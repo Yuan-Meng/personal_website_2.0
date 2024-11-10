@@ -1,33 +1,195 @@
 {
   "graph": {
-    "/notes/nvim-go-template-syntax-highlighting/": {
+    "/notes/17_going_under/": {
       "in": [],
       "out": []
     },
-    "/posts/17_going_under/": {
+    "/notes/birthday/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/cocosci/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/empathy/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/guitar/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/python_env/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/resolutions-2022/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/attention_as_dict/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/autocomplete/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/causality/causality/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/ebr/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/human_vision/human_vision/": {
       "in": [],
       "out": []
     },
     "/posts/ltr/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/md_coding/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/metrics/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/mle_interviews/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/mtml/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/negative_sampling/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/newgrads/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/nothingness/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/perceptron/": {
       "in": [],
       "out": []
     }
   },
   "pages": {
-    "/notes/nvim-go-template-syntax-highlighting/": {
-      "permalink": "/notes/nvim-go-template-syntax-highlighting/",
+    "/notes/17_going_under/": {
+      "permalink": "/notes/17_going_under/",
       "section": "notes",
-      "title": "Highlight Syntax in Go Templates"
-    },
-    "/posts/17_going_under/": {
-      "permalink": "/posts/17_going_under/",
-      "section": "posts",
       "title": "Seventeen Going Under"
+    },
+    "/notes/birthday/": {
+      "permalink": "/notes/birthday/",
+      "section": "notes",
+      "title": "Brithday Wish"
+    },
+    "/notes/cocosci/": {
+      "permalink": "/notes/cocosci/",
+      "section": "notes",
+      "title": "Latest Hits in Cognitively Inpsired AI"
+    },
+    "/notes/empathy/": {
+      "permalink": "/notes/empathy/",
+      "section": "notes",
+      "title": "How Could Anyone Know How Another Feels?"
+    },
+    "/notes/guitar/": {
+      "permalink": "/notes/guitar/",
+      "section": "notes",
+      "title": "A Minimalist Setup for Zoom Guitar Lessons"
+    },
+    "/notes/python_env/": {
+      "permalink": "/notes/python_env/",
+      "section": "notes",
+      "title": "Set Up Python Environment for CogSci 131"
+    },
+    "/notes/resolutions-2022/": {
+      "permalink": "/notes/resolutions-2022/",
+      "section": "notes",
+      "title": "New Year Resolutions"
+    },
+    "/posts/attention_as_dict/": {
+      "permalink": "/posts/attention_as_dict/",
+      "section": "posts",
+      "title": "Attention as Soft Dictionary Lookup"
+    },
+    "/posts/autocomplete/": {
+      "permalink": "/posts/autocomplete/",
+      "section": "posts",
+      "title": "Autocompletion for Search Enginees"
+    },
+    "/posts/causality/causality/": {
+      "permalink": "/posts/causality/causality/",
+      "section": "posts",
+      "title": "Causal Inference in Data Science"
+    },
+    "/posts/ebr/": {
+      "permalink": "/posts/ebr/",
+      "section": "posts",
+      "title": "An Introduction to Embedding-Based Retrieval"
+    },
+    "/posts/human_vision/human_vision/": {
+      "permalink": "/posts/human_vision/human_vision/",
+      "section": "posts",
+      "title": "Is Human Vision More like CNN or Vision Transformer?"
     },
     "/posts/ltr/": {
       "permalink": "/posts/ltr/",
       "section": "posts",
       "title": "An Evolution of Learning to Rank"
+    },
+    "/posts/md_coding/": {
+      "permalink": "/posts/md_coding/",
+      "section": "posts",
+      "title": "Code ML Algorithms From Scratch"
+    },
+    "/posts/metrics/": {
+      "permalink": "/posts/metrics/",
+      "section": "posts",
+      "title": "Choosing Metrics"
+    },
+    "/posts/mle_interviews/": {
+      "permalink": "/posts/mle_interviews/",
+      "section": "posts",
+      "title": "(Opinionated) Guide to ML Engineer Job Hunting"
+    },
+    "/posts/mtml/": {
+      "permalink": "/posts/mtml/",
+      "section": "posts",
+      "title": "The Annotated Multi-Task Ranker: An MMoE Code Example"
+    },
+    "/posts/negative_sampling/": {
+      "permalink": "/posts/negative_sampling/",
+      "section": "posts",
+      "title": "Negative Sampling for Learning Two-Tower Networks"
+    },
+    "/posts/newgrads/": {
+      "permalink": "/posts/newgrads/",
+      "section": "posts",
+      "title": "(Quirky) Roadmap for New Grad Data Scientists"
+    },
+    "/posts/nothingness/": {
+      "permalink": "/posts/nothingness/",
+      "section": "posts",
+      "title": "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
+    },
+    "/posts/perceptron/": {
+      "permalink": "/posts/perceptron/",
+      "section": "posts",
+      "title": "Teaching A Peceptron to See"
     }
   }
 }

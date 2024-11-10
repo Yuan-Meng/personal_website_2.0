@@ -106,6 +106,8 @@
   </url><url>
     <loc>http://localhost:1313/about/</loc>
   </url><url>
+    <loc>http://localhost:1313/graph/</loc>
+  </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>
