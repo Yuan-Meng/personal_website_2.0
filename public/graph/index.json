@@ -44,7 +44,7 @@
       "in": [],
       "out": []
     },
-    "/posts/human_vision/human_vision/": {
+    "/posts/human_vision/": {
       "in": [],
       "out": []
     },
@@ -145,8 +145,8 @@
       "section": "posts",
       "title": "An Introduction to Embedding-Based Retrieval"
     },
-    "/posts/human_vision/human_vision/": {
-      "permalink": "/posts/human_vision/human_vision/",
+    "/posts/human_vision/": {
+      "permalink": "/posts/human_vision/",
       "section": "posts",
       "title": "Is Human Vision More like CNN or Vision Transformer?"
     },

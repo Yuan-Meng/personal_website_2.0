@@ -1,6 +1,9 @@
 {{- $license := default "none" site.Params.footer.creativeCommonsLicense -}}
 {{- $licenseData := index site.Data.til.cc $license -}}
 {{- $showCopyright := and site.Copyright ( ne $license "zero" ) -}}
+{{- with .Site.Params.social }}
+<div id="social-icons">{{ partialCached "social-icons.html" . }}</div>
+{{- end }}
 <section class="items-top flex flex-row justify-between opacity-70">
   <div class="flex flex-col space-y-2">
     {{- if $showCopyright }}
