@@ -16,6 +16,6 @@ toc: true
 
 
 ## Blogposts
-4. [*Transformers in music recommendation*](https://research.google/blog/transformers-in-music-recommendation/) by Google Research.
+4. [*Transformers in Music Recommendation*](https://research.google/blog/transformers-in-music-recommendation/) by Google Research.
 5. [*Large-scale User Sequences at Pinterest*](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9) by Pinterest Engineering.
 6. [*User Action Sequence Modeling for Pinterest Ads Engagement Modeling*](https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e) by Pinterest Engineering.

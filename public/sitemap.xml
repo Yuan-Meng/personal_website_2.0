@@ -6,11 +6,19 @@
   </url><url>
     <loc>http://localhost:1313/posts/seq_user_modeling/</loc>
   </url><url>
+    <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/literature-review/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/writing/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/mle_interviews/</loc>
   </url><url>
@@ -44,8 +52,6 @@
   </url><url>
     <loc>http://localhost:1313/categories/vector-based-search/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/17_going_under/</loc>
@@ -78,7 +84,7 @@
   </url><url>
     <loc>http://localhost:1313/categories/data-science/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/nothingness/</loc>
+    <loc>http://localhost:1313/notes/nothingness/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/jupyter/</loc>
   </url><url>

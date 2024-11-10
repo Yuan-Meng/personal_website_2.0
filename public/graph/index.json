@@ -20,6 +20,14 @@
       "in": [],
       "out": []
     },
+    "/notes/how_i_read_papers/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/nothingness/": {
+      "in": [],
+      "out": []
+    },
     "/notes/python_env/": {
       "in": [],
       "out": []
@@ -76,10 +84,6 @@
       "in": [],
       "out": []
     },
-    "/posts/nothingness/": {
-      "in": [],
-      "out": []
-    },
     "/posts/perceptron/": {
       "in": [],
       "out": []
@@ -114,6 +118,16 @@
       "permalink": "/notes/guitar/",
       "section": "notes",
       "title": "A Minimalist Setup for Zoom Guitar Lessons"
+    },
+    "/notes/how_i_read_papers/": {
+      "permalink": "/notes/how_i_read_papers/",
+      "section": "notes",
+      "title": "How I Read Papers for Blogposts"
+    },
+    "/notes/nothingness/": {
+      "permalink": "/notes/nothingness/",
+      "section": "notes",
+      "title": "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
     },
     "/notes/python_env/": {
       "permalink": "/notes/python_env/",
@@ -184,11 +198,6 @@
       "permalink": "/posts/newgrads/",
       "section": "posts",
       "title": "(Quirky) Roadmap for New Grad Data Scientists"
-    },
-    "/posts/nothingness/": {
-      "permalink": "/posts/nothingness/",
-      "section": "posts",
-      "title": "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
     },
     "/posts/perceptron/": {
       "permalink": "/posts/perceptron/",

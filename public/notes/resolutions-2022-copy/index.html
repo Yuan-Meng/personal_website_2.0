@@ -10,30 +10,38 @@
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
-    Down the Rabbit Hole: Sequential User Modeling | Yuan Meng
+    New Year Resolutions | Yuan Meng
 </title>
-  <meta name="description" content=" References Papers ConvFormer: Revisiting Token-mixers for Sequential User Modeling (2024) by Wang et al., ICLR. PinnerFormer: Sequence Modeling for User Representation at Pinterest (2022) by Pancha et al., KDD. TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest (2024) by Xia et al., KDD. Blogposts Transformers in Music Recommendation by Google Research. Large-scale User Sequences at Pinterest by Pinterest Engineering. User Action Sequence Modeling for Pinterest Ads Engagement Modeling by Pinterest Engineering. " />
-<meta property="og:url" content="http://localhost:1313/posts/seq_user_modeling/">
+  <meta name="description" content=" Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670
+Resolutions are meant to be broken, but like everything good in life, it’s better to try and fail than never to have attempted at all. So here’s my attempt for 2022.
+1. Be a better modeler 2021 felt quite surreal — I got my first job offer as a machine learning data scientist, something I’d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:" />
+<meta property="og:url" content="http://localhost:1313/notes/resolutions-2022-copy/">
   <meta property="og:site_name" content="Yuan Meng">
-  <meta property="og:title" content="Down the Rabbit Hole: Sequential User Modeling">
-  <meta property="og:description" content="References Papers ConvFormer: Revisiting Token-mixers for Sequential User Modeling (2024) by Wang et al., ICLR. PinnerFormer: Sequence Modeling for User Representation at Pinterest (2022) by Pancha et al., KDD. TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest (2024) by Xia et al., KDD. Blogposts Transformers in Music Recommendation by Google Research. Large-scale User Sequences at Pinterest by Pinterest Engineering. User Action Sequence Modeling for Pinterest Ads Engagement Modeling by Pinterest Engineering.">
+  <meta property="og:title" content="New Year Resolutions">
+  <meta property="og:description" content="Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670
+Resolutions are meant to be broken, but like everything good in life, it’s better to try and fail than never to have attempted at all. So here’s my attempt for 2022.
+1. Be a better modeler 2021 felt quite surreal — I got my first job offer as a machine learning data scientist, something I’d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-11-10T00:00:00+00:00">
+    <meta property="article:section" content="notes">
+    <meta property="article:published_time" content="2022-01-01T00:00:00+00:00">
 
 
-  <meta itemprop="name" content="Down the Rabbit Hole: Sequential User Modeling">
-  <meta itemprop="description" content="References Papers ConvFormer: Revisiting Token-mixers for Sequential User Modeling (2024) by Wang et al., ICLR. PinnerFormer: Sequence Modeling for User Representation at Pinterest (2022) by Pancha et al., KDD. TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest (2024) by Xia et al., KDD. Blogposts Transformers in Music Recommendation by Google Research. Large-scale User Sequences at Pinterest by Pinterest Engineering. User Action Sequence Modeling for Pinterest Ads Engagement Modeling by Pinterest Engineering.">
-  <meta itemprop="datePublished" content="2024-11-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="73">
-  <meta itemprop="keywords" content="Recommender systems">
+  <meta itemprop="name" content="New Year Resolutions">
+  <meta itemprop="description" content="Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670
+Resolutions are meant to be broken, but like everything good in life, it’s better to try and fail than never to have attempted at all. So here’s my attempt for 2022.
+1. Be a better modeler 2021 felt quite surreal — I got my first job offer as a machine learning data scientist, something I’d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:">
+  <meta itemprop="datePublished" content="2022-01-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="685">
+  <meta itemprop="keywords" content="Personal reflections">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Down the Rabbit Hole: Sequential User Modeling">
-  <meta name="twitter:description" content="References Papers ConvFormer: Revisiting Token-mixers for Sequential User Modeling (2024) by Wang et al., ICLR. PinnerFormer: Sequence Modeling for User Representation at Pinterest (2022) by Pancha et al., KDD. TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest (2024) by Xia et al., KDD. Blogposts Transformers in Music Recommendation by Google Research. Large-scale User Sequences at Pinterest by Pinterest Engineering. User Action Sequence Modeling for Pinterest Ads Engagement Modeling by Pinterest Engineering.">
+  <meta name="twitter:title" content="New Year Resolutions">
+  <meta name="twitter:description" content="Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670
+Resolutions are meant to be broken, but like everything good in life, it’s better to try and fail than never to have attempted at all. So here’s my attempt for 2022.
+1. Be a better modeler 2021 felt quite surreal — I got my first job offer as a machine learning data scientist, something I’d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:">
 
-<link rel="canonical" href="http://localhost:1313/posts/seq_user_modeling/" />
+<link rel="canonical" href="http://localhost:1313/notes/resolutions-2022-copy/" />
 
     <link rel="stylesheet" href="/css/index.css" />
 
@@ -41,28 +49,14 @@
       <script src="/js/main.js" defer></script>
   
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
 
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        renderMathInElement(document.body, {
-            delimiters: [
-                {left: "$$", right: "$$", display: true},
-                {left: "$", right: "$", display: false}
-            ]
-        });
-    });
-</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
-  "@id": "http://localhost:1313/posts/seq_user_modeling/",
+  "@id": "http://localhost:1313/notes/resolutions-2022-copy/",
   "@type": "BlogPosting",
   "articleSection": [
-    "Recommender systems"
+    "Personal reflections"
   ],
   "author": {
     "@type": "Person",
@@ -71,19 +65,19 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2024-11-10",
-  "description": " References Papers ConvFormer: Revisiting Token-mixers for Sequential User Modeling (2024) by Wang et al., ICLR. PinnerFormer: Sequence Modeling for User Representation at Pinterest (2022) by Pancha et al., KDD. TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest (2024) by Xia et al., KDD. Blogposts Transformers in Music Recommendation by Google Research. Large-scale User Sequences at Pinterest by Pinterest Engineering. User Action Sequence Modeling for Pinterest Ads Engagement Modeling by Pinterest Engineering. ",
-  "headline": "Down the Rabbit Hole: Sequential User Modeling",
+  "datePublished": "2022-01-01",
+  "description": " Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670\nResolutions are meant to be broken, but like everything good in life, it’s better to try and fail than never to have attempted at all. So here’s my attempt for 2022.\n1. Be a better modeler 2021 felt quite surreal — I got my first job offer as a machine learning data scientist, something I’d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:",
+  "headline": "New Year Resolutions",
   "isPartOf": {
-    "@id": "http://localhost:1313/posts/",
+    "@id": "http://localhost:1313/notes/",
     "@type": "Blog",
-    "name": "Posts"
+    "name": "Notes"
   },
-  "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
-  "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT1M",
-  "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 73
+  "mainEntityOfPage": "http://localhost:1313/notes/resolutions-2022-copy/",
+  "name": "New Year Resolutions",
+  "timeRequired": "PT4M",
+  "url": "http://localhost:1313/notes/resolutions-2022-copy/",
+  "wordCount": 685
 }
 </script>
 
@@ -104,11 +98,11 @@
       >
     </li>
     <li>
-      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      <a href="/posts/">Posts</a
       >
     </li>
     <li>
-      <a href="/notes/">Notes</a
+      <a aria-current="true" class="ancestor" href="/notes/">Notes</a
       >
     </li>
     </ul>
@@ -119,57 +113,27 @@
       <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
         <article class="main">
     <header>
-      <h1 class="!mb-1">Down the Rabbit Hole: Sequential User Modeling</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2024-11-10T00:00:00&#43;00:00">November 10, 2024</time>
+      <h1 class="!mb-1">New Year Resolutions</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2022-01-01T00:00:00&#43;00:00">January 1, 2022</time>
         </div>
     </header>
 
     
     
-      <div class="toc-container">
-        <span id="toc-toggle">
-          <span id="toc-icon">▶</span> 
-          <span>Table of Contents</span>
-        </span>
-        <nav id="TableOfContents" class="toc-content">
-          <nav id="TableOfContents">
-  <ul>
-    <li><a href="#references">References</a>
-      <ul>
-        <li><a href="#papers">Papers</a></li>
-        <li><a href="#blogposts">Blogposts</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-        </nav>
-      </div>
-
-      <script>
-        
-        document.addEventListener('DOMContentLoaded', function () {
-          var tocToggle = document.getElementById('toc-toggle');
-          var tocContent = document.getElementById('TableOfContents');
-          var tocIcon = document.getElementById('toc-icon');
-          tocToggle.addEventListener('click', function () {
-            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
-              tocContent.style.display = 'block';
-              tocIcon.textContent = '▼'; 
-            } else {
-              tocContent.style.display = 'none';
-              tocIcon.textContent = '▶'; 
-            }
-          });
-        });
-      </script>
-    
 
     
     <div class="content">
-      <h2 id="references" class="scroll-mt-8 group">
-  References
+      <figure><img src="https://www.dropbox.com/s/2ux6iau56c9s6pf/resolution.png?raw=1"
+    alt="Piled Higher and Deeper: https://phdcomics.com/comics.php?f=1670" width="600"><figcaption>
+      <p>Piled Higher and Deeper: <a href="https://phdcomics.com/comics.php?f=1670">https://phdcomics.com/comics.php?f=1670</a></p>
+    </figcaption>
+</figure>
+
+<p>Resolutions are meant to be broken, but like everything good in life, it&rsquo;s better to try and fail than never to have attempted at all. So here&rsquo;s my attempt for 2022.</p>
+<h2 id="1-be-a-better-modeler" class="scroll-mt-8 group">
+  1. Be a better modeler
   
-    <a href="#references"
+    <a href="#1-be-a-better-modeler"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -191,10 +155,26 @@
     </a>
   
 </h2>
-<h3 id="papers" class="scroll-mt-8 group">
-  Papers
+<p>2021 felt quite surreal &mdash; I got my first job offer as a machine learning data scientist, something I&rsquo;d been dreaming of for nearly two years. In 2022, I wanna up my ante in the modeling game by working through (a subset of) the following:</p>
+<ul>
+<li><strong>Read Kevin Murphy&rsquo;s <a href="https://www.amazon.com/Machine-Learning-Probabilistic-Perspective-Computation/dp/0262018020">Machine Learning: A Probabilistic Perspective</a></strong> to build a solid foundation 👉 I learned ML in a somewhat hacky way, by doing projects across a wide range of topics (e.g., graphs, NLP, recommender systems, etc.). Sure, I&rsquo;ve taken ML classes and read other ML books, but Kevin Murphy&rsquo;s 1000-page bible is something I just got the courage for and probably closer to my training in computational cognitive science (i.e., structured <a href="https://probmods.org/">probabilistic models</a> and Bayesian stuff) than the other classics out there.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/s/263flcrbuy9gila/ml.jpeg?raw=1" width="450">
+</figure>
+
+<ul>
+<li>
+<p><strong>Apply best practices from <a href="https://www.amazon.com/Bayesian-Modeling-Computation-Chapman-Statistical/dp/036789436X/ref=sr_1_1?keywords=Bayesian+Modeling+and+Computation+in+Python&amp;qid=1641023662&amp;sr=8-1">Bayesian Modeling and Computation in Python</a> to my dissertation</strong> 👉 Much like how I learned ML for data science, I also picked up Bayesian modeling for research in a hacky way, by reading other scientists&rsquo; code and asking for help, which is both a source of pride and insecurity. I&rsquo;m thankful how this PyMC3 book finally came out when I&rsquo;m wrapping up grad school and writing my dissertation &mdash; in the last 5 months of my PhD career, I want to re-learn Bayes the systematic way and double-check the modeling work I&rsquo;ve done.</p>
+</li>
+<li>
+<p><strong>Learn more about deep learning</strong> by taking Hugging Face&rsquo;s <a href="https://huggingface.co/course/chapter1/1">transformer</a> and NYU&rsquo;s <a href="https://cds.nyu.edu/deep-learning/">DS-GA 1008</a> courses, listening to the <a href="https://open.spotify.com/show/7o9r3fFig3MhTJwehXDbXm">Gradient Dissent</a> podcast, playing with <a href="https://paperswithcode.com/">Papers with Code</a>, and perhaps reaching out to <a href="https://mlcollective.org/">ML Collective</a> and/or <a href="https://blog.evjang.com/2020/06/free-office-hours-for-non-traditional.html">Eric Jang</a>.</p>
+</li>
+</ul>
+<p>I also wish to learn more about model serving &mdash; the reason being that deploying my own models may give me more autonomy and save loads of back-and-forth communication with machine learning engineers who may not be as familiar with my work.</p>
+<h2 id="2-be-a-better-friend" class="scroll-mt-8 group">
+  2. Be a better friend
   
-    <a href="#papers"
+    <a href="#2-be-a-better-friend"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -215,16 +195,16 @@
 
     </a>
   
-</h3>
-<ol>
-<li><a href="https://openreview.net/forum?id=Gny0PVtKz2"><em>ConvFormer: Revisiting Token-mixers for Sequential User Modeling</em></a> (2024) by Wang et al., <em>ICLR</em>.</li>
-<li><a href="https://arxiv.org/abs/2205.04507"><em>PinnerFormer: Sequence Modeling for User Representation at Pinterest</em></a> (2022) by Pancha et al., <em>KDD</em>.</li>
-<li><a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2024) by Xia et al., <em>KDD</em>.</li>
-</ol>
-<h3 id="blogposts" class="scroll-mt-8 group">
-  Blogposts
+</h2>
+<blockquote>
+<p>&ldquo;It&rsquo;s only love, it&rsquo;s only pain, it&rsquo;s only fear that runs through my veins, it&rsquo;s all the things you can&rsquo;t explain, that makes us human.&rdquo; &mdash; Civil Twilight, <a href="https://open.spotify.com/track/4fDXIANSPZ5TyyIeiTPbD9">Human</a> (2009)</p>
+</blockquote>
+<p>The pandemic still loomed over 2021 (and will stay for God knows how long&hellip;), yet I made more friends than I ever did, thanks to sports, tech, interviews, and circumstances stranger than Hollywood horrors. I&rsquo;m so tried of telling the last story nor do I wish to anymore. The upshot is that I&rsquo;ve felt pain, had fun, and seen the good, the bad, and the ugly in people &mdash; and I wouldn&rsquo;t trade it for the world.</p>
+<p>In 2022, I want to be kinder, more open, and let people feel valued and loved. As a researcher who works with kids, I used to end experiments with a generic &ldquo;Thank you&rdquo;, but now I always tell the family how their selfless contribution helps our lab carry on with cool science on rainy days &mdash; maybe I&rsquo;m older, or maybe it&rsquo;s the apocalypse, I&rsquo;ve learned nothing is ever easy in this life and we can take no kindness for granted. And as an introvert, it used to kill me to reach out to folks I admire, but as I&rsquo;m doing that increasingly more, I feel happier than ever &mdash; this may be the social version of <em>fortuna favet fortibus</em> (&ldquo;fortune favors the bold&rdquo;).</p>
+<h2 id="3-be-kind-to-myself" class="scroll-mt-8 group">
+  3. Be kind to myself
   
-    <a href="#blogposts"
+    <a href="#3-be-kind-to-myself"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -245,12 +225,11 @@
 
     </a>
   
-</h3>
-<ol start="4">
-<li><a href="https://research.google/blog/transformers-in-music-recommendation/"><em>Transformers in Music Recommendation</em></a> by Google Research.</li>
-<li><a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9"><em>Large-scale User Sequences at Pinterest</em></a> by Pinterest Engineering.</li>
-<li><a href="https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e"><em>User Action Sequence Modeling for Pinterest Ads Engagement Modeling</em></a> by Pinterest Engineering.</li>
-</ol>
+</h2>
+<p>I&rsquo;m glad I went to LA on a whim at the end of 2021 and had extensive conversations with my friend (who I bet my 💰 on will be a gifted clinical scientist) about mental health and what &ldquo;doing enough&rdquo; means. All this weight we carry and rituals we perform in order not to fall behind may just ironically weigh us down. I hope that in 2022, I can learn to let go of the shackles I put on myself and&hellip; just do stuff. Last but not least, I&rsquo;ll shop around for a cat and a therapist I really like.</p>
+<figure><img src="https://www.dropbox.com/s/tpwsx5z1j38gaf6/meow.jpg?raw=1" width="400">
+</figure>
+
 
     </div>
   </article>
@@ -282,7 +261,7 @@
 
       <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
           <li>
-            <a href="/categories/recommender-systems/" class="taxonomy category">recommender systems</a>
+            <a href="/categories/personal-reflections/" class="taxonomy category">personal reflections</a>
           </li>
       </ul>
     </section>
@@ -313,7 +292,7 @@
       <content-network-graph
   class="h-64 ml-6"
   data-endpoint="/graph/index.json"
-  page="/posts/seq_user_modeling/"
+  page="/notes/resolutions-2022-copy/"
 ></content-network-graph>
 
     </section>
