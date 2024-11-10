@@ -22,4 +22,4 @@ So, how do I begin? To dive deeper into search/recommendations/ads ("搜广推")
 
 The trick is knowing which topics are worth learning. For example, behind great search/rec/ads are deep user/content understanding, efficient and high-recall retrieval, unbiased and high-precision ranking, ways to mitigate position bias, cold start, and staleness, etc.. A great search/rec/ads ML engineer needs a good breadth on these topics. 
 
-My knowledge comes from working on my projects, chatting with search/personalization/ads colleagues, going down the rabbit paper citation hole, and stumbling on paper recs in my LinkedIn or 小红书 feed --- such serendipity is why I love ranking in the first place 😉.
+My knowledge comes from working on my projects, chatting with search/personalization/ads colleagues, going down the paper citation rabbit hole, and stumbling on paper recs in my LinkedIn or 小红书 feed --- such serendipity is why I love ranking in the first place 😉.
