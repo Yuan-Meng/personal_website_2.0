@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Yuan Meng</title>
+    <link>http://localhost:1313/categories/</link>
+    <description>Recent content in Categories on Yuan Meng</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <managingEditor>mycaptainmy@gmail.com (Yuan Meng)</managingEditor>
+    <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
+    <copyright>Yuan Meng</copyright>
+    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Career</title>
+      <link>http://localhost:1313/categories/career/</link>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/career/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Interview</title>
+      <link>http://localhost:1313/categories/interview/</link>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/interview/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine learning</title>
+      <link>http://localhost:1313/categories/machine-learning/</link>
+      <pubDate>Tue, 15 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>http://localhost:1313/categories/ai/</link>
+      <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cognitive science</title>
+      <link>http://localhost:1313/categories/cognitive-science/</link>
+      <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/cognitive-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Negative sampling</title>
+      <link>http://localhost:1313/categories/negative-sampling/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/negative-sampling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Recommender system</title>
+      <link>http://localhost:1313/categories/recommender-system/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/recommender-system/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Information retrieval</title>
+      <link>http://localhost:1313/categories/information-retrieval/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/information-retrieval/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Multi-task learning</title>
+      <link>http://localhost:1313/categories/multi-task-learning/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/multi-task-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Embedding</title>
+      <link>http://localhost:1313/categories/embedding/</link>
+      <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/embedding/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vector-based search</title>
+      <link>http://localhost:1313/categories/vector-based-search/</link>
+      <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/vector-based-search/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Personal reflections</title>
+      <link>http://localhost:1313/categories/personal-reflections/</link>
+      <pubDate>Mon, 06 May 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/personal-reflections/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Natural language processing</title>
+      <link>http://localhost:1313/categories/natural-language-processing/</link>
+      <pubDate>Sat, 09 Mar 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/natural-language-processing/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Learning to rank</title>
+      <link>http://localhost:1313/categories/learning-to-rank/</link>
+      <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/learning-to-rank/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Search</title>
+      <link>http://localhost:1313/categories/search/</link>
+      <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/search/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autocomplete</title>
+      <link>http://localhost:1313/categories/autocomplete/</link>
+      <pubDate>Sat, 06 Jan 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/autocomplete/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Algorithms</title>
+      <link>http://localhost:1313/categories/algorithms/</link>
+      <pubDate>Wed, 22 Jun 2022 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/algorithms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data science</title>
+      <link>http://localhost:1313/categories/data-science/</link>
+      <pubDate>Sun, 13 Mar 2022 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/data-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Jupyter</title>
+      <link>http://localhost:1313/categories/jupyter/</link>
+      <pubDate>Wed, 19 Jan 2022 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/jupyter/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>http://localhost:1313/categories/python/</link>
+      <pubDate>Wed, 19 Jan 2022 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Guitar</title>
+      <link>http://localhost:1313/categories/guitar/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/guitar/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Music</title>
+      <link>http://localhost:1313/categories/music/</link>
+      <pubDate>Sun, 05 Dec 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/music/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Causal inference</title>
+      <link>http://localhost:1313/categories/causal-inference/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/causal-inference/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quasi-experiment</title>
+      <link>http://localhost:1313/categories/quasi-experiment/</link>
+      <pubDate>Fri, 12 Nov 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/quasi-experiment/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Metrics</title>
+      <link>http://localhost:1313/categories/metrics/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/metrics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Product</title>
+      <link>http://localhost:1313/categories/product/</link>
+      <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/product/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

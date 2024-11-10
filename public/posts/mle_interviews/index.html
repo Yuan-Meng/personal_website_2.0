@@ -1,0 +1,1168 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    (Opinionated) Guide to ML Engineer Job Hunting | Yuan Meng
+</title>
+  <meta name="description" content=" The Marriage Analogy Over 2 years ago, I wrote a blog post on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer “frameworks”, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal — it’s something you can rehearse but can never force." />
+<meta property="og:url" content="http://localhost:1313/posts/mle_interviews/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="(Opinionated) Guide to ML Engineer Job Hunting">
+  <meta property="og:description" content="The Marriage Analogy Over 2 years ago, I wrote a blog post on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer “frameworks”, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal — it’s something you can rehearse but can never force.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-10-15T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="(Opinionated) Guide to ML Engineer Job Hunting">
+  <meta itemprop="description" content="The Marriage Analogy Over 2 years ago, I wrote a blog post on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer “frameworks”, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal — it’s something you can rehearse but can never force.">
+  <meta itemprop="datePublished" content="2024-10-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="5613">
+  <meta itemprop="keywords" content="Career,Machine learning,Interview">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="(Opinionated) Guide to ML Engineer Job Hunting">
+  <meta name="twitter:description" content="The Marriage Analogy Over 2 years ago, I wrote a blog post on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer “frameworks”, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal — it’s something you can rehearse but can never force.">
+
+<link rel="canonical" href="http://localhost:1313/posts/mle_interviews/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/mle_interviews/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Career",
+    "Machine learning",
+    "Interview"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2024-10-15",
+  "description": " The Marriage Analogy Over 2 years ago, I wrote a blog post on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer “frameworks”, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal — it’s something you can rehearse but can never force.",
+  "headline": "(Opinionated) Guide to ML Engineer Job Hunting",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews/",
+  "name": "(Opinionated) Guide to ML Engineer Job Hunting",
+  "timeRequired": "PT27M",
+  "url": "http://localhost:1313/posts/mle_interviews/",
+  "wordCount": 5613
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">(Opinionated) Guide to ML Engineer Job Hunting</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2024-10-15T00:00:00&#43;00:00"
+            >October 15, 2024</time
+          >
+        </div>
+    </header>
+
+    <h2 id="the-marriage-analogy" class="scroll-mt-8 group">
+  The Marriage Analogy
+  
+    <a href="#the-marriage-analogy"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Over 2 years ago, I wrote a <a href="https://www.yuan-meng.com/posts/newgrads/">blog post</a> on how to find jobs as a new grad data scientist (as a twist of fate, I never worked as a product data scientist but instead became an ML engineer at DoorDash). Back in 2021, I cared a ton about interview skills, answer &ldquo;frameworks&rdquo;, and whatnot, which may still come handy at New Grad or Early Career levels. For experienced hires, however, I think of interviews as some sort of marriage proposal &mdash; <em>it&rsquo;s something you can rehearse but can never force</em>.</p>
+<p>If your resume is strong enough, you may get a date or two (e.g., recruiter call/HM chat/phone screen), but for the company to say &ldquo;yes&rdquo; (the offer), the expertise you bring to the table has to fit their roadmap and the person that you are must fit the company/team culture &mdash; otherwise, the marriage will be painful (and short).</p>
+<p>Of course, you can and should prepare for interviews &mdash; just like people spent days or even months preparing for the very moment to propose, but a strong foundation should&rsquo;ve already been built over the years through thick (ML counterpart: when your models succeed) and thin (ML counterpart: when you learn from failures).</p>
+<h2 id="what-to-prepare" class="scroll-mt-8 group">
+  What to Prepare
+  
+    <a href="#what-to-prepare"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<blockquote>
+<p>You need to be motivated&hellip; It isn&rsquo;t so difficult, but it&rsquo;s also not so easy. &mdash; <em><a href="https://github.com/mikexcohen/LinAlgBook">Linear Algebra: Theory, Intuition, Code</a></em>, Mike X. Cohen</p>
+</blockquote>
+<p>The foreword from my favorite linear algebra book perfectly summarizes my opinion about the MLE interview. It isn&rsquo;t so hard that companies would ask you to implement, say, a two-tower model in one hour. It isn&rsquo;t so easy that you can pass as an expert by memorizing a textbook without understanding. You need to be motivated because sheer power of will is sometimes needed to go over the vast knowledge repertoire of an MLE, especially when you also need to perform well at your current job while on the hunt. Rest assured that no time ever goes to waste &mdash; even if you don&rsquo;t get an offer &mdash; reading and thinking about ML foundations help you make more principled or creative decisions at work, or re-appreciate the sheer beauty of AI/ML.</p>
+<p>A typical MLE interview loop consists of 6 rounds, as shown in the hexagon. Some companies use a subset and some companies have their unique rounds. Generally, a successful candidate is a good coder with solid ML foundations who has delivered high-impact ML projects via challenging cross-functional collaborations and follows the latest industry/academic trends. As Josh Tobin put it, good MLEs are unicorns.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/jtwcup2ms2nt3wondqp04/Screenshot-2024-03-15-at-9.23.48-PM.png?rlkey=5e042y4cxlwo71rgajyyxkzfn&amp;raw=1"
+    alt="In a talk at Berkeley, Josh Tobin likened ML engineers to &lsquo;unicorns&rsquo;" width="1000"><figcaption>
+      <p>In a talk at Berkeley, Josh Tobin likened ML engineers to &lsquo;unicorns&rsquo;</p>
+    </figcaption>
+</figure>
+
+<ol>
+<li><strong>Coding</strong>: For MLE candidates, coding interviews are like the GRE for Ph.D. candidates &mdash; good performance by no means guarantees acceptance, but poor performance easily disqualifies you (unless you have an uncannily matching background). There are 3 styles of MLE coding questions:
+<ul>
+<li><strong>LeetCode</strong> (<em>extremely common</em>): Classic data structures &amp; algorithms problems 👉 <span style="background-color: #FDB515">same as the bar for SWE</span>: Meta asks 2 Mediums in 45 min; most places ask 1 Hard + 1 Medium in 1 hour, or 1 Hard with some follow-ups in 45 min.</li>
+<li><strong>ML Coding</strong> (<em>traditional or researchy positions</em>):  Code up a simple model (e.g., K-means, logistic/linear regression), a SOTA building block (e.g., multi-headed attention), or an ML concept (e.g., AUC, vector/matrix multiplication) 👉 these were popular a few years ago, and some companies still keep them; researchy positions may also probe into ML coding.</li>
+<li><strong>Object-Oriented Programming</strong> (<em>backend-heavy positions</em>): In places where MLEs handle heavy backend work (e.g., Netflix, Reddit), candidates are often asked to implement some sort of CRUD (create, read, update, delete) API 👉 class methods get increasingly more complex with each follow-up.</li>
+</ul>
+</li>
+<li><strong>ML System Design</strong>: Your resume may be packed with impressive projects, but it&rsquo;s impossible to tell if you thought of the solutions yourself or someone else told you what to do. The MLSD round is a window into your first-principle thinking of how to design a scalable ML system for a business problem at hand.
+<ul>
+<li><strong>Content:</strong> In 45 min to 1 hour, you translate a vague business problem into an end-to-end ML system, from collecting requirements, understanding business objectives, framing the problem as an ML task, to data generation, feature engineering, label design, model architecture &amp; loss function choices, and eventually monitoring, deployment, scaling, and A/B.</li>
+<li><strong>Focus:</strong> Some companies focus on the &ldquo;ML&rdquo; (SOTA model details) and some on the &ldquo;E&rdquo; (the end-to-end ML system at training and serving time, including feature store, model store, data/feature/prediction/monitoring pipelines, etc.). Some companies have 2 design rounds covering both. It&rsquo;s necessary to deeply understand both industry-standard models and the ML infra.</li>
+</ul>
+</li>
+<li><strong>ML Breadth</strong>: Many companies have a rapid-fire round asking questions about ML foundations (&ldquo;八股文快问快答&rdquo;), such as the bias-variance trade-off, detecting overfitting and under-fitting, L1/L2 regularization, feature/model selection&hellip; Noways DL basics are also a necessity, such as how backpropagation works, choices of optimizers and schedulers, vanishing/exploding gradients and remedies, regularization methods that apply specifically to neural nets, etc..</li>
+<li><strong>ML Domain Knowledge</strong>: This round ensures you&rsquo;re an expert of your domain (e.g., NLP/ranking) who deeply understands key ideas from seminal works.
+<ul>
+<li><strong>NLP</strong>: The original Transformer in <em>Attention Is All You Need</em>, popular Transformers (BERT/GPT/BART/T5/Llama), efficient Transformers (e.g., FlashAttention, Sliding Window Attention, LoRA, QLoRA, PEFT), RLHF, eval&hellip;</li>
+<li><strong>Search/Rec/Ads</strong>: Multi-stage ranking design (candidate generation 👉 first-pass ranking 👉 second-pass ranking 👉 re-ranking), ranking metrics (MRR@K, nDCG@K, MAP@k, Recall@k&hellip;), popular DL architectures (e.g., Wide &amp; Deep, DCN, DCN V2, DIN, DIEN, DHEN, etc.), multi-objective learning and value models, solutions for cold-start/position bias/diversity&hellip;</li>
+</ul>
+</li>
+<li><strong>Project Deep Dive</strong>: Your past success is a predictor of your future. By walking through how you delivered impactful ML projects by choosing the right business problem to solve, carefully considering all alternatives and their trade-offs, aligning the team on key decisions, and executing against decided milestones, you give the hiring manager some confidence that you could do the same there.
+<ul>
+<li><strong>A Big Red Flag</strong>: Nothing is worse than making a random decision without any justifications (e.g., long-term tech debt vs. short-term velocity, accuracy vs. latency, buy vs. build, etc.), because it suggests you&rsquo;re unable/unwilling to make difficult decisions when the moment comes, but it is those moments that make or break a project.</li>
+</ul>
+</li>
+<li><strong>Behavior Interview</strong>: A rapid-fire round of questions asking how you solve problems, work with others, deliver under pressure and limited resources, iterate on feedback, mentor team members, learn from successes/failures…</li>
+</ol>
+<p>I joke with my friends that <span style="background-color: #FDB515">project management is the only real skill behind ML interview preparation</span> 😆. Finding the time is already challenging &mdash; it takes <em>devotion</em> , <em>motivation</em>, and <em>discipline</em> to make consistent progress toward your goals, be them learning the state of the art or enhancing the foundational knowledge that you&rsquo;ve built over the years. I sometimes listen to <em>Remember the Name</em> to remind myself:</p>
+<blockquote>
+<p>This is ten percent luck <br/> Twenty percent skill <br/> Fifteen percent concentrated power of will <br/> Five percent pleasure <br/> Fifty percent pain <br/> And a hundred percent reason to remember the name <br/> &mdash; Fort Minor, <a href="https://www.youtube.com/watch?v=7HfjKUYiumA"><em>Remember the Name</em></a> (2005)</p>
+</blockquote>
+<h2 id="how-to-prepare" class="scroll-mt-8 group">
+  How to Prepare
+  
+    <a href="#how-to-prepare"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="meta-tip-track-your-learnings" class="scroll-mt-8 group">
+  Meta Tip: Track Your Learnings
+  
+    <a href="#meta-tip-track-your-learnings"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>I&rsquo;m your stereotypical INTJ who plans everything and tracks everything 🤣. For each interview topic, I have a dedicated Notion page; I block daily recurring times on my Notion Calendar to study a given topic at a give time; when the time comes, I track each interview round as a task in a centralized table with all my interviews.</p>
+<h4 id="one-topic-per-notion-page" class="scroll-mt-8 group">
+  One Topic per Notion Page
+  
+    <a href="#one-topic-per-notion-page"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I used to open one Google doc for each company I interviewed with and quickly noticed the redundancy &mdash; many companies have the same rounds, so instead of writing new notes, I could&rsquo;ve reviewed previous ones. I switched to Notion (a big fan since 2018) to consolidate my notes. As you can see from the screenshot, I created one page for each interview round. Whenever I learn something new about a topic, I add it to the corresponding page. When reviewing a topic, I open the page to skim.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/v27sq1fb7ma34rq05a83y/Screenshot-2024-10-15-at-7.27.07-PM.png?rlkey=o1u0pz016xxzsdql3cqsv5052&amp;st=b890it5j&amp;raw=1"
+    alt="I created Notion pages to collect knowledge for each MLE interview round" width="400"><figcaption>
+      <p>I created Notion pages to collect knowledge for each MLE interview round</p>
+    </figcaption>
+</figure>
+
+<p>I can&rsquo;t share my notes since they contain NDA content &mdash; you should create your own notes anyways, because deep learning (no puns intended) doesn&rsquo;t come from reading someone else&rsquo;s notes; rather, notes are a means to consolidate your learning from the source (e.g., textbooks, SOTA papers, talks, engineering blogs, code, etc.).</p>
+<h4 id="block-time-on-your-calendar" class="scroll-mt-8 group">
+  Block Time on Your Calendar
+  
+    <a href="#block-time-on-your-calendar"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I practice LC-style coding for one hour before work and 2 hours after work. I read NLP + ranking papers/books/blogs/code/etc. for 2-3 hours in the evenings. I do take days off, but try to adhere to this schedule if I can. Having a schedule in Notion Calendar reminds me to focus on work during the day (so I don&rsquo;t think about interviews) and enjoy learning after work (rather than stretching &ldquo;busy work&rdquo;).</p>
+<p>You should find a schedule that suits your lifestyle. Or perhaps, you thrive without schedules, like some of my friends do. The bottom line is, ML interview prep takes a ton of time and you need to learn how to fit it into your normal work/life.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/g1m9j7z63j51hbfa2q9fi/Screenshot-2024-03-15-at-11.39.04-PM.png?rlkey=zg36o6hys6yhpnd4qi8i2xd6j&amp;raw=1"
+    alt="I blocked time for LC practice and NLP/ranking readings in Notion Calendar" width="1200"><figcaption>
+      <p>I blocked time for LC practice and NLP/ranking readings in Notion Calendar</p>
+    </figcaption>
+</figure>
+
+<h4 id="track-interview-progress" class="scroll-mt-8 group">
+  Track Interview Progress
+  
+    <a href="#track-interview-progress"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>When the time comes for interviewing, I track each interview as a task in a centralized table. Before an interview is scheduled, I place it under &ldquo;scheduling.&rdquo; Once it&rsquo;s confirmed, I move it to &ldquo;in progress,&rdquo; and after it&rsquo;s completed, I drag it to &ldquo;done.&rdquo; Each interview comes with its own Notion page, where I note the date and time for each round, what to prepare, and the time I decide to allocate (e.g., 2 weeks for coding, 1 week for ML design, and 3 days for behavior).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/h6f0r7m4g8pmjyig53jra/Screenshot-2024-10-15-at-8.01.27-PM.png?rlkey=4laxswoi84nkf94o6mkpvs4wp&amp;st=5nmw4hz2&amp;raw=1"
+    alt="I track each round as a task, with a detailed page for the prep agenda." width="1200"><figcaption>
+      <p>I track each round as a task, with a detailed page for the prep agenda.</p>
+    </figcaption>
+</figure>
+
+<p>For me personally, this tracking system relieves my stress and helps me focus:</p>
+<ol>
+<li><strong>Tunnel vision</strong>: When I prepare for a phone interview, I focus only on what&rsquo;s necessary for that phone interview and don&rsquo;t worry about whether I&rsquo;ll pass the onsite; when I prepare for an onsite at one company, I don&rsquo;t worry about preparing for another company&rsquo;s interview later.</li>
+<li><strong>Get into the zone</strong>: When I open an interview-specific page, I get into the zone.</li>
+</ol>
+<h3 id="coding" class="scroll-mt-8 group">
+  Coding
+  
+    <a href="#coding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="classic-ds--a" class="scroll-mt-8 group">
+  Classic DS &amp; A
+  
+    <a href="#classic-ds--a"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>As the NeetCode guy <a href="https://www.youtube.com/watch?v=2V7yPrxJ8Ck">put it</a>, <span style="background-color: #FDB515">the only way to solve LC problems is to have seen the algorithms beforehand</span>; it&rsquo;s unrealistic to derive neat algorithms on the spot. That said, I do think coding interviews are valuable for weeding out &ldquo;bad&rdquo; engineers: If someone is a great engineer, it would be out of character for them to write a solution with no regard for time or memory efficiency, keep adding &ldquo;patches&rdquo; to save a flawed logic, or get frustrated when their code doesn&rsquo;t work the first time. Of course, the reverse isn&rsquo;t true: Just because someone solves a LC problem doesn&rsquo;t mean they&rsquo;re a great engineer &ndash; they might&rsquo;ve just seen the solution yesterday.</p>
+<p>So, how do you get started with LC? If you start with the 1312-page <a href="https://en.wikipedia.org/wiki/Introduction_to_Algorithms">CLRS</a> book, you may still not have got your hands dirty a year later. If you just grind random questions, you may never identify common patterns. I find <a href="https://neetcode.io/courses">NeetCode&rsquo;s</a> beginner and advanced courses a great middle ground. Navdeep Singh explains almost all the data structures and algorithms you&rsquo;ll ever need for coding interviews. Each lesson lasts between 10 to 25 minutes and comes with 3 to 5 practice questions, so you&rsquo;ll learn the theory and get hands-on practice immediately. The courses are paid, but for the price of 3-4 take-out orders, you get the best way to organize your LC prep.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/b59qf2upsoz3pu4rvsi6s/Screenshot-2024-03-16-at-12.18.14-AM.png?rlkey=gjprpbxezvo4uzjt6d53w2qpp&amp;raw=1" width="600">
+ </figure>
+
+<p>The table below summarizes data structures and algorithms in the two courses.</p>
+ <table>
+<tr>
+<th>Common data structures</th>
+<th>Common algorithms</th>
+</tr>
+<tr>
+<td>
+<ul>
+<li>Strings</li>
+<li>Arrays</li>
+<li>Matrices (can represent graphs)</li>
+<li>Hash tables</li>
+<li>Hash sets</li>
+<li>Heaps (priority queues)</li>
+<li>Linked list</li>
+<li>Trees
+<ul>
+<li>Binary tree</li>
+<li>Binary search tree</li>
+<li>Tries</li>
+<li>Segment trees</li>
+</ul>
+</li>
+<li>Graphs
+<ul>
+<li>Union Find</li>
+<li>Directed acyclic graphs (DAGs)</li>
+</ul>
+</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>Binary search</li>
+<li>Depth-first search (DFS)</li>
+<li>Breadth-first search (BFS)</li>
+<li>Backtracking
+<ul>
+<li>Subsets</li>
+<li>Combinations</li>
+<li>Permutations</li>
+</ul>
+</li>
+<li>Sliding windows</li>
+<li>Two pointers</li>
+<li>Prefix sum (e.g., Kadane&rsquo;s)</li>
+<li>Dynamic programming (top-down, bottom-up)</li>
+<li>Graph algorithms
+<ul>
+<li>Topological sort</li>
+<li>Dijkstra&rsquo;s</li>
+<li>Prim&rsquo;s</li>
+<li>Kruskal&rsquo;s</li>
+</ul>
+</li>
+<li>Sorting</li>
+<li>Bit manipulation</li>
+</ul>
+</td>
+</tr>
+</table>
+<p>After the courses, I recommend doing Blind 75 and NeetCode 150, two problem collections that cover classic, high-frequency interview questions. NeetCode All (500+ problems) is an overkill &mdash; if you have interviews lined up, then move on to practicing LC problems with company tags (URL: <code>leetcode.com/company/&lt;company name&gt;</code>).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/rxbnz4jpmzd8q22a7ccyx/Screenshot-2024-03-16-at-12.41.08-AM.png?rlkey=dpmx3aseb5ijp84eo61z64o26&amp;raw=1" width="500">
+</figure>
+
+<p>The final test is solving the problem on the spot. Around the time I began getting offers, including from companies notorious for asking hard coding questions, I started feeling calm and composed with new problems. Below is how I approach them:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/jtg4r456ve2gdfzat7ku6/Screenshot-2024-10-15-at-8.20.41-PM.png?rlkey=0xwvfs2j657ji1kw47iazn56k&amp;st=v85wynqt&amp;raw=1"
+    alt="My approach to solving (almost) all LC problems in coding interviews." width="1200"><figcaption>
+      <p>My approach to solving (almost) all LC problems in coding interviews.</p>
+    </figcaption>
+</figure>
+
+<ol>
+<li><strong>Understand</strong>: Interviewers usually paste the prompt in the coding interface (e.g., CoderPad, HackerRank, CodeSignal). Read both the prompt and test cases carefully. Most problems are clear, but ask if anything is unclear.</li>
+<li><strong>Brainstorm</strong>: In the first minute or two, let your intuitions flow. The prompt or test cases often hint at solutions. For example, words like &ldquo;most&rdquo; or &ldquo;least&rdquo; might suggest a greedy approach, or using DFS/DP to explore all possibilities.</li>
+<li><strong>Narrow down</strong>: If you have a clear intuition, go with it. Otherwise, weigh the optimal solution for the problem against what you can realistically implement given the time you have. For instance, even if Dijkstra&rsquo;s is optimal, I might opt for regular DFS since it&rsquo;s easier for me to explain and implement.</li>
+<li><strong>Communicate</strong>: Once you find a direction, explain it to the interviewer. If they agree, proceed; if they suggest a different approach, pivot.</li>
+<li><strong>Implement</strong>: Only start coding if the interviewer agrees on your approach. I find it helpful to outline the steps as comments, then flesh out each step, moving comments down as I code. Walk through your solution with a simple example.</li>
+</ol>
+<p>It took me a while (3-4 months) to reach the above state. During my first 100-200 problems, I struggled even with Medium problems, often adding unnecessary data structures or special case handling as things went awry. Think of LC problems as training data for the AI that is you &mdash; too few training examples (&lt; 400 problems), you may miss common patterns and useful tricks. However, the &ldquo;learning algorithm&rdquo; matters too. As Chris Jereza <a href="https://www.youtube.com/watch?v=lDTKnzrX6qU">puts it</a>, many people solve thousands of problems but fail to recognize patterns, just like many go to the gym regularly but never get fit. Mastery comes not just from the number of problems you solve but from <em>intensity</em> and <em>reflection</em>. I track all problems I solved in Notion, rate my mastery of each (&ldquo;no clue&rdquo;, &ldquo;brute force&rdquo;, &ldquo;has bugs&rdquo;, &ldquo;bug free&rdquo;), revisit problems for which I got &ldquo;no clue&rdquo; or had bugs, and summarize a one-sentence gist for each solution. For each company I interviewed with, I manually added company tags from LC &mdash; this upfront effort paid off long-term. You can modify my <a href="https://www.notion.so/yuanm/7667ceebb8dd4f3f840d96e43c9733c1?v=a9389f5990ed4cc691e326f92488624f&amp;pvs=4">template</a> to fit your needs.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/psk5siwwikk29kt62tq6j/Screenshot-2024-10-16-at-3.30.46-PM.png?rlkey=lkkwhf57wywsdnkredqsn4viq&amp;st=4jq5ey6f&amp;raw=1" width="1500">
+</figure>
+
+<p>I highly recommend doing a few mock interviews before the real one, as it prepares you to solve problems while being watched. Companies like Google and Meta even provide a mock interview service where you can meet with one of their interviewers before your actual interview. That said, I&rsquo;m not a big fan of excessive mock interviews &mdash; after two or three, I already know I can think under pressure; it&rsquo;s just a matter of whether I know the algorithm or not. For me, practicing a wide variety of algorithms on my own is more efficient. However, if your bottleneck is nerves rather than knowledge, it might be worth investing more time in mock interviews.</p>
+<h4 id="ml-coding" class="scroll-mt-8 group">
+  ML Coding
+  
+    <a href="#ml-coding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Some companies may ask you to code simple ML algorithms from scratch and run them on toy data, examples including K-means (K-means++), logistic/linear regression (gradient descent), and KNN. You can find example implementations in my <a href="https://www.yuan-meng.com/posts/md_coding/">blog post</a>. You can ask your recruiter if you&rsquo;re expecting LC-style coding, ML coding, or both.</p>
+<p>Sometimes, you may not write a full algorithm, but rather a model component (e.g., multi-headed attention &mdash; see my other <a href="https://www.yuan-meng.com/posts/attention_as_dict/">post</a> for implementation), an operation (e.g., dot product, matrix multiplication), or an eval metric (e.g,, ROC-AUC, PR-AUC, nDCG). For a complete list of ML coding problems, check out <a href="https://www.deep-ml.com/">ML Code Challenges</a>!</p>
+<figure><img src="https://www.dropbox.com/scl/fi/va6t574yiv8d6ugouuj9n/Screenshot-2024-10-16-at-3.26.06-PM.png?rlkey=cwl2u4wmszqk7wkcm3vikj36i&amp;st=1r4jf2ty&amp;raw=1"
+    alt="https://www.deep-ml.com/ has a comprehensive list of ML coding problems." width="1500"><figcaption>
+      <p><a href="https://www.deep-ml.com/">https://www.deep-ml.com/</a> has a comprehensive list of ML coding problems.</p>
+    </figcaption>
+</figure>
+
+<h4 id="breadth-first-vs-depth-first" class="scroll-mt-8 group">
+  Breadth-First vs. Depth-First
+  
+    <a href="#breadth-first-vs-depth-first"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I&rsquo;m naturally a depth-first person: For every company I interview with, I work through its LC tags twice &mdash; once to solve them and again to review and reproduce the solution. This strategy doesn&rsquo;t generalize well &mdash; with each new company, I put in loads of incremental effort. Companies like Google are notorious for asking novel questions, so if I were to grind LC again, I&rsquo;d take a breadth-first approach. I&rsquo;d focus on data structures and algorithms where I often make mistakes and solve representative problems for each to ensure I fully grasp the solutions.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/dx1iz5hgp0g8qwyf996hh/Screenshot-2024-10-17-at-5.46.03-PM.png?rlkey=cmhjgynzmfrh9tgf5wdxbz0h1&amp;st=wz3sp2qw&amp;raw=1" width="1200">
+</figure>
+
+<h3 id="ml-system-design" class="scroll-mt-8 group">
+  ML System Design
+  
+    <a href="#ml-system-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<blockquote>
+<p><span style="background-color: #FDB515">&ldquo;Project&rdquo; is the word many organizations use to coordinate efforts which move the needle of a specific business goal.</span> &mdash; Gergely Orosz (2023), <em>The Software Engineer&rsquo;s Guidebook</em>.</p>
+</blockquote>
+<h4 id="mini-design-review" class="scroll-mt-8 group">
+  Mini Design Review
+  
+    <a href="#mini-design-review"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I think of the ML system design interview as a mini design review for an ML project. You first need to understand how the model moves the needle of a business goal (and push back if it doesn&rsquo;t), how success is measured, which users will see the model&rsquo;s predictions on which surfaces, what the system requirements are (e.g., latency, throughput, SLA), and how to translate the business problem into an ML problem with the right objective(s). Then, dive deep into how to develop (training data + label generation, features), evaluate (offline, online), and serve the model (e.g., data + feature + training + serving + monitoring pipelines) at web scale.</p>
+<p>You need to drive the interview in an organized manner to cover all bases in 45 minutes or 1 hour, while also attuning to the interviewer&rsquo;s preferences &mdash; some focus on model architectures or feature ideas, others on ML infra and the end-to-end ML system. Think of them as design reviewers and meet their requests to get buy-in: Discuss modeling ideas from papers and your experience if they want model details, or draw a system diagram if they ask for the end-to-end architecture.</p>
+<p>When I was interviewing for New Grad roles, I took ML system design courses (Educative: <a href="https://www.educative.io/courses/grokking-the-machine-learning-interview"><em>Grokking the Machine Learning Interview</em></a> and read Alex Xu&rsquo;s <a href="https://www.amazon.com/Machine-Learning-System-Design-Interview/dp/1736049127"><em>Machine Learning System Design Interview</em></a>. However, these resources don&rsquo;t cover enough ML depth in any given domain, be it ranking, trust &amp; safety, or NLP. As an interviewer myself, I&rsquo;ve seen many candidates who memorize the structure from these sources, but it&rsquo;s really only substance that matters. You gotta know the industry gold standard, state-of-the-art models, and best practices for ML production in your domain.</p>
+<!-- summarized learning in my [notes](https://yuanm.notion.site/ml-system-design-cd12d1028ed640e199e64ed0ed461851?pvs=4). -->
+<!-- 
+<figure><img src="https://www.dropbox.com/scl/fi/bld9zng0xz2r5grp6fp9i/Screenshot-2024-03-16-at-10.55.08-AM.png?rlkey=jfd9g8bi2h1dv6k2j1xlqwjz0&amp;raw=1" width="1200">
+</figure>
+
+
+As a counterexample --- can I design an autonomous driving system in an interview, from a ranking/NLP background?  Perhaps, if I memorize some CV techniques, but my lack of experience will show, and, if offered the job, I'll run the system to the ground... My advice: Sure, read Alex's book for the structure, but the real preparation is being a good MLE who designs thoughtful, practical, reliable, and scalable ML systems and goes to design reviews to learn how others think (or critique). 
+ -->
+<h4 id="resources" class="scroll-mt-8 group">
+  Resources
+  
+    <a href="#resources"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Below are resources I still find useful for ML system design:</p>
+<ol>
+<li><strong>General advice</strong>: <a href="http://patrickhalina.com/posts/ml-eng-interview-guide/">ML Eng Interview Guide</a> by Pinterest&rsquo;s <a href="https://www.linkedin.com/in/patrick-halina/?originalSubdomain=ca">Patrick Halina</a></li>
+<li><strong>Feature ideas</strong>: <a href="https://pyemma.github.io/Features-in-Recommendation-System/">Features in Recommendation Systems (那些年，我们追过的 Feature)</a></li>
+<li><strong>Data pipelines</strong>: <a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/46178.pdf">Data Management Challenges in Production Machine Learning</a></li>
+<li><strong>Evolution of an ML system</strong>: <a href="https://developers.google.com/machine-learning/guides/rules-of-ml">Best Practices for ML Engineering</a></li>
+<li><strong>State of the art</strong>: Engineering blogs + papers in your domain (e.g., general: NeurIPS/ICLR/ICML; information retrieval: KDD/RecSys/SIGIR)</li>
+</ol>
+<h3 id="ml-breadth" class="scroll-mt-8 group">
+  ML Breadth
+  
+    <a href="#ml-breadth"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>In this new wave of AI/ML craze, many DS/SWE friends and strangers asked me how to transition into an MLE. As someone who went through this transition back in school, I hate to discourage people, but it&rsquo;s also no use being dishonest: Grasping machine learning theory and applying it to production systems takes years of study and experience. Anyone can copy &amp; paste PyTorch code online, but only seasoned ML engineers can trouble-shoot a model that&rsquo;s not performing as intended (see my <a href="https://www.yuan-meng.com/posts/ltr/">post</a> on Airbnb&rsquo;s long-winded journey into DL). ML engineering is somewhat like medicine in that neural networks are as much an enigma as the human body: Highly specialized knowledge is needed to diagnose a non-working system and prescribe remedies.</p>
+<p>This post aims to help current ML engineers find new ML opportunities. I do not have first-hand advice on transitioning from DS/SWE to MLE for experienced hires, but someone else may have, so I encourage you to keep looking for their advice.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/92naxalcd6i78zx1ztyzb/0F7631FE-DE40-47A8-A9E3-2DF4923C4C95_1_201_a.jpg?rlkey=ek4tn1eiu7ttg8lsd624wqanh&amp;raw=1" width="500">
+</figure>
+
+<p>All supervised learning models share the 3 following components (<a href="https://github.com/Chrisackerman1/The-Hundred-Page-Machine-Learning-Book">Burkov, 2019</a>):</p>
+<ul>
+<li><strong>Loss function</strong>: The discrepancy between the predicted value and the target value</li>
+<li><strong>Optimization criterion</strong>: Objectives the training process seeks to optimize for</li>
+<li><strong>Optimization routine</strong>: Approaches (e.g., gradient descent, SGD, momentum, Adam) to leveraging training data to find a solution to the optimization criterion</li>
+</ul>
+<p>The so-called &ldquo;ML breadth&rdquo; interview usually revolves around these concepts. For instance, how do we know if model training has converged (by looking at train/valid losses)? What is the so-called bias-variance trade-off? How do we tell if a model is under-fitting or over-fitting? If a model is over-fitting, how can we regularize it (e.g., L1/L2 regularization, early stopping, dropout&hellip;)? When training very deep neural nets, how do we prevent vanishing or exploding gradients? How do we choose the right optimizers and schedulers? How do we properly initialize model weights?&hellip;</p>
+<p>You can find the answers to these questions in countless textbooks, YouTube videos, tech blogs, interview guides, etc.. I like learning things systemically (as opposed to in a piecemeal manner) and below are books and online resources I like the best.</p>
+<ol>
+<li><strong>Math foundations</strong>: Once in a while when I scroll through my LinkedIn/X feed, I&rsquo;d see ML &ldquo;gurus&rdquo; fighting over whether math is necessary for getting into ML in 202X. My sense is that it greatly helps to know/review basic linear algebra and multi-variate calculus, or ML papers will read like gibberish &mdash; and ML engineers do need to catch up on seminal/new papers in their fields.
+<ul>
+<li><strong>Linear algebra</strong>: <a href="https://www.youtube.com/watch?v=fNk_zzaMoSs&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">Essence of Linear Algebra</a> by 3Blue1Brown and <a href="https://github.com/mikexcohen/LinAlgBook">Linear Algebra: Theory, Intuition, Code</a> by Mike X Cohen 👉 <strong>Why</strong>: Some joke that ML is glorified linear algebra, which is quite true. Many ML methods are directly taken from linear algebra (e.g., OLS, matrix factorization, LoRA), many ML concepts hinge on linear algebra (e.g., embedding: projection), and linear algebra offers a compact way to represent weights &amp; biases in each neural net layer and operations on them&hellip;</li>
+<li><strong>Calculus</strong>: <a href="https://www.youtube.com/watch?v=WUvTyaaNkzM&amp;list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr">Essence of Calculus</a> by 3Blue1Brown 👉 <strong>Why</strong>: So you understand how optimization routines work and vanishing/exploding gradient problems</li>
+</ul>
+</li>
+<li><strong>Combine theory + code</strong>: I recommended <a href="https://www.amazon.com/Machine-Learning-PyTorch-Scikit-Learn-learning-ebook/dp/B09NW48MR1">Machine Learning with PyTorch and Scikit-Learn</a> by Sebastian Raschka 2 years ago and my recommendation stands today. It&rsquo;s the best foundational ML book that combines theory with code, covering everything from traditional ML to SOTA, implementing both using libraries and from scratch. I recommend reading it from cover to cover and running the <a href="https://github.com/rasbt/machine-learning-book">code</a>.</li>
+<li><strong>Go deep into theory</strong>: Last but not least, Kevin Murphy wrote 3 epic books on machine learning theory, the most recent ones being <a href="https://probml.github.io/pml-book/book1.html">Probabilistic Machine Learning: An Introduction (2022)</a> and <a href="https://probml.github.io/pml-book/book2.html">Probabilistic Machine Learning: Advanced Topics (2023)</a>. Even for concepts you and I can&rsquo;t be more familiar with such as attention, he still shed fresh light on them every now and then (see my <a href="https://www.yuan-meng.com/posts/attention_as_dict/">post</a> on the &ldquo;attention as soft dictionary lookup&rdquo; analogy). As an MLE who wishes to connect the dots scattered over the years, I think Kevin&rsquo;s books are the dream.
+<figure><img src="https://www.dropbox.com/scl/fi/f2624w8e5dxe77cko9791/Screenshot-2024-03-16-at-2.57.10-PM.png?rlkey=8a51dwek7aiqdwtbn8a6ix0ao&amp;raw=1"
+        alt="Table of Content of Probabilistic Machine Learning: Advanced Topics" width="500"><figcaption>
+          <p><a href="https://probml.github.io/pml-book/book2.html#toc">Table of Content</a> of Probabilistic Machine Learning: Advanced Topics</p>
+        </figcaption>
+    </figure>
+</li>
+</ol>
+<!-- I don't specifically prepare for ML Breadth interviews or keep Notion notes --- I did that 2 years ago (see my [old notes](https://www.notion.so/yuanm/core-ml-1930f2267ce942c984b005c1bb62d429?pvs=4)).  -->
+<p>Chip Huyen curated some <a href="https://huyenchip.com/ml-interviews-book/contents/8.1.2-questions.html">questions</a> in her ML interview book and a Roblox Principal MLE also wrote a <a href="https://medium.com/@reachpriyaa/how-to-crack-machine-learning-interviews-at-faang-78a2882a05c5">nice article</a> that contains many actual questions I&rsquo;ve encountered, which you can go over before an ML breadth interview to refresh your memories.</p>
+<h3 id="ml-depth" class="scroll-mt-8 group">
+  ML Depth
+  
+    <a href="#ml-depth"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>If you interview with companies such as Meta, LinkedIn, or Pinterest, you&rsquo;ll choose a team later. At most companies (e.g., Netflix, Apple, Uber, and even Google now), MLE candidates interview with specific teams looking for domain experts who are familiar with the gold standards in their fields and the latest advancements.</p>
+<h4 id="paper-tracker" class="scroll-mt-8 group">
+  Paper Tracker
+  
+    <a href="#paper-tracker"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>It would take many lifetimes to read all papers that ever got published in your field. That said, good ML engineers should be familiar with the seminal works and &ldquo;new classics&rdquo; in their domain and make paper reading a regular habit. I used to save paper PDFs in random folders and would often forget which ones I had read, let alone what I learned from them. Then, inspired by the coding tracker, I created a paper tracker to keep track of papers/books/blog posts I read on different topics.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/m5nh0fyhaxe4f282kvkyo/Screenshot-2024-03-16-at-3.15.57-PM.png?rlkey=twfh7pw2n1c0mlwelmtil6wjc&amp;raw=1" width="1500">
+</figure>
+
+<p>For each entry, I write a one- or two-sentence TL;DR, and after clicking on the paper title, I jot down detailed notes. The example below is for the <a href="https://arxiv.org/abs/2307.09288">Llama 2</a> paper.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/g8qics73srz7jbexo3994/Screenshot-2024-03-16-at-3.26.40-PM.png?rlkey=3vcyjsh8wj3xwdkqj22muzw93&amp;raw=1" width="1000">
+</figure>
+
+<h4 id="ranking" class="scroll-mt-8 group">
+  Ranking
+  
+    <a href="#ranking"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Ranking is a revenue generator for consumer-facing companies &mdash; without search, recommendations, or ads, they can&rsquo;t make money. This is why ranking is one of the most impactful and exciting domains, with the most job openings nowadays (arguably tied with NLP). I collect the ranking papers (search/rec/ads) I read in this <a href="https://github.com/Yuan-Meng/search_rec_ads_papers">repo</a>.</p>
+<p>Earlier this year, I summarized classic search ranking papers in a blog post, <a href="https://www.yuan-meng.com/posts/ltr/"><em>An Evolution of Learning to Rank</em></a>. You can find the original papers under <a href="https://www.yuan-meng.com/posts/ltr/#learn-more">&ldquo;Learn More&rdquo;</a>.</p>
+<p>Recommendation is the sibling of search, where users don&rsquo;t submit a query, yet we still read their minds and show appealing content. To gain a general understanding of this domain, I recommend <a href="https://www.amazon.com/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%85%A8%E5%BD%A9%EF%BC%89-%E5%8D%9A%E6%96%87%E8%A7%86%E7%82%B9%E5%87%BA%E5%93%81-%E7%8E%8B%E5%96%86/dp/7121384647/ref=sr_1_1?crid=XZSJ6ZW1282A&amp;dib=eyJ2IjoiMSJ9.BxuHruDCtEpyjInRfwvRFn7pyNHfnLqM9I7MhiVO4QjP5NwIPzDAXhfcdM4N-9cc.-Amg_ZFv605zkwdYZmfQJIg4d3GGoacM4rlgWcwz29c&amp;dib_tag=se&amp;keywords=%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F&amp;qid=1710629348&amp;sprefix=%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%2Caps%2C141&amp;sr=8-1">深度学习推荐系统</a> by Zhe Wang, who was the Head of Engineering at TikTok. This book not only reviews the evolution of recommendation models, from collaborative filtering to deep learning architectures, but also offers practical insights into productionizing such models. Unfortunately, for non-Chinese speakers, this book is only available in Chinese; the book content is slightly outdated, too, as models published after 2020 (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN V2</a>, <a href="https://arxiv.org/abs/2203.11014">DHEN</a>) are not covered. I also find Gaurav Chakravorty&rsquo;s <a href="https://substack.com/@recsysml">blog</a> and <a href="https://github.com/gauravchak">repo</a> to be gold mines of practical rec models knowledge. For instance, in this <a href="https://github.com/gauravchak/two_tower_models">two-tower model repo</a>, Gaurav starts with a barebones structure and gradually introduces components like user history embeddings, position debiasing, and a light ranker, which is highly educational.</p>
+<p>Ads have extra concerns (e.g., bidding, auction, calibration) on top of organic ranking. I&rsquo;ve become increasingly more fascinated by ads, which is arguably the most technically challenging ranking domain and directly impacts company revenues.</p>
+<h4 id="nlp" class="scroll-mt-8 group">
+  NLP
+  
+    <a href="#nlp"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>As a Cognitive Science Ph.D. student, I was interested in all aspects of the human intelligence except for language, thinking that language is an indirect, inaccurate byproduct of thought 😅. Back in Summer 2021 when I was driving to LA, I listened to a Gradient Dissent <a href="https://www.youtube.com/watch?v=VaxNN3YRhBA">episode</a> where Emily Bender argued that to interact with language models as we do with humans, we must treat them as equal linguistic partners rather than as mechanistic pattern recognizers. Back then, that day seemed far away. Now with the success of ChatGPT and ever more powerful new LLMs, NLP has become the fastest growing field in AI/ML, with far more active research, new startups, and headcount than any other ML fields. I got into NLP only because I was assigned to work on Query Understanding after joining DoorDash as a new grad. If ranking has always fascinated me, then NLP is a required taste I&rsquo;ve come to appreciate.</p>
+<p>To get into NLP, first read <a href="https://www.amazon.com/Natural-Language-Processing-Transformers-Applications/dp/1098103246"><em>Natural Language Processing With Transformers</em></a> by Hugging Face &mdash; it&rsquo;s the best textbook on transformer-based models, with intuitive explanations and practical code examples, covering a wide range of NLP tasks including sequence classification, named entity recognition, question answering, summarization, generation, etc.. It also talks about model compression, training without enough data, and pretraining LLMs from scratch, which come handy in production.</p>
+<p>While awesome, the HF book leaves you wanting for details from the original papers. To learn more, check out Sebastian Raschka&rsquo;s <a href="https://magazine.sebastianraschka.com/p/understanding-large-language-models">LLM reading list</a>, which starts with the original transformer in <em>Attention is All You Need</em> and its predecessors, moves on to the post child of each iconic model architecture (e.g., encoder-only: BERT; decoder-only: GPT; encoder-decoder: BART), and ends on SOTA models, training techniques (e.g., <a href="https://lightning.ai/pages/community/lora-insights/">LoRA and QLoRA</a>), and architectural innovations (e.g., FlashAttention, Rotary Positional Embeddings). To understand more deeply how each component of the original transformer can be optimized, I recommend Lilian Weng&rsquo;s blog post <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/"><em>The Transformer Family Version 2.0</em></a>. To get an in-depth understanding of latest models (e.g., Llama 2, Mistral, Mamba) and fundamental techniques (e.g., quantization, RAG, distributed training), I suggest watching Umar Jamil&rsquo;s amazing YouTube <a href="https://www.youtube.com/@umarjamilai">videos</a> and reading his neat implementations (<a href="https://github.com/hkproj">GitHub</a>). Andrej Karpathy has also created a great course <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a> and legendary educational repos (e.g., <a href="https://github.com/karpathy/minGPT">miniGPT</a>, <a href="https://github.com/karpathy/nanoGPT">nanoGPT</a>, <a href="https://github.com/karpathy/minbpe">minbpe</a>), which use minimalist code to train minimalist models.</p>
+<p>For important topics not covered, you can read representative blog posts and literature review to catch up, such as <a href="https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/">prompt engineering</a>, <a href="https://huggingface.co/blog/rlhf">RLHF</a>, and <a href="https://arxiv.org/abs/2307.03109">LLM evaluation</a>.</p>
+<p>There will never be a day when you think you know enough about NLP. Neither does your interviewer. Most NLP interviews focus on the basics, such as the original transformer, common tokenizers, popular models (e.g., BERT/GPT/BART/T5/Llama 3.2), and widely used techniques (e.g., RLHF, RAG, LoRA). Focus on these in your interview prep and don&rsquo;t worry about being asked about papers that came out yesterday.</p>
+<h3 id="behavior-interview" class="scroll-mt-8 group">
+  Behavior Interview
+  
+    <a href="#behavior-interview"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="tell-me-a-time-when" class="scroll-mt-8 group">
+  Tell Me A Time When&hellip;
+  
+    <a href="#tell-me-a-time-when"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I used to stammer my way through behavior interviews because I didn&rsquo;t prepare for some questions I was asked. Then Amazon recommended the <a href="https://www.amazon.com/Behavioral-Interviews-Software-Engineers-Strategies/dp/B0C1JFQYCR/ref=tmm_pap_swatch_0?_encoding=UTF8&amp;qid=&amp;sr="><em>Behavioral Interviews for Software Engineers</em></a> book to me, which has 30+ behavior questions one will ever get asked. I don&rsquo;t find the answers particularly applicable to MLE candidates &mdash; the question list itself is the treasure. Just like I did for coding and reading, I created a tracker for BQ questions, coming up with the best example for each question and putting my answer in the STAR (situation, task, action, result) format.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/ex0xgnv4noz5x24y44fuu/Screenshot-2024-10-17-at-5.19.13-PM.png?rlkey=sgyodjvv5brws04495avew5qh&amp;st=gigx7p1m&amp;raw=1" width="1500">
+</figure>
+
+<p>Any example you provide should be a true reflection of your character, but think carefully about which examples to provide &mdash; don&rsquo;t paint yourself in a bad light 😂. Reading Merih Taze&rsquo;s <a href="https://www.amazon.com/Engineers-Survival-Guide-Facebook-Microsoft/dp/B09MBZBGFK"><em>Engineers Survival Guide</em></a> helped me understand what behavior makes a good engineer &mdash; model not your answers but your words and deeds after it. I wish I read it in my first year at DoorDash, which would&rsquo;ve saved me many sweat and tears from reaching alignment, getting visibility, making impact, helping my managers to help me, resolving conflicts, and whatnot. Gergely Orosz&rsquo;s <a href="https://www.amazon.com/Software-Engineers-Guidebook-Navigating-positions/dp/908338182X"><em>The Software Engineer&rsquo;s Guidebook</em></a> is another great book to read if you have the time.</p>
+<h4 id="project-deep-dive" class="scroll-mt-8 group">
+  Project Deep Dive
+  
+    <a href="#project-deep-dive"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In some sense, the project deep dive is like an extended version of &ldquo;tell me about the project you&rsquo;re most proud of&rdquo;, but goes into all technical details imaginable &mdash;</p>
+<ul>
+<li><strong>Background</strong>: What business problem was the model trying to solve?</li>
+<li><strong>Solution &amp; alternatives</strong>: How did you solve the problem? Which alternatives did you consider? What were the trade-offs? How did you align the team?</li>
+<li><strong>Challenges</strong>: Which technical and XFN collaboration challenges did you face?</li>
+<li><strong>Impact</strong>: In the end, what impact did you make? How did you measure it?</li>
+<li><strong>Reflection</strong>: What were you most proud of and what would you change?</li>
+</ul>
+<p>Choose a successful project you drove from end to end, or the lack of ownership or impact will backfire. Not only that, choose a project for which you made wise decisions by carefully considering all alternatives and thoughtfully balancing all sides (e.g., business goals/priorities, eng excellence, infra limits&hellip;). If you made a big mistake (e.g., not involving a function until it was too late, making hasty decisions without thinking ahead) in a project, talk about other projects &mdash; this is your chance to showcase your technical + XFN collab prowess, not a post mortem.</p>
+<p>When preparing for this round, I re-read my annual and mid-year perf reviews and made slides for each significant project I delivered. I highly recommend finding a friend not even in your field and practicing getting your stories across to them.</p>
+<h2 id="the-moment-of-truth" class="scroll-mt-8 group">
+  The &ldquo;Moment of Truth&rdquo;
+  
+    <a href="#the-moment-of-truth"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="dont-sweat-it" class="scroll-mt-8 group">
+  Don&rsquo;t Sweat It
+  
+    <a href="#dont-sweat-it"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Back in school, I often lost sleep the night before an interview, fearing that any wrong word could cost me the job. Nowadays, I work, sleep, play with cats, and have hotpot as usual before interviews, knowing results are determined long before. If I&rsquo;m &ldquo;the one&rdquo;, all I need is to chat with the interviewer about topics we&rsquo;re both passionate about. For instance, I can spot a ranking expert from a brief conversation, even if they occasionally stammer or forget a few minor details &mdash; so can my interviewer. If I make grave mistakes and can&rsquo;t recover what I forget through first-principle thinking, then I&rsquo;m not &ldquo;the one&rdquo;, and not hiring me is for the best. It&rsquo;s like being rejected after a few dates &mdash; it&rsquo;s unpleasant, but it&rsquo;s far better than marrying someone profoundly incompatible and divorcing them later.</p>
+<!-- If you know me by now, you might've guessed that I created an interview progress tracker, using one table to track the stage (**scheduling**: sent availability but coordinator hasn't finalized the schedule; **in progress**: interview scheduled for a future date; **done**: completed the given interview round) of each round (e.g., recruiter/HM chat, phone screen, onsite) with each company and another table to track what each round entails. When interviewing with a specific company, I filter down to the rounds asked by that company and review the corresponding Notion Pages.  -->
+<h3 id="imposter-syndrome" class="scroll-mt-8 group">
+  &ldquo;Imposter Syndrome&rdquo;
+  
+    <a href="#imposter-syndrome"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<blockquote>
+<p><span style="background-color: #FDB515">However, maybe you&rsquo;re working somewhere where you haven&rsquo;t dealt with large scale data or they aren&rsquo;t using any type of sophisticated ML techniques. This is a great motivation to get a new job!</span> &mdash; <em><a href="http://patrickhalina.com/posts/systems-design-interview-guide/">Systems Design Interview Guide</a></em>, Patrick Halina, Staff MLE @Pinterest</p>
+</blockquote>
+<p>When I first started my interview prep journey, I struggled with imposter syndrome: If I&rsquo;m already building the most sophisticated models from SOTA papers, then why would I need to look for new opportunities? But if I haven&rsquo;t worked on such models, then why would anyone take a chance on me? If I talk about new ML techniques I&rsquo;ve only learned from papers to land a job, am I letting my words speak louder than my actions, which goes against the kind of ML engineer I aspire to be?</p>
+<p>Pinterest ML engineer Patrick Halina&rsquo;s words has brought me great solace: It is <em>because</em> you desire new challenges and knowledge that you dream of going somewhere new &mdash; if you stay put, nothing will ever change. The tears, sweat, discipline, drive, and passion you&rsquo;ve put into pursuing your dream will fuel your new journey.</p>
+
+  </article>
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/career/" class="taxonomy category">career</a>
+          </li>
+          <li>
+            <a href="/categories/machine-learning/" class="taxonomy category">machine learning</a>
+          </li>
+          <li>
+            <a href="/categories/interview/" class="taxonomy category">interview</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/mle_interviews/"
+></content-network-graph>
+
+    </section>
+</aside>
+
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        <section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2024, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+    
+  </body>
+</html>

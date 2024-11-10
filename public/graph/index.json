@@ -1,0 +1,33 @@
+{
+  "graph": {
+    "/notes/nvim-go-template-syntax-highlighting/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/17_going_under/": {
+      "in": [],
+      "out": []
+    },
+    "/posts/ltr/": {
+      "in": [],
+      "out": []
+    }
+  },
+  "pages": {
+    "/notes/nvim-go-template-syntax-highlighting/": {
+      "permalink": "/notes/nvim-go-template-syntax-highlighting/",
+      "section": "notes",
+      "title": "Highlight Syntax in Go Templates"
+    },
+    "/posts/17_going_under/": {
+      "permalink": "/posts/17_going_under/",
+      "section": "posts",
+      "title": "Seventeen Going Under"
+    },
+    "/posts/ltr/": {
+      "permalink": "/posts/ltr/",
+      "section": "posts",
+      "title": "An Evolution of Learning to Rank"
+    }
+  }
+}

@@ -1,0 +1,1035 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    Is Human Vision More like CNN or Vision Transformer? | Yuan Meng
+</title>
+  <meta name="description" content=" Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley." />
+<meta property="og:url" content="http://localhost:1313/notes/human_vision/human_vision/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="Is Human Vision More like CNN or Vision Transformer?">
+  <meta property="og:description" content="Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="notes">
+    <meta property="article:published_time" content="2024-10-13T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="Is Human Vision More like CNN or Vision Transformer?">
+  <meta itemprop="description" content="Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley.">
+  <meta itemprop="datePublished" content="2024-10-13T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3998">
+  <meta itemprop="keywords" content="AI,Cognitive science">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Is Human Vision More like CNN or Vision Transformer?">
+  <meta name="twitter:description" content="Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley.">
+
+<link rel="canonical" href="http://localhost:1313/notes/human_vision/human_vision/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/notes/human_vision/human_vision/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "AI",
+    "Cognitive science"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2024-10-13",
+  "description": " Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley.",
+  "headline": "Is Human Vision More like CNN or Vision Transformer?",
+  "isPartOf": {
+    "@id": "http://localhost:1313/notes/",
+    "@type": "Blog",
+    "name": "Notes"
+  },
+  "mainEntityOfPage": "http://localhost:1313/notes/human_vision/human_vision/",
+  "name": "Is Human Vision More like CNN or Vision Transformer?",
+  "timeRequired": "PT19M",
+  "url": "http://localhost:1313/notes/human_vision/human_vision/",
+  "wordCount": 3998
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a aria-current="true" class="ancestor" href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">Is Human Vision More like CNN or Vision Transformer?</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2024-10-13T00:00:00&#43;00:00"
+            >October 13, 2024</time
+          >
+        </div>
+    </header>
+
+    <h2 id="engineer-the-mind" class="scroll-mt-8 group">
+  Engineer the Mind
+  
+    <a href="#engineer-the-mind"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study <a href="https://en.wikipedia.org/wiki/Cognitive_science">cognitive science</a> at Berkeley.</p>
+<blockquote>
+<p>- <em>&ldquo;So, what is cognitive science?&rdquo;</em> he asked. <br/> - <em>&ldquo;It is the study of the mind, uncovering algorithms that might underlie human reasoning, perception, and language.&rdquo;</em> I tried my best to explain. <br/> - <em>&ldquo;Cool&hellip; How is that different from artificial intelligence?&rdquo;</em> Dad 🤔. <br/> - <em>&ldquo;Hmm&hellip; AI engineers solutions that work, but CogSci reverse-engineers how humans think back from the solutions?&rdquo;</em> 21-year-old me 🤓. <br/> - <em>&ldquo;If AI works, does it matter if it works like the mind? Since the mind already works, does it matter if we can reverse-engineer it?&rdquo;</em> Dad 🧐. <br/> - <em>&ldquo;The weather today is quite nice&hellip;&rdquo;</em> 21-year-old me 🥵. <br/></p>
+</blockquote>
+<p>Little did I know, nearly 10 years later as a machine learning engineer, I&rsquo;d be repeating this conversation with recruiters, hiring managers, and curious colleagues, each asking my dad&rsquo;s questions. My answers, and perhaps the field&rsquo;s, have changed.</p>
+<h3 id="marr-purpose--function" class="scroll-mt-8 group">
+  Marr: Purpose &amp; Function
+  
+    <a href="#marr-purpose--function"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<blockquote>
+<p><span style="background-color: #B3E59A"> <em>&ldquo;Trying to understand perception by studying only neurons is like trying to understand bird flight by studying only feathers: It just cannot be done.&rdquo;</em> </span> &mdash; David Marr (1982), <em>Vision</em>, p. 27.</p>
+</blockquote>
+<p>When I started my PhD in 2016, it was before the <a href="https://paperswithcode.com/method/transformer">Transformer</a>. ResNet (<a href="https://arxiv.org/abs/1512.03385">CVPR 2016</a>) had just surpassed humans in image classification, while higher-level cognition was still dominated by Bayesian models (see <a href="https://www.ed.ac.uk/files/atoms/files/griffithstics.pdf">Griffiths et al. 2010</a>, <a href="https://wiki.santafe.edu/images/e/e1/HowToGrowAMind%282011%29Tenebaum_J.pdf">Tenenbaum et al., 2011</a>, and <a href="https://arxiv.org/abs/1604.00289">Lake et al., 2017</a>, for reviews), like Computer Vision before AlexNet. Even Fei-Fei Li, the godmother of AI, began her career in Bayes (e.g., <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=f6fffe049408c7b0343a1bdcefe0dc3d0256646d">CVPR 2004</a>).</p>
+<p>Why Bayes? I hope my CogSci professors forgive me &mdash; I think Bayesian models are neat &ldquo;pseudocode&rdquo; to capture a learner&rsquo;s inductive biases through priors and outcomes through posteriors, without worrying too much about the process in between.</p>
+<p>This tradition of understanding the mind through its abstract function stems from the British neuroscientist <a href="https://en.wikipedia.org/wiki/David_Marr_(neuroscientist)">David Marr</a>. Tired of neuroscience&rsquo;s obsession with identifying one specialized neuron after another (e.g., Barlow, 1953, &ldquo;bug detector&rdquo;; Gross, Rocha-Miranda, &amp; Bender, 1972, &ldquo;hand detector&rdquo;; and the Cambridge joke, the <a href="https://en.wikipedia.org/wiki/Grandmother_cell">apocryphal grandmother cell</a> that supposedly activates when you see your grandma), Marr argued that to truly understand vision, we must step back and consider the <em>purpose</em> of vision and the <em>problems</em> it solves. This is the &ldquo;computational&rdquo; level of analysis, which laid the groundwork for modern computational cognitive science.</p>
+<p>Marr provided a vivid example of how to understand an information-processing system through its purpose and function: <em>How do we understand a cash register</em>, which tells a customer how much to pay? Instead of examining each button on the machine, like neuroscientists did in the &rsquo;50s and &rsquo;60s, we can ask, <em>what should a cash register compute?</em> &mdash; Addition. <em>Why addition and not, say, multiplication?</em> &mdash; Because addition, unlike multiplication, meets the requirements for a successful transaction:</p>
+<ul>
+<li><strong>The rules of zero</strong>: If you buy nothing, you pay nothing; if you buy nothing along with something, you should pay for that something.</li>
+<li><strong>Commutativity</strong>: The order in which items are scanned shouldn&rsquo;t affect the total.</li>
+<li><strong>Associativity</strong>: Grouping items into different piles shouldn&rsquo;t affect the total.</li>
+<li><strong>Inverse</strong>: If you buy something and then return it, you should pay nothing.</li>
+</ul>
+<p>Multiplication fails the rule of zero &mdash; if you buy nothing along with something, you&rsquo;d pay nothing, since $0 \times \mathrm{something} = 0$. So, any merchant aiming to make a profit wouldn&rsquo;t use a cash register that performs multiplication. Studying the buttons won&rsquo;t help us understand the cash register at this level, Marr argued, just as finding the grandmother cell doesn&rsquo;t bring us any closer to understanding vision.</p>
+<p>Summarized below are levels at which we study the mind (artificial or natural). At the computational level, we define the constraints for a task (in domains such as vision, language, or reasoning) and identify a computation that satisfies these constraints. At the algorithmic level, we determine input/output representations, as well as the algorithm to perform the transformation. Finally, at the implementational level, we figure out how to physically implement these representations and algorithms, whether in the human brain or in a machine (like a CPU or a GPU).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/p9d9vhkjwrcaeehjy817v/Screenshot-2024-10-12-at-3.44.14-PM.png?rlkey=npsrifdkyk27dqc4m6543hhyx&amp;st=a7t01q4e&amp;raw=1"
+    alt="Source: David Marr&rsquo;s Vision, Chapter 1 The Philosophy and the Approach" width="650"><figcaption>
+      <p>Source: David Marr&rsquo;s <em>Vision</em>, Chapter 1 <a href="http://mechanism.ucsd.edu/teaching/f18/David_Marr_Vision_A_Computational_Investigation_into_the_Human_Representation_and_Processing_of_Visual_Information.chapter1.pdf">The Philosophy and the Approach</a></p>
+    </figcaption>
+</figure>
+
+<h3 id="hinton-mechanism--pretraining" class="scroll-mt-8 group">
+  Hinton: Mechanism &amp; Pretraining
+  
+    <a href="#hinton-mechanism--pretraining"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Marr did not prescribe specific architectures for modeling vision, yet his vision for vision somehow contributed to the rejection of a generation of vision papers using neural nets, as Geoff Hinton recounted in his <a href="https://www.youtube.com/watch?v=E14IsFbAbpI">conversation</a> with Fei-Fei Li.</p>
+<blockquote>
+<p><span style="background-color: #9FD1FF"> <em>&ldquo;It&rsquo;s hard to imagine now, but around 2010 or 2011, the top Computer Vision people were really adamantly against neural nets &mdash; they were so against it that, for example, one of the main journals had a policy not to referee papers on neural nets at one point. Yann LeCun sent a paper to a conference where he had a neural net that was better at doing segmentation of pedestrians than the state of the art, and it was rejected. One of the reasons it was rejected was because one of the referees said this tells us nothing about vision &mdash; they had <strong>this view of how computer vision works</strong>, which is, you study the nature of the problem of vision, you formulate an algorithm that will solve it, you implement that algorithm, and you publish a paper.&rdquo;</em> </span> &mdash; Geoff Hinton (2023), <em>talk @Radical Ventures</em>, <a href="https://youtu.be/E14IsFbAbpI?si=UJGqQYxA5oJ2tCGL&amp;t=1767">29&rsquo; 27&rsquo;&rsquo;</a>.</p>
+</blockquote>
+<p><em>&ldquo;This view of how computer vision works&rdquo;</em> clearly came from Marr, but I found it kind of sad that Marr&rsquo;s motivation to zoom out from the nitty-gritty when first understanding an intelligence was misinterpreted by some as staying at this abstract level forever, without getting back down to business once we know the direction.</p>
+<p>And it wasn&rsquo;t just vision &mdash; I remember Berkeley CogSci PhD students had to write seminar essays explaining why neural networks (dubbed as <a href="https://en.wikipedia.org/wiki/Connectionism">&ldquo;connectionism&rdquo;</a> in CogSci) weren&rsquo;t as good a fit for higher-level cognition as Bayesian models. The recurring argument was that neural networks require too much data to train, and it&rsquo;s way harder to adjust weights in a neural net than to modify edges in a Bayes net. For instance, a human may misclassify a dolphin as a fish but can quickly correct the label to a mammal &mdash; at that time, it was hard to imagine how a neural network could perform this one-shot belief updating that was straightforward in a Bayes net.</p>
+<p>Only after so many years can I admit &ndash; I never really understood the contention between Bayesian models and neural nets. First of all, they&rsquo;re not even at the same level of analysis, with the former describing the solution to a task and the latter solving it. Moreover, just as it was underwhelming for Marr to see a collection of specialized neurons and call it &ldquo;understanding vision,&rdquo; it felt similarly underwhelming to draw a Bayes net describing how a cognitive task should be done and call it &ldquo;understanding cognition,&rdquo; without implementing the nitty-gritty details to build one. Years later, I heard my doubts spoken aloud by Hinton, in that same talk with Fei-Fei (he might as well just say MIT&rsquo;s <a href="https://web.mit.edu/cocosci/josh.html">Josh Tenenbaum</a>&rsquo;s name out aloud 😆).</p>
+<blockquote>
+<p><span style="background-color: #FFE88D"> <em>&ldquo;For a long time in cognitive science, the general opinion was that if you give neural nets enough training data, they can do complicated things, but they need an awful lot of training data &mdash; they need to see thousands of cats &mdash; and people are much more statistically efficient. What they were really doing was comparing what an MIT undergraduate can learn to do on a limited amount of data with what a neural net that starts with random weights can learn to do on a limited amount of data. </br> </br> To make a fair comparison, you take a foundation model that is a neural net trained on lots and lots of data, give it a completely new task, and you ask how much data it needs to learn this completely new task &mdash; and you discover these things are statistically efficient and compare favorably with people in how much data they need.&rdquo;</em> </span> &mdash; Geoff Hinton (2023), <em>talk @Radical Ventures</em>, <a href="https://youtu.be/E14IsFbAbpI?si=_OTpAbwpAquSqHQ-&amp;t=2779">46&rsquo; 19&rsquo;&rsquo;</a>.</p>
+</blockquote>
+<p>When interviewing at Berkeley, I asked my student host why Bayesian models could magically explain how humans learn so much from so little, so quickly (Prof. <a href="http://alisongopnik.com/">Alison Gopnik</a>&rsquo;s catchphrase). I don&rsquo;t remember her answer. Today, I realize that prior knowledge sharpens the probability density around certain hypotheses. If we allow pretraining on a Bayes net, we should similarly allow pretraining on a neural net.</p>
+<h2 id="human-vs-computer-vision" class="scroll-mt-8 group">
+  Human vs. Computer Vision
+  
+    <a href="#human-vs-computer-vision"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Today&rsquo;s cognitive science is much more receptive to neural nets &mdash; so much so that one might worry the best-performing model on machine learning benchmarks may just be viewed as the algorithm underlying the human mind. We need clever experimental designs and metrics to assess how well SOTA models align with human cognition. <a href="https://arxiv.org/pdf/2105.07197">Tuli et al.&rsquo;s (2021)</a> CogSci paper, comparing CNNs and Vision Transformers (ViT) to human vision, is an early effort in this direction. Below, I review the key ideas behind CNN + ViT and the authors&rsquo; methodology for measuring model-human alignment.</p>
+<h3 id="convolutional-neural-network-cnn" class="scroll-mt-8 group">
+  Convolutional Neural Network (CNN)
+  
+    <a href="#convolutional-neural-network-cnn"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>A <a href="https://en.wikipedia.org/wiki/Convolutional_neural_network">convolutional neural network</a> (CNN) is a fancier version of a feed-forward network (FNN), which extracts features through convolutional layers and pooling layers first, before feeding them to fully connected layers. But <em>what is a convolution</em>? And <em>what features can it extract</em>? These are the million-dollar questions.</p>
+<h4 id="what-is-a-convolution" class="scroll-mt-8 group">
+  What Is a Convolution?
+  
+    <a href="#what-is-a-convolution"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In math, a <a href="https://en.wikipedia.org/wiki/Convolution">convolution</a> is an operation on two functions, $f$ and $g$, that creates a third function, $f * g$. That might sound a bit abstract. In his awesome <a href="https://www.youtube.com/watch?v=KuXjwB4LzSA">video</a>, 3Blue1Brown explains it with a classic dice example: Imagine two $N$-faced dice, each with an array of probabilities for landing on faces 1 to $N$. To find the probability of rolling a specific sum from the two dice, you use a <em>convolution</em>:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/e722znugseompbmpwjtc6/Screenshot-2024-10-13-at-10.13.16-AM.png?rlkey=5xh6rr01cx8e5ca8ukernw3fw&amp;st=xhb8vg1e&amp;raw=1"
+    alt="The probability of rolling a sum of 6 from 2 dice (source: 3Blue1Brown)." width="500"><figcaption>
+      <p>The probability of rolling a sum of 6 from 2 dice (source: <a href="https://www.youtube.com/watch?v=KuXjwB4LzSA">3Blue1Brown</a>).</p>
+    </figcaption>
+</figure>
+
+<ol>
+<li>Flip the second die so that its faces range from $N$ to 1, left to right;</li>
+<li>Align dice with offsets 1 to $N$; sums in the overlapping region are the same;</li>
+<li>Finally, to get the probability of rolling each unique sum, add the product of the probabilities from each overlapping pair of faces.</li>
+</ol>
+<p>Below is a Python implementation for 1D array convolution (if this an coding interview 😅), or you could simply call <code>np.convolve</code> on the two input arrays.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Length of the convolved array is len(dice1) + len(dice2) - 1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dice1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dice2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Perform convolution</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Index: a unique sum</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Value: probability of this sum</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dice1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dice2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Example 1: Two fair dice</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected output (probabilities for sums 2 to 12):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [0.027777777777777776, 0.05555555555555555, 0.08333333333333333, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1111111111111111, 0.1388888888888889, 0.16666666666666669, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1388888888888889, 0.1111111111111111, 0.08333333333333333, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.05555555555555555, 0.027777777777777776]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Example 2: Two weighted dice</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected output (probabilities for sums 2 to 12):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [0.0176, 0.058300000000000005, 0.1033, 0.1214, 0.1422, 0.1644, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1457, 0.10930000000000001, 0.06280000000000001, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.05159999999999999, 0.0234]</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<p>See the full results of convolving two 6-faced dice below, along with the formula.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/jhrttufl0cxmsej24wtgo/Screenshot-2024-10-13-at-9.37.58-AM.png?rlkey=1lzumlvdxjfifa4d1opxbocte&amp;st=nvc4fw39&amp;raw=1"
+    alt="Probabilities of rolling possible sums from 2 dice (source: 3Blue1Brown)." width="1500"><figcaption>
+      <p>Probabilities of rolling possible sums from 2 dice (source: <a href="https://www.youtube.com/watch?v=KuXjwB4LzSA">3Blue1Brown</a>).</p>
+    </figcaption>
+</figure>
+
+<p>In a CNN, instead of convolving two 1D arrays of the same length, we convolve two 2D arrays of different dimensions &mdash; a larger image array and a smaller $k \times k$ kernel (which, like the second 1D array, is flipped 180 degrees before applying).</p>
+<h4 id="what-features-can-it-extract" class="scroll-mt-8 group">
+  What Features Can It Extract?
+  
+    <a href="#what-features-can-it-extract"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<figure><img src="https://www.dropbox.com/scl/fi/3pymdr2gleao16g5dwx1t/Screenshot-2024-10-13-at-11.27.12-AM.png?rlkey=ztglg0gj4pyybcbf8h44cvsiu&amp;st=q83g0r6n&amp;raw=1"
+    alt="An example kernel for detecting horizontal edges (source: 3Blue1Brown)." width="1500"><figcaption>
+      <p>An example kernel for detecting horizontal edges (source: <a href="https://www.youtube.com/watch?v=KuXjwB4LzSA">3Blue1Brown</a>).</p>
+    </figcaption>
+</figure>
+
+<p><em>Element values in the kernel determine what features it extracts</em>. In the above example, element values sum up to 1, so the kernel blurs the original image by taking a moving average of neighboring pixels (&ldquo;box blur&rdquo;). If we allow some values in a kernel to be positive and others negative, the kernel may detect variations in pixel values and pick up on features such as vertical and horizontal edges. We can design different kernel values to detect different image features (more <a href="https://en.wikipedia.org/wiki/Kernel_(image_processing)">examples</a>).</p>
+<p>In the 1D example, we considered all possible offsets between two arrays. In a CNN, however, we only compute element-wise products where the kernel is fully aligned with the original image. If the original image has dimensions $m \times n$ (ignoring the color channel for now), the output array &mdash; or the &ldquo;feature map&rdquo; &mdash; of a $k \times k$ kernel will have dimensions $(m - k + 1) \times (n - k + 1)$. This is because the kernel slides horizontally $(n - k + 1)$ times and vertically $(m - k + 1)$ times across the image.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/0jlc6tkazba6ab37gvdxv/Screenshot-2024-10-13-at-11.56.49-AM.png?rlkey=xwi0e4r4186ogsp5xlkc7tfn8&amp;st=30xd4zqs&amp;raw=1"
+    alt="In a CNN, we only convolve fully aligned positions (source: DigitalOcean)." width="1500"><figcaption>
+      <p>In a CNN, we only convolve fully aligned positions (source: <a href="https://www.digitalocean.com/community/tutorials/writing-cnns-from-scratch-in-pytorch">DigitalOcean</a>).</p>
+    </figcaption>
+</figure>
+
+<p>In practice, we usually add padding to keep the dimensions of each feature map at $m \times n$ instead of reducing it to $(m - k + 1) \times (n - k + 1)$. After convolution, we stack the $l$ feature maps into a tensor of size $l \times m \times n$, and then apply the ReLU activation function to each element in the tensor, setting negative values to zero.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/tb263n4exx926l7vmnuuu/Screenshot-2024-10-13-at-12.25.27-PM.png?rlkey=hcf7s7bhtlq9tfwarug0n4mbu&amp;st=sosp0r51&amp;raw=1"
+    alt="Apply max pooling after convolutional layers &#43; ReLU (source: CS231n)." width="1500"><figcaption>
+      <p>Apply max pooling after convolutional layers + ReLU (source: <a href="https://cs231n.github.io/convolutional-networks/">CS231n</a>).</p>
+    </figcaption>
+</figure>
+
+<p>It&rsquo;s customary to apply max pooling after ReLU, where we use a fixed-size window to downsample each individual feature map and take the maximum value in each window. We can use a hyperparameter &ldquo;stride&rdquo; to control how far the window moves across the feature map &mdash; with a stride of 2, we reduce the spatial dimensions by half.</p>
+<p>Using a window of size $p \times p$ and a stride of $s$, we reduce the tensor dimension to:</p>
+<p>$$l \times \left( \left\lfloor \frac{m - p}{s} \right\rfloor + 1 \right) \times \left( \left\lfloor \frac{n - p}{s} \right\rfloor + 1 \right).$$</p>
+<p>Finally, this dimension-reduced tensor is fed into a feed-forward network to perform the target task, such as image classification or object detection.</p>
+<h4 id="putting-together-a-cnn" class="scroll-mt-8 group">
+  Putting Together a CNN
+  
+    <a href="#putting-together-a-cnn"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<blockquote>
+<p><span style="background-color: #D9CEFF"> <em>&ldquo;There is no set way of formulating a CNN architecture. That being said, it would be idiotic to simply throw a few of layers together and expect it to work.&rdquo;</em> </span> &mdash; O&rsquo;Shea and Nash (2015), <em><a href="https://arxiv.org/abs/1511.08458">An Introduction to CNN</a></em>.</p>
+</blockquote>
+<figure><img src="https://www.dropbox.com/scl/fi/6iuyho5mv6w7o5e3w6izj/Screenshot-2024-10-13-at-11.39.37-AM.png?rlkey=b2h4t1xuxo6zmb2z2fapp1bui&amp;st=19j5vozh&amp;raw=1"
+    alt="A common way to stack CNN layers (source: O&rsquo;Shea and Nash, 2015)." width="1500"><figcaption>
+      <p>A common way to stack CNN layers (source: <a href="https://arxiv.org/abs/1511.08458">O&rsquo;Shea and Nash, 2015</a>).</p>
+    </figcaption>
+</figure>
+
+<p>To extract complex features at increasingly levels of abstraction, we can use multiple CNN layers. A common approach is to stack two convolutional layers before each pooling layer. The code below illustrates this concept (<a href="https://www.digitalocean.com/community/tutorials/writing-cnns-from-scratch-in-pytorch">source</a>).</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-02">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-02 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-02"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ConvNeuralNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  Determine what layers and their order in CNN object </span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">ConvNeuralNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">max_pool1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer4</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">max_pool2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">relu1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Progresses data across layers    </span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_pool1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer4</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_pool2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">out</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h3 id="vision-transformer-vit" class="scroll-mt-8 group">
+  Vision Transformer (ViT)
+  
+    <a href="#vision-transformer-vit"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Some say the success of CNNs in Computer Vision is no coincidence (e.g., <a href="https://www.pnas.org/doi/full/10.1073/pnas.1403112111">Yamins et al., 2014</a>) &mdash; the primate <a href="https://en.wikipedia.org/wiki/Visual_cortex">primary visual cortex (V1)</a> is similar to a CNN in that it also uses local receptive fields (&ldquo;kernels&rdquo;) with pooling to extract features from visual inputs, with increasing levels of abstraction from one layer to the next.</p>
+<p>Transformers, on the other hand, originated from Natural Language Processing (e.g., <a href="https://arxiv.org/abs/1706.03762">Vaswani et al., 2017</a>) and do not bear biological similarities to the visual cortex like CNNs do, nor do they enjoy inductive biases such as translation equivariance (e.g., rotating or moving a pattern doesn&rsquo;t affect recognition) and locality (e.g., nearby pixels are more similar to one another than remote ones), which are inherent to CNNs. Despite lacking these inductive biases, a standard Transformer trained on large datasets (14M-300M images) performs favorably to CNNs on many benchmarks.</p>
+<p>An image doesn&rsquo;t have discrete tokens like language does. To leverage the standard Transformer encoder (see this <a href="https://nlp.seas.harvard.edu/annotated-transformer/">post</a>, for an NLP refresher), the Vision Transformer (ViT) authors split each image into fixed-size patches and treat each patch as a token. They then apply a linear projection to embed each flattened patch. To aid classification, a learnable <code>[CLS]</code> token is prepended to the sequence of patch embeddings. Positional embeddings are added to patch embeddings to retain positional information before feeding them into the multi-headed attention and MLP blocks.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/qh6a9fgumutekl5q3gav3/Screenshot-2024-10-13-at-1.08.08-PM.png?rlkey=3f98ekhp1d17pw8n14so6nynh&amp;st=9nq5sexy&amp;raw=1"
+    alt="Architecture of the Vision Transformer (source: Dosovitskiy et al., 2020)." width="1500"><figcaption>
+      <p>Architecture of the Vision Transformer (source: <a href="https://arxiv.org/abs/2010.11929"> Dosovitskiy et al., 2020</a>).</p>
+    </figcaption>
+</figure>
+
+<p>It&rsquo;s fascinating that, with sufficient training, ViT learns to produce similar embeddings for patches in the same row or column, even though it lacks the inductive bias of CNNs that nearby patches should be similar. This harkens back to Hinton&rsquo;s <a href="http://localhost:1313/posts/human_vision/#hinton-mechanism--pretraining">comment</a> that pretrained foundation models generalize as well as human learners, despite that humans are endowed with even more inductive biases than CNNs.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/p7wjcxeripl0yc1f7ubu9/Screenshot-2024-10-13-at-2.15.59-PM.png?rlkey=auenfi97bk1bhtyfr69x7zw9f&amp;st=jsxjtpf7&amp;raw=1"
+    alt="Attention from output token to input (source: Dosovitskiy et al., 2020)." width="300"><figcaption>
+      <p>Attention from output token to input (source: <a href="https://arxiv.org/abs/2010.11929">Dosovitskiy et al., 2020</a>).</p>
+    </figcaption>
+</figure>
+
+<h3 id="model-human-alignment" class="scroll-mt-8 group">
+  Model-Human Alignment
+  
+    <a href="#model-human-alignment"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<blockquote>
+<p><span style="background-color: #FFCFE5"> <em>&ldquo;First, two systems can differ in which stimuli they fail to classify correctly [&hellip;] Second, while there is only one way to be right, there are many ways to be wrong &mdash; systems can also vary systematically in how they misclassify stimuli.&rdquo;</em> </span> &mdash; Tuli et al. (2021).</p>
+</blockquote>
+<p>As far as engineers are concerned, whichever model performs better on the task at hand should be used. However, the overall accuracy doesn&rsquo;t tell us which model behaves more like humans and, therefore, may be <em>closer to the nature of human vision</em>.</p>
+<p>Why does the question in this blog post&rsquo;s title even matter? Today, as an engineer, I&rsquo;m not so sure anymore. If I were to channel my CogSci professors, they might say that understanding the algorithms behind human vision is key to improving human-machine alignment and interaction. In any case, it&rsquo;s still a great exercise to think how we can measure and compare the alignment between models and human performance.</p>
+<h4 id="shape-bias" class="scroll-mt-8 group">
+  Shape Bias
+  
+    <a href="#shape-bias"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>If you mess up the texture of an image but keep the shapes intact, like the one below, a human would still be able to recognize the cat in it. This is the so-called &ldquo;shape bias&rdquo; in human vision (e.g., <a href="https://pubmed.ncbi.nlm.nih.gov/30343894/">Kucker et al., 2019</a>). By contrast, a CNN trained on ImageNet exhibits a texture bias (e.g., <a href="https://arxiv.org/abs/1811.12231">Geirhos et al., 2018</a>).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/76855uzk8ke4vvmabnnbs/Screenshot-2024-10-13-at-3.00.10-PM.png?rlkey=bie4jt7f92k50aw8ocxtpl7kp&amp;st=1xax2fkr&amp;raw=1"
+    alt="Stylized ImageNet with transformed textures (source: Tuli et al., 2021)." width="500"><figcaption>
+      <p><a href="https://github.com/rgeirhos/Stylized-ImageNet">Stylized ImageNet</a> with transformed textures (source: <a href="https://arxiv.org/pdf/2105.07197">Tuli et al., 2021</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Of course, one might ask: How can a CNN or ViT learn to rely on shapes if it has never been trained on texture-transformed cats still labeled as &ldquo;cats&rdquo;, for instance? The authors compared both ImageNet-trained models (CNN: ResNet-50; ViT: ViT-B/32) and models fine-tuned with augmented data (e.g., Gaussian blur, color distortions) to human performance. ViT demonstrated a stronger shift toward shape bias than CNN, though both models still fall far short of human-level shape bias.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/02igt2ro9a5degf1rh8pc/Screenshot-2024-10-13-at-4.17.45-PM.png?rlkey=6b9590y6qcszhser1atyx0ouk&amp;st=uu1sxxp1&amp;raw=1"
+    alt="Shape bias shown by human vs. models (source: Tuli et al., 2021)." width="500"><figcaption>
+      <p>Shape bias shown by human vs. models (source: <a href="https://arxiv.org/pdf/2105.07197">Tuli et al., 2021</a>).</p>
+    </figcaption>
+</figure>
+
+<h4 id="error-consistency" class="scroll-mt-8 group">
+  Error Consistency
+  
+    <a href="#error-consistency"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We can also collect human judgments for all ImageNet classes and check if the human-label confusion matrix (e.g., $P$) differs more from the CNN-label or the ViT-label confusion matrix (e.g., $Q$). We can symmetric metrics to measure the distance between two probability distributions, such as the <a href="https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence">Jensen–Shannon divergence</a> (JSD):</p>
+<p>$$\text{JSD}(P \parallel Q) = \frac{1}{2} \left( \text{KL}(P \parallel M) + \text{KL}(Q \parallel M) \right),$$</p>
+<p>where $M = \frac{1}{2}(P + Q)$ and $\text{KL}(P \parallel M)$ is the the Kullback-Leibler divergence between distributions $P$ and $M$, defined as $\text{KL}(P \parallel M) = \sum_i P(i) \log \frac{P(i)}{M(i)}$.</p>
+<p>With 1,000 ImageNet classes, populating the $10^6$ cells with human data is infeasible. The ImageNet classes were inspired by the <a href="https://wordnet.princeton.edu/">WordNet</a> &mdash; using the WordNet hierarchy, the authors identified 16 &ldquo;entry-level&rdquo; categories (e.g., airplane, bear, bird) that are hypernyms of finer labels, reducing the matrix dimensions to $16 \times 16$.</p>
+<p>JSD returns a non-negative scalar, where 0 indicates identical distributions and large numbers indicate large divergences. The authors computed two types of JSD:</p>
+<ul>
+<li><strong>Class-wise JSD</strong>: Collapse the $16 \times 16$ confusion matrix into a 16-vector, where each element represents the total count of errors made for that class 👉 compute JSD between the human and the model (CNN or ViT) error vectors.</li>
+<li><strong>Inter-class JSD</strong>: Compare the full $16 \times 16$ confusion matrices, where each element represents the count of times one class is misclassified as another 👉 compute JSD between the human and the model (CNN or ViT) confusion matrices to measure how similarly they confuse specific pairs of classes.</li>
+</ul>
+<p>Cohen&rsquo;s $\kappa$ is another measure of whether humans and models tend to make mistakes on the same images and how much this agreement differs from chance. However, Cohen&rsquo;s $\kappa$ has the limitation of not considering which label is assigned when an error is made. Overall, ViT shows more consistency with human errors, especially after fine-tuning. Interestingly, fine-tuning made CNNs less consistent with human errors.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/80x1kxfasawjyad4kcs94/Screenshot-2024-10-13-at-4.05.14-PM.png?rlkey=0lk8kxjmxk1z7lczcmwu8guof&amp;st=hayaabbg&amp;raw=1"
+    alt="Error consistency between human vs. models (source: Tuli et al., 2021)." width="500"><figcaption>
+      <p>Error consistency between human vs. models (source: <a href="https://arxiv.org/pdf/2105.07197">Tuli et al., 2021</a>).</p>
+    </figcaption>
+</figure>
+
+<h2 id="cognitively-inspired-ai" class="scroll-mt-8 group">
+  Cognitively Inspired AI
+  
+    <a href="#cognitively-inspired-ai"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Looking back on my dad&rsquo;s question in Winter 2015, I&rsquo;d answer differently today.</p>
+<blockquote>
+<p>- <em>&ldquo;If AI works, does it matter if it works like the mind? Since the mind already works, does it matter if we can reverse-engineer it?&rdquo;</em> Dad 🧐. <br/></p>
+</blockquote>
+<p>Back then, as a 21-year-old dead set on becoming a cognitive scientist, I wanted to believe that some special algorithms allow humans to learn from small amounts of data in a way that machines cannot. Now, as an engineer, I think that if pretraining on large datasets gets us human-level generalization and performance, perhaps it doesn&rsquo;t matter if we can create a replica of the human mind &mdash; just like if we can build a plane that flies, does it matter if it flies the same way as a bird?</p>
+<p>But I still believe in the value of Cognitively Inspired AI, especially in a world seemingly dominated by Transformers. In a recent <a href="https://www.youtube.com/watch?v=vIXfYFB7aBI&amp;t=1991s">talk</a> publicizing her startup <a href="https://techcrunch.com/2024/08/14/nea-led-a-100m-round-into-fei-fei-lis-new-ai-startup-now-valued-at-over-1b/">World Labs</a>, Fei-Fei Li emphasized the importance of spatial intelligence. The 3D world doesn&rsquo;t come with captions describing what&rsquo;s happening &mdash; it follows the rules of physics. To navigate this world, we may need a new form of representation, one that goes beyond sequences, tokens, and attention. As for what that might be, I look forward to what emerges from Fei-Fei&rsquo;s new venture. Before then, I have this hunch that the answer lies in some old CogSci literature from decades ago&hellip; We shall see.</p>
+<h2 id="references" class="scroll-mt-8 group">
+  References
+  
+    <a href="#references"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="papers" class="scroll-mt-8 group">
+  Papers
+  
+    <a href="#papers"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol>
+<li><a href="https://arxiv.org/pdf/2105.07197"><em>Are Convolutional Neural Networks or Transformers More Like Human Vision?</em></a> (2021) by Tuli, Dasgupta, Grant, and Griffiths, <em>CogSci</em>.</li>
+<li><a href="https://arxiv.org/abs/2406.15955"><em>Vision Transformers Represent Relations Between Objects</em></a> (2024) by Lepori et al., <em>arXiv</em>.</li>
+<li><a href="https://proceedings.neurips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf"><em>ImageNet Classification with Deep Convolutional Neural Networks</em></a> (2012) by Krizhevsky, Sutskever, and Hinton, <em>NeurIPS</em>.</li>
+<li><a href="https://hal.science/hal-04206682/document"><em>Deep Learning</em></a> (2015) by LeCun, Bengio, and Hinton, <em>Nature</em>.</li>
+<li><a href="https://arxiv.org/abs/1511.08458"><em>An Introduction to Convolutional Neural Networks</em></a> (2015) by O&rsquo;Shea and Nash, <em>arXiv</em>.</li>
+<li><a href="https://www.pnas.org/doi/full/10.1073/pnas.1403112111"><em>Performance-optimized Hierarchical Models Predict Neural Responses in Higher Visual Cortex</em></a> (2014) by Yamins et al., <em>PNAS</em>.</li>
+<li><a href="https://openreview.net/forum?id=YicbFdNTTy"><em>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</em></a> (2021) by Dosovitskiy et al., <em>ICLR</em>.</li>
+<li><a href="https://mitpress.mit.edu/9780262514620/vision/"><em>Vision</em></a> (1982) by Marr, <em>MIT Press</em>.</li>
+<li><a href="https://www.ed.ac.uk/files/atoms/files/griffithstics.pdf"><em>Probabilistic Models of Cognition: Exploring Representations and Inductive Biases</em></a> (2010) by Griffiths et al., <em>Trends in Cognitive Sciences.</em></li>
+<li><a href="https://wiki.santafe.edu/images/e/e1/HowToGrowAMind%282011%29Tenebaum_J.pdf"><em>How to Grow a Mind: Statistics, Structure, and Abstraction</em></a> (2011) by Tenenbaum et al., <em>Science</em>.</li>
+<li><a href="https://arxiv.org/abs/1604.00289"><em>Building Machines that Learn and Think Like People</em></a> (2017) by Lake et al., <em>Behavioral and Brain Sciences</em>.</li>
+<li><a href="https://arxiv.org/abs/2004.05107"><em>Levels of Analysis for Machine Learning</em></a> (2020) by Hamrick, <em>arXiv</em>.</li>
+<li><a href="https://www.dropbox.com/scl/fo/tsuwr50z48813negx6f06/AOAFD4MnnU7kJG5mkgl7CdU?rlkey=1yiucza3jn1e3nwlzrvh6zg2q&amp;st=rd86h6kb&amp;dl=0"><em>Yuan&rsquo;s Qualifying Exam Notes</em></a> (2018), <em>UC Berkeley</em>.</li>
+</ol>
+<h3 id="talks" class="scroll-mt-8 group">
+  Talks
+  
+    <a href="#talks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="14">
+<li><em><a href="https://www.youtube.com/watch?v=KuXjwB4LzSA">But What Is A Convolution?</a></em> by 3Blue1Brown, <em>YouTube</em>.</li>
+<li><em><a href="https://youtu.be/E14IsFbAbpI?si=pGDRbakEIOHv9A5p">Geoffrey Hinton and Fei-Fei Li in Conversation</a></em>, <em>YouTube</em>.</li>
+<li><a href="https://www.edge.org/conversation/tom_griffiths-aerodynamics-for-cognition"><em>Aerodynamics For Cognition</em></a> by Griffiths, <em>Edge</em>.</li>
+<li><a href="https://www.youtube.com/watch?v=vIXfYFB7aBI&amp;t=1991s"><em>The Future of AI is Here</em></a> by Fei-Fei Li on her startup <a href="https://techcrunch.com/2024/08/14/nea-led-a-100m-round-into-fei-fei-lis-new-ai-startup-now-valued-at-over-1b/">World Labs</a>, <em>YouTube</em>.</li>
+</ol>
+
+  </article>
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/ai/" class="taxonomy category">AI</a>
+          </li>
+          <li>
+            <a href="/categories/cognitive-science/" class="taxonomy category">cognitive science</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/notes/human_vision/human_vision/"
+></content-network-graph>
+
+    </section>
+</aside>
+
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        <section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2024, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+    
+  </body>
+</html>

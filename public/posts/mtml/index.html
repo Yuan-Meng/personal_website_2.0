@@ -1,0 +1,2601 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    The Annotated Multi-Task Ranker: An MMoE Code Example | Yuan Meng
+</title>
+  <meta name="description" content="Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy’s Neural Networks: Zero to Hero, the viral The Illustrated Transformer and its successor The Annotated Transformer, Umar Jamil’s YouTube series dissecting SOTA models and the companion repo, among others.
+When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don’t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (Ma et al., 2018) using implementation in the popular DeepCTR-Torch repo, to teach myself and readers how the authors’ blueprint translates into code." />
+<meta property="og:url" content="http://localhost:1313/posts/mtml/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="The Annotated Multi-Task Ranker: An MMoE Code Example">
+  <meta property="og:description" content="Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy’s Neural Networks: Zero to Hero, the viral The Illustrated Transformer and its successor The Annotated Transformer, Umar Jamil’s YouTube series dissecting SOTA models and the companion repo, among others.
+When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don’t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (Ma et al., 2018) using implementation in the popular DeepCTR-Torch repo, to teach myself and readers how the authors’ blueprint translates into code.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-05T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="The Annotated Multi-Task Ranker: An MMoE Code Example">
+  <meta itemprop="description" content="Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy’s Neural Networks: Zero to Hero, the viral The Illustrated Transformer and its successor The Annotated Transformer, Umar Jamil’s YouTube series dissecting SOTA models and the companion repo, among others.
+When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don’t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (Ma et al., 2018) using implementation in the popular DeepCTR-Torch repo, to teach myself and readers how the authors’ blueprint translates into code.">
+  <meta itemprop="datePublished" content="2024-07-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3822">
+  <meta itemprop="keywords" content="Information retrieval,Multi-task learning">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Annotated Multi-Task Ranker: An MMoE Code Example">
+  <meta name="twitter:description" content="Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy’s Neural Networks: Zero to Hero, the viral The Illustrated Transformer and its successor The Annotated Transformer, Umar Jamil’s YouTube series dissecting SOTA models and the companion repo, among others.
+When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don’t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (Ma et al., 2018) using implementation in the popular DeepCTR-Torch repo, to teach myself and readers how the authors’ blueprint translates into code.">
+
+<link rel="canonical" href="http://localhost:1313/posts/mtml/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/mtml/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Information retrieval",
+    "Multi-task learning"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2024-07-05",
+  "description": "Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy’s Neural Networks: Zero to Hero, the viral The Illustrated Transformer and its successor The Annotated Transformer, Umar Jamil’s YouTube series dissecting SOTA models and the companion repo, among others.\nWhen it comes to Search/Ads/Recommendations (“搜广推”), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don’t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (Ma et al., 2018) using implementation in the popular DeepCTR-Torch repo, to teach myself and readers how the authors’ blueprint translates into code.",
+  "headline": "The Annotated Multi-Task Ranker: An MMoE Code Example",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/mtml/",
+  "name": "The Annotated Multi-Task Ranker: An MMoE Code Example",
+  "timeRequired": "PT18M",
+  "url": "http://localhost:1313/posts/mtml/",
+  "wordCount": 3822
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">The Annotated Multi-Task Ranker: An MMoE Code Example</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2024-07-05T00:00:00&#43;00:00"
+            >July 5, 2024</time
+          >
+        </div>
+    </header>
+
+    <p>Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a>, the viral <a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a> and its successor <a href="https://nlp.seas.harvard.edu/annotated-transformer/">The Annotated Transformer</a>, Umar Jamil&rsquo;s YouTube <a href="https://www.youtube.com/@umarjamilai">series</a> dissecting SOTA models and the companion <a href="https://github.com/hkproj">repo</a>, among others.</p>
+<p>When it comes to Search/Ads/Recommendations (&ldquo;搜广推&rdquo;), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don&rsquo;t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (<a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">Ma et al., 2018</a>) using implementation in the popular <a href="https://github.com/shenweichen/DeepCTR-Torch">DeepCTR-Torch</a> repo, to teach myself and readers how the authors&rsquo; blueprint translates into code.</p>
+<h2 id="the-paper-ma-et-al-2018httpsdlacmorgdoipdf10114532198193220007" class="scroll-mt-8 group">
+  The Paper (<a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">Ma et al., 2018</a>)
+  
+    <a href="#the-paper-ma-et-al-2018httpsdlacmorgdoipdf10114532198193220007"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>A huge appeal of deep learning is its ability to optimize for multiple task objectives at once, such as clicks and conversions in search/ads/feed ranking. In traditional machine learning, you would have to build multiple models, one per task, making the system hard to maintain for needing separate data/training/serving pipelines, and missing out on the opportunity for transfer learning between tasks.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/d1ycplzd4w2kvb8jnrlel/Screenshot-2024-07-04-at-6.53.34-PM.png?rlkey=lqw5n3xubfaovsskhk57xaxm7&amp;st=1ayhbz4q&amp;raw=1" width="1500">
+</figure>
+
+<p>In early designs, all tasks shared the same backbone that feeds into task-specific towers (e.g., Caruana, <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=9464d15f4f8d578f93332db4aa1c9c182fd51735">1993</a>, <a href="https://link.springer.com/book/10.1007/978-1-4615-5529-2">1998</a>). The Shared-Bottom architecture is simple and intuitive &mdash; the drawback is that low task correlation can hurt model performance.</p>
+<p>As a solution to the above issue, we can replace the shared bottom with a group of bottom networks (&ldquo;experts&rdquo;), which explicitly learn relationships between tasks and how each task uses the shared representations. This is the Mixture-of-Experts (MoE) architecture (e.g., <a href="http://www.cs.utoronto.ca/~hinton/absps/jjnh91.ps">Jacobs et al., 1991</a>, <a href="https://arxiv.org/pdf/1312.4314">Eigen et al., 2013</a>, <a href="https://arxiv.org/pdf/1701.06538.pdf%22%20%5Ct%20%22_blank">Shazeer et al., 2017</a>).</p>
+<p>In the original Mixture of Experts (MoE) model, a &ldquo;gating network&rdquo; assembles expert outputs by learning each expert&rsquo;s weight from input features (weights sum to 1) and returning the weighted sum of expert outputs as the output to the next layer:</p>
+<p>$$y = \sum_{i=1}^n g(x)_i f_i(x)$$</p>
+<p>, where $g(x)_i$ is the weight of the $i$th expert, and $f_i$ is the output from that expert.</p>
+<p>The Multi-gate Mixture-of-Experts (MMoE) model has as many gating networks as there are tasks. Each gate learns a specific way to leverage expert outputs for its respective task. In contrast, a One-gate Mixture-of-Experts (OMoE) model uses a single gating network to find a best way to leverage expert outputs across all tasks.</p>
+<p>As task correlation decreases, the MMoE architecture has a larger advantage over OMoE. Both MoE models outperform Shared-Bottom, regardless of task correlation. In today&rsquo;s web-scale ranking systems, MMoE is by far the most widely adopted.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/2kemc5gweuh71m900xsem/Screenshot-2024-07-04-at-7.53.42-PM.png?rlkey=y9evkc53ik22wjpzwcsdycvuy&amp;st=o0rh5pqv&amp;raw=1" width="1500">
+</figure>
+
+<h2 id="the-data-byterechttpswwwbiendataxyzcompetitionicmechallenge2019" class="scroll-mt-8 group">
+  The Data (<a href="https://www.biendata.xyz/competition/icmechallenge2019/">ByteRec</a>)
+  
+    <a href="#the-data-byterechttpswwwbiendataxyzcompetitionicmechallenge2019"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Large-scale benchmark data played a pivotal role in the resurgence of deep learning. A prominent example is the <a href="https://en.wikipedia.org/wiki/ImageNet">ImageNet dataset</a> with 14 million images from 20,000 categories, on which the CNN-based AlexNet achieved groundbreaking accuracy, outperforming non-DL models by a gigantic margin. Unlike in computer vision, ranking benchmarks are often set by companies famous for recommendation systems, such as Netflix (<a href="https://en.wikipedia.org/wiki/Netflix_Prize">Netflix Prize</a>) and ByteDance (<a href="https://www.biendata.xyz/competition/icmechallenge2019/">Short Video Understanding Challenge</a>).</p>
+<p>The ByteDance data (henceforth &ldquo;ByteRec&rdquo;) is particularly suitable for multi-task learning, since there are 2 desired user behaviors to predict &mdash; <em>finish</em> and <em>share</em>.</p>
+<p>ByteRec only has a couple of features, a simplification from real search/feed logs:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/5rw8nnarzv49r21wsiia9/Screenshot-2024-07-04-at-8.21.47-PM.png?rlkey=gkz9ivf2401u27m8899nm5hw5&amp;st=yzp9uz9r&amp;raw=1" width="1500">
+</figure>
+
+<ul>
+<li><strong>Dense features</strong>: Only <code>duration_time</code> (video watch time in seconds)</li>
+<li><strong>Sparse features</strong>: Categorical features such as ID (<code>uid</code>, <code>item_id</code>, <code>author_id</code>, <code>music_id</code>, <code>channel</code>, <code>device</code>) and locations (<code>user_city</code>, <code>item_city</code>)</li>
+<li><strong>Targets</strong>: Whether (<code>1</code>) or not (<code>0</code>) a user did <code>finish</code> or <code>share</code> a video</li>
+</ul>
+<h2 id="the-code-deepctr-torchhttpsgithubcomshenweichendeepctr-torch" class="scroll-mt-8 group">
+  The Code (<a href="https://github.com/shenweichen/DeepCTR-Torch">DeepCTR-Torch</a>)
+  
+    <a href="#the-code-deepctr-torchhttpsgithubcomshenweichendeepctr-torch"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>For learning deep learning ranking model architectures, I find <a href="https://github.com/shenweichen/DeepCTR-Torch">DeepCTR-Torch</a> (TensorFlow version: <a href="https://github.com/shenweichen/DeepCTR">DeepCTR</a>) highly educational. The repo covers SOTA models spanning the last decade (e.g., Deep &amp; Cross, DCN, DCN v2, DIN, DIEN, PNN, MMoE, etc.), even though it may not have the full functionalities needed by production-grade rankers (e.g., hash encoding for ID features). There is a <a href="https://deepctr-torch.readthedocs.io/en/latest/index.html">doc</a> accompanying the code.</p>
+<p>Below, I&rsquo;ll explain the MMoE <a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/models/multitask/mmoe.py">architecture</a> and how it was used in the example <a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/examples/run_multitask_learning.py">training script</a> the author provided. As with <em>The Annotated Transformer</em>, this post aims not to create an original implementation, but to provide a line-by-line explanation of an existing one. Please find my commented code in this Colab <a href="https://colab.research.google.com/drive/1hA9K8cexY6hDLTGpYw1Dw-1kDvgIeJ_u?usp=sharing">notebook</a>.</p>
+<h3 id="load-data" class="scroll-mt-8 group">
+  Load Data
+  
+    <a href="#load-data"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>For testing, we can use a toy sample with 200 rows rather than the full data. At work, I also like testing models on small datasets, so I can fail and debug fast.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">log_loss</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span><span class="p">,</span> <span class="n">MinMaxScaler</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">deepctr_torch.models.basemodel</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">deepctr_torch.layers</span> <span class="kn">import</span> <span class="n">DNN</span><span class="p">,</span> <span class="n">PredictionLayer</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">deepctr_torch.inputs</span> <span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SparseFeat</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DenseFeat</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">get_feature_names</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">combined_dnn_input</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># sample data with 200 rows</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s2">&#34;https://raw.githubusercontent.com/shenweichen/DeepCTR-Torch/master/examples/byterec_sample.txt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">url</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sep</span><span class="o">=</span><span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">names</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;uid&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;user_city&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;item_id&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;author_id&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;item_city&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;channel&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;finish&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;like&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;music_id&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;device&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;time&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;duration_time&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h3 id="transform-features" class="scroll-mt-8 group">
+  Transform Features
+  
+    <a href="#transform-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>While deep learning models are known for automated feature engineering, we still need to encode sparse categorical features and scale dense numerical features to a limited range (e.g., [0, 1]) before feeding data to the input layer.</p>
+<h4 id="specify-feature--target-columns" class="scroll-mt-8 group">
+  Specify Feature + Target Columns
+  
+    <a href="#specify-feature--target-columns"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>For easy references, we first specify different types of feature + target columns:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-02">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-02 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-02"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">sparse_features</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;uid&#34;</span><span class="p">,</span>  <span class="c1"># watcher&#39;s user id</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;user_city&#34;</span><span class="p">,</span>  <span class="c1"># watcher&#39;s city</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;item_id&#34;</span><span class="p">,</span>  <span class="c1"># video&#39;s id</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;author_id&#34;</span><span class="p">,</span>  <span class="c1"># author&#39;s user id</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;item_city&#34;</span><span class="p">,</span>  <span class="c1"># video&#39;s city</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;channel&#34;</span><span class="p">,</span>  <span class="c1"># author&#39;s channel</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;music_id&#34;</span><span class="p">,</span>  <span class="c1"># soundtrack id if the video contains music</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;device&#34;</span><span class="p">,</span>  <span class="c1"># user&#39;s device</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dense_features</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;duration_time&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">target</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;finish&#34;</span><span class="p">,</span> <span class="s2">&#34;like&#34;</span><span class="p">]</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h4 id="encode-sparse-features" class="scroll-mt-8 group">
+  Encode Sparse Features
+  
+    <a href="#encode-sparse-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>For each sparse feature, we can instantiate a <code>LabelEncoder</code> to assign an integer from <code>0</code> to <code>(n - 1)</code> to each of the <code>n</code> unique feature values.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-03">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-03 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-03"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">sparse_features</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lbe</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">=</span> <span class="n">lbe</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">feat</span><span class="p">])</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>This method faces the out-of-vocabulary (OOV) problem: At inference time, if a feature has a value not seen during training such as a new author ID, the model might assign a low score if unknown authors typically have low engagement in historical data, leading the model to downrank new author content in the future. One solution is <a href="https://ai.plainenglish.io/harnessing-the-power-of-hash-encoding-for-categorical-data-in-data-science-d5fd3cff6673">hash encoding</a>: different OOV feature values are randomly assigned to different buckets, temporarily &ldquo;borrowing&rdquo; the model&rsquo;s learning for that bucket to avoid systematic biases. Hash encoding is not implemented in DeepCTR-Torch.</p>
+<h4 id="scale-dense-features" class="scroll-mt-8 group">
+  Scale Dense Features
+  
+    <a href="#scale-dense-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>For each dense feature, we can use a <code>MinMaxScaler</code> to cap its range to <code>[0, 1]</code>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-04">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-04 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-04"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">mms</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="n">dense_features</span><span class="p">]</span> <span class="o">=</span> <span class="n">mms</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">dense_features</span><span class="p">])</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>If exact values don&rsquo;t matter, we can discretize dense features into buckets (e.g., age $\rightarrow$ age groups) and process them as categorical (e.g., one-hot encoding).</p>
+<h4 id="create-training-data" class="scroll-mt-8 group">
+  Create Training Data
+  
+    <a href="#create-training-data"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Different deep learning libraries expect input data to be in different formats. DeepCTR-Torch uses <a href="https://stackoverflow.com/questions/2970608/what-are-named-tuples-in-python">named tuples</a> such as <code>SparseFeat</code> and <code>DenseFeat</code>  to store feature metadata such as names, data types, dimensions, <em>etc.</em>. See definitions <a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/inputs.py">here</a>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-05">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-05 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-05"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># columns with sparse features</span>
+</span></span><span class="line"><span class="cl"><span class="n">sparse_feature_columns</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SparseFeat</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">vocabulary_size</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">sparse_features</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># columns with dense features</span>
+</span></span><span class="line"><span class="cl"><span class="n">dense_feature_columns</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DenseFeat</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">feat</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">dense_features</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># columns with all features</span>
+</span></span><span class="line"><span class="cl"><span class="n">fixlen_feature_columns</span> <span class="o">=</span> <span class="n">sparse_feature_columns</span> <span class="o">+</span> <span class="n">dense_feature_columns</span>
+</span></span><span class="line"><span class="cl"><span class="n">dnn_feature_columns</span> <span class="o">=</span> <span class="n">fixlen_feature_columns</span>
+</span></span><span class="line"><span class="cl"><span class="n">linear_feature_columns</span> <span class="o">=</span> <span class="n">fixlen_feature_columns</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>After the train-test split, we store the two datasets into two dictionaries, where the keys are feature names and the values are lists of feature values.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-06">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-06 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-06"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># split data by rows</span>
+</span></span><span class="line"><span class="cl"><span class="n">split_boundary</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="n">split_boundary</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="n">split_boundary</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># get feature names</span>
+</span></span><span class="line"><span class="cl"><span class="n">feature_names</span> <span class="o">=</span> <span class="n">get_feature_names</span><span class="p">(</span><span class="n">linear_feature_columns</span> <span class="o">+</span> <span class="n">dnn_feature_columns</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># prepare input dicts: {feature name : feature list}</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_model_input</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">train</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">feature_names</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">test_model_input</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">test</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">feature_names</span><span class="p">}</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h3 id="model-training" class="scroll-mt-8 group">
+  Model Training
+  
+    <a href="#model-training"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="set-up-environment" class="scroll-mt-8 group">
+  Set Up Environment
+  
+    <a href="#set-up-environment"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We use GPU for training whenever available; otherwise, we use CPU instead:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-07">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-07 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-07"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">device</span> <span class="o">=</span> <span class="s2">&#34;cpu&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">use_cuda</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">use_cuda</span> <span class="ow">and</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;cuda ready...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">device</span> <span class="o">=</span> <span class="s2">&#34;cuda:0&#34;</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h4 id="instantiate-the-model" class="scroll-mt-8 group">
+  Instantiate the Model
+  
+    <a href="#instantiate-the-model"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I will explain the inner working of the <code>MMOE</code> model class in the <a href="https://www.yuan-meng.com/posts/mtml/#the-anatomy-of-the-mmoe-class">next section</a>.</p>
+<p>To instantiate a new model, we need to provide a feature column list for the &ldquo;deep&rdquo; part of the network (our version of MMoE doesn&rsquo;t have a &ldquo;wide&rdquo; part), a list of task types (<code>binary</code> or <code>regression</code>), L2 regularization strength, and the names of the tasks (e.g., <code>[&quot;finish&quot;, &quot;share&quot;]</code>), and so on. In the DeepCTR-Torch API, we need to run <code>model.compile()</code> to specify the optimizer, the loss function for each task, and metrics to monitor during training before we can train the model.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-08">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-08 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-08"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># instantiate a MMoE model</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">MMOE</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dnn_feature_columns</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">task_types</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;binary&#34;</span><span class="p">,</span> <span class="s2">&#34;binary&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">l2_reg_embedding</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">task_names</span><span class="o">=</span><span class="n">target</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># specify optimizer, loss functions for each task, and metrics</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;adagrad&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;binary_crossentropy&#34;</span><span class="p">,</span> <span class="s2">&#34;binary_crossentropy&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;binary_crossentropy&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h4 id="train-the-model" class="scroll-mt-8 group">
+  Train the Model
+  
+    <a href="#train-the-model"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The model training and inference API adopts the common <code>fit</code> and <code>predict</code> methods. <code>model.fit</code> takes a dictionary as features (<code>{feature name: feature list}</code>) and an <code>n</code>-dimensional array as targets (<code>n</code> being the number of tasks), along with training setup details (e.g., batch size, number of epochs, output verbosity, etc.). <code>model.predict</code> takes a similar dictionary as features and the inference batch size, and it outputs predictions for each task (dimension: <code>[batch_size, num_tasks]</code>).</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-09">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-09 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-09"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># fit model to training data</span>
+</span></span><span class="line"><span class="cl"><span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_model_input</span><span class="p">,</span> <span class="n">train</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># generate predictions for test data</span>
+</span></span><span class="line"><span class="cl"><span class="n">pred_ans</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_model_input</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span> <span class="c1"># inference batch size: 256</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">target_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">target</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log_loss_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">log_loss</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">pred_ans</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">auc_value</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="n">target</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">pred_ans</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">target_name</span><span class="si">}</span><span class="s2"> test LogLoss: </span><span class="si">{</span><span class="n">log_loss_value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">target_name</span><span class="si">}</span><span class="s2"> test AUC: </span><span class="si">{</span><span class="n">auc_value</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h3 id="the-anatomy-of-the-mmoe-class" class="scroll-mt-8 group">
+  The Anatomy of the <code>MMOE</code> Class
+  
+    <a href="#the-anatomy-of-the-mmoe-class"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>The &ldquo;meat&rdquo; of this post is the class definition of the <code>MMOE</code> model. You can find the source code <a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/models/multitask/mmoe.py">here</a>. The snippet below includes comments added by me. The model design is a faithful translation of the MMoE architecture (doodles also by me):</p>
+<figure><img src="https://www.dropbox.com/scl/fi/644b2o0qn6unmjcvzebk1/Screenshot-2024-07-05-at-1.19.37-PM.png?rlkey=lhpc6i3mebw2p28sdfh5asz74&amp;st=smyl06ao&amp;raw=1" width="1000">
+</figure>
+
+<ul>
+<li><strong>Input</strong>: For each training instance, embeddings are flattened and concatenated with dense features into a single vector, which feeds into gates and experts.</li>
+<li><strong>Expert outputs</strong>: Each expert gets the same input and generates an vector output.</li>
+<li><strong>Gating outputs</strong>: Each gate gets the same input and generates a scalar weight for each expert; for each gate, the weights of all experts sum up to 1.</li>
+<li><strong>MMoE outputs</strong>: For each task, we use the corresponding gate network to output a weighted sum of expert outputs, which is the input to the task-specific tower.</li>
+<li><strong>Task outputs</strong>: Each tower gets a task-specific input and generates an output.</li>
+</ul>
+<p>Now, let&rsquo;s digest the model code bit by bit. You can read it in its entirety first:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-10">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-10 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-10"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MMOE</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Instantiates the multi-gate mixture-of-experts architecture.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param dnn_feature_columns: an iterable containing all the features used by deep part of the model.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param num_experts: integer, number of experts.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param expert_dnn_hidden_units: list, list of positive integer or empty list, the layer number and units in each layer of expert dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param gate_dnn_hidden_units: list, list of positive integer or empty list, the layer number and units in each layer of gate dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param tower_dnn_hidden_units: list, list of positive integer or empty list, the layer number and units in each layer of task-specific dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param l2_reg_linear: float, l2 regularizer strength applied to linear part.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param l2_reg_embedding: float, l2 regularizer strength applied to embedding vector.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param l2_reg_dnn: float, l2 regularizer strength applied to dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param init_std: float, to use as the initialize std of embedding vector.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param seed: integer, to use as random seed.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param dnn_dropout: float in [0,1), the probability we will drop out a given dnn coordinate.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param dnn_activation: activation function to use in dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param dnn_use_bn: bool, whether use batchnormalization before activation or not in dnn.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param task_types: list of str, indicating the loss of each tasks, ``&#34;binary&#34;`` for binary logloss, ``&#34;regression&#34;`` for regression loss. e.g. [&#39;binary&#39;, &#39;regression&#39;].
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param task_names: list of str, indicating the predict target of each tasks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param device: str, ``&#34;cpu&#34;`` or ``&#34;cuda:0&#34;``.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param gpus: list of int or torch.device for multiple gpus. if none, run on `device`. `gpus[0]` should be the same gpu with `device`.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :return: a pytorch model instance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dnn_feature_columns</span><span class="p">,</span>  <span class="c1"># a list feature used by the deep part</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_experts</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>  <span class="c1"># number of experts</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expert_dnn_hidden_units</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>  <span class="c1"># each expert dnn has 2 layers</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gate_dnn_hidden_units</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,),</span>  <span class="c1"># each gate dnn has 1 layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tower_dnn_hidden_units</span><span class="o">=</span><span class="p">(</span><span class="mi">64</span><span class="p">,),</span>  <span class="c1"># each tower dnn has 1 layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">l2_reg_linear</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>  <span class="c1"># l2 regularizer strength for linear part</span>
+</span></span><span class="line"><span class="cl">        <span class="n">l2_reg_embedding</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span> <span class="c1"># l2 regularizer strength for emb part</span>
+</span></span><span class="line"><span class="cl">        <span class="n">l2_reg_dnn</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="c1"># l2 regularizer strength for DNN part</span>
+</span></span><span class="line"><span class="cl">        <span class="n">init_std</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">seed</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dnn_dropout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dnn_activation</span><span class="o">=</span><span class="s2">&#34;relu&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dnn_use_bn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># whether to use batch norm</span>
+</span></span><span class="line"><span class="cl">        <span class="n">task_types</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;binary&#34;</span><span class="p">,</span> <span class="s2">&#34;binary&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">task_names</span><span class="o">=</span><span class="p">(</span><span class="s2">&#34;ctr&#34;</span><span class="p">,</span> <span class="s2">&#34;ctcvr&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">device</span><span class="o">=</span><span class="s2">&#34;cpu&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gpus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">MMOE</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">linear_feature_columns</span><span class="o">=</span><span class="p">[],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dnn_feature_columns</span><span class="o">=</span><span class="n">dnn_feature_columns</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">l2_reg_linear</span><span class="o">=</span><span class="n">l2_reg_linear</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">l2_reg_embedding</span><span class="o">=</span><span class="n">l2_reg_embedding</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gpus</span><span class="o">=</span><span class="n">gpus</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_names</span><span class="p">)</span>  <span class="c1"># infer task count from task names</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># performs input validations</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;num_tasks must be greater than 1&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>  <span class="c1"># multi-task model must have multiple tasks</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">num_experts</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;num_experts must be greater than 1&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>  <span class="c1"># multi-expert model must have multiple experts</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dnn_feature_columns</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;dnn_feature_columns is null!&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>  <span class="c1"># the deep part must have features</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">task_types</span><span class="p">)</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;num_tasks must be equal to the length of task_types&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>  <span class="c1"># make sure we specify a type for each task</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">task_type</span> <span class="ow">in</span> <span class="n">task_types</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">task_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&#34;binary&#34;</span><span class="p">,</span> <span class="s2">&#34;regression&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="sa">f</span><span class="s2">&#34;task must be binary or regression, </span><span class="si">{</span><span class="n">task_type</span><span class="si">}</span><span class="s2"> is illegal&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>  <span class="c1"># make sure task type is valid</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span> <span class="o">=</span> <span class="n">num_experts</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">task_names</span> <span class="o">=</span> <span class="n">task_names</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_input_dim</span><span class="p">(</span><span class="n">dnn_feature_columns</span><span class="p">)</span>  
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn_hidden_units</span> <span class="o">=</span> <span class="n">expert_dnn_hidden_units</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_hidden_units</span> <span class="o">=</span> <span class="n">gate_dnn_hidden_units</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_hidden_units</span> <span class="o">=</span> <span class="n">tower_dnn_hidden_units</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># expert dnn: each element is an expert network</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">expert_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># gate dnn: each element is a gate for a task</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gate_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">gate_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># select weights to regularize</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">add_regularization_weight</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">filter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&#34;weight&#34;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&#34;bn&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">l2</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># a list of linear layers, one for each task</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">gate_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gate_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># tower dnn: each element is a tower for each task</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tower_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">expert_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">tower_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># select weights to regularize</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">add_regularization_weight</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">filter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&#34;weight&#34;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&#34;bn&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">l2</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># a list of linear layers, one for each task</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_final_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">tower_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tower_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">else</span> <span class="n">expert_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># each task type has an output</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">PredictionLayer</span><span class="p">(</span><span class="n">task</span><span class="p">)</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">task_types</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># add final parameters to be regularized</span>
+</span></span><span class="line"><span class="cl">        <span class="n">regularization_modules</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_final_layer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">regularization_modules</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">add_regularization_weight</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">filter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&#34;weight&#34;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="s2">&#34;bn&#34;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">module</span><span class="o">.</span><span class="n">named_parameters</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                <span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="n">l2</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># list of embedding and dense feature values</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_from_feature_columns</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnn_feature_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_dict</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># concat features into a single vector for each instance</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dnn_input</span> <span class="o">=</span> <span class="n">combined_dnn_input</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># expert dnn: collect output from each expert</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expert_outs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expert_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expert_outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expert_out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">expert_outs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">expert_outs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (bs, num_experts, dim)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># gate dnn: each gate has a way to combine expert outputs</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mmoe_outs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="p">):</span>  <span class="c1"># input =&gt; gate dnn =&gt; final gate layer</span>
+</span></span><span class="line"><span class="cl">                <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">gate_dnn_out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>  <span class="c1"># input =&gt; final gate layer</span>
+</span></span><span class="line"><span class="cl">                <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># performs matrix multiplication between post-softmax gate dnn output and expert outputs</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gate_mul_expert</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">gate_dnn_out</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">expert_outs</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>  <span class="c1"># (bs, 1, dim)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">mmoe_outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate_mul_expert</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># tower dnn: each tower generates output for a specific task</span>
+</span></span><span class="line"><span class="cl">        <span class="n">task_outs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="p">):</span>  <span class="c1"># input =&gt; tower dnn =&gt; final tower layer</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tower_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">mmoe_outs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tower_dnn_logit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">tower_dnn_out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>  <span class="c1"># input =&gt; final tower layer</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tower_dnn_logit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">mmoe_outs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">tower_dnn_logit</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">task_outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">task_outs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">task_outs</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># output dimension: (bs, num_tasks)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">task_outs</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>When coding up deep learning models, I think of the constructor (<code>def __init__</code>) as the LEGO blocks: You specify what the pieces are and the properties of each piece, so that later you can use them at your disposal. The <code>forward</code> pass is the building process &mdash; you put the pieces together in a specific way, to allow the data (<code>X</code>) to flow through the network architecture and return the output. For each component, we&rsquo;ll look at the LEGO pieces and how they are used in the <code>forward</code> method.</p>
+<h4 id="model-inputs" class="scroll-mt-8 group">
+  Model Inputs
+  
+    <a href="#model-inputs"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p><code>MMOE</code> inherits from <code>BaseModel</code> (<a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/models/basemodel.py">code</a>), which contains components and methods shared by various model architectures. It uses the <code>input_from_feature_columns</code> method from <code>BaseModel</code> and the <code>combined_dnn_input</code> function from the <code>inputs</code> <a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/inputs.py">module</a> to process the raw input into a format that can be consumed by the DNN model.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-11">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-11 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-11"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># list of embedding and dense feature values</span>
+</span></span><span class="line"><span class="cl"><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_from_feature_columns</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dnn_feature_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_dict</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># concat feature lists into input for the deep part</span>
+</span></span><span class="line"><span class="cl"><span class="n">dnn_input</span> <span class="o">=</span> <span class="n">combined_dnn_input</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>The <code>input_from_feature_columns</code> method first identifies which features are sparse and which are dense. For sparse features, it performs a lookup. For each <code>embedding_name</code> (e.g., <code>uid</code>), it finds the embedding matrix, and then for a given feature value (a particular <code>uid</code>), it retrieves the corresponding embedding vector. The output is a list of embedding vectors (<code>sparse_embedding_list</code>: <code>[emb1, emb2, emb3, ...]</code>). For dense features, it returns a list of scalars (<code>dense_value_list</code>: <code>[val1, val2, val3, ...]</code>). These two lists are returned separately.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-12">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-12 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-12"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">input_from_feature_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">feature_columns</span><span class="p">,</span> <span class="n">embedding_dict</span><span class="p">,</span> <span class="n">support_dense</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">sparse_feature_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">SparseFeat</span><span class="p">),</span> <span class="n">feature_columns</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature_columns</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dense_feature_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">DenseFeat</span><span class="p">),</span> <span class="n">feature_columns</span><span class="p">))</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature_columns</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">varlen_sparse_feature_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">VarLenSparseFeat</span><span class="p">),</span> <span class="n">feature_columns</span><span class="p">))</span> <span class="k">if</span> <span class="n">feature_columns</span> <span class="k">else</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">support_dense</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dense_feature_columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;DenseFeat is not supported in dnn_feature_columns&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">sparse_embedding_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">embedding_dict</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">embedding_name</span><span class="p">](</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">long</span><span class="p">())</span> <span class="k">for</span>
+</span></span><span class="line"><span class="cl">        <span class="n">feat</span> <span class="ow">in</span> <span class="n">sparse_feature_columns</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">sequence_embed_dict</span> <span class="o">=</span> <span class="n">varlen_embedding_lookup</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding_dict</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                  <span class="n">varlen_sparse_feature_columns</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">varlen_sparse_embedding_list</span> <span class="o">=</span> <span class="n">get_varlen_pooling_list</span><span class="p">(</span><span class="n">sequence_embed_dict</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                                           <span class="n">varlen_sparse_feature_columns</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">dense_value_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_index</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">dense_feature_columns</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">sparse_embedding_list</span> <span class="o">+</span> <span class="n">varlen_sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>Then the <code>combined_dnn_input</code> function takes the two feature lists as inputs and outputs a matrix (<code>[batch_size, input_dim]</code>), where each row is a feature vector with all embeddings and dense features concatenated together:</p>
+<ul>
+<li><code>sparse_dnn_input</code>: Concatenate sparse embeddings in <code>sparse_embedding_list</code> along the last dimension; flatten the result starting from the 2nd dimension.</li>
+<li><code>dense_dnn_input</code>: Concatenate  dense values in <code>dense_value_list</code> along the last dimension; flatten the result starting from the 2nd dimension.</li>
+<li><code>dnn_input</code>: Concatenate <code>sparse_dnn_input</code> (if available) and <code>dense_dnn_input</code> (if available) along the feature dimension; one of them must be available.</li>
+</ul>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-13">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-13 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-13"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">combined_dnn_input</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dense_value_list</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dense_value_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sparse_dnn_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dense_dnn_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">dense_value_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">concat_fun</span><span class="p">([</span><span class="n">sparse_dnn_input</span><span class="p">,</span> <span class="n">dense_dnn_input</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">sparse_embedding_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">dense_value_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">dense_value_list</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">start_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">NotImplementedError</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h4 id="expert-networks" class="scroll-mt-8 group">
+  Expert Networks
+  
+    <a href="#expert-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In this implementation, each expert network is a two-layer fully connected DNN. The first layer has 256 neurons, and the second has 128, as specified in <code>expert_dnn_hidden_units=(256, 128)</code>; they are connected by ReLU activation. <code>nn.ModuleList</code> stores and manages a list of expert networks as a single module.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-14">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-14 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-14"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expert_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>Each expert network processes <code>dnn_input</code> independently. Outputs from all experts are returned in a matrix of dimension <code>[batch_size, num_experts, output_dim]</code>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-15">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-15 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-15"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">expert_outs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expert_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expert_dnn</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">expert_outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">expert_out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">expert_outs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">expert_outs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<h4 id="gating-networks" class="scroll-mt-8 group">
+  Gating Networks
+  
+    <a href="#gating-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The gating network has a simpler structure than the expert network &mdash; each gate is a one-layer DNN with 64 neurons, as specified in <code>gate_dnn_hidden_units=(64,)</code>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-16">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-16 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-16"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gate_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<p>The output from each gating network is passed to a linear layer to generate the weight of each expert that will be used in to combine expert outputs in each task.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-17">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-17 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-17"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">gate_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">gate_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">num_experts</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<p>Each gate takes <code>dnn_input</code> and outputs expert-specific weights, which are then multiplied with expert outputs to get the input for the corresponding tower.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-18">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-18 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-18"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="n">mmoe_outs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="p">):</span>  <span class="c1"># input =&gt; gate dnn =&gt; final gate layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">gate_dnn_out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>  <span class="c1"># input =&gt; final gate layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gate_dnn_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gate_dnn_final_layer</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">dnn_input</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># performs matrix multiplication between post-softmax gate dnn output and expert outputs</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gate_mul_expert</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">gate_dnn_out</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">expert_outs</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>  <span class="c1"># (bs, 1, dim)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mmoe_outs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gate_mul_expert</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<h4 id="tower-networks" class="scroll-mt-8 group">
+  Tower Networks
+  
+    <a href="#tower-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Similar to the gating networks above, each tower network is also a one-layer DNN with 64 neurons, as specified in <code>gate_dnn_hidden_units=(64,)</code>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-19">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-19 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-19"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">DNN</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">expert_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tower_dnn_hidden_units</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">activation</span><span class="o">=</span><span class="n">dnn_activation</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">l2_reg</span><span class="o">=</span><span class="n">l2_reg_dnn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dropout_rate</span><span class="o">=</span><span class="n">dnn_dropout</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">use_bn</span><span class="o">=</span><span class="n">dnn_use_bn</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">init_std</span><span class="o">=</span><span class="n">init_std</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>The output from each tower is passed to a linear layer to generate the final prediction for a given task. Results of all tasks are collected in a <code>nn.ModuleList</code>.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-20">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-20 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-20"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># a list of linear layers, one for each task</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">tower_dnn_final_layer</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tower_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tower_dnn_hidden_units</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="n">expert_dnn_hidden_units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_tasks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># each task type has an output</span>
+</span></span><span class="line"><span class="cl"><span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">PredictionLayer</span><span class="p">(</span><span class="n">task</span><span class="p">)</span> <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">task_types</span><span class="p">])</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>During training (<a href="https://github.com/shenweichen/DeepCTR-Torch/blob/master/deepctr_torch/models/basemodel.py"><code>fit</code></a> in <code>BaseModel</code>), the total loss from all tasks and regularization is used to compute gradients and update weights &mdash; <code>total_loss.backward()</code>.</p>
+<h2 id="read-more" class="scroll-mt-8 group">
+  Read More
+  
+    <a href="#read-more"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Personally, I think deep learning ranking expertise is harder to come by than deep learning NLP expertise. Companies of any size can support fine-tuning &ldquo;classic&rdquo; NLP models such as BERT or BART, but many tech companies are still using Gradient Boosted Decision Trees (GBDT) in their ranking stack and struggling with the transition to deep learning. I&rsquo;ll be collecting sources as I learn more. Below are some resources I find particularly useful at this moment:</p>
+<ol>
+<li><a href="https://github.com/liyinxiao/Ranking_Papers">Ranking papers</a>: A repository curated by a Meta engineer, collecting industry papers published by Meta, Airbnb, Amazon, and many more.</li>
+<li>Gaurav Chakravorty&rsquo;s <a href="https://github.com/gauravchak">repo</a>: Toy models created by a Meta E7 for educational purposes.</li>
+</ol>
+
+  </article>
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/information-retrieval/" class="taxonomy category">information retrieval</a>
+          </li>
+          <li>
+            <a href="/categories/multi-task-learning/" class="taxonomy category">multi-task learning</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/mtml/"
+></content-network-graph>
+
+    </section>
+</aside>
+
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        <section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2024, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+    
+  </body>
+</html>

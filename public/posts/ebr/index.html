@@ -1,0 +1,1027 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    An Introduction to Embedding-Based Retrieval | Yuan Meng
+</title>
+  <meta name="description" content=" So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors." />
+<meta property="og:url" content="http://localhost:1313/posts/ebr/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="An Introduction to Embedding-Based Retrieval">
+  <meta property="og:description" content="So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-06-22T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="An Introduction to Embedding-Based Retrieval">
+  <meta itemprop="description" content="So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.">
+  <meta itemprop="datePublished" content="2024-06-22T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3658">
+  <meta itemprop="keywords" content="Embedding,Information retrieval,Vector-based search">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="An Introduction to Embedding-Based Retrieval">
+  <meta name="twitter:description" content="So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.">
+
+<link rel="canonical" href="http://localhost:1313/posts/ebr/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/ebr/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Embedding",
+    "Information retrieval",
+    "Vector-based search"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2024-06-22",
+  "description": " So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.",
+  "headline": "An Introduction to Embedding-Based Retrieval",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/ebr/",
+  "name": "An Introduction to Embedding-Based Retrieval",
+  "timeRequired": "PT18M",
+  "url": "http://localhost:1313/posts/ebr/",
+  "wordCount": 3658
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">An Introduction to Embedding-Based Retrieval</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2024-06-22T00:00:00&#43;00:00"
+            >June 22, 2024</time
+          >
+        </div>
+    </header>
+
+    <h2 id="so-what-is-an-embedding" class="scroll-mt-8 group">
+  So, What is an Embedding?
+  
+    <a href="#so-what-is-an-embedding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p><a href="https://en.wikipedia.org/wiki/Embedding">Embedding</a> is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.</p>
+<details>
+  <summary><b>Mathematical topology</b></summary>
+  <p>An embedding is a function $f: X \rightarrow Y$ between two topological spaces that is injective (one-to-one) and a homeomorphism onto its image, thus preserving the topological properties of $X$ within $Y$. This concept ensures that $X$ is mapped into $Y$ in a way that $X$'s structure — such as its continuity and open/closed set properties — is maintained exactly within the host structure $Y$</p>
+</details>
+<details>
+  <summary><b>Machine learning</b></summary>
+  <p>An embedding is a transformation $f: X \rightarrow \mathbb{R}^d$ that maps entities from a high-dimensional or abstract space $X$ (e.g., words, images, or graph nodes) to vectors in a lower-dimensional, continuous vector space $\mathbb{R}^d$. This mapping aims to preserve relevant properties of the original entities, such as similarity or relational structure, thereby enabling more effective computational manipulation and analysis.</p>
+</details>
+<p>A vector $\mathbb{R}^d$ is an ordered list of numbers, which can represent almost everything:</p>
+<ul>
+<li>A geographic location, described by <code>[latitude, longitude]</code>.</li>
+<li>A desk, characterized by <code>[height, area, color, other attributes]</code>.</li>
+<li>A photo, consisting of channel values for each pixel, <code>[[r, g, b], ...]</code>.</li>
+</ul>
+<p>In traditional machine learning, each training example is described by a feature vector, usually consisted of hand-crafted features. For example, in spam classification, input text features might include the presence of a &ldquo;$&rdquo; 🤑 symbol in the email content, whether the subject line is in all CAPITAL LETTERS, and so on.</p>
+<p>All vectors are not embeddings. For vectors to be considered as embeddings, similar entities in the real world must also be close in the embedding space, according to some distance function (e.g., Euclidean distance, Jaccard similarity, dot product, cosine similarity, etc.) &mdash; a property that regular vectors do not always satisfy. Consider the example from <a href="*https://www.oreilly.com/library/view/machine-learning-design/9781098115777/*"><em>Machine Learning Design Patterns</em></a>: 6 one-hot vectors are used to represent the number of babies in one birth. While singles are more similar to twins than they are to quintuplets, the cosine similarity between the single vector (<code>[1, 0, 0, 0, 0, 0]</code>) and the twin vector (<code>[0, 1, 0, 0, 0, 0]</code>) is 0, the same as that between the single vector and the quintuplets vector (<code>[0, 0, 0, 0, 0, 1]</code>). After all, these one-hot vectors are orthogonal to one another. Since one-hot vectors do not capture similarities between categories, they are <em>not</em> embeddings.</p>
+<p>We can use a lower-dimensional dense vector to represent each class label (column 3 in the table below), such that more similar labels are closer to one another.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Plurality</th>
+          <th>One-hot encoding</th>
+          <th>Learned encoding</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Single (1)</td>
+          <td>[1,0,0,0,0,0]</td>
+          <td>[0.4, 0.6]</td>
+      </tr>
+      <tr>
+          <td>Multiple (2+)</td>
+          <td>[0,1,0,0,0,0]</td>
+          <td>[0.1, 0.5]</td>
+      </tr>
+      <tr>
+          <td>Twins (2)</td>
+          <td>[0,0,1,0,0,0]</td>
+          <td>[-0.1, 0.3]</td>
+      </tr>
+      <tr>
+          <td>Triplets (3)</td>
+          <td>[0,0,0,1,0,0]</td>
+          <td>[-0.2, 0.5]</td>
+      </tr>
+      <tr>
+          <td>Quadruplets (4)</td>
+          <td>[0,0,0,0,1,0]</td>
+          <td>[-0.4, 0.3]</td>
+      </tr>
+      <tr>
+          <td>Quintuplets (5)</td>
+          <td>[0,0,0,0,0,1]</td>
+          <td>[-0.6, 0.5]</td>
+      </tr>
+  </tbody>
+</table>
+<figure><img src="https://www.dropbox.com/scl/fi/5xi8v3omgam3126dr0ahi/Screenshot-2024-04-21-at-2.58.25-PM.png?rlkey=zt24ehipliz2c1f2o8pol4zax&amp;st=911v312w&amp;raw=1" width="1000">
+</figure>
+
+<p>The million-dollar question is, how do we learn the &ldquo;proper&rdquo; lower-dimensional representation of an entity in the embedding space? This is the exact type of problems that <a href="https://paperswithcode.com/task/metric-learning#:~:text=The%20goal%20of%20Metric%20Learning,been%20developed%20for%20Metric%20Learning.">&ldquo;metric learning&rdquo;</a> tries to solve. Typically, we need to mine the raw training data (e.g., search or feed logs) for positive/negative pairs or triplets, initialize each entity&rsquo;s embedding with random values, and gradually pull similar entities (e.g., a user and a clicked item) closer and push dissimilar entities apart (e.g., a user and an unengaged item) in the embedding space using some contrastive objective (e.g., contrastive loss, triplet loss, Noise Contrastive Estimation, etc.).</p>
+<p>In the now-classic <a href="https://arxiv.org/abs/2006.11632">paper</a>, the Facebook Search team outlined the challenges of building a web-scale embedding-based retrieval system. These include defining positive/negative labels, balancing hard (e.g., impressed but unclicked search results) vs. easy (non-positive results sampled from the the mini-batch) negatives, and serving at scale. A particularly interesting finding is that training exclusively on hard negatives reduced recall by 55% compared to training exclusively on in-batch negatives, yet adding a few hard negatives (e.g., two people on the search result page have the same name, but one is the searcher&rsquo;s social connection and one is not &mdash; the latter is a hard negative) improved recall. It could be that easy negatives help the model capture textual similarities, while hard negatives force it to lean on contextual features (e.g., the searcher&rsquo;s location and social network). For a toy implementation of the embedding model architecture, check out this <a href="https://github.com/liyinxiao/UnifiedEmbeddingModel/blob/main/main.py">repo</a>. For an in-depth review of metric learning theories, read Lilian Weng&rsquo;s wonderful <a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/">blog post</a>. For more examples of industry applications, you can like Jaideep&rsquo;s <a href="https://medium.com/better-ml/embedding-learning-for-retrieval-29af1c9a1e65">post</a> and a recent industry <a href="https://arxiv.org/pdf/2006.02282">paper</a> in the e-commerce space.</p>
+<p>After learning embeddings, we can answer many key questions &mdash; to name a few:</p>
+<ul>
+<li><strong>First-pass ranking</strong>: For a  user, how do we sift through a vast inventory of products/movies/posts/people/etc. to find items they may show interests in?</li>
+<li><strong>Passage retrieval/semantic search</strong>: Given a natural language question, how do we retrieve passages that may contain the answer?</li>
+</ul>
+<p>All this boils down to the <strong>top-$k$ retrieval problem</strong>: Given a query point $q$, how do we find top-$k$ document points $u \in \mathcal{X}$ that are most similar to it, so that we can minimize a distance function $\delta$ calculated on entity embeddings?</p>
+<p>$$\mathop{\text{arg min}}\limits^{(k)}_{u \in \mathcal{X}} \delta(q, u).$$</p>
+<h2 id="top-k-retrieval-problem" class="scroll-mt-8 group">
+  Top-$k$ Retrieval Problem
+  
+    <a href="#top-k-retrieval-problem"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>The startup Pinecone is a leading provider of web-scale commercial top-$k$ retrieval solutions. In this blogpost, I review key ideas from the new monograph <a href="https://arxiv.org/abs/2401.09350"><em>Foundations of Vector Retrieval (2024)</em></a> by Sebastian Bruch, a Principal Scientist at Pinecone.</p>
+<h3 id="choices-of-distance-functions" class="scroll-mt-8 group">
+  Choices of Distance Functions
+  
+    <a href="#choices-of-distance-functions"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Finding top-$k$ points &ldquo;closest&rdquo; to the query point first requires a distance function. The figure below shows the 3 most popular choices (↓: minimize; ↑: maximize).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/hx955sne496k99umhqi7f/Screenshot-2024-04-21-at-4.24.45-PM.png?rlkey=sxnuzw2ve6tye9qjf1g8jrt3v&amp;st=0og5opxa&amp;raw=1"
+    alt="Distance Functions for Top-$k$ Retrieval (Bruch, 2024, Chapter 1, p. 8)" width="1000"><figcaption>
+      <p>Distance Functions for Top-$k$ Retrieval (Bruch, 2024, Chapter 1, p. 8)</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Euclidean distance</strong> (↓): Straight line  from each point to the query point;</li>
+<li><strong>Cosine similarity</strong> (↑): 1 - angular distance from each point to the query point;</li>
+<li><strong>Inner product</strong> (↑): Imagine a hyperplane orthogonal to the query point passing through a document point — the shortest distance from this hyperplane to the query point is the inner product between the query-document pair.</li>
+</ul>
+<details>
+  <summary><b>Proper vs. improper metrics</b></summary>
+  <p>A proper metric 1) is non-negative, 2) symmetrical (i.e., $\delta(u, v) = \delta(u, v)$), and 3) satisfies the triangle inequality $\delta(u, v) \leq \delta(u, w) + \delta(w, v)$. Per these criteria, the inner product is not proper, because it is not non-negative and doesn't satisfy the triangle inequality, $\langle {u,v} \rangle \neq \langle {u,w} \rangle + \langle {w,v} \rangle$. In fact, we can't even guarantee that a vector maximizes the inner product with itself. That said, in a high enough dimension where data points $\mathcal{X}$ are i.i.d. in each dimension, we'd likely encounter "coincidences" with high confidence that $\langle {u,u} \rangle$ is greater than any $\langle {u,v} \rangle$ where $v \neq u$.</p>
+</details>
+<p>The 3 distance functions lead to 3 common types of vector retrieval:</p>
+<ul>
+<li><strong>$k$-Nearest Neighbor Search ($k$-NN)</strong>: Minimizes Euclidean, $\mathop{\arg \min}\limits_{u \in \mathcal{X}}\limits^{(k)} \lVert q - u \rVert_2^2$;</li>
+<li><strong>$k$-Maximum Cosine Similarity Search ($k$-MCS)</strong>: Minimizes angular distance, $\mathop{\arg \min}\limits_{u \in \mathcal{X}}\limits^{(k)} 1 - \frac{\langle {q,u} \rangle}{\lVert q \rVert_2 \lVert u \rVert_2}$, or maximizes cosine similarity $\mathop{\arg \max}\limits_{u \in \mathcal{X}}\limits^{(k)} \frac{\langle {q,u} \rangle}{\lVert u \rVert_2}$, given $\lVert q \rVert_2 = 1$;</li>
+<li><strong>$k$-Maximum Inner Product Search ($k$-MIPS)</strong>: Maximizes inner product, $\mathop{\arg \max}\limits_{u \in \mathcal{X}}\limits^{(k)} \langle {q,u} \rangle$.</li>
+</ul>
+<p>The 3 distance functions are related to one another. This is plain to see between $k$-MCS and $k$-MIPS: The former is a normalized version of the latter, where the inner product is divide by the $L_2$ norm of $u$. As for $k$-NN, we can expand the Euclidean distance into $\mathop{\arg \min}\limits_{u \in \mathcal{X}}\limits^{(k)} \lVert q \rVert_2^2 - 2\langle {q,u} \rangle + \lVert u \rVert_2^2$, which can be rewritten as $\mathop{\arg \min}\limits_{u&rsquo; \in \mathcal{X&rsquo;}}\limits^{(k)} \langle {q&rsquo;,u&rsquo;} \rangle$ by discarding the constant term $\lVert q \rVert_2^2$ and concatenating vectors $q \in \mathbb{R}^d$ and $u \in \mathbb{R}^d$ each with a 1-dimensional vector $[-1/2]$ into $q&rsquo; \in \mathbb{R}^{d + 1}$ and $u&rsquo; \in \mathbb{R}^{d + 1}$, respectively.</p>
+<p>When to use which? As with all ML problems, it depends on your data and use cases:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Distance Metric</th>
+          <th>Common In</th>
+          <th>Advantage</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Euclidean Distance</td>
+          <td>Spatial databases, clustering</td>
+          <td>Measures absolute differences; intuitive in low-dimensional spaces</td>
+          <td>Best when scale and actual size differences are crucial</td>
+      </tr>
+      <tr>
+          <td>Cosine Similarity</td>
+          <td>Text retrieval, document similarity</td>
+          <td>Focuses on direction rather than magnitude; effective in high dimensions</td>
+          <td>Ideal for normalized data where orientation matters</td>
+      </tr>
+      <tr>
+          <td>Inner Product</td>
+          <td>Neural networks, collaborative filtering</td>
+          <td>Direct measure of alignment; computationally efficient with matrix operations</td>
+          <td>Useful when projection similarity is more relevant than geometric closeness</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="approximate-retrieval-algorithms" class="scroll-mt-8 group">
+  Approximate Retrieval Algorithms
+  
+    <a href="#approximate-retrieval-algorithms"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Regardless of the distance function, when the embedding dimension $d$ is high and the documents are vast, it&rsquo;s inefficient to compute $\delta(q, v)$ for every query-document pair and return top $k$ documents in ascending order of distance. Efficient search calls for approximate top-$k$ retrieval algorithms that trade some accuracy for speed.</p>
+<p>The idea behind approximate top-$k$ retrieval is that we accept a vector $u$ as a valid solution so long as its distance to the query point $q$ is at most $(1 + \epsilon)$ times the distance to the $k$-th optimal vector (<strong>Caveat</strong>: Every vector may quality as an $\epsilon$-approximate nearest neighbor if embedding dimension $d$ is high and data are <em>i.i.d.</em> in every dimension, noted by <a href="https://minds.wisconsin.edu/bitstream/handle/1793/60174/TR1377.pdf?sequence=1&amp;ref=https://githubhelp.com">Beyer et al., 1999</a>). Recall at $k$ is often used to measure the effectiveness of approximate retrieval algorithms, which ideally maximize the overlap between the exact top-$k$ set $\mathcal{S}$ and the approximate top-$k$ set $\mathcal{\tilde{S}}$, $|\mathcal{S} \cap \mathcal{\tilde{S}}| / k$.</p>
+<p>In this section, we review some common algorithms for approximate top-$k$ retrieval.</p>
+<h4 id="branch-and-bound-algorithms" class="scroll-mt-8 group">
+  Branch-and-Bound Algorithms
+  
+    <a href="#branch-and-bound-algorithms"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Branch-and-bound is one of the earliest algorithms for top-$k$ vector retrieval. It proceeds in two phases: 1) Recursively <strong>partitioning</strong> the vector space $\mathcal{X}$ into smaller regions, marking region boundaries, and storing them in a binary search tree (BST), and 2) only <strong>searching</strong> regions that could contain vectors in the top $k$ solution set.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/fxy7jr9oo6mac3j8ki0is/Screenshot-2024-04-21-at-5.56.57-PM.png?rlkey=ch8lg4imvf6xwrzecnwd662v5&amp;st=wmmto60f&amp;raw=1"
+    alt="The Branch-and-Bound Algorithms (Bruch, 2024, Chapter 4, p. 32)" width="400"><figcaption>
+      <p>The Branch-and-Bound Algorithms (Bruch, 2024, Chapter 4, p. 32)</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Partitioning</strong>: The original vector space is partitioned into a balanced binary search tree (BST), where each internal node has a decision boundary
+<ul>
+<li>Partition the vector space into regions $\mathcal{R}_l$ and $\mathcal{R}_r$; the boundary is $h$</li>
+<li>Exhaustively search $\mathcal{R}_l$ to find the optimal point $u_l^\ast$ that minimizes the distance to the query vector $q$, $\delta(q, u_l^\ast)$ 👉 <em>certify</em> $u_l^\ast$ is indeed optimal
+<ul>
+<li>If $\delta(q, u_l^\ast) &lt; \delta(q, \mathcal{R_r})$: Found optimal point and can discard points in $\mathcal{R}_r$
+<ul>
+<li>$\delta$-ball centered at $q$ with radius $\delta(q, u_l^\ast)$ is contained entirely in $\mathcal{R}_l$, so no point from $\mathcal{R}_r$ has have shorter distance to $q$ than $u_l^\ast$</li>
+</ul>
+</li>
+<li>If $\delta(q, u_l^\ast) \geq \delta(q, \mathcal{R_r})$: Also search $\mathcal{R}_l$ and compare the solution with $u_l^\ast$
+<ul>
+<li>Backtrack to the parent of $\mathcal{R}_l$ and compare $\delta(q, u_l^\ast)$ with the distance of $q$ with the decision boundary</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Retrieval</strong>: Similar to partitioning, but needs more care during traversal
+<ul>
+<li>Traverse from root to leaf; each node determines if $q$ belongs to $\mathcal{R}_l$ or $\mathcal{R}_r$</li>
+<li>Once we find the leaf region that contains $q$, we find the candidate vector $u^\ast$ 👉 backtrack and certify that $u^\ast$ is indeed optimal
+<ul>
+<li>At each internal node, compare the distance between $q$ and the current candidate with the distance between $q$ and the region on the other side of the boundary 👉 prune or search for better candidates</li>
+</ul>
+</li>
+<li>Terminate when back at root 👉 all branches are either pruned or certified</li>
+</ul>
+</li>
+</ul>
+<p>Different instantiations of branch-and-bound algorithms differ in how they split a collection or conduct certification. In general, brand-and-bound algorithms work poorly on high-dimensional data as the number of leaves that may be visited during certification grows exponentially with the embedding dimension $d$. Modern approximate nearest neighbor retrieval services rarely rely on branch-and-bound.</p>
+<h4 id="locality-sensitive-hashing-lsh" class="scroll-mt-8 group">
+  Locality Sensitive Hashing (LSH)
+  
+    <a href="#locality-sensitive-hashing-lsh"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Locality Sensitive Hashing (LSH) reduces the nearest neighbor search space by hashing each vector into a single bucket, $h: \mathbb{R}^d \rightarrow [b]$, and searching exhaustively within the bucket. The choice of the hash function $h$ is critical because this algorithm only works if $\epsilon$-approximate $k$ nearest neighbors are hashed into the same bucket.</p>
+<p>To reduce the reliance on one hash function, we can independently apply $L$ hash functions, each from a family of hash functions $h \in \mathcal{H}$, to map vectors into buckets (see this Pinecone <a href="https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/">blog post</a> for more details on hash functions). If a query is hashed into multiple buckets, then we search all these buckets to find nearest neighbors &mdash; we sacrifice some efficiency in hopes to get more accurate results.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/ibe1tr26h3k3pszf0lf17/Screenshot-2024-06-22-at-11.36.15-PM.png?rlkey=niw2bpqcztfc6xbevjmei8jni&amp;st=klehneyl&amp;raw=1"
+    alt="Locality Sensitive Hashing (LSH) Algorithm (Bruch, 2024, Chapter 5, p. 58)" width="600"><figcaption>
+      <p>Locality Sensitive Hashing (LSH) Algorithm (Bruch, 2024, Chapter 5, p. 58)</p>
+    </figcaption>
+</figure>
+
+<h4 id="graph-algorithms-eg-hnsw" class="scroll-mt-8 group">
+  Graph Algorithms (e.g., HNSW)
+  
+    <a href="#graph-algorithms-eg-hnsw"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Graph algorithms perform random walks from one vector to another via connected edges $(u, v) \in \mathcal{E}$, hopefully getting closer to the optimal solution with every hop.</p>
+<p>The graph $G(\mathcal{V}, \mathcal{E})$ is constructed during pre-processing of the vector collections &mdash;</p>
+<ul>
+<li><strong>Nodes $\mathcal{V}$</strong>: Each vector $u \in \mathcal{X}$ is a node in the graph $G$ &mdash; i.e., $|\mathcal{V}| = |\mathcal{X}|$</li>
+<li><strong>Edges $\mathcal{E}$</strong>: Simply connecting every node by an edge results in high space + time complexity &mdash; how we can construct a sparse graph that solves the top-$k$ vector retrieval problem is an active research topic.</li>
+</ul>
+<p>Whatever graph we decide to construct, it needs to support &ldquo;best-first search&rdquo;, a greedy algorithm for finding top-$k$ nearest neighbors:</p>
+<ul>
+<li><strong>Entry</strong>: To begin, enter the graph from an arbitrary node $u$;</li>
+<li><strong>Distance comparison</strong>: Compare the distance from the node to query $q$ with the distance from each of the node&rsquo;s neighbors $N(u)$ to $q$;
+<ul>
+<li><strong>Terminate</strong>: If no $N(u)$ is closer to $q$, then $u$ is a top-$k$ nearest neighbor;</li>
+<li><strong>Hop</strong>: If a $N(u)$ is closer to $q$ than $u$, then hop to the closest neighbor;</li>
+</ul>
+</li>
+<li><strong>Iteration</strong>: Repeat until the terminal condition is met.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/s5j2ithac4ukhiys5hcj7/Screenshot-2024-06-23-at-9.31.14-AM.png?rlkey=vn5kkouxd4w9ilqvzrpgi8u3x&amp;st=e71z747p&amp;raw=1"
+    alt="The Greedy Best-First-Search Algorithm (Bruch, 2024, Chapter 6, p. 74)" width="600"><figcaption>
+      <p>The Greedy Best-First-Search Algorithm (Bruch, 2024, Chapter 6, p. 74)</p>
+    </figcaption>
+</figure>
+
+<p>Below is a toy implementation to sketch out the algorithm we just described:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">heapq</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># calculate Euclidean distance between two points in space</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">best_first_search</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">start_node</span><span class="p">,</span> <span class="n">query_point</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># priority queue: [(negative distance to query point, current node)]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">euclidean_distance</span><span class="p">(</span><span class="n">query_point</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">start_node</span><span class="p">]),</span> <span class="n">start_node</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># track visited nodes to avoid revisiting</span>
+</span></span><span class="line"><span class="cl">    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">start_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># collect top-k nodes without storing distances</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">priority_queue</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># get current node to visit</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_distance</span><span class="p">,</span> <span class="n">current_node</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># assume it&#39;s a top-k solution</span>
+</span></span><span class="line"><span class="cl">        <span class="n">is_candidate</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># visit each of the node&#39;s neighbors</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">current_node</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># compute distance to the query</span>
+</span></span><span class="line"><span class="cl">                <span class="n">dist</span> <span class="o">=</span> <span class="n">euclidean_distance</span><span class="p">(</span><span class="n">query_point</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">neighbor</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">,</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="c1"># current node is not a candidate if a neighbor is closer</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="n">current_distance</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">is_candidate</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># if node is closest to query, add to result list</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">is_candidate</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># if we already have k results, we can stop</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># example graph in the form of an adjacency list</span>
+</span></span><span class="line"><span class="cl"><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;A&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">,</span> <span class="s2">&#34;C&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;B&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;D&#34;</span><span class="p">,</span> <span class="s2">&#34;E&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;C&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;F&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;D&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;E&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;F&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;C&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># coordinates for each node</span>
+</span></span><span class="line"><span class="cl"><span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;A&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&#34;B&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&#34;D&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s2">&#34;E&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&#34;F&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">top_k_nodes</span> <span class="o">=</span> <span class="n">best_first_search</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># output: [&#39;B&#39;, &#39;C&#39;, &#39;E&#39;]</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>If a graph cannot get us spatially closer to the solution with each hop, then it doesn&rsquo;t support best-first search. A widely used graph that does support best-first search is the <a href="https://en.wikipedia.org/wiki/Delaunay_triangulation">Delaunay graph</a>, which can be created from the <a href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi diagram</a>.</p>
+<ul>
+<li><strong>Voronoi diagram</strong>: The space $\mathbb{R}^d$ is partitioned into unique regions $\mathcal{R} = \bigcup_{u \in \mathcal{X}} \mathcal{R}_u$, where each region $\mathcal{R}_u$ is owned by $u \in \mathcal{X}$ and consists of $u$&rsquo;s nearest neighbors;</li>
+<li><strong>Delaunay graph</strong>: An undirected graph that connects nodes $u$ and $v$ in the Voronoi diagram if their Voronoi regions have a non-empty intersection, $\mathcal{R}_u \cap \mathcal{R}_u \neq  \emptyset$.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/xlvcadtk361kqxpyuxt0p/Screenshot-2024-06-23-at-9.29.58-AM.png?rlkey=w9hwdwwkdj6ot2g5dkhcpjmjj&amp;st=jvgy6y7w&amp;raw=1"
+    alt="The Delaunay Graph and the Voronoi Diagram (Bruch, 2024, Chapter 6, p. 77)" width="600"><figcaption>
+      <p>The Delaunay Graph and the Voronoi Diagram (Bruch, 2024, Chapter 6, p. 77)</p>
+    </figcaption>
+</figure>
+
+<p>If we pick an entry node far from the answer, then we must traverse all Voronoi regions in between to get there. To speed up traversal, we can add long-range edges between non-Voronoi neighbors to skip over certain regions. The question is, which long-range edges should we add? In his seminal <em>Nature</em> paper, <a href="https://www.nature.com/articles/35022643">Kleinberg (2000)</a> proposed a probabilistic approach based on the lattice network:</p>
+<ul>
+<li><strong>Lattice network</strong>: Every node has a directed edge to every node on a $m \times m$ grid;</li>
+<li><strong>Node distance</strong>: The distance between two nodes $u$ and $v$ are defined by their Manhattan distance, $\delta (u, v) = \lVert u - v \rVert_1$;</li>
+<li><strong>Edge probability</strong>: Form a long-distance edge between $u$ and $v$ with probability proportional to $\delta (u, v)^{- \alpha}$, where $\alpha \geq$ is a hyperparameter that controls the bias to forming a long-range connection (higher $\alpha$ favors longer distances).</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/rovai3146q4nvklhda978/Screenshot-2024-06-23-at-11.30.52-AM.png?rlkey=9rubh46vnleftougo1ytos5sf&amp;st=1d2jinnh&amp;raw=1"
+    alt="Forming Long-Distance Edges in the Lattice Network (Bruch, 2024, Chapter 6, p. 88)" width="600"><figcaption>
+      <p>Forming Long-Distance Edges in the Lattice Network (Bruch, 2024, Chapter 6, p. 88)</p>
+    </figcaption>
+</figure>
+
+<p>With long-distance edges, the average number of hops required to go from one node to another significantly drops &mdash; an observation dubbed as the &ldquo;small world phenomenon&rdquo;. The resulting Navigable Small World (NSW) graphs are the basic of the Hierarchical Navigable Small World (HNSW) algorithm that allows for remarkably fast nearest neighbor search. You can find more details on HNSW in this Pinecone <a href="https://www.pinecone.io/learn/series/faiss/hnsw/">post</a>.</p>
+<h4 id="clustering-eg-faiss" class="scroll-mt-8 group">
+  Clustering (e.g., FAISS)
+  
+    <a href="#clustering-eg-faiss"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The motivation behind clustering is similar to that behind hashing, but instead of using a hash function to map vectors into buckets, we can use a clustering function (e.g., KMeans) to map vectors into clusters, $\xi : \mathbb{R}^d \to [C]$. At retrieval time, we apply a routing function, $\tau : \mathbb{R}^d \to [C]^{l}$, to return top-$l$ clusters whose centroids are the closest to the query vector $q$, and then search for top-$k$ neighbors over the union of top-$l$ clusters. This is the main idea behind <a href="https://www.pinecone.io/learn/series/faiss/faiss-tutorial/">Facebook AI Similarity Search (FAISS)</a>, perhaps the most popular approximate retrieval algorithm today.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/ka38302lxoo46pnd2xswg/Screenshot-2024-06-23-at-1.36.11-PM.png?rlkey=s1tvwknbb82a2ktzl3ttlvb51&amp;st=s5cqpozw&amp;raw=1"
+    alt="Clustering Algorithms for Top-$l$ and Top-$k$ Retrieval (Bruch, 2024, Chapter 7, p. 106)" width="600"><figcaption>
+      <p>Clustering Algorithms for Top-$l$ and Top-$k$ Retrieval (Bruch, 2024, Chapter 7, p. 106)</p>
+    </figcaption>
+</figure>
+
+<p>For clustering algorithms to work, the data we search over must follow a multi-modal distribution &mdash; which is fortunately usually the case with real-world data.</p>
+<!-- ### Sampling Algorithms -->
+<h2 id="embedding-storage-optimization" class="scroll-mt-8 group">
+  Embedding Storage Optimization
+  
+    <a href="#embedding-storage-optimization"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>The search algorithms above aim to reduce the search space with some optimality guarantee, whereas the optimization tricks below aim to save the embedding storage.</p>
+<h3 id="quantization" class="scroll-mt-8 group">
+  Quantization
+  
+    <a href="#quantization"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>When using clustering algorithms such as FAISS, we can think of each of the $C$ centroids as a &ldquo;codeword&rdquo; and the $2^C$ combinations they form as the &ldquo;codebook&rdquo;. Each vector can be encoded using $\log_2 C$ bits &mdash; this is called <strong>Vector Quantization</strong>. Before quantization, $O(md)$ space is required to store the embeddings ($m$: number of embeddings; $d$: embedding dimension), but only $O(Cd + m\log_2 C)$ space is needed afterward ($O(Cd)$: stores original centroids). A larger $C$ reduces the approximation error but requires more space; conversely, a smaller $C$ saves space but increases the error.</p>
+<p>Today, a more popular quantization method is <strong>Product Quantization</strong>, which divides a high-dimensional vector (e.g., 128) into $L$ orthogonal subspaces (e.g., 8 subspaces, each of dimension 16), performs Vector Quantization on each subspace, and concatenates the quantized subspaces. This approach is particularly beneficial when the embedding dimension $d$ is so high that many centroids are needed to cover the space $\mathbb{R}^d$. In contrast, we may only need a small number of centroids to cover each subspace, so that even with $L$ subspaces, the total number of centroids still remains fewer than what we would need if we were to quantize the entire vector directly.</p>
+<h3 id="sketching" class="scroll-mt-8 group">
+  Sketching
+  
+    <a href="#sketching"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Sketching is a type of algorithms that map a higher-dimensional vector to a lower-dimensional vector, $\phi : \mathbb{R}^d \to \mathbb{R}^{d_\circ}$ ($d_\circ &lt; d$), after which certain properties of interest (e.g., the Euclidean distance or the inner product between any pair of points) are preserved with high probability. Then, instead of searching over original vectors, we search over their sketches $\phi(u)$ for $u \in \mathcal{X}$ to solve top-$k$ retrieval problems.</p>
+<p>That is the theory, at least. For certain type of problems, sketching can result in unacceptable errors. I recommend that you read Ethan N. Epperly&rsquo;s <a href="https://huggingface.co/blog/ethanepperly/does-sketching-work">blog post</a> and <a href="https://arxiv.org/abs/2311.04362">paper</a> for a detailed analysis of common sketching algorithms and sketching errors.</p>
+<h3 id="feature-multiplexing" class="scroll-mt-8 group">
+  Feature Multiplexing
+  
+    <a href="#feature-multiplexing"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Embeddings are typically stored in a $N \times d$ lookup table, where $N$ is the size of the &ldquo;vocabulary&rdquo; and $d$ the embedding dimension. In NLP, $N$ is in the order of tens of thousands. In search/ads/recommendations, $N$ can be in the order of tens of billions (e.g., users, items), which can easily blow up model parameters and storage.</p>
+<p>Like how we can decompose words into subword tokens, we can decompose embeddings into subspaces to reduce the vocabulary size &mdash; each embedding is stored in multiple rows, each row representing a subspace, and the original embedding can be recovered from a weighted sum of rows. This is the &ldquo;hashing trick&rdquo; (<a href="https://arxiv.org/pdf/0902.2206.pdf">Weinberg et al., 2009</a>).</p>
+<p>Researchers at DeepMind (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/afcac2e300bc243d15c25cd4f4040f0d-Paper-Conference.pdf">Coleman et al., 2023</a>) proposed a new learning framework called <em>Feature Multiplexing</em>, where all embedding features share a single embedding table and multiple features may share one representation space (e.g., semantically-similar features on the query and the document sides). Models trained with Feature Multiplexing achieved or beat SOTA performance on both open-source and Google data.</p>
+<h2 id="references" class="scroll-mt-8 group">
+  References
+  
+    <a href="#references"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="bookspapers" class="scroll-mt-8 group">
+  Books/Papers
+  
+    <a href="#bookspapers"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol>
+<li>Bruch, S. (2024). Foundations of Vector Retrieval. <a href="https://arxiv.org/pdf/2401.09350">arXiv:2401.09350</a>.</li>
+<li>Huang, J. T., Sharma, A., Sun, S., Xia, L., Zhang, D., Pronin, P., &hellip; &amp; Yang, L. (2020). Embedding-based retrieval in Facebook search. KDD (<a href="https://arxiv.org/abs/2006.11632">paper</a> + <a href="https://github.com/liyinxiao/UnifiedEmbeddingModel">code</a>).</li>
+<li>Coleman, B., Kang, W. C., Fahrbach, M., Wang, R., Hong, L., Chi, E., &amp; Cheng, D. (2023). Unified Embedding: Battle-tested feature representations for web-scale ML systems. <a href="https://proceedings.neurips.cc/paper_files/paper/2023/file/afcac2e300bc243d15c25cd4f4040f0d-Paper-Conference.pdf">NeurIPS</a>.</li>
+<li>Zhang, H., Wang, S., Zhang, K., Tang, Z., Jiang, Y., Xiao, Y., &hellip; &amp; Yang, W. Y. (2020, July). Towards personalized and semantic retrieval: An end-to-end solution for e-commerce search via embedding learning. <a href="https://arxiv.org/pdf/2006.02282">SIGIR</a>.</li>
+</ol>
+<h3 id="blog-posts" class="scroll-mt-8 group">
+  Blog Posts
+  
+    <a href="#blog-posts"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="5">
+<li><a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/">Contrastive Representation Learning</a> by Lilian Weng (2021)</li>
+<li><a href="https://medium.com/better-ml/embedding-learning-for-retrieval-29af1c9a1e65">Embedding-Based Retrieval for Search &amp; Recommendation</a> by Jaideep Ray (2021)</li>
+<li><a href="https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/">Locality Sensitive Hashing (LSH): The Illustrated Guide</a> by Pinecone</li>
+<li><a href="https://www.pinecone.io/learn/series/faiss/hnsw/">Hierarchical Navigable Small Worlds (HNSW)</a> by Pinecone</li>
+<li><a href="https://www.pinecone.io/learn/series/faiss/">FAISS: The Missing Manual</a> by Pinecone</li>
+<li><a href="https://huggingface.co/blog/ethanepperly/does-sketching-work">Does Sketching Work?</a> by Ethan N. Epperly (2023)</li>
+</ol>
+
+  </article>
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/embedding/" class="taxonomy category">embedding</a>
+          </li>
+          <li>
+            <a href="/categories/information-retrieval/" class="taxonomy category">information retrieval</a>
+          </li>
+          <li>
+            <a href="/categories/vector-based-search/" class="taxonomy category">vector-based search</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/ebr/"
+></content-network-graph>
+
+    </section>
+</aside>
+
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        <section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2024, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+    
+  </body>
+</html>

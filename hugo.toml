@@ -1,0 +1,82 @@
+baseURL = "https://www.yuan-meng.com/"
+languageCode = "en-us"
+title = "Yuan Meng"
+enableRobotsTXT = true
+titleCaseStyle = "firstupper"
+copyright = 'Yuan Meng'
+
+[module]
+  [[module.imports]]
+    path = "github.com/michenriksen/hugo-theme-til"
+
+[outputs]
+  home = ['html']
+  section = ['html', 'rss', 'json']
+  page = ['html']
+
+[frontmatter]
+  lastmod = ["lastmod", "modified"]
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    pageRef = "/posts"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "notes"
+    name = "Notes"
+    pageRef = "/notes"
+    weight = 20
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    style = 'tokyonight-night'
+
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  description = "Yuan's musings about machine learning, human learning, and career reflections."
+
+  [params.author]
+    name = "Yuan Meng"
+    email = "mycaptainmy@gmail.com"
+
+  [params.footer]
+    creativeCommonsLicense = 'by_sa'
+
+  [params.robotstxt]
+    blockCC = true
+    blockAI = true
+
+[privacy]
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[services]
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.twitter]
+    disableInlineCSS = true
