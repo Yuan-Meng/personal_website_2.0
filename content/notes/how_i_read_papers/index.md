@@ -4,7 +4,7 @@ date: 2024-11-10
 categories: ["writing", "literature review"]
 ---
 
-Former OpenAI researcher Lilian Weng has taught foundational and SOTA in AI/ML to a generation of machine learning practitioners through her awesome [blogposts](https://lilianweng.github.io/faq/). It all started with her personal learning notes and a passion for learning through teaching.
+Former OpenAI researcher Lilian Weng has taught foundational and SOTA ideas in AI/ML to a generation of machine learning practitioners through her awesome [blogposts](https://lilianweng.github.io/faq/). It all started with her personal learning notes and a passion for learning through teaching.
 
 I started my own blog for the same reasons: By sharing my learnings publicly, I motivate myself to articulate my understanding explicitly. 
 
