@@ -2,9 +2,13 @@
 title: "Down the Rabbit Hole: Sequential User Modeling"
 date: 2024-11-10
 math: true
-categories: ["recommender systems"]
+categories: ["recommender systems", "information retrieval"]
 toc: true
 ---
+
+{{< admonition >}}
+Coming soon.... 
+{{< /admonition >}}
 
 
 # References

@@ -8,6 +8,8 @@
   </url><url>
     <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/information-retrieval/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/literature-review/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
@@ -39,8 +41,6 @@
     <loc>http://localhost:1313/posts/negative_sampling/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/recommender-system/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/information-retrieval/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/multi-task-learning/</loc>
   </url><url>
