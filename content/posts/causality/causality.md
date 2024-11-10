@@ -14,6 +14,8 @@ You're probably thinking, *"The red block stopped, right after which the green b
 
 Nice try... I know what you're thinking, *"The red block <u>made</u> the green one move"*. 
 
+<!--more-->
+
 # Why Ask Why?
 
 ## We can't help but think about causation

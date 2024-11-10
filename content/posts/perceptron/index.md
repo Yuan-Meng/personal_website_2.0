@@ -8,6 +8,8 @@ toc: true
 
 Ten years after the ImageNet Challenge thawed the last AI winter, ChaptGPT and generative AI have become part of our everyday life and colloquial language, like (almost) no one has imagined just 2 years back. As increasingly more folks aspire to foray into the field of ML/AI, I can't help but think about a lesson from my guitar teacher:
 
+<!--more-->
+
 > Everyone wants to start playing the songs they love right off the bat, but without nailing seemingly "boring" building blocks such as scales, harmonies, and rhythms, the songs you love will sound like a nightmare...
 
 Not to sound discouraging (yup, when people say "not to do X", they're doing exactly X...), but I think those who can ride the AI wave are those who take their time to build from the foundations. Let's begin with the oldest and simplest neural net: The *Perceptron,* ([Rosenblatt, 1959](https://psycnet.apa.org/record/1959-09865-001)).

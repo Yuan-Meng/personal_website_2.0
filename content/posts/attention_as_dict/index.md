@@ -8,6 +8,8 @@ toc: true
 
 # The Dictionary Metaphor 🔑📚
 
+<!--more-->
+
 By now, the scaled-dot product attention formula might have burned into our brains 🧠, $\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$, yet still this brilliant metaphor from Kevin Murphy's PML book gives it a refreshed interpretation --- 
 
 > "We can think of attention as a soft dictionary look up, in which we compare the query $q$ to each key $k_i$, and then retrieve the corresponding value $v_i$." --- Chapter 15, p. 513

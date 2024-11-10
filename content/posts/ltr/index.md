@@ -12,6 +12,7 @@ toc: true
 
 > Enigmas of the universe <br/> Cannot be known without a search <br/> --- Epica, [*Omega*](https://open.spotify.com/track/34Oz0bzAq7E1aUnKksPfJJ?si=9eabd1446a6a4ccc) (2021)
 
+<!--more-->
 
 In *[The Rainmaker (1997)](https://en.wikipedia.org/wiki/The_Rainmaker_(1997_film))*,  the freshly graduated lawyer Rudy Baylor faced off against a giant insurance firm in his debut case, almost getting buried by mountains of case files that the corporate lawyers never expected him to sift through. If only Rudy had a search engine that *retrieves* all files mentioning suspicious denials and *ranks* them from most to least relevant, the case prep would've been a breeze.
 

@@ -11,6 +11,8 @@ Since last November, I regularly get questions about how to get data science job
 
 > **(PhD) students applying to machine learning or product data scientist roles at tech companies through university recruiting.** 
 
+<!--more-->
+
 ## What's special about university recruiting
 > **July to October is high time to start**: Some say companies have more headcounts at the beginning of each year --- that's **just not true for university recruiting**. Most new grads get hired in the Fall (August to December), much fewer next Spring. Apply early, even if you need to get ready later!
 

@@ -15,6 +15,8 @@ The iconic YouTube paper ([Covington et al., 2016](https://research.google/pubs/
 - **Retrieval** (a.k.a. "candidate generation"): Quickly select top k (in the hundreds or thousands) loosely relevant items from a large corpus of billions
 - **Ranking** (a.k.a. "reranking"): Order final candidates (dozens) by predicted reward probability (e.g., an ads click, a listing booking, a video watch, *etc.*)
 
+<!--more-->
+
 {{< figure src="https://www.dropbox.com/scl/fi/xfzcn69xt5umpiqgiblvj/Screenshot-2024-09-01-at-3.27.32-PM.png?rlkey=co9ingrwzjdawfkj4nfg7j4eg&st=ym59f9sr&raw=1" width="500">}}
 
 ## Two-Tower Network for Retrieval

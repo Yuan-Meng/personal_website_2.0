@@ -8,6 +8,8 @@ toc: true
 
 Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy's [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html), the viral [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and its successor [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/), Umar Jamil's YouTube [series](https://www.youtube.com/@umarjamilai) dissecting SOTA models and the companion [repo](https://github.com/hkproj), among others.
 
+<!--more-->
+
 When it comes to Search/Ads/Recommendations ("搜广推"), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don't share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper ([Ma et al., 2018](https://dl.acm.org/doi/pdf/10.1145/3219819.3220007)) using implementation in the popular [DeepCTR-Torch](https://github.com/shenweichen/DeepCTR-Torch) repo, to teach myself and readers how the authors' blueprint translates into code. 
 
 # The Paper ([Ma et al., 2018](https://dl.acm.org/doi/pdf/10.1145/3219819.3220007))

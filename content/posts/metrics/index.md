@@ -9,6 +9,8 @@ toc: true
 
 'Tis the college and job application season of the year. If only schools and companies have crystal balls to see into each candidate's future achievements, they need not interview people; since they do not have such things, SAT scores, GPA, internships, and other quantifiable metrics are used to aid decisions. Simplified metrics are by no means ideal — As Goodhart put it (often [paraphrased](https://en.wikipedia.org/wiki/Goodhart%27s_law)), "When a measure becomes a metric, it ceases to be a good measure." However, the opposite is worse: Making critical decisions based on heuristics, biases, and personal opinions.
 
+<!--more-->
+
 The solution? It's *not* not using metrics but carefully designing good metrics:
 
 > "[...] faulty intuition, untrusted partners, and complex systems can be understood via intuitive, trustworthy, simple metrics." — David Manheim, [*Goodhart's Law and Why Measurement is Hard*](https://www.ribbonfarm.com/2016/06/09/goodharts-law-and-why-measurement-is-hard/)

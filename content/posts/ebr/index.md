@@ -10,6 +10,8 @@ toc: true
 
 [Embedding](https://en.wikipedia.org/wiki/Embedding) is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors. 
 
+<!--more-->
+
 <details>
   <summary><b>Mathematical topology</b></summary>
   <p>An embedding is a function $f: X \rightarrow Y$ between two topological spaces that is injective (one-to-one) and a homeomorphism onto its image, thus preserving the topological properties of $X$ within $Y$. This concept ensures that $X$ is mapped into $Y$ in a way that $X$'s structure — such as its continuity and open/closed set properties — is maintained exactly within the host structure $Y$</p>

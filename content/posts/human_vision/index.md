@@ -10,6 +10,7 @@ toc: true
 
 In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study [cognitive science](https://en.wikipedia.org/wiki/Cognitive_science) at Berkeley.
 
+<!--more-->
 
 > \- *"So, what is cognitive science?"* he asked. <br/> \- *"It is the study of the mind, uncovering algorithms that might underlie human reasoning, perception, and language."* I tried my best to explain. <br/> \- *"Cool... How is that different from artificial intelligence?"* Dad 🤔. <br/> \- *"Hmm... AI engineers solutions that work, but CogSci reverse-engineers how humans think back from the solutions?"* 21-year-old me 🤓. <br/> \- *"If AI works, does it matter if it works like the mind? Since the mind already works, does it matter if we can reverse-engineer it?"* Dad 🧐. <br/> \- *"The weather today is quite nice..."* 21-year-old me 🥵. <br/>
 

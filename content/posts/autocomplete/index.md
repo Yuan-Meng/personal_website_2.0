@@ -8,6 +8,8 @@ toc: true
 
 Autocompletion dates back half a century ago ([Longuet-Higgins & Ortony, 1968](https://www.doc.ic.ac.uk/~shm/MI/mi3.html)), initially designed to save keystrokes as people type and help those with physical disabilities type faster. The incomplete user input is the **"query prefix"** and suggested ways of extending the prefix into a full query are **"query completions"**. This feature is essential to modern text editors and search engines.
 
+<!--more-->
+
 {{< figure src="https://www.dropbox.com/scl/fi/a112bhnp4bctso6fwn72x/Screenshot-2024-01-06-at-4.27.56-PM.png?rlkey=bphpjszgirskda9i142icb5os&raw=1" width="450" >}}
 
 
