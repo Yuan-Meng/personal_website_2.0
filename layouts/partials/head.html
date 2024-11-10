@@ -1,5 +1,7 @@
 {{- $description := or .Description .Summary site.Params.description | plainify | htmlUnescape | chomp -}}
 {{- $author := or .Params.author site.Author -}}
+{{ $styles := resources.Get "css/styles.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $styles.Permalink }}">
 <meta charset="utf-8" />
 <meta name="language" content="{{ site.Language.LanguageName | default "en" }}" />
 <meta name="viewport" content="width=device-width" />

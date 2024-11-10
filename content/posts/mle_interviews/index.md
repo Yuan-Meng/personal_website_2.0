@@ -3,6 +3,7 @@ title: (Opinionated) Guide to ML Engineer Job Hunting
 date: 2024-10-15
 math: true
 categories: ["career", "machine learning", "interview"]
+toc: true
 ---
 
 # The Marriage Analogy

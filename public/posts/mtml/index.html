@@ -4,7 +4,9 @@
   dir="ltr"
 >
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="utf-8" />
+    
+<link rel="stylesheet" href="http://localhost:1313/css/styles.min.30bb45eb22a875545611138569e9d0de6a7f6d840a287bda29b5f6ea87c1d2f1.css">
+<meta charset="utf-8" />
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
@@ -123,13 +125,16 @@ When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitiv
         <article class="main">
     <header>
       <h1 class="!mb-1">The Annotated Multi-Task Ranker: An MMoE Code Example</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2024-07-05T00:00:00&#43;00:00"
-            >July 5, 2024</time
-          >
+          <time class="text-sm italic opacity-80" datetime="2024-07-05T00:00:00&#43;00:00">July 5, 2024</time>
         </div>
     </header>
 
-    <p>Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a>, the viral <a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a> and its successor <a href="https://nlp.seas.harvard.edu/annotated-transformer/">The Annotated Transformer</a>, Umar Jamil&rsquo;s YouTube <a href="https://www.youtube.com/@umarjamilai">series</a> dissecting SOTA models and the companion <a href="https://github.com/hkproj">repo</a>, among others.</p>
+    
+    
+
+    
+    <div class="content">
+      <p>Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a>, the viral <a href="https://jalammar.github.io/illustrated-transformer/">The Illustrated Transformer</a> and its successor <a href="https://nlp.seas.harvard.edu/annotated-transformer/">The Annotated Transformer</a>, Umar Jamil&rsquo;s YouTube <a href="https://www.youtube.com/@umarjamilai">series</a> dissecting SOTA models and the companion <a href="https://github.com/hkproj">repo</a>, among others.</p>
 <p>When it comes to Search/Ads/Recommendations (&ldquo;搜广推&rdquo;), however, intuitive explanations accompanied by code are rare. Company engineering blogs tend to focus on high-level system designs, and many top conference (e.g., KDD/RecSys/SIGIR) papers don&rsquo;t share code. In this post, I explain the iconic Multi-gate Mixture-of-Experts (MMoE) paper (<a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">Ma et al., 2018</a>) using implementation in the popular <a href="https://github.com/shenweichen/DeepCTR-Torch">DeepCTR-Torch</a> repo, to teach myself and readers how the authors&rsquo; blueprint translates into code.</p>
 <h2 id="the-paper-ma-et-al-2018httpsdlacmorgdoipdf10114532198193220007" class="scroll-mt-8 group">
   The Paper (<a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">Ma et al., 2018</a>)
@@ -2458,7 +2463,10 @@ When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitiv
 <li>Gaurav Chakravorty&rsquo;s <a href="https://github.com/gauravchak">repo</a>: Toy models created by a Meta E7 for educational purposes.</li>
 </ol>
 
+    </div>
   </article>
+
+  
     <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
     <section class="flex flex-col space-y-4">
       <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">

@@ -8,9 +8,7 @@
         {{- $dateMachine := . | time.Format "2006-01-02T15:04:05-07:00" -}}
         {{- $dateHuman := . | time.Format (default ":date_long" site.Params.dateFormat) -}}
         <div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="{{ $dateMachine }}"
-            >{{ $dateHuman }}</time
-          >
+          <time class="text-sm italic opacity-80" datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
         </div>
       {{- end }}
 
@@ -23,15 +21,50 @@
             alt="{{ $.Params.FeatureCaption }}"
           />
           {{- with $.Params.FeatureCaption }}
-            <figcaption class="text-xs italic">{{ . |  markdownify }}</figcaption>
+            <figcaption class="text-xs italic">{{ . | markdownify }}</figcaption>
           {{- end }}
         </figure>
       {{- end }}
     </header>
 
-    {{ .Content }}
+    <!-- Table of Contents Section -->
+    {{ if .Params.toc }}
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          {{ .TableOfContents }}
+        </nav>
+      </div>
+
+      <script>
+        // TOC Toggle Script
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; // Change icon to down arrow
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; // Change icon to right arrow
+            }
+          });
+        });
+      </script>
+    {{ end }}
+
+    <!-- Main Content -->
+    <div class="content">
+      {{ .Content }}
+    </div>
   </article>
 
+  <!-- Optional Meta Section -->
   {{- if or (eq .Section "posts") (eq .Section "notes") }}
     {{ partial "page/meta" . }}
   {{- end }}

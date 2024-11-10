@@ -1,0 +1,48 @@
+/* Container for the Table of Contents */
+.toc-container {
+  background-color: #F2F2F2;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Toggle button styling for the TOC */
+#toc-toggle {
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Icon inside the TOC toggle button */
+#toc-icon {
+  margin-right: 5px;
+  display: inline-block;
+}
+
+/* Styling for the TOC content */
+.toc-content {
+  display: none; /* Hidden by default, shown when toggle is clicked */
+  margin-top: 8px;
+  padding-left: 8px;
+  border-left: 2px solid #ccc;
+  color: #333;
+  line-height: 0.8; /* Adjust for spacing between lines */
+  font-size: 0.9em; /* Font size for TOC entries */
+}
+
+/* Link styling inside the TOC */
+.toc-content a,
+.toc-content a:visited {
+  color: #333 !important; /* Force the color to override any other styles */
+  text-decoration: none; /* Remove underline */
+}
+
+.toc-content a:hover,
+.toc-content a:focus {
+  text-decoration: underline; /* Optional hover and focus effect */
+  color: #555; /* Slightly darker color on hover, adjust as needed */
+}
