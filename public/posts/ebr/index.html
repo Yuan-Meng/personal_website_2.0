@@ -26,7 +26,7 @@
   <meta itemprop="name" content="An Introduction to Embedding-Based Retrieval">
   <meta itemprop="description" content="So, What is an Embedding? Embedding is a classic idea in mathematical topology and machine learning (click ▶ for definitions). You can think of embeddings as a special type of vectors.">
   <meta itemprop="datePublished" content="2024-06-22T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3658">
+  <meta itemprop="wordCount" content="3717">
   <meta itemprop="keywords" content="Embedding,Information retrieval,Vector-based search">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "An Introduction to Embedding-Based Retrieval",
   "timeRequired": "PT18M",
   "url": "http://localhost:1313/posts/ebr/",
-  "wordCount": 3658
+  "wordCount": 3717
 }
 </script>
 
@@ -136,26 +136,33 @@
         <nav id="TableOfContents" class="toc-content">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#choices-of-distance-functions">Choices of Distance Functions</a></li>
-    <li><a href="#approximate-retrieval-algorithms">Approximate Retrieval Algorithms</a>
+    <li><a href="#so-what-is-an-embedding">So, What is an Embedding?</a></li>
+    <li><a href="#top-k-retrieval-problem">Top-$k$ Retrieval Problem</a>
       <ul>
-        <li><a href="#branch-and-bound-algorithms">Branch-and-Bound Algorithms</a></li>
-        <li><a href="#locality-sensitive-hashing-lsh">Locality Sensitive Hashing (LSH)</a></li>
-        <li><a href="#graph-algorithms-eg-hnsw">Graph Algorithms (e.g., HNSW)</a></li>
-        <li><a href="#clustering-eg-faiss">Clustering (e.g., FAISS)</a></li>
+        <li><a href="#choices-of-distance-functions">Choices of Distance Functions</a></li>
+        <li><a href="#approximate-retrieval-algorithms">Approximate Retrieval Algorithms</a>
+          <ul>
+            <li><a href="#branch-and-bound-algorithms">Branch-and-Bound Algorithms</a></li>
+            <li><a href="#locality-sensitive-hashing-lsh">Locality Sensitive Hashing (LSH)</a></li>
+            <li><a href="#graph-algorithms-eg-hnsw">Graph Algorithms (e.g., HNSW)</a></li>
+            <li><a href="#clustering-eg-faiss">Clustering (e.g., FAISS)</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#quantization">Quantization</a></li>
-    <li><a href="#sketching">Sketching</a></li>
-    <li><a href="#feature-multiplexing">Feature Multiplexing</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#bookspapers">Books/Papers</a></li>
-    <li><a href="#blog-posts">Blog Posts</a></li>
+    <li><a href="#embedding-storage-optimization">Embedding Storage Optimization</a>
+      <ul>
+        <li><a href="#quantization">Quantization</a></li>
+        <li><a href="#sketching">Sketching</a></li>
+        <li><a href="#feature-multiplexing">Feature Multiplexing</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#bookspapers">Books/Papers</a></li>
+        <li><a href="#blog-posts">Blog Posts</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
         </nav>
@@ -618,65 +625,130 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">heapq</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># calculate Euclidean distance between two points in space</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">point1</span><span class="p">,</span> <span class="n">point2</span><span class="p">)))</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">best_first_search</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">start_node</span><span class="p">,</span> <span class="n">query_point</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># priority queue: [(negative distance to query point, current node)]</span>
-</span></span><span class="line"><span class="cl">    <span class="n">priority_queue</span> <span class="o">=</span> <span class="p">[(</span><span class="n">euclidean_distance</span><span class="p">(</span><span class="n">query_point</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">start_node</span><span class="p">]),</span> <span class="n">start_node</span><span class="p">)]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># track visited nodes to avoid revisiting</span>
-</span></span><span class="line"><span class="cl">    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">start_node</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># collect top-k nodes without storing distances</span>
-</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">priority_queue</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># get current node to visit</span>
-</span></span><span class="line"><span class="cl">        <span class="n">current_distance</span><span class="p">,</span> <span class="n">current_node</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># assume it&#39;s a top-k solution</span>
-</span></span><span class="line"><span class="cl">        <span class="n">is_candidate</span> <span class="o">=</span> <span class="kc">True</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># visit each of the node&#39;s neighbors</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">[</span><span class="n">current_node</span><span class="p">]:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">neighbor</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="c1"># compute distance to the query</span>
-</span></span><span class="line"><span class="cl">                <span class="n">dist</span> <span class="o">=</span> <span class="n">euclidean_distance</span><span class="p">(</span><span class="n">query_point</span><span class="p">,</span> <span class="n">coords</span><span class="p">[</span><span class="n">neighbor</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">                <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">priority_queue</span><span class="p">,</span> <span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">                <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="c1"># current node is not a candidate if a neighbor is closer</span>
-</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="n">current_distance</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">is_candidate</span> <span class="o">=</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># if node is closest to query, add to result list</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">is_candidate</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_node</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1"># if we already have k results, we can stop</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="k">break</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># example graph in the form of an adjacency list</span>
-</span></span><span class="line"><span class="cl"><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;A&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">,</span> <span class="s2">&#34;C&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;B&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;D&#34;</span><span class="p">,</span> <span class="s2">&#34;E&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;C&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="s2">&#34;F&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;D&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;E&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;B&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;F&#34;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&#34;C&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># coordinates for each node</span>
-</span></span><span class="line"><span class="cl"><span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;A&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&#34;B&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s2">&#34;D&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="s2">&#34;E&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&#34;F&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">top_k_nodes</span> <span class="o">=</span> <span class="n">best_first_search</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="s2">&#34;A&#34;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># output: [&#39;B&#39;, &#39;C&#39;, &#39;E&#39;]</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> heapq
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">euclidean_distance</span>(point1, point2):
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># calculate Euclidean distance between two points in space</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> math<span style="color:#ff79c6">.</span>sqrt(<span style="color:#8be9fd;font-style:italic">sum</span>((a <span style="color:#ff79c6">-</span> b) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">for</span> a, b <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">zip</span>(point1, point2)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">best_first_search</span>(graph, coords, start_node, query_point, k):
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># priority queue: [(negative distance to query point, current node)]</span>
+</span></span><span style="display:flex;"><span>    priority_queue <span style="color:#ff79c6">=</span> [(euclidean_distance(query_point, coords[start_node]), start_node)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># track visited nodes to avoid revisiting</span>
+</span></span><span style="display:flex;"><span>    visited <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">set</span>()
+</span></span><span style="display:flex;"><span>    visited<span style="color:#ff79c6">.</span>add(start_node)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># collect top-k nodes without storing distances</span>
+</span></span><span style="display:flex;"><span>    result <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">while</span> priority_queue <span style="color:#ff79c6">and</span> <span style="color:#8be9fd;font-style:italic">len</span>(result) <span style="color:#ff79c6">&lt;</span> k:
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># get current node to visit</span>
+</span></span><span style="display:flex;"><span>        current_distance, current_node <span style="color:#ff79c6">=</span> heapq<span style="color:#ff79c6">.</span>heappop(priority_queue)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># assume it&#39;s a top-k solution</span>
+</span></span><span style="display:flex;"><span>        is_candidate <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># visit each of the node&#39;s neighbors</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> neighbor <span style="color:#ff79c6">in</span> graph[current_node]:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">if</span> neighbor <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> visited:
+</span></span><span style="display:flex;"><span>                <span style="color:#6272a4"># compute distance to the query</span>
+</span></span><span style="display:flex;"><span>                dist <span style="color:#ff79c6">=</span> euclidean_distance(query_point, coords[neighbor])
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#ff79c6">.</span>heappush(priority_queue, (dist, neighbor))
+</span></span><span style="display:flex;"><span>                visited<span style="color:#ff79c6">.</span>add(neighbor)
+</span></span><span style="display:flex;"><span>                <span style="color:#6272a4"># current node is not a candidate if a neighbor is closer</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">if</span> dist <span style="color:#ff79c6">&lt;</span> current_distance:
+</span></span><span style="display:flex;"><span>                    is_candidate <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">False</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># if node is closest to query, add to result list</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> is_candidate:
+</span></span><span style="display:flex;"><span>            result<span style="color:#ff79c6">.</span>append(current_node)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># if we already have k results, we can stop</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(result) <span style="color:#ff79c6">&gt;=</span> k:
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">break</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># example graph in the form of an adjacency list</span>
+</span></span><span style="display:flex;"><span>graph <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;A&#34;</span>: [<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;C&#34;</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;B&#34;</span>: [<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;D&#34;</span>, <span style="color:#f1fa8c">&#34;E&#34;</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;C&#34;</span>: [<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;F&#34;</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;D&#34;</span>: [<span style="color:#f1fa8c">&#34;B&#34;</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;E&#34;</span>: [<span style="color:#f1fa8c">&#34;B&#34;</span>],
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;F&#34;</span>: [<span style="color:#f1fa8c">&#34;C&#34;</span>],
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># coordinates for each node</span>
+</span></span><span style="display:flex;"><span>coords <span style="color:#ff79c6">=</span> {<span style="color:#f1fa8c">&#34;A&#34;</span>: [<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">0</span>], <span style="color:#f1fa8c">&#34;B&#34;</span>: [<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">1</span>], <span style="color:#f1fa8c">&#34;C&#34;</span>: [<span style="color:#bd93f9">2</span>, <span style="color:#bd93f9">2</span>], <span style="color:#f1fa8c">&#34;D&#34;</span>: [<span style="color:#bd93f9">5</span>, <span style="color:#bd93f9">5</span>], <span style="color:#f1fa8c">&#34;E&#34;</span>: [<span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>], <span style="color:#f1fa8c">&#34;F&#34;</span>: [<span style="color:#bd93f9">4</span>, <span style="color:#bd93f9">4</span>]}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>top_k_nodes <span style="color:#ff79c6">=</span> best_first_search(graph, coords, <span style="color:#f1fa8c">&#34;A&#34;</span>, [<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>], <span style="color:#bd93f9">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># output: [&#39;B&#39;, &#39;C&#39;, &#39;E&#39;]</span></span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python code snippet end</p>
 
   

@@ -35,7 +35,7 @@ You’re probably thinking, “The red block stopped, right after which the gree
 Nice try… I know what you’re thinking, “The red block made the green one move”.
 Why Ask Why? We can’t help but think about causation Your stats professor can say “correlation is not causation” like a broken record, but we can’t help but think about causation. Even 12-month-old babies don’t think the motions of the two blocks are merely correlated. They look longer, as if surprised, when we reverse the sequence (but not if the blocks don’t abide by Newton’s Third Law, in which case the event can’t be causal, Kominsky et al., 2017). If you’re intrigued by causal cognition, I recommend this talk by Tobias Gerstenberg.">
   <meta itemprop="datePublished" content="2021-11-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5538">
+  <meta itemprop="wordCount" content="5541">
   <meta itemprop="keywords" content="Causal inference,Quasi-experiment">
 
   <meta name="twitter:card" content="summary">
@@ -94,9 +94,9 @@ Why Ask Why? We can’t help but think about causation Your stats professor can 
   },
   "mainEntityOfPage": "http://localhost:1313/posts/causality/causality/",
   "name": "Causal Inference in Data Science",
-  "timeRequired": "PT26M",
+  "timeRequired": "PT27M",
   "url": "http://localhost:1313/posts/causality/causality/",
-  "wordCount": 5538
+  "wordCount": 5541
 }
 </script>
 
@@ -147,36 +147,45 @@ Why Ask Why? We can’t help but think about causation Your stats professor can 
         <nav id="TableOfContents" class="toc-content">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#we-cant-help-but-think-about-causation">We can&rsquo;t help but think about causation</a></li>
-    <li><a href="#we-cant-make-things-happen-without-knowing-why">We can&rsquo;t make things happen without knowing why</a></li>
-    <li><a href="#yet-we-cant-always-use-ab-testing-to-figure-out-why">Yet we can&rsquo;t always use A/B testing to figure out why</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#test-differently-switchbacks">Test differently: switchbacks</a></li>
-    <li><a href="#infer-from-observational-data">Infer from observational data?</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#1-regression">1. Regression</a></li>
-    <li><a href="#2-matching">2. Matching</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#3-difference-in-differences-dd">3. Difference-in-Differences (DD)</a></li>
-    <li><a href="#4-synthetic-control">4. Synthetic Control</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#5-regression-discontinuity-design-rdd">5. Regression Discontinuity Design (RDD)</a></li>
-    <li><a href="#6-instrumental-variables-ivs">6. Instrumental Variables (IVs)</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#books">Books</a></li>
-    <li><a href="#papers">Papers</a></li>
-    <li><a href="#talks">Talks</a></li>
-    <li><a href="#blogs">Blogs</a></li>
+    <li><a href="#why-ask-why">Why Ask Why?</a>
+      <ul>
+        <li><a href="#we-cant-help-but-think-about-causation">We can&rsquo;t help but think about causation</a></li>
+        <li><a href="#we-cant-make-things-happen-without-knowing-why">We can&rsquo;t make things happen without knowing why</a></li>
+        <li><a href="#yet-we-cant-always-use-ab-testing-to-figure-out-why">Yet we can&rsquo;t always use A/B testing to figure out why</a></li>
+      </ul>
+    </li>
+    <li><a href="#rethink-alternatives">Rethink Alternatives</a>
+      <ul>
+        <li><a href="#test-differently-switchbacks">Test differently: switchbacks</a></li>
+        <li><a href="#infer-from-observational-data">Infer from observational data?</a></li>
+      </ul>
+    </li>
+    <li><a href="#method-1-statistical-control">Method 1: Statistical Control</a>
+      <ul>
+        <li><a href="#1-regression">1. Regression</a></li>
+        <li><a href="#2-matching">2. Matching</a></li>
+      </ul>
+    </li>
+    <li><a href="#method-2-counterfactuals">Method 2: Counterfactuals</a>
+      <ul>
+        <li><a href="#3-difference-in-differences-dd">3. Difference-in-Differences (DD)</a></li>
+        <li><a href="#4-synthetic-control">4. Synthetic Control</a></li>
+      </ul>
+    </li>
+    <li><a href="#method-3-natural-experiments">Method 3: Natural Experiments</a>
+      <ul>
+        <li><a href="#5-regression-discontinuity-design-rdd">5. Regression Discontinuity Design (RDD)</a></li>
+        <li><a href="#6-instrumental-variables-ivs">6. Instrumental Variables (IVs)</a></li>
+      </ul>
+    </li>
+    <li><a href="#resources">Resources</a>
+      <ul>
+        <li><a href="#books">Books</a></li>
+        <li><a href="#papers">Papers</a></li>
+        <li><a href="#talks">Talks</a></li>
+        <li><a href="#blogs">Blogs</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
         </nav>
@@ -443,8 +452,16 @@ Why Ask Why? We can’t help but think about causation Your stats professor can 
     </div>
   </aside>
   <p class="sr-only">r code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">lme4</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nf">lmer</span><span class="p">(</span><span class="n">delivery_time</span> <span class="o">~</span> <span class="n">has_sos</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span><span class="o">|</span><span class="n">market</span><span class="o">/</span><span class="n">time</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">sb_data</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#50fa7b">library</span>(lme4)
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">lmer</span>(delivery_time <span style="color:#ff79c6">~</span> has_sos <span style="color:#ff79c6">+</span> (<span style="color:#bd93f9">1</span><span style="color:#ff79c6">|</span>market<span style="color:#ff79c6">/</span>time), data<span style="color:#ff79c6">=</span>sb_data)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">r code snippet end</p>
 
   
@@ -619,7 +636,14 @@ Why Ask Why? We can’t help but think about causation Your stats professor can 
     </div>
   </aside>
   <p class="sr-only">r code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">infection_rate</span> <span class="o">~</span> <span class="n">got_booster</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">has_asthema</span> <span class="o">+</span> <span class="n">SES</span> <span class="o">+</span> <span class="kc">...</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">omicron</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#50fa7b">lm</span>(infection_rate <span style="color:#ff79c6">~</span> got_booster <span style="color:#ff79c6">+</span> age <span style="color:#ff79c6">+</span> has_asthema <span style="color:#ff79c6">+</span> SES <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">...</span>, data<span style="color:#ff79c6">=</span>omicron)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">r code snippet end</p>
 
   

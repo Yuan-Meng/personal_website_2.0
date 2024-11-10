@@ -29,7 +29,7 @@ Everyone wants to start playing the songs they love right off the bat, but witho
   <meta itemprop="description" content="Ten years after the ImageNet Challenge thawed the last AI winter, ChaptGPT and generative AI have become part of our everyday life and colloquial language, like (almost) no one has imagined just 2 years back. As increasingly more folks aspire to foray into the field of ML/AI, I can’t help but think about a lesson from my guitar teacher:
 Everyone wants to start playing the songs they love right off the bat, but without nailing seemingly “boring” building blocks such as scales, harmonies, and rhythms, the songs you love will sound like a nightmare…">
   <meta itemprop="datePublished" content="2023-07-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1883">
+  <meta itemprop="wordCount" content="2018">
   <meta itemprop="keywords" content="Machine learning">
 
   <meta name="twitter:card" content="summary">
@@ -85,9 +85,9 @@ Everyone wants to start playing the songs they love right off the bat, but witho
   },
   "mainEntityOfPage": "http://localhost:1313/posts/perceptron/",
   "name": "Teaching A Peceptron to See",
-  "timeRequired": "PT9M",
+  "timeRequired": "PT10M",
   "url": "http://localhost:1313/posts/perceptron/",
-  "wordCount": 1883
+  "wordCount": 2018
 }
 </script>
 
@@ -138,16 +138,21 @@ Everyone wants to start playing the songs they love right off the bat, but witho
         <nav id="TableOfContents" class="toc-content">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#how-do-humans-see-in-plain-english">How do humans see, in plain English?</a></li>
-    <li><a href="#but-how-can-a-machine-see">But how can a machine see?</a></li>
-    <li><a href="#wait-how-do-we-learn-the-weights">Wait&hellip; how do we &ldquo;learn&rdquo; the weights?</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#read-image-inputs">Read image inputs</a></li>
-    <li><a href="#classify-0-vs-1">Classify 0 vs. 1</a></li>
-    <li><a href="#interpret-learned-weights">Interpret learned weights</a></li>
-    <li><a href="#generalize-to-all-image-pairs">Generalize to all image pairs</a></li>
+    <li><a href="#seeing-7-vs-l">Seeing &ldquo;7&rdquo; vs. &ldquo;L&rdquo;</a>
+      <ul>
+        <li><a href="#how-do-humans-see-in-plain-english">How do humans see, in plain English?</a></li>
+        <li><a href="#but-how-can-a-machine-see">But how can a machine see?</a></li>
+        <li><a href="#wait-how-do-we-learn-the-weights">Wait&hellip; how do we &ldquo;learn&rdquo; the weights?</a></li>
+      </ul>
+    </li>
+    <li><a href="#code-up-a-perceptron">Code Up A Perceptron</a>
+      <ul>
+        <li><a href="#read-image-inputs">Read image inputs</a></li>
+        <li><a href="#classify-0-vs-1">Classify 0 vs. 1</a></li>
+        <li><a href="#interpret-learned-weights">Interpret learned weights</a></li>
+        <li><a href="#generalize-to-all-image-pairs">Generalize to all image pairs</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
         </nav>
@@ -450,26 +455,52 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># dimension of all images</span>
-</span></span><span class="line"><span class="cl"><span class="n">DIM</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># flattened image dimension</span>
-</span></span><span class="line"><span class="cl"><span class="n">N</span> <span class="o">=</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">DIM</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_image_files</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&#34;images/&#34;</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;loads images of given digit and returns a list of vectors&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># initialize empty list to collect vectors</span>
-</span></span><span class="line"><span class="cl">    <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># read files in the path</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)))):</span>
-</span></span><span class="line"><span class="cl">        <span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">f</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># check image dimension</span>
-</span></span><span class="line"><span class="cl">            <span class="k">assert</span> <span class="n">i</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">DIM</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># flatten i into a single vector</span>
-</span></span><span class="line"><span class="cl">            <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">images</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># dimension of all images</span>
+</span></span><span style="display:flex;"><span>DIM <span style="color:#ff79c6">=</span> (<span style="color:#bd93f9">28</span>, <span style="color:#bd93f9">28</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># flattened image dimension</span>
+</span></span><span style="display:flex;"><span>N <span style="color:#ff79c6">=</span> DIM[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> DIM[<span style="color:#bd93f9">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">load_image_files</span>(n, path<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;images/&#34;</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;loads images of given digit and returns a list of vectors&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># initialize empty list to collect vectors</span>
+</span></span><span style="display:flex;"><span>    images <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># read files in the path</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> f <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">sorted</span>(os<span style="color:#ff79c6">.</span>listdir(os<span style="color:#ff79c6">.</span>path<span style="color:#ff79c6">.</span>join(path, <span style="color:#8be9fd;font-style:italic">str</span>(n)))):
+</span></span><span style="display:flex;"><span>        p <span style="color:#ff79c6">=</span> os<span style="color:#ff79c6">.</span>path<span style="color:#ff79c6">.</span>join(path, <span style="color:#8be9fd;font-style:italic">str</span>(n), f)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> os<span style="color:#ff79c6">.</span>path<span style="color:#ff79c6">.</span>isfile(p):
+</span></span><span style="display:flex;"><span>            i <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>loadtxt(p)
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># check image dimension</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">assert</span> i<span style="color:#ff79c6">.</span>shape <span style="color:#ff79c6">==</span> DIM
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># flatten i into a single vector</span>
+</span></span><span style="display:flex;"><span>            images<span style="color:#ff79c6">.</span>append(i<span style="color:#ff79c6">.</span>flatten())
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> images</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -563,11 +594,22 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">classify_image</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;use weight matrix W to determine digit in image&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># if dot product &gt; 0, return 1; otherwise 0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">y</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">classify_image</span>(W, image):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;use weight matrix W to determine digit in image&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># if dot product &gt; 0, return 1; otherwise 0</span>
+</span></span><span style="display:flex;"><span>    y <span style="color:#ff79c6">=</span> (np<span style="color:#ff79c6">.</span>dot(image, W) <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span>)<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">int</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> y</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -635,24 +677,48 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;updates weight matrix W based on training (image,label) pairs&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># loop through images and labels</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># predict image label</span>
-</span></span><span class="line"><span class="cl">        <span class="n">pred_label</span> <span class="o">=</span> <span class="n">classify_image</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># update only if prediction is wrong</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">pred_label</span> <span class="o">!=</span> <span class="n">label</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># predicted 0 but label is 1</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="n">W</span> <span class="o">+=</span> <span class="n">image</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># predicted 1 but label is 0</span>
-</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="n">W</span> <span class="o">-=</span> <span class="n">image</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># return updated weights</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">W</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">update_weights</span>(W, images, labels):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;updates weight matrix W based on training (image,label) pairs&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># loop through images and labels</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> image, label <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">zip</span>(images, labels):
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># predict image label</span>
+</span></span><span style="display:flex;"><span>        pred_label <span style="color:#ff79c6">=</span> classify_image(W, image)
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># update only if prediction is wrong</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> pred_label <span style="color:#ff79c6">!=</span> label:
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># predicted 0 but label is 1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">if</span> label <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>:
+</span></span><span style="display:flex;"><span>                W <span style="color:#ff79c6">+=</span> image
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># predicted 1 but label is 0</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">else</span>:
+</span></span><span style="display:flex;"><span>                W <span style="color:#ff79c6">-=</span> image
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># return updated weights</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> W</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -718,34 +784,68 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">train_perceptron</span><span class="p">(</span><span class="n">digit1</span><span class="p">,</span> <span class="n">digit2</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;train perceptron on (image, label) pairs for given steps&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># load images of two digits to compare</span>
-</span></span><span class="line"><span class="cl">    <span class="n">img1</span> <span class="o">=</span> <span class="n">load_image_files</span><span class="p">(</span><span class="n">digit1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">img2</span> <span class="o">=</span> <span class="n">load_image_files</span><span class="p">(</span><span class="n">digit2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># initialize empty list to collect accuarcies</span>
-</span></span><span class="line"><span class="cl">    <span class="n">accuracies</span> <span class="o">=</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># initilaize random weights from standard normal</span>
-</span></span><span class="line"><span class="cl">    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># iterate through each epoch</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">)):</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># randomly sample images for &#39;0&#39;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">sample1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># randomly sample images for &#39;1&#39;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">sample2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1"># train on chosen samples</span>
-</span></span><span class="line"><span class="cl">        <span class="n">W</span> <span class="o">=</span> <span class="n">update_weights</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">sample1</span> <span class="o">+</span> <span class="n">sample2</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># evaluate performance on all images</span>
-</span></span><span class="line"><span class="cl">        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">compute_accuracy</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">img1</span> <span class="o">+</span> <span class="n">img2</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">img2</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">        <span class="n">accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># return accuracies and final weights</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">accuracies</span><span class="p">,</span> <span class="n">W</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">train_perceptron</span>(digit1, digit2, n_samples<span style="color:#ff79c6">=</span><span style="color:#bd93f9">25</span>, epoch<span style="color:#ff79c6">=</span><span style="color:#bd93f9">200</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;train perceptron on (image, label) pairs for given steps&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># load images of two digits to compare</span>
+</span></span><span style="display:flex;"><span>    img1 <span style="color:#ff79c6">=</span> load_image_files(digit1)
+</span></span><span style="display:flex;"><span>    img2 <span style="color:#ff79c6">=</span> load_image_files(digit2)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># initialize empty list to collect accuarcies</span>
+</span></span><span style="display:flex;"><span>    accuracies <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># initilaize random weights from standard normal</span>
+</span></span><span style="display:flex;"><span>    W <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>normal(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, size<span style="color:#ff79c6">=</span>N)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># iterate through each epoch</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> tqdm(<span style="color:#8be9fd;font-style:italic">range</span>(epoch)):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># randomly sample images for &#39;0&#39;</span>
+</span></span><span style="display:flex;"><span>        sample1 <span style="color:#ff79c6">=</span> random<span style="color:#ff79c6">.</span>sample(img1, n_samples)
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># randomly sample images for &#39;1&#39;</span>
+</span></span><span style="display:flex;"><span>        sample2 <span style="color:#ff79c6">=</span> random<span style="color:#ff79c6">.</span>sample(img2, n_samples)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># train on chosen samples</span>
+</span></span><span style="display:flex;"><span>        W <span style="color:#ff79c6">=</span> update_weights(W, sample1 <span style="color:#ff79c6">+</span> sample2, [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> n_samples <span style="color:#ff79c6">+</span> [<span style="color:#bd93f9">1</span>] <span style="color:#ff79c6">*</span> n_samples)
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># evaluate performance on all images</span>
+</span></span><span style="display:flex;"><span>        accuracy <span style="color:#ff79c6">=</span> compute_accuracy(W, img1 <span style="color:#ff79c6">+</span> img2, [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">len</span>(img1) <span style="color:#ff79c6">+</span> [<span style="color:#bd93f9">1</span>] <span style="color:#ff79c6">*</span> <span style="color:#8be9fd;font-style:italic">len</span>(img2))
+</span></span><span style="display:flex;"><span>        accuracies<span style="color:#ff79c6">.</span>append(accuracy)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># return accuracies and final weights</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> accuracies, W</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -811,17 +911,34 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;computes accuracy on a list of images&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># initialize count at 0</span>
-</span></span><span class="line"><span class="cl">    <span class="n">n_correct</span> <span class="o">=</span> <span class="mi">0</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># loop through image list</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">images</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># increment count by each time we correctly classify an image</span>
-</span></span><span class="line"><span class="cl">        <span class="n">n_correct</span> <span class="o">+=</span> <span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">classify_image</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">image</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># accuracy is total correct / total</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">n_correct</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">compute_accuracy</span>(W, images, labels):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;computes accuracy on a list of images&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># initialize count at 0</span>
+</span></span><span style="display:flex;"><span>    n_correct <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># loop through image list</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i, image <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">enumerate</span>(images):
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># increment count by each time we correctly classify an image</span>
+</span></span><span style="display:flex;"><span>        n_correct <span style="color:#ff79c6">+=</span> (labels[i] <span style="color:#ff79c6">==</span> classify_image(W, image))<span style="color:#ff79c6">.</span>astype(<span style="color:#8be9fd;font-style:italic">int</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># accuracy is total correct / total</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> n_correct <span style="color:#ff79c6">/</span> <span style="color:#8be9fd;font-style:italic">len</span>(images)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -887,16 +1004,32 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="c1"># train on 25 examples for given number of epochs</span>
-</span></span><span class="line"><span class="cl"><span class="n">n_samples</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">=</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">500</span>
-</span></span><span class="line"><span class="cl"><span class="n">accuracies</span><span class="p">,</span> <span class="n">trained_W</span> <span class="o">=</span> <span class="n">train_perceptron</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># plot accuracy as a function of epoch</span>
-</span></span><span class="line"><span class="cl"><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">),</span> <span class="n">accuracies</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&#34;epoch&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&#34;mean accuracy&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&#34;training accuracy&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#6272a4"># train on 25 examples for given number of epochs</span>
+</span></span><span style="display:flex;"><span>n_samples, epochs <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">25</span>, <span style="color:#bd93f9">500</span>
+</span></span><span style="display:flex;"><span>accuracies, trained_W <span style="color:#ff79c6">=</span> train_perceptron(<span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>, n_samples, epochs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># plot accuracy as a function of epoch</span>
+</span></span><span style="display:flex;"><span>fig, ax <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize<span style="color:#ff79c6">=</span>(<span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">8</span>))
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>plot(<span style="color:#8be9fd;font-style:italic">range</span>(epochs), accuracies)
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>set_xlabel(<span style="color:#f1fa8c">&#34;epoch&#34;</span>, fontsize<span style="color:#ff79c6">=</span><span style="color:#bd93f9">20</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>set_ylabel(<span style="color:#f1fa8c">&#34;mean accuracy&#34;</span>, fontsize<span style="color:#ff79c6">=</span><span style="color:#bd93f9">20</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>set_title(<span style="color:#f1fa8c">&#34;training accuracy&#34;</span>, fontsize<span style="color:#ff79c6">=</span><span style="color:#bd93f9">25</span>)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -991,13 +1124,26 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="c1"># reshape weights back to 28 * 28</span>
-</span></span><span class="line"><span class="cl"><span class="n">trained_W_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trained_W</span><span class="p">,</span> <span class="n">DIM</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># plot weight matrix</span>
-</span></span><span class="line"><span class="cl"><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">trained_W_2d</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&#34;off&#34;</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#6272a4"># reshape weights back to 28 * 28</span>
+</span></span><span style="display:flex;"><span>trained_W_2d <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>reshape(trained_W, DIM)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># plot weight matrix</span>
+</span></span><span style="display:flex;"><span>fig, ax <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize<span style="color:#ff79c6">=</span>(<span style="color:#bd93f9">10</span>, <span style="color:#bd93f9">10</span>))
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>imshow(trained_W_2d)
+</span></span><span style="display:flex;"><span>ax<span style="color:#ff79c6">.</span>axis(<span style="color:#f1fa8c">&#34;off&#34;</span>)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -1091,42 +1237,84 @@ Everyone wants to start playing the songs they love right off the bat, but witho
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_accuracy_matrix</span><span class="p">(</span><span class="n">n_num</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;get maxtrix with classification accuracy&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># initialize matrix with all 1&#39;s</span>
-</span></span><span class="line"><span class="cl">    <span class="n">acc_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">n_num</span><span class="p">,</span> <span class="n">n_num</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># loop through digit pairs</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">digit1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">digit2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">digit1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_num</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># get accuracies after 100 epochs</span>
-</span></span><span class="line"><span class="cl">            <span class="n">acc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_perceptron</span><span class="p">(</span><span class="n">digit1</span><span class="p">,</span> <span class="n">digit2</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="c1"># replace value in matrix with final accuracy</span>
-</span></span><span class="line"><span class="cl">            <span class="n">acc_matrix</span><span class="p">[</span><span class="n">digit1</span><span class="p">,</span> <span class="n">digit2</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">            <span class="n">acc_matrix</span><span class="p">[</span><span class="n">digit2</span><span class="p">,</span> <span class="n">digit1</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># return matrix</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">acc_matrix</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">plot_accuracy_matrix</span><span class="p">(</span><span class="n">acc_matrix</span><span class="p">,</span> <span class="n">n_num</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;plot classification accuracy using a heatmap&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># generate heatmap</span>
-</span></span><span class="line"><span class="cl">    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="n">g</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">acc_matrix</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&#34;Blues&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_num</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_num</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&#34;accuracy matrix&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># add color bar</span>
-</span></span><span class="line"><span class="cl">    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># plot accuracy between each digit pair </span>
-</span></span><span class="line"><span class="cl"><span class="n">acc_matrix</span> <span class="o">=</span> <span class="n">get_accuracy_matrix</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">plot_accuracy_matrix</span><span class="p">(</span><span class="n">acc_matrix</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></span></span></code></pre></div>
+  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">get_accuracy_matrix</span>(n_num):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;get maxtrix with classification accuracy&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># initialize matrix with all 1&#39;s</span>
+</span></span><span style="display:flex;"><span>    acc_matrix <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>ones([n_num, n_num])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># loop through digit pairs</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> digit1 <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(n_num <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> digit2 <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(digit1 <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>, n_num):
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># get accuracies after 100 epochs</span>
+</span></span><span style="display:flex;"><span>            acc, _ <span style="color:#ff79c6">=</span> train_perceptron(digit1, digit2, <span style="color:#bd93f9">25</span>, <span style="color:#bd93f9">100</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># replace value in matrix with final accuracy</span>
+</span></span><span style="display:flex;"><span>            acc_matrix[digit1, digit2] <span style="color:#ff79c6">=</span> acc[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>]
+</span></span><span style="display:flex;"><span>            acc_matrix[digit2, digit1] <span style="color:#ff79c6">=</span> acc[<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># return matrix</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> acc_matrix
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">plot_accuracy_matrix</span>(acc_matrix, n_num):
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;&#34;&#34;plot classification accuracy using a heatmap&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># generate heatmap</span>
+</span></span><span style="display:flex;"><span>    fig, ax <span style="color:#ff79c6">=</span> plt<span style="color:#ff79c6">.</span>subplots(figsize<span style="color:#ff79c6">=</span>(<span style="color:#bd93f9">8</span>, <span style="color:#bd93f9">8</span>))
+</span></span><span style="display:flex;"><span>    g <span style="color:#ff79c6">=</span> ax<span style="color:#ff79c6">.</span>imshow(acc_matrix, cmap<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;Blues&#34;</span>)
+</span></span><span style="display:flex;"><span>    ax<span style="color:#ff79c6">.</span>set_xticks(<span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0</span>, n_num))
+</span></span><span style="display:flex;"><span>    ax<span style="color:#ff79c6">.</span>set_yticks(<span style="color:#8be9fd;font-style:italic">range</span>(<span style="color:#bd93f9">0</span>, n_num))
+</span></span><span style="display:flex;"><span>    ax<span style="color:#ff79c6">.</span>set_title(<span style="color:#f1fa8c">&#34;accuracy matrix&#34;</span>, fontsize<span style="color:#ff79c6">=</span><span style="color:#bd93f9">20</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># add color bar</span>
+</span></span><span style="display:flex;"><span>    fig<span style="color:#ff79c6">.</span>colorbar(g, ax<span style="color:#ff79c6">=</span>ax)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># plot accuracy between each digit pair </span>
+</span></span><span style="display:flex;"><span>acc_matrix <span style="color:#ff79c6">=</span> get_accuracy_matrix(<span style="color:#bd93f9">10</span>)
+</span></span><span style="display:flex;"><span>plot_accuracy_matrix(acc_matrix, <span style="color:#bd93f9">10</span>)</span></span></code></pre></td></tr></table>
+</div>
+</div>
   <p class="sr-only">python3 code snippet end</p>
 
   
