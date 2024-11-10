@@ -130,6 +130,47 @@ Everyone wants to start playing the songs they love right off the bat, but witho
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-do-humans-see-in-plain-english">How do humans see, in plain English?</a></li>
+    <li><a href="#but-how-can-a-machine-see">But how can a machine see?</a></li>
+    <li><a href="#wait-how-do-we-learn-the-weights">Wait&hellip; how do we &ldquo;learn&rdquo; the weights?</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#read-image-inputs">Read image inputs</a></li>
+    <li><a href="#classify-0-vs-1">Classify 0 vs. 1</a></li>
+    <li><a href="#interpret-learned-weights">Interpret learned weights</a></li>
+    <li><a href="#generalize-to-all-image-pairs">Generalize to all image pairs</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

@@ -3,6 +3,7 @@ title: "Is Human Vision More like CNN or Vision Transformer?"
 date: 2024-10-13
 math: true
 categories: ["AI", "cognitive science"]
+toc: true
 ---
 
 # Engineer the Mind

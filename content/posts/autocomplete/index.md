@@ -3,6 +3,7 @@ title: Autocompletion for Search Enginees
 date: 2024-01-06
 math: true
 categories: ["search", "information retrieval", "autocomplete"]
+toc: true
 ---
 
 Autocompletion dates back half a century ago ([Longuet-Higgins & Ortony, 1968](https://www.doc.ic.ac.uk/~shm/MI/mi3.html)), initially designed to save keystrokes as people type and help those with physical disabilities type faster. The incomplete user input is the **"query prefix"** and suggested ways of extending the prefix into a full query are **"query completions"**. This feature is essential to modern text editors and search engines.

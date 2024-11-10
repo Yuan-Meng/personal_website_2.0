@@ -3,6 +3,7 @@ title: "An Introduction to Embedding-Based Retrieval"
 date: 2024-06-22
 math: true
 categories: ["embedding", "information retrieval", "vector-based search"]
+toc: true
 ---
 
 # So, What is an Embedding?

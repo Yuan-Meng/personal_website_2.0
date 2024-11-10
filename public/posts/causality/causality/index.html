@@ -139,6 +139,67 @@ Why Ask Why? We can’t help but think about causation Your stats professor can 
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#we-cant-help-but-think-about-causation">We can&rsquo;t help but think about causation</a></li>
+    <li><a href="#we-cant-make-things-happen-without-knowing-why">We can&rsquo;t make things happen without knowing why</a></li>
+    <li><a href="#yet-we-cant-always-use-ab-testing-to-figure-out-why">Yet we can&rsquo;t always use A/B testing to figure out why</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#test-differently-switchbacks">Test differently: switchbacks</a></li>
+    <li><a href="#infer-from-observational-data">Infer from observational data?</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#1-regression">1. Regression</a></li>
+    <li><a href="#2-matching">2. Matching</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#3-difference-in-differences-dd">3. Difference-in-Differences (DD)</a></li>
+    <li><a href="#4-synthetic-control">4. Synthetic Control</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#5-regression-discontinuity-design-rdd">5. Regression Discontinuity Design (RDD)</a></li>
+    <li><a href="#6-instrumental-variables-ivs">6. Instrumental Variables (IVs)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#books">Books</a></li>
+    <li><a href="#papers">Papers</a></li>
+    <li><a href="#talks">Talks</a></li>
+    <li><a href="#blogs">Blogs</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

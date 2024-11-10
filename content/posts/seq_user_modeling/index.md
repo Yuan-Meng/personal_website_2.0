@@ -3,6 +3,7 @@ title: Flavors of Sequential User Modeling
 date: 2024-11-10
 math: true
 categories: ["information retrieval", "recommender system"]
+toc: true
 ---
 
 <!-- 

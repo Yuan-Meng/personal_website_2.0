@@ -4,6 +4,7 @@ date: "2024-02-17"
 locale: "en_US"
 math: true
 categories: ["search", "information retrieval", "learning to rank"]
+toc: true
 ---
 
 

@@ -3,6 +3,7 @@ title: "Attention as Soft Dictionary Lookup"
 date: "2024-03-09"
 math: true
 categories: ["machine learning", "natural language processing"]
+toc: true
 ---
 
 # The Dictionary Metaphor 🔑📚

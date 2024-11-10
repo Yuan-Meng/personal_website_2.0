@@ -127,6 +127,66 @@
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#two-stage-architecture">Two-Stage Architecture</a></li>
+    <li><a href="#two-tower-network-for-retrieval">Two-Tower Network for Retrieval</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#random-negative-sampling-rns">Random Negative Sampling (RNS)</a></li>
+    <li><a href="#batch-negative-sampling-bns">Batch Negative Sampling (BNS)</a></li>
+    <li><a href="#mixed-negative-sampling-mns">Mixed Negative Sampling (MNS)</a></li>
+    <li><a href="#online-hard-negative-mining-hnm">Online Hard Negative Mining (HNM)</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#social-media">Social Media</a>
+      <ul>
+        <li><a href="#facebook-people-search-kdd-2020httpsdlacmorgdoiabs10114533944863403305">Facebook People Search (<a href="https://dl.acm.org/doi/abs/10.1145/3394486.3403305">KDD 2020</a>)</a></li>
+        <li><a href="#linkedin-job-search-kdd-2024httpsarxivorgabs240213435">LinkedIn Job Search (<a href="https://arxiv.org/abs/2402.13435">KDD 2024</a>)</a></li>
+      </ul>
+    </li>
+    <li><a href="#e-commerce">E-Commerce</a>
+      <ul>
+        <li><a href="#jdcom-product-search-sigir-2020httpsdlacmorgdoiabs10114533972713401446">JD.com Product Search (<a href="https://dl.acm.org/doi/abs/10.1145/3397271.3401446">SIGIR 2020</a>)</a></li>
+        <li><a href="#amazon-product-search-kdd-2019httpswwwamazonsciencepublicationssemantic-product-search">Amazon Product Search (<a href="https://www.amazon.science/publications/semantic-product-search">KDD 2019</a>)</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#papers">Papers</a></li>
+    <li><a href="#blogposts--repos">Blogposts + Repos</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

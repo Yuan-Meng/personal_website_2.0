@@ -3,6 +3,7 @@ title: Teaching A Peceptron to See
 date: 2023-07-02
 math: true
 categories: ["machine learning"]
+toc: true
 ---
 
 Ten years after the ImageNet Challenge thawed the last AI winter, ChaptGPT and generative AI have become part of our everyday life and colloquial language, like (almost) no one has imagined just 2 years back. As increasingly more folks aspire to foray into the field of ML/AI, I can't help but think about a lesson from my guitar teacher:

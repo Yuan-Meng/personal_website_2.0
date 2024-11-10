@@ -3,6 +3,7 @@ title: (Quirky) Roadmap for New Grad Data Scientists
 date: 2022-03-13
 math: true
 categories: ["career", "data science", "machine learning", "interview"] 
+toc: true
 ---
 
 # New Grad Timeline

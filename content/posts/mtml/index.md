@@ -3,6 +3,7 @@ title: "The Annotated Multi-Task Ranker: An MMoE Code Example"
 date: 2024-07-05
 math: true
 categories: ["information retrieval", "multi-task learning"]
+toc: true
 ---
 
 Natural Language Processing (NLP) has an abundance of intuitively explained tutorials with code, such as Andrej Kaparthy's [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html), the viral [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) and its successor [The Annotated Transformer](https://nlp.seas.harvard.edu/annotated-transformer/), Umar Jamil's YouTube [series](https://www.youtube.com/@umarjamilai) dissecting SOTA models and the companion [repo](https://github.com/hkproj), among others.

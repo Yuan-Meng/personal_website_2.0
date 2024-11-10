@@ -3,6 +3,7 @@ title: "Negative Sampling for Learning Two-Tower Networks"
 date: 2024-09-02
 math: true
 categories: ["negative sampling", "recommender system"]
+toc: true
 ---
 
 # Web-Scale Recommender Systems

@@ -3,6 +3,7 @@ title: "Causal Inference in Data Science"
 date: "2021-11-12"
 math: true
 categories: ["causal inference", "quasi-experiment"]
+toc: true
 ---
 
 What do you see? 👀

@@ -127,6 +127,42 @@
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#self-attention">Self-Attention</a></li>
+    <li><a href="#multi-headed-attention">Multi-Headed Attention</a></li>
+    <li><a href="#token-embeddings">Token Embeddings</a></li>
+    <li><a href="#positional-encoding">Positional Encoding</a></li>
+    <li><a href="#sequence-classification">Sequence Classification</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

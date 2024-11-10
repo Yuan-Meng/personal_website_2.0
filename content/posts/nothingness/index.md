@@ -2,6 +2,7 @@
 title: "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
 date: 2022-03-04
 categories: ["personal reflections"]
+toc: true
 ---
 
 # Seriously, Read *The Ph.D. Grind*

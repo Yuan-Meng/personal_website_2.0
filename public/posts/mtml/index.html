@@ -131,6 +131,61 @@ When it comes to Search/Ads/Recommendations (“搜广推”), however, intuitiv
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#load-data">Load Data</a></li>
+    <li><a href="#transform-features">Transform Features</a>
+      <ul>
+        <li><a href="#specify-feature--target-columns">Specify Feature + Target Columns</a></li>
+        <li><a href="#encode-sparse-features">Encode Sparse Features</a></li>
+        <li><a href="#scale-dense-features">Scale Dense Features</a></li>
+        <li><a href="#create-training-data">Create Training Data</a></li>
+      </ul>
+    </li>
+    <li><a href="#model-training">Model Training</a>
+      <ul>
+        <li><a href="#set-up-environment">Set Up Environment</a></li>
+        <li><a href="#instantiate-the-model">Instantiate the Model</a></li>
+        <li><a href="#train-the-model">Train the Model</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-anatomy-of-the-mmoe-class">The Anatomy of the <code>MMOE</code> Class</a>
+      <ul>
+        <li><a href="#model-inputs">Model Inputs</a></li>
+        <li><a href="#expert-networks">Expert Networks</a></li>
+        <li><a href="#gating-networks">Gating Networks</a></li>
+        <li><a href="#tower-networks">Tower Networks</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

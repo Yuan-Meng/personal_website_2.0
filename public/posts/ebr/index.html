@@ -128,6 +128,57 @@
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#choices-of-distance-functions">Choices of Distance Functions</a></li>
+    <li><a href="#approximate-retrieval-algorithms">Approximate Retrieval Algorithms</a>
+      <ul>
+        <li><a href="#branch-and-bound-algorithms">Branch-and-Bound Algorithms</a></li>
+        <li><a href="#locality-sensitive-hashing-lsh">Locality Sensitive Hashing (LSH)</a></li>
+        <li><a href="#graph-algorithms-eg-hnsw">Graph Algorithms (e.g., HNSW)</a></li>
+        <li><a href="#clustering-eg-faiss">Clustering (e.g., FAISS)</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#quantization">Quantization</a></li>
+    <li><a href="#sketching">Sketching</a></li>
+    <li><a href="#feature-multiplexing">Feature Multiplexing</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#bookspapers">Books/Papers</a></li>
+    <li><a href="#blog-posts">Blog Posts</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">

@@ -3,6 +3,7 @@ title: Choosing Metrics
 date: 2021-11-06
 categories: ["metrics", "product"]
 math: true
+toc: true
 ---
 
 

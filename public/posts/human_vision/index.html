@@ -127,6 +127,61 @@
 
     
     
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#marr-purpose--function">Marr: Purpose &amp; Function</a></li>
+    <li><a href="#hinton-mechanism--pretraining">Hinton: Mechanism &amp; Pretraining</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#convolutional-neural-network-cnn">Convolutional Neural Network (CNN)</a>
+      <ul>
+        <li><a href="#what-is-a-convolution">What Is a Convolution?</a></li>
+        <li><a href="#what-features-can-it-extract">What Features Can It Extract?</a></li>
+        <li><a href="#putting-together-a-cnn">Putting Together a CNN</a></li>
+      </ul>
+    </li>
+    <li><a href="#vision-transformer-vit">Vision Transformer (ViT)</a></li>
+    <li><a href="#model-human-alignment">Model-Human Alignment</a>
+      <ul>
+        <li><a href="#shape-bias">Shape Bias</a></li>
+        <li><a href="#error-consistency">Error Consistency</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#papers">Papers</a></li>
+    <li><a href="#talks">Talks</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
     
     <div class="content">
