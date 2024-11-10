@@ -104,6 +104,8 @@
   </url><url>
     <loc>http://localhost:1313/categories/product/</loc>
   </url><url>
+    <loc>http://localhost:1313/about/</loc>
+  </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

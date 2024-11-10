@@ -19,16 +19,22 @@ copyright = 'Yuan Meng'
 
 [menu]
   [[menu.main]]
+    identifier = "about"
+    name = "About"
+    pageRef = "/about"
+    weight = 10
+
+  [[menu.main]]
     identifier = "posts"
     name = "Posts"
     pageRef = "/posts"
-    weight = 10
+    weight = 20
 
   [[menu.main]]
     identifier = "notes"
     name = "Notes"
     pageRef = "/notes"
-    weight = 20
+    weight = 30
 
 [markup]
   [markup.highlight]
