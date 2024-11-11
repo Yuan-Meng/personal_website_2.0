@@ -155,7 +155,11 @@
     </a>
   
 </h3>
-<p>The iconic YouTube paper (<a href="https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/">Covington et al., 2016</a>) introduced a two-stage architecture that since became the industry standard for large-scale recommender systems:</p></div>
+<p>The iconic YouTube paper (<a href="https://research.google/pubs/deep-neural-networks-for-youtube-recommendations/">Covington et al., 2016</a>) introduced a two-stage architecture that since became the industry standard for large-scale recommender systems:</p>
+<ul>
+<li><strong>Retrieval</strong> (a.k.a. &ldquo;candidate generation&rdquo;): Quickly select top k (in the hundreds or thousands) loosely relevant items from a large corpus of billions</li>
+<li><strong>Ranking</strong> (a.k.a. &ldquo;reranking&rdquo;): Order final candidates (dozens) by predicted reward probability (e.g., an ads click, a listing booking, a video watch, <em>etc.</em>)</li>
+</ul></div>
         </article>
       </li>
   </ol>

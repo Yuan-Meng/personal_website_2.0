@@ -6,8 +6,10 @@ categories: ["recommender systems", "information retrieval"]
 toc: true
 ---
 
+> The efficacy of model simplification often hinges on precise prior knowledge, prompting an inquiry into why certain simplifications to the Transformer architecture prove effective and what insights they offer. --- Wang et al., [*ICLR 2024*](https://openreview.net/forum?id=Gny0PVtKz2)
+
 {{< admonition >}}
-Coming soon.... 
+Coming soon.... 在写了在写了🤓
 {{< /admonition >}}
 
 <!--more-->
@@ -15,10 +17,11 @@ Coming soon....
 # References
 
 ## Papers
-1. [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
-2. [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*.
-3. [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
-4. [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
+1. [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*.
+2. [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
+3. [*RankFormer: Listwise Learning-to-Rank Using Listwide Labels*](https://arxiv.org/abs/2306.05808) (2023) by Buyl et al., *KDD*.
+4. [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
+5. [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
 
 
 ## Blogposts
