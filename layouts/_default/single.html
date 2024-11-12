@@ -27,6 +27,9 @@
       {{- end }}
     </header>
 
+    <!-- Reading Time Indicator -->
+    {{ partial "reading-time.html" . }}
+
     <!-- Table of Contents Section -->
     {{ if .Params.toc }}
       <div class="toc-container">
