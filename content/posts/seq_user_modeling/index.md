@@ -68,7 +68,7 @@ A fatal shortcoming of Markov chains lies in the ["memorylessness"](https://en.w
 
 ### Recurrent Neural Networks
 
-Compared to Markov chains that memory-less, Recurrent Neural Networks (RNNs) are able to retain activation from previous states several steps ago.
+<!-- Compared to Markov chains that memory-less, Recurrent Neural Networks (RNNs) are able to retain activation from previous states several steps ago. -->
 
 ### Convolutional Neural Networks
 ### Graph Neural Networks
