@@ -67,6 +67,9 @@ In a recommender system, a Markov-chain model predicts the transition probabilit
 A fatal shortcoming of Markov chains lies in the ["memorylessness"](https://en.wikipedia.org/wiki/Memorylessness) assumption --- that future states depend only on the current state, ignoring preceding states. For example, if I bought cat food (because I suddenly remembered 😂) after buying ink, the system won't be more likely to recommend paper to me than if I didn't buy ink at all. Real shoppers jump between diverse interests and engage with unrelated items, which are nuances that Markov chains cannot capture.
 
 ### Recurrent Neural Networks
+
+Compared to Markov chains that memory-less, Recurrent Neural Networks (RNNs) are able to retain activation from previous states several steps ago.
+
 ### Convolutional Neural Networks
 ### Graph Neural Networks
 
