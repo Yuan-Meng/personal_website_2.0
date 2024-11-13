@@ -111,7 +111,7 @@ The model is trained to minimize the error between the predicted rating $\hat{r}
 LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., [Hidasi et al., 2016](https://arxiv.org/abs/1511.06939)) and hierarchical RNNs (e.g., [Quadrana et al., 2017](https://dl.acm.org/doi/abs/10.1145/3109859.3109896)). Regardless of the specific architecture, RNN-based recommenders share some common drawbacks:
 
 - **False dependencies**: Just because I bought cat litter after buying books doesn't mean the two are related. User action sequences contain lots of noise, which RNNs cannot sift through;
-- **Ignoring collective dependencies**: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I'm making a Mojito and recommend lime juice, but not if I just bought one of them.
+- **Ignoring collective dependencies**: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I'm making a Mojito and recommend lime juice, but not if I just bought one of them. It's hard for RNNs to capture such "collective dependencies".
 
 ### Convolutional Neural Networks
 

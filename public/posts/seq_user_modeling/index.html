@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1723">
+  <meta itemprop="wordCount" content="1732">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT9M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 1723
+  "wordCount": 1732
 }
 </script>
 
@@ -543,7 +543,7 @@ $$</p>
 <p>LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., <a href="https://arxiv.org/abs/1511.06939">Hidasi et al., 2016</a>) and hierarchical RNNs (e.g., <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">Quadrana et al., 2017</a>). Regardless of the specific architecture, RNN-based recommenders share some common drawbacks:</p>
 <ul>
 <li><strong>False dependencies</strong>: Just because I bought cat litter after buying books doesn&rsquo;t mean the two are related. User action sequences contain lots of noise, which RNNs cannot sift through;</li>
-<li><strong>Ignoring collective dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them.</li>
+<li><strong>Ignoring collective dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them. It&rsquo;s hard for RNNs to capture such &ldquo;collective dependencies&rdquo;.</li>
 </ul>
 <h4 id="convolutional-neural-networks" class="scroll-mt-8 group">
   Convolutional Neural Networks
