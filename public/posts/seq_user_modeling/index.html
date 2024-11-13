@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1027">
+  <meta itemprop="wordCount" content="1663">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT5M",
+  "timeRequired": "PT8M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 1027
+  "wordCount": 1663
 }
 </script>
 
@@ -130,7 +130,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     </header>
 
     
-    Reading time: 5 minutes
+    Reading time: 8 minutes
 
     
     
@@ -500,7 +500,51 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     </a>
   
 </h4>
-<!-- Compared to Markov chains that memory-less, Recurrent Neural Networks (RNNs) are able to retain activation from previous states several steps ago. -->
+<p>Instead of relying solely on today&rsquo;s input to predict tomorrow, a Recurrent Neural Network (RNN) maintains a &ldquo;hidden state&rdquo; that serves as a memory of yesterday&rsquo;s activation and that of all days prior. The hidden state is &ldquo;hidden&rdquo; because it doesn&rsquo;t produce any observable output, such as a character or an action. Today&rsquo;s input, combined with the previous hidden state, is used to predict tomorrow. The last hidden state can be used to represent the sequence so far.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/r05faxbpxpevzgtjywz2m/Screenshot-2024-11-12-at-7.18.01-PM.png?rlkey=1p88m4grpfp1imww83d9lf8vx&amp;st=nbyecz33&amp;raw=1"
+    alt="The vanilla RNN architecture that almost nobody uses directly (Wikipedia)." width="1800"><figcaption>
+      <p>The vanilla RNN architecture that almost nobody uses directly (<a href="https://en.wikipedia.org/wiki/Recurrent_neural_network">Wikipedia</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Generally speaking, a RNN maps the input and the hidden state at step $t$, $x_t$ and $h_t$, to an output $y_t$ and an updated hidden state $h_{t+1}$,</p>
+<p>$$
+f_{\theta}(x_t, h_t) \rightarrow (y_t, h_{t+1}),
+$$</p>
+<p>where:</p>
+<ul>
+<li>$x_t$: input vector;</li>
+<li>$h_t$: hidden vector;</li>
+<li>$y_t$: output vector;</li>
+<li>$\theta$: neural network parameters.</li>
+</ul>
+<p>Vanilla RNNs are difficult to train because they are susceptible to the vanishing or exploding gradient problem, where gradients become increasingly small or large when we are backpropagating errors from the last output to the first input. More advanced versions RNNs, such as <a href="https://en.wikipedia.org/wiki/Long_short-term_memory">Long Short-Term Memory (LSTM)</a> and <a href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">Gated Recurrent Units (GRUs)</a>, were invented to address these issues. From the early 2010s until the rise of Transformers around 2017-2018, these RNN variants were state-of-the-art in Natural Language Processing (NLP).</p>
+<p><a href="https://research.google/pubs/recurrent-recommender-networks/">Wu et al. (2017)</a> introduced the Recurrent Recommender Network (RRN), using LSTMs to encode user and movie hidden states, which then help predict how a user might rate a movie at a given time. RRN outperformed <a href="https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)">Matrix Factorization</a> methods such SVD++, which won the Netflix Prize but ignored the temporal dynamics of users and movies. The idea is based on a few clever observations:</p>
+<ul>
+<li><strong>Users evolve with movies and over time</strong>: After watching a great detective movie like <em>Knives Out</em>, I want to see more like it; as I grow older, I appreciate non-action movies more&hellip;</li>
+<li><strong>Movies evolve with audiences and over time</strong>: Every Christmas, <em>Elf</em> sees a resurgence in popularity; winning an award often leads to a sudden spike in appreciation for a film; some &ldquo;sleeper hits&rdquo; take years to build a reputation..</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/qn3dzi4d7ajmmvbc9xgru/Screenshot-2024-11-12-at-9.15.11-PM.png?rlkey=mrud07o647yakehuf7cxw87rq&amp;st=syacksj8&amp;raw=1"
+    alt="RNN uses 2 LTSMs to capture user and movie hidden states (Wu et al., 2017)." width="1800"><figcaption>
+      <p>RNN uses 2 LTSMs to capture user and movie hidden states (<a href="https://research.google/pubs/recurrent-recommender-networks/">Wu et al., 2017</a>).</p>
+    </figcaption>
+</figure>
+
+<p>The authors used one LSTM to model user hidden states and another to model movie hidden states. A time $t$, the predicted rating of user $i$ on movie $j$, $\hat{r}_{ij|t}$, is a combination the user&rsquo;s and the movie&rsquo;s dynamic latent factors (the last hidden states of the LTSMs) and their stationary latent factors (representing stable user and movie traits),</p>
+<p>$$
+\hat{r}_{ij|t} = f(u_{it}, m_{jt}, u_i, m_j) := \langle \tilde{u}_{it}, \tilde{m}_{jt} \rangle + \langle u_i, m_j \rangle,
+$$</p>
+<p>where $\langle \cdot, \cdot \rangle$ denotes an inner product, and:</p>
+<ul>
+<li>$\tilde{u}_{it}$ and $\tilde{m}_{jt}$ are time-varying states $u_{it}$ (for the user) and $m_{jt}$ (for the movie) generated by the LSTM networks;</li>
+<li>$u_i$ and $m_j$ are stationary latent factors for the user (e,.g., profile, long-term interests) and the movie (e.g., genre), respectively.</li>
+</ul>
+<p>The model is trained to minimize the error between the predicted rating $\hat{r}_{ij|t}$ and the actual $r_{ij|t}$. It captures exogenous dynamics (e.g., winning an award) and endogenous dynamics (e.g., seasonality) of movies better than models ignoring temporal information.</p>
+<p>LTSMs in RNN can be replaced with other RNN variants, such as GRUs (e.g., <a href="https://arxiv.org/abs/1511.06939">Hidasi et al., 2016</a>) and hierarchical RNNs (e.g., <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">Quadrana et al., 2017</a>). Regardless of the specific architecture, RNN-based recommenders share some common drawbacks:</p>
+<ul>
+<li><strong>False dependencies</strong>: Just because I bought cat litter after buying books doesn&rsquo;t mean the two are related. User action sequences contain lots of noise, which RNNs cannot sift through;</li>
+<li><strong>Ignoring collective dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them.</li>
+</ul>
 <h4 id="convolutional-neural-networks" class="scroll-mt-8 group">
   Convolutional Neural Networks
   
