@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Is Human Vision More like CNN or Vision Transformer?">
   <meta itemprop="description" content="Engineer the Mind In Winter 2015, after coming back from grad school interviews in the States, I told my dad over hotpot that I was going to study cognitive science at Berkeley.">
   <meta itemprop="datePublished" content="2024-10-13T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4063">
+  <meta itemprop="wordCount" content="3998">
   <meta itemprop="keywords" content="AI,Cognitive science">
 
   <meta name="twitter:card" content="summary">
@@ -82,9 +82,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/human_vision/",
   "name": "Is Human Vision More like CNN or Vision Transformer?",
-  "timeRequired": "PT20M",
+  "timeRequired": "PT19M",
   "url": "http://localhost:1313/posts/human_vision/",
-  "wordCount": 4063
+  "wordCount": 3998
 }
 </script>
 
@@ -126,7 +126,7 @@
     </header>
 
     
-    Reading time: 20 minutes
+    Reading time: 19 minutes
 
     
     
@@ -457,78 +457,39 @@
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">convolve</span>(dice1, dice2):
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Length of the convolved array is len(dice1) + len(dice2) - 1</span>
-</span></span><span style="display:flex;"><span>    n1 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">len</span>(dice1)
-</span></span><span style="display:flex;"><span>    n2 <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">len</span>(dice2)
-</span></span><span style="display:flex;"><span>    result <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> (n1 <span style="color:#ff79c6">+</span> n2 <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Perform convolution</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(n1):
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> j <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(n2):
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># Index: a unique sum</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># Value: probability of this sum</span>
-</span></span><span style="display:flex;"><span>            result[i <span style="color:#ff79c6">+</span> j] <span style="color:#ff79c6">+=</span> dice1[i] <span style="color:#ff79c6">*</span> dice2[j]
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> result
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Example 1: Two fair dice</span>
-</span></span><span style="display:flex;"><span>dice1 <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">6</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">6</span>
-</span></span><span style="display:flex;"><span>dice2 <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">1</span><span style="color:#ff79c6">/</span><span style="color:#bd93f9">6</span>] <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">6</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(convolve(dice1, dice2))
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Expected output (probabilities for sums 2 to 12):</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># [0.027777777777777776, 0.05555555555555555, 0.08333333333333333, </span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  0.1111111111111111, 0.1388888888888889, 0.16666666666666669, </span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  0.1388888888888889, 0.1111111111111111, 0.08333333333333333, </span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  0.05555555555555555, 0.027777777777777776]</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Example 2: Two weighted dice</span>
-</span></span><span style="display:flex;"><span>dice1 <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0.16</span>, <span style="color:#bd93f9">0.21</span>, <span style="color:#bd93f9">0.17</span>, <span style="color:#bd93f9">0.16</span>, <span style="color:#bd93f9">0.12</span>, <span style="color:#bd93f9">0.18</span>]
-</span></span><span style="display:flex;"><span>dice2 <span style="color:#ff79c6">=</span> [<span style="color:#bd93f9">0.11</span>, <span style="color:#bd93f9">0.22</span>, <span style="color:#bd93f9">0.24</span>, <span style="color:#bd93f9">0.10</span>, <span style="color:#bd93f9">0.20</span>, <span style="color:#bd93f9">0.13</span>]
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">print</span>(convolve(dice1, dice2))
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Expected output (probabilities for sums 2 to 12):</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># [0.0176, 0.058300000000000005, 0.1033, 0.1214, 0.1422, 0.1644, </span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  0.1457, 0.10930000000000001, 0.06280000000000001, </span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  0.05159999999999999, 0.0234]</span></span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Length of the convolved array is len(dice1) + len(dice2) - 1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dice1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dice2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Perform convolution</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Index: a unique sum</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Value: probability of this sum</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dice1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">dice2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Example 1: Two fair dice</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected output (probabilities for sums 2 to 12):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [0.027777777777777776, 0.05555555555555555, 0.08333333333333333, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1111111111111111, 0.1388888888888889, 0.16666666666666669, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1388888888888889, 0.1111111111111111, 0.08333333333333333, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.05555555555555555, 0.027777777777777776]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Example 2: Two weighted dice</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">,</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.16</span><span class="p">,</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.18</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">dice2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.11</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.20</span><span class="p">,</span> <span class="mf">0.13</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">convolve</span><span class="p">(</span><span class="n">dice1</span><span class="p">,</span> <span class="n">dice2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected output (probabilities for sums 2 to 12):</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [0.0176, 0.058300000000000005, 0.1033, 0.1214, 0.1422, 0.1644, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.1457, 0.10930000000000001, 0.06280000000000001, </span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  0.05159999999999999, 0.0234]</span></span></span></code></pre></div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -686,76 +647,38 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">ConvNeuralNet</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#  Determine what layers and their order in CNN object </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, num_classes):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>(ConvNeuralNet, self)<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>conv_layer1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Conv2d(in_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>, out_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">32</span>, kernel_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>conv_layer2 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Conv2d(in_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">32</span>, out_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">32</span>, kernel_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>max_pool1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>MaxPool2d(kernel_size <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>, stride <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>conv_layer3 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Conv2d(in_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">32</span>, out_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">64</span>, kernel_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>conv_layer4 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Conv2d(in_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">64</span>, out_channels<span style="color:#ff79c6">=</span><span style="color:#bd93f9">64</span>, kernel_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>max_pool2 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>MaxPool2d(kernel_size <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>, stride <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">2</span>)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>fc1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(<span style="color:#bd93f9">1600</span>, <span style="color:#bd93f9">128</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>relu1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>ReLU()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>fc2 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(<span style="color:#bd93f9">128</span>, num_classes)
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Progresses data across layers    </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>conv_layer1(x)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>conv_layer2(out)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>max_pool1(out)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>conv_layer3(out)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>conv_layer4(out)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>max_pool2(out)
-</span></span><span style="display:flex;"><span>                
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> out<span style="color:#ff79c6">.</span>reshape(out<span style="color:#ff79c6">.</span>size(<span style="color:#bd93f9">0</span>), <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>fc1(out)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>relu1(out)
-</span></span><span style="display:flex;"><span>        out <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>fc2(out)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> out</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ConvNeuralNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#  Determine what layers and their order in CNN object </span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">(</span><span class="n">ConvNeuralNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">max_pool1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer4</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">max_pool2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">stride</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">1600</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">relu1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Progresses data across layers    </span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_pool1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv_layer4</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_pool2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">out</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   

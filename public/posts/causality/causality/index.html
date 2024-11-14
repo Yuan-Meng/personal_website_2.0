@@ -32,7 +32,7 @@ Nice try… I know what you’re thinking, “The red block made the green one m
 You’re probably thinking, “The red block stopped, right after which the green block started to move coincidentally.”
 Nice try… I know what you’re thinking, “The red block made the green one move”.">
   <meta itemprop="datePublished" content="2021-11-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5541">
+  <meta itemprop="wordCount" content="5538">
   <meta itemprop="keywords" content="Causal inference,Quasi-experiment">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ Nice try… I know what you’re thinking, “The red block made the green one m
   },
   "mainEntityOfPage": "http://localhost:1313/posts/causality/causality/",
   "name": "Causal Inference in Data Science",
-  "timeRequired": "PT27M",
+  "timeRequired": "PT26M",
   "url": "http://localhost:1313/posts/causality/causality/",
-  "wordCount": 5541
+  "wordCount": 5538
 }
 </script>
 
@@ -134,7 +134,7 @@ Nice try… I know what you’re thinking, “The red block made the green one m
     </header>
 
     
-    Reading time: 27 minutes
+    Reading time: 26 minutes
 
     
     
@@ -451,16 +451,8 @@ Nice try… I know what you’re thinking, “The red block made the green one m
     </div>
   </aside>
   <p class="sr-only">r code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#50fa7b">library</span>(lme4)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">lmer</span>(delivery_time <span style="color:#ff79c6">~</span> has_sos <span style="color:#ff79c6">+</span> (<span style="color:#bd93f9">1</span><span style="color:#ff79c6">|</span>market<span style="color:#ff79c6">/</span>time), data<span style="color:#ff79c6">=</span>sb_data)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">lme4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">lmer</span><span class="p">(</span><span class="n">delivery_time</span> <span class="o">~</span> <span class="n">has_sos</span> <span class="o">+</span> <span class="p">(</span><span class="m">1</span><span class="o">|</span><span class="n">market</span><span class="o">/</span><span class="n">time</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">sb_data</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">r code snippet end</p>
 
   
@@ -635,14 +627,7 @@ Nice try… I know what you’re thinking, “The red block made the green one m
     </div>
   </aside>
   <p class="sr-only">r code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#50fa7b">lm</span>(infection_rate <span style="color:#ff79c6">~</span> got_booster <span style="color:#ff79c6">+</span> age <span style="color:#ff79c6">+</span> has_asthema <span style="color:#ff79c6">+</span> SES <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">...</span>, data<span style="color:#ff79c6">=</span>omicron)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">lm</span><span class="p">(</span><span class="n">infection_rate</span> <span class="o">~</span> <span class="n">got_booster</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="n">has_asthema</span> <span class="o">+</span> <span class="n">SES</span> <span class="o">+</span> <span class="kc">...</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">omicron</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">r code snippet end</p>
 
   

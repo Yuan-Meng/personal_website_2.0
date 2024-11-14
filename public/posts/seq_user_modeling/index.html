@@ -22,14 +22,14 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-11-12T00:00:00+00:00">
+    <meta property="article:published_time" content="2024-11-13T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Down the Rabbit Hole: Sequential User Modeling">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
-  <meta itemprop="datePublished" content="2024-11-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1732">
+  <meta itemprop="datePublished" content="2024-11-13T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2087">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -76,7 +76,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2024-11-12",
+  "datePublished": "2024-11-13",
   "description": " Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?\nYuan’s Amazon browsing history last week; distinct sessions are color-coded.",
   "headline": "Down the Rabbit Hole: Sequential User Modeling",
   "isPartOf": {
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT9M",
+  "timeRequired": "PT10M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 1732
+  "wordCount": 2087
 }
 </script>
 
@@ -125,12 +125,12 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         <article class="main">
     <header>
       <h1 class="!mb-1">Down the Rabbit Hole: Sequential User Modeling</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2024-11-12T00:00:00&#43;00:00">November 12, 2024</time>
+          <time class="text-sm italic opacity-80" datetime="2024-11-13T00:00:00&#43;00:00">November 13, 2024</time>
         </div>
     </header>
 
     
-    Reading time: 9 minutes
+    Reading time: 10 minutes
 
     
     
@@ -411,58 +411,29 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     </div>
   </aside>
   <p class="sr-only">python3 code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python3" data-lang="python3"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MarkovChain</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># dictionary to store transitions: {current state : [next state]}</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>transitions <span style="color:#ff79c6">=</span> {}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">addTransition</span>(self, v, w):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># add a transition from state v to state w</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> v <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>transitions:
-</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>transitions[v] <span style="color:#ff79c6">=</span> []
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>transitions[v]<span style="color:#ff79c6">.</span>append(w)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">next</span>(self, v):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># pick a transition leaving state v uniformly at random</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> v <span style="color:#ff79c6">not</span> <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>transitions <span style="color:#ff79c6">or</span> <span style="color:#ff79c6">not</span> self<span style="color:#ff79c6">.</span>transitions[v]:
-</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">None</span>  <span style="color:#6272a4"># no transitions available</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> random<span style="color:#ff79c6">.</span>choice(self<span style="color:#ff79c6">.</span>transitions[v])
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">toString</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># return a string representation of the Markov chain</span>
-</span></span><span style="display:flex;"><span>        result <span style="color:#ff79c6">=</span> []
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> state, transitions <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>transitions<span style="color:#ff79c6">.</span>items():
-</span></span><span style="display:flex;"><span>            result<span style="color:#ff79c6">.</span>append(<span style="color:#f1fa8c">f</span><span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">{</span>state<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c"> -&gt; </span><span style="color:#f1fa8c">{</span><span style="color:#f1fa8c">&#39;, &#39;</span><span style="color:#ff79c6">.</span>join(transitions)<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">.</span>join(result)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MarkovChain</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># dictionary to store transitions: {current state : [next state]}</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">addTransition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># add a transition from state v to state w</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pick a transition leaving state v uniformly at random</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># no transitions available</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">toString</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return a string representation of the Markov chain</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">state</span><span class="p">,</span> <span class="n">transitions</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python3 code snippet end</p>
 
   
@@ -543,7 +514,7 @@ $$</p>
 <p>LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., <a href="https://arxiv.org/abs/1511.06939">Hidasi et al., 2016</a>) and hierarchical RNNs (e.g., <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">Quadrana et al., 2017</a>). Regardless of the specific architecture, RNN-based recommenders share some common drawbacks:</p>
 <ul>
 <li><strong>False dependencies</strong>: Just because I bought cat litter after buying books doesn&rsquo;t mean the two are related. User action sequences contain lots of noise, which RNNs cannot sift through;</li>
-<li><strong>Ignoring collective dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them. It&rsquo;s hard for RNNs to capture such &ldquo;collective dependencies&rdquo;.</li>
+<li><strong>Ignoring union-level dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them. It&rsquo;s hard for RNNs to capture such &ldquo;union-level dependencies&rdquo;.</li>
 </ul>
 <h4 id="convolutional-neural-networks" class="scroll-mt-8 group">
   Convolutional Neural Networks
@@ -570,9 +541,24 @@ $$</p>
     </a>
   
 </h4>
-<p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV), where they excel at extracting local patterns (for more details, see my <a href="https://www.yuan-meng.com/posts/human_vision/#convolutional-neural-network-cnn">post</a>). Since a sequence can be represented as a 1D image or that item embeddings can be stacked into a matrix (a 2D image), CNNs can also be used to model sequential data.</p>
-<!-- ([Tang et al., 2018](https://dl.acm.org/doi/abs/10.1145/3159652.3159656))
-([Yuan et al., 2019])(https://dl.acm.org/doi/abs/10.1145/3289600.3290975) -->
+<p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a <a href="https://www.yuan-meng.com/posts/human_vision/#convolutional-neural-network-cnn">previous post</a>, I reviewed the CNN architecture in detail.</p>
+<p>CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image (<a href="https://arxiv.org/pdf/1809.07426">Tang &amp; Kang, 2018</a>) or a 1D image whose &ldquo;color channel&rdquo; is the embedding dimension (<a href="https://arxiv.org/abs/1808.05163">Yuan et al., 2019</a>). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action &mdash; this is hard for RNNs which best capture point-level dependencies from one action to another.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/za225afaopif9mpd6wc23/Screenshot-2024-11-13-at-9.13.07-PM.png?rlkey=ca284r83tx8z6zv4xkswin58d&amp;st=ub0lhkdv&amp;raw=1"
+    alt="The first CNN recommender Caser treats the embedding matrix as a 2D &lsquo;image&rsquo;." width="1800"><figcaption>
+      <p>The first CNN recommender <a href="https://arxiv.org/pdf/1809.07426"><em>Caser</em></a> treats the embedding matrix as a 2D &lsquo;image&rsquo;.</p>
+    </figcaption>
+</figure>
+
+<p><em>Caser</em> was the first CNN recommender to beat the RNN SOTA in sequential recommendation. Given a user sequence of length $L$, we perform an embedding lookup and stack item embeddings into matrix $\mathbf{E}$ of dimension $L \times d$, where $d$ is the embedding dimension. Horizontal filters of dimension $h \times d$ slide over the rows of $\mathbf{E}$ to capture union-level dependencies (e.g., $(\mathrm{rum}, \mathrm{mint}) \rightarrow \mathrm{lime})$, where $h$ is the height of the filter &mdash; we can think of it as the size of the union. We use max pooling to extract the max value from each horizontal filter. Vertical filters of dimension $L \times 1$ slides over the columns of $\mathbf{E}$ to capture point-level dependencies. No max pooling is needed since we want to keep every item latent dimension.</p>
+<p>Outputs from the convolutional layers are concatenated with the user embedding (generated by a Latent Factor Model) and fed into an MLP layer to predict the probability of each possible next action. We can recommend the top N items with the highest predicted probabilities.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/5tvwhafskm9awdch582kd/Screenshot-2024-11-13-at-8.48.28-PM.png?rlkey=7bp27lrq17dm7b4ho5lzjfktr&amp;st=b2cxqikr&amp;raw=1"
+    alt="Yuan et al., 2019 transformed the 2D image into a 1D representation and applied 1D dilated convolution without max pooling." width="1800"><figcaption>
+      <p>Yuan et al., 2019 transformed the 2D image into a 1D representation and applied 1D dilated convolution without max pooling.</p>
+    </figcaption>
+</figure>
+
+<p>In Caser, max pooling leads to information loss, and small filter sizes make it challenging to capture long-range dependencies. Yuan et al. (2019) addressed these issues by (1) removing max pooling and (2) using dilated convolutions, where some positions are filled with 0&rsquo;s. In general, larger filters increase the numbers of parameters to learn, making CNNs harder to train &mdash; dilated convolution strikes a good balance between the receptive field size and training efficiency.</p>
+<p>Despite these optimizations, capturing super long-range dependencies and looking beyond local patterns is inherently difficult for CNNs.</p>
 <h4 id="graph-neural-networks" class="scroll-mt-8 group">
   Graph Neural Networks
   

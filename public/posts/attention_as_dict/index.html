@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Attention as Soft Dictionary Lookup">
   <meta itemprop="description" content="The Dictionary Metaphor 🔑📚">
   <meta itemprop="datePublished" content="2024-03-09T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1837">
+  <meta itemprop="wordCount" content="1660">
   <meta itemprop="keywords" content="Machine learning,Natural language processing">
 
   <meta name="twitter:card" content="summary">
@@ -82,9 +82,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/attention_as_dict/",
   "name": "Attention as Soft Dictionary Lookup",
-  "timeRequired": "PT9M",
+  "timeRequired": "PT8M",
   "url": "http://localhost:1313/posts/attention_as_dict/",
-  "wordCount": 1837
+  "wordCount": 1660
 }
 </script>
 
@@ -126,7 +126,7 @@
     </header>
 
     
-    Reading time: 9 minutes
+    Reading time: 8 minutes
 
     
     
@@ -368,60 +368,30 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">from</span> math <span style="color:#ff79c6">import</span> sqrt
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> torch
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> torch <span style="color:#ff79c6">import</span> nn
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> torch.nn.functional <span style="color:#ff79c6">as</span> F
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> transformers <span style="color:#ff79c6">import</span> AutoTokenizer, AutoModel, AutoConfig
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># load tokenizer from model checkpoint</span>
-</span></span><span style="display:flex;"><span>model_ckpt <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;bert-base-uncased&#34;</span>
-</span></span><span style="display:flex;"><span>tokenizer <span style="color:#ff79c6">=</span> AutoTokenizer<span style="color:#ff79c6">.</span>from_pretrained(model_ckpt)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># load config associated with given model</span>
-</span></span><span style="display:flex;"><span>config <span style="color:#ff79c6">=</span> AutoConfig<span style="color:#ff79c6">.</span>from_pretrained(model_ckpt)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># input text</span>
-</span></span><span style="display:flex;"><span>text <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;time flies like an arrow&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># tokenize input text</span>
-</span></span><span style="display:flex;"><span>inputs <span style="color:#ff79c6">=</span> tokenizer(text, return_tensors<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;pt&#34;</span>, add_special_tokens<span style="color:#ff79c6">=</span><span style="color:#ff79c6">False</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># nn.Embedding is a lookup table to find embeddings of each input_id</span>
-</span></span><span style="display:flex;"><span>token_emb <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Embedding(config<span style="color:#ff79c6">.</span>vocab_size, config<span style="color:#ff79c6">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># look up embeddings by id</span>
-</span></span><span style="display:flex;"><span>input_embs <span style="color:#ff79c6">=</span> token_emb(inputs<span style="color:#ff79c6">.</span>input_ids)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModel</span><span class="p">,</span> <span class="n">AutoConfig</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># load tokenizer from model checkpoint</span>
+</span></span><span class="line"><span class="cl"><span class="n">model_ckpt</span> <span class="o">=</span> <span class="s2">&#34;bert-base-uncased&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_ckpt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># load config associated with given model</span>
+</span></span><span class="line"><span class="cl"><span class="n">config</span> <span class="o">=</span> <span class="n">AutoConfig</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">model_ckpt</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># input text</span>
+</span></span><span class="line"><span class="cl"><span class="n">text</span> <span class="o">=</span> <span class="s2">&#34;time flies like an arrow&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># tokenize input text</span>
+</span></span><span class="line"><span class="cl"><span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&#34;pt&#34;</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># nn.Embedding is a lookup table to find embeddings of each input_id</span>
+</span></span><span class="line"><span class="cl"><span class="n">token_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># look up embeddings by id</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_embs</span> <span class="o">=</span> <span class="n">token_emb</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_ids</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -487,42 +457,21 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># init Q, K, V with input_embs</span>
-</span></span><span style="display:flex;"><span>query <span style="color:#ff79c6">=</span> key <span style="color:#ff79c6">=</span> value <span style="color:#ff79c6">=</span> input_embs
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">scaled_dot_product_attention</span>(query, key, value):
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># get key dim: hidden_dim</span>
-</span></span><span style="display:flex;"><span>    dim_k <span style="color:#ff79c6">=</span> key<span style="color:#ff79c6">.</span>size(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>)  <span style="color:#6272a4"># last dim</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># attention weights</span>
-</span></span><span style="display:flex;"><span>    weights <span style="color:#ff79c6">=</span> torch<span style="color:#ff79c6">.</span>bmm(query, key<span style="color:#ff79c6">.</span>transpose(<span style="color:#bd93f9">1</span>, <span style="color:#bd93f9">2</span>)) <span style="color:#ff79c6">/</span> sqrt(dim_k)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># attention scores</span>
-</span></span><span style="display:flex;"><span>    scores <span style="color:#ff79c6">=</span> F<span style="color:#ff79c6">.</span>softmax(weights, dim<span style="color:#ff79c6">=-</span><span style="color:#bd93f9">1</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># output embeddings</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> torch<span style="color:#ff79c6">.</span>bmm(scores, value)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># init Q, K, V with input_embs</span>
+</span></span><span class="line"><span class="cl"><span class="n">query</span> <span class="o">=</span> <span class="n">key</span> <span class="o">=</span> <span class="n">value</span> <span class="o">=</span> <span class="n">input_embs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">scaled_dot_product_attention</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># get key dim: hidden_dim</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dim_k</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># last dim</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># attention weights</span>
+</span></span><span class="line"><span class="cl">    <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">dim_k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># attention scores</span>
+</span></span><span class="line"><span class="cl">    <span class="n">scores</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># output embeddings</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -589,106 +538,53 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">AttentionHead</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, embed_dim, head_dim):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># init 3 independent linear layers</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>q <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(embed_dim, head_dim)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>k <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(embed_dim, head_dim)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>v <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(embed_dim, head_dim)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, hidden_state):
-</span></span><span style="display:flex;"><span>        attn_outputs <span style="color:#ff79c6">=</span> scaled_dot_product_attention(
-</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>q(hidden_state), self<span style="color:#ff79c6">.</span>k(hidden_state), self<span style="color:#ff79c6">.</span>v(hidden_state)
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> attn_outputs
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">MultiHeadAttention</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># embedding size is 768 in the case of &#34;bert-base-uncased&#34;</span>
-</span></span><span style="display:flex;"><span>        embed_dim <span style="color:#ff79c6">=</span> config<span style="color:#ff79c6">.</span>hidden_size
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># conventionally, hidden_size is divisible by num_heads</span>
-</span></span><span style="display:flex;"><span>        num_heads <span style="color:#ff79c6">=</span> config<span style="color:#ff79c6">.</span>num_attention_heads
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># if we have 12 heads, each head get 768 // 12 = 54 hidden_dim</span>
-</span></span><span style="display:flex;"><span>        head_dim <span style="color:#ff79c6">=</span> embed_dim <span style="color:#ff79c6">//</span> num_heads
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># create a list of attention heads</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>heads <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>ModuleList(
-</span></span><span style="display:flex;"><span>            [AttentionHead(embed_dim, head_dim) <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(num_heads)]
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># final linear layer</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>output_linear <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(embed_dim, embed_dim)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, hidden_state):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># concat output from each head on the last dim</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> torch<span style="color:#ff79c6">.</span>cat([h(hidden_state) <span style="color:#ff79c6">for</span> h <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>heads], dim<span style="color:#ff79c6">=-</span><span style="color:#bd93f9">1</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># pass through final linear layer</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>output_linear(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># use model config from the beginning</span>
-</span></span><span style="display:flex;"><span>multihead_attn <span style="color:#ff79c6">=</span> MultiHeadAttention(config)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># attention outputs concatenated from 12 heads</span>
-</span></span><span style="display:flex;"><span>attn_output <span style="color:#ff79c6">=</span> multihead_attn(input_embs)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">AttentionHead</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">,</span> <span class="n">head_dim</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># init 3 independent linear layers</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">head_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">head_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">head_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">attn_outputs</span> <span class="o">=</span> <span class="n">scaled_dot_product_attention</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">attn_outputs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># embedding size is 768 in the case of &#34;bert-base-uncased&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">embed_dim</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># conventionally, hidden_size is divisible by num_heads</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_heads</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">num_attention_heads</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># if we have 12 heads, each head get 768 // 12 = 54 hidden_dim</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head_dim</span> <span class="o">=</span> <span class="n">embed_dim</span> <span class="o">//</span> <span class="n">num_heads</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># create a list of attention heads</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">heads</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="n">AttentionHead</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">head_dim</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_heads</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># final linear layer</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">output_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">embed_dim</span><span class="p">,</span> <span class="n">embed_dim</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># concat output from each head on the last dim</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">h</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">heads</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pass through final linear layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># use model config from the beginning</span>
+</span></span><span class="line"><span class="cl"><span class="n">multihead_attn</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># attention outputs concatenated from 12 heads</span>
+</span></span><span class="line"><span class="cl"><span class="n">attn_output</span> <span class="o">=</span> <span class="n">multihead_attn</span><span class="p">(</span><span class="n">input_embs</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -779,40 +675,20 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">FeedForward</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>linear_1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(config<span style="color:#ff79c6">.</span>hidden_size, config<span style="color:#ff79c6">.</span>intermediate_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>linear_2 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(config<span style="color:#ff79c6">.</span>intermediate_size, config<span style="color:#ff79c6">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>gelu <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>GELU()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dropout <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Dropout(config<span style="color:#ff79c6">.</span>hidden_dropout_prob)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>linear_1(x)
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>gelu(x)
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>linear_2(x)
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>dropout(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">FeedForward</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">linear_1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">linear_2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">gelu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GELU</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear_2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -878,46 +754,23 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TransformerEncoderLayer</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>layer_norm_1 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>LayerNorm(config<span style="color:#ff79c6">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>layer_norm_2 <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>LayerNorm(config<span style="color:#ff79c6">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>attention <span style="color:#ff79c6">=</span> MultiHeadAttention(config)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>feed_forward <span style="color:#ff79c6">=</span> FeedForward(config)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># apply layer norm on input</span>
-</span></span><span style="display:flex;"><span>        hidden_state <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>layer_norm_1(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># apply attention with skip connection</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>attention(hidden_state)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># apply feedforward with skip connection</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> x <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>feed_forward(self<span style="color:#ff79c6">.</span>layer_norm_2(x))
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># return processed</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerEncoderLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm_1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm_2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">MultiHeadAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">feed_forward</span> <span class="o">=</span> <span class="n">FeedForward</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># apply layer norm on input</span>
+</span></span><span class="line"><span class="cl">        <span class="n">hidden_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm_1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># apply attention with skip connection</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># apply feedforward with skip connection</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">feed_forward</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layer_norm_2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return processed</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -1013,64 +866,32 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Embeddings</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># look up token and position embeddings</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>token_embeddings <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Embedding(config<span style="color:#ff79c6">.</span>vocab_size, config<span style="color:#ff79c6">.</span>hidden_size)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>position_embeddings <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Embedding(
-</span></span><span style="display:flex;"><span>            config<span style="color:#ff79c6">.</span>max_position_embeddings, config<span style="color:#ff79c6">.</span>hidden_size
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># define layernorm and dropout layers</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>layer_norm <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>LayerNorm(config<span style="color:#ff79c6">.</span>hidden_size, eps<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1e-12</span>)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>drop_out <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Dropout()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, input_ids):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># length of the input sequence</span>
-</span></span><span style="display:flex;"><span>        seq_length <span style="color:#ff79c6">=</span> input_ids<span style="color:#ff79c6">.</span>size(<span style="color:#bd93f9">1</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># position id: [0 to seq_length - 1]</span>
-</span></span><span style="display:flex;"><span>        position_ids <span style="color:#ff79c6">=</span> torch<span style="color:#ff79c6">.</span>arange(seq_length, dtype<span style="color:#ff79c6">=</span>torch<span style="color:#ff79c6">.</span>long)<span style="color:#ff79c6">.</span>unsqueeze(<span style="color:#bd93f9">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># look up embeddings by id</span>
-</span></span><span style="display:flex;"><span>        token_embeddings <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>token_embeddings(input_ids)
-</span></span><span style="display:flex;"><span>        position_embeddings <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>position_embeddings(position_ids)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># add up token and position embeddings</span>
-</span></span><span style="display:flex;"><span>        embeddings <span style="color:#ff79c6">=</span> token_embeddings <span style="color:#ff79c6">+</span> position_embeddings
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># pass through layer norm and dropout</span>
-</span></span><span style="display:flex;"><span>        embeddings <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>layer_norm(embeddings)
-</span></span><span style="display:flex;"><span>        embeddings <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>drop_out(embeddings)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> embeddings</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Embeddings</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># look up token and position embeddings</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">token_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">position_embeddings</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">config</span><span class="o">.</span><span class="n">max_position_embeddings</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># define layernorm and dropout layers</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">drop_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># length of the input sequence</span>
+</span></span><span class="line"><span class="cl">        <span class="n">seq_length</span> <span class="o">=</span> <span class="n">input_ids</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># position id: [0 to seq_length - 1]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">position_ids</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># look up embeddings by id</span>
+</span></span><span class="line"><span class="cl">        <span class="n">token_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token_embeddings</span><span class="p">(</span><span class="n">input_ids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">position_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_embeddings</span><span class="p">(</span><span class="n">position_ids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># add up token and position embeddings</span>
+</span></span><span class="line"><span class="cl">        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">token_embeddings</span> <span class="o">+</span> <span class="n">position_embeddings</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pass through layer norm and dropout</span>
+</span></span><span class="line"><span class="cl">        <span class="n">embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer_norm</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_out</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">embeddings</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -1136,40 +957,20 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TransformerEncoder</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>embeddings <span style="color:#ff79c6">=</span> Embeddings(config)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># repeat 12 times</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>layers <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>ModuleList(
-</span></span><span style="display:flex;"><span>            [TransformerEncoderLayer(config) <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(config<span style="color:#ff79c6">.</span>num_hidden_layers)]
-</span></span><span style="display:flex;"><span>        )
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>embeddings(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> layer <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>layers:
-</span></span><span style="display:flex;"><span>            x <span style="color:#ff79c6">=</span> layer(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">Embeddings</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># repeat 12 times</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="n">TransformerEncoderLayer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">num_hidden_layers</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -1260,52 +1061,26 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TransformerForSequenceClassification</span>(nn<span style="color:#ff79c6">.</span>Module):
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, config):
-</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">super</span>()<span style="color:#ff79c6">.</span>__init__()
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>encoder <span style="color:#ff79c6">=</span> TransformerEncoder(config)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dropout <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Dropout(config<span style="color:#ff79c6">.</span>hidden_dropout_prob)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>classifier <span style="color:#ff79c6">=</span> nn<span style="color:#ff79c6">.</span>Linear(config<span style="color:#ff79c6">.</span>hidden_size, config<span style="color:#ff79c6">.</span>num_labels)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">forward</span>(self, x):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># select [CLS] token</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>encoder(x)[:, <span style="color:#bd93f9">0</span>, :]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># apply dropout on embedding</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>dropout(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># pass through classification layer</span>
-</span></span><span style="display:flex;"><span>        x <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>classifier(x)
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> x
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># specify number of labels</span>
-</span></span><span style="display:flex;"><span>config<span style="color:#ff79c6">.</span>num_labels <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">3</span>
-</span></span><span style="display:flex;"><span>encoder_classifier <span style="color:#ff79c6">=</span> TransformerForSequenceClassification(config)
-</span></span><span style="display:flex;"><span>encoder_classifier(inputs<span style="color:#ff79c6">.</span>input_ids)<span style="color:#ff79c6">.</span>size()</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TransformerForSequenceClassification</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">TransformerEncoder</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">num_labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># select [CLS] token</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># apply dropout on embedding</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pass through classification layer</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># specify number of labels</span>
+</span></span><span class="line"><span class="cl"><span class="n">config</span><span class="o">.</span><span class="n">num_labels</span> <span class="o">=</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl"><span class="n">encoder_classifier</span> <span class="o">=</span> <span class="n">TransformerForSequenceClassification</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">encoder_classifier</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">input_ids</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   

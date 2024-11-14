@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Code ML Algorithms From Scratch">
   <meta itemprop="description" content="Coding interviews can mean different things for “traditional” software engineers (back-end, front-end, full-stack, etc.) and engineers with a machine learning focus. Apart from LeetCode-style questions, ML engineers (as well as applied scientists, research engineers, and, occasionally, machine learning data scientists) may be asked to implement a classic ML algorithm from scratch during an interview.">
   <meta itemprop="datePublished" content="2022-06-22T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4110">
+  <meta itemprop="wordCount" content="3849">
   <meta itemprop="keywords" content="Machine learning,Algorithms">
 
   <meta name="twitter:card" content="summary">
@@ -82,9 +82,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/md_coding/",
   "name": "Code ML Algorithms From Scratch",
-  "timeRequired": "PT20M",
+  "timeRequired": "PT19M",
   "url": "http://localhost:1313/posts/md_coding/",
-  "wordCount": 4110
+  "wordCount": 3849
 }
 </script>
 
@@ -126,7 +126,7 @@
     </header>
 
     
-    Reading time: 20 minutes
+    Reading time: 19 minutes
 
     
     
@@ -312,50 +312,25 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># import libraries</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> sklearn <span style="color:#ff79c6">import</span> datasets
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> sklearn.model_selection <span style="color:#ff79c6">import</span> train_test_split
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> sklearn.linear_model <span style="color:#ff79c6">import</span> SGDRegressor
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># load the diabetes dataset for demonstration</span>
-</span></span><span style="display:flex;"><span>X, y <span style="color:#ff79c6">=</span> datasets<span style="color:#ff79c6">.</span>load_diabetes(return_X_y<span style="color:#ff79c6">=</span><span style="color:#ff79c6">True</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># use 80% for training and 20% for test</span>
-</span></span><span style="display:flex;"><span>X_train, X_test, y_train, y_test <span style="color:#ff79c6">=</span> train_test_split(
-</span></span><span style="display:flex;"><span>    X, y, test_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0.2</span>, random_state<span style="color:#ff79c6">=</span><span style="color:#bd93f9">42</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># create a new model</span>
-</span></span><span style="display:flex;"><span>lr <span style="color:#ff79c6">=</span> SGDRegressor(learning_rate<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;optimal&#34;</span>, max_iter<span style="color:#ff79c6">=</span><span style="color:#bd93f9">10000</span>)
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># fit model to training data</span>
-</span></span><span style="display:flex;"><span>lr<span style="color:#ff79c6">.</span>fit(X_train, y_train)
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># use fitted model to predict test data</span>
-</span></span><span style="display:flex;"><span>y_pred <span style="color:#ff79c6">=</span> lr<span style="color:#ff79c6">.</span>predict(X_test)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># import libraries</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDRegressor</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># load the diabetes dataset for demonstration</span>
+</span></span><span class="line"><span class="cl"><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_diabetes</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># use 80% for training and 20% for test</span>
+</span></span><span class="line"><span class="cl"><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># create a new model</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span> <span class="o">=</span> <span class="n">SGDRegressor</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="s2">&#34;optimal&#34;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># fit model to training data</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># use fitted model to predict test data</span>
+</span></span><span class="line"><span class="cl"><span class="n">y_pred</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -422,86 +397,43 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LinearRegression</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, lr<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0.01</span>, epoch<span style="color:#ff79c6">=</span><span style="color:#bd93f9">10</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># set hyperparameter values</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">=</span> lr  <span style="color:#6272a4"># learning rate</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>epoch <span style="color:#ff79c6">=</span> epoch  <span style="color:#6272a4"># number of epochs</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fit</span>(self, X, y):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of observations, number of features</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_obs, self<span style="color:#ff79c6">.</span>n_features <span style="color:#ff79c6">=</span> X<span style="color:#ff79c6">.</span>shape
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># initialize weights and bias</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_features)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read data and labels from input</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X <span style="color:#ff79c6">=</span> X
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">=</span> y
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use gradient descent to update weights</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>epoch):
-</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>update_weights()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">update_weights</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use current parameters to predict</span>
-</span></span><span style="display:flex;"><span>        y_pred <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>predict(self<span style="color:#ff79c6">.</span>X)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># compute gradients with respect weights</span>
-</span></span><span style="display:flex;"><span>        grad_w <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> np<span style="color:#ff79c6">.</span>dot(self<span style="color:#ff79c6">.</span>X<span style="color:#ff79c6">.</span>T, (self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">-</span> y_pred)) <span style="color:#ff79c6">/</span> self<span style="color:#ff79c6">.</span>n_obs
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># compute gradient with respect to bias</span>
-</span></span><span style="display:flex;"><span>        grad_b <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> np<span style="color:#ff79c6">.</span>sum(self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">-</span> y_pred) <span style="color:#ff79c6">/</span> self<span style="color:#ff79c6">.</span>n_obs
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># update parameters by substracting lr * gradients</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">-</span> self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">*</span> grad_w
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">-</span> self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">*</span> grad_b
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict</span>(self, X):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use current parameters to make predictions</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> X<span style="color:#ff79c6">.</span>dot(self<span style="color:#ff79c6">.</span>w) <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>b</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LinearRegression</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># set hyperparameter values</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>  <span class="c1"># learning rate</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">epoch</span>  <span class="c1"># number of epochs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of observations, number of features</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># initialize weights and bias</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read data and labels from input</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use gradient descent to update weights</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">update_weights</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use current parameters to predict</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># compute gradients with respect weights</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grad_w</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># compute gradient with respect to bias</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grad_b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># update parameters by substracting lr * gradients</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grad_w</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grad_b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use current parameters to make predictions</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -612,28 +544,14 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># import library</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> sklearn.linear_model <span style="color:#ff79c6">import</span> LinearRegression
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># create a new model</span>
-</span></span><span style="display:flex;"><span>lr <span style="color:#ff79c6">=</span> LinearRegression()
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># fit model to training data</span>
-</span></span><span style="display:flex;"><span>lr<span style="color:#ff79c6">.</span>fit(X_train, y_train)
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># use fitted model to predict test data</span>
-</span></span><span style="display:flex;"><span>y_pred <span style="color:#ff79c6">=</span> lr<span style="color:#ff79c6">.</span>predict(X_test)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># import library</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># create a new model</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># fit model to training data</span>
+</span></span><span class="line"><span class="cl"><span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># use fitted model to predict test data</span>
+</span></span><span class="line"><span class="cl"><span class="n">y_pred</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -699,68 +617,34 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">import</span> copy
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LinearRegression</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># no hyperparameters to intialize</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">pass</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fit</span>(self, X, y):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read data and labels from input</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X <span style="color:#ff79c6">=</span> X
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">=</span> y
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># create a vector of all 1&#39;s to X</span>
-</span></span><span style="display:flex;"><span>        X <span style="color:#ff79c6">=</span> copy<span style="color:#ff79c6">.</span>deepcopy(X) <span style="color:#6272a4"># keep original X intact</span>
-</span></span><span style="display:flex;"><span>        dummy <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>ones(X<span style="color:#ff79c6">.</span>shape[<span style="color:#bd93f9">0</span>]) <span style="color:#6272a4"># create a vector of 1&#39;s</span>
-</span></span><span style="display:flex;"><span>        X <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>concatenate((dummy, X), <span style="color:#bd93f9">1</span>) <span style="color:#6272a4"># add it to X</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use OLS to estimate betas</span>
-</span></span><span style="display:flex;"><span>        xT <span style="color:#ff79c6">=</span> X<span style="color:#ff79c6">.</span>transpose()
-</span></span><span style="display:flex;"><span>        inversed <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>linalg<span style="color:#ff79c6">.</span>inv(xT<span style="color:#ff79c6">.</span>dot(X))
-</span></span><span style="display:flex;"><span>        betas <span style="color:#ff79c6">=</span> inversed<span style="color:#ff79c6">.</span>dot(xT)<span style="color:#ff79c6">.</span>dot(y)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># bias is the first column</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">=</span> betas[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># weights are the rest</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">=</span> betas[<span style="color:#bd93f9">1</span>:]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict</span>(self, X):
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> X<span style="color:#ff79c6">.</span>dot(self<span style="color:#ff79c6">.</span>w) <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>b</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">copy</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LinearRegression</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># no hyperparameters to intialize</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read data and labels from input</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># create a vector of all 1&#39;s to X</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="c1"># keep original X intact</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dummy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># create a vector of 1&#39;s</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">dummy</span><span class="p">,</span> <span class="n">X</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># add it to X</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use OLS to estimate betas</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xT</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">inversed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">xT</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">betas</span> <span class="o">=</span> <span class="n">inversed</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xT</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># bias is the first column</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">betas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># weights are the rest</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">betas</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -875,44 +759,22 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># create some toy data</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> sklearn.datasets <span style="color:#ff79c6">import</span> make_classification
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>X, y <span style="color:#ff79c6">=</span> make_classification(
-</span></span><span style="display:flex;"><span>    n_samples<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1000</span>,
-</span></span><span style="display:flex;"><span>    n_features<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>,
-</span></span><span style="display:flex;"><span>    n_redundant<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>,
-</span></span><span style="display:flex;"><span>    n_informative<span style="color:#ff79c6">=</span><span style="color:#bd93f9">2</span>,
-</span></span><span style="display:flex;"><span>    random_state<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>,
-</span></span><span style="display:flex;"><span>    n_clusters_per_class<span style="color:#ff79c6">=</span><span style="color:#bd93f9">1</span>,
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># use 80% for training and 20% for test</span>
-</span></span><span style="display:flex;"><span>X_train, X_test, y_train, y_test <span style="color:#ff79c6">=</span> train_test_split(
-</span></span><span style="display:flex;"><span>    X, y, test_size<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0.2</span>, random_state<span style="color:#ff79c6">=</span><span style="color:#bd93f9">42</span>
-</span></span><span style="display:flex;"><span>)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># create some toy data</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_informative</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># use 80% for training and 20% for test</span>
+</span></span><span class="line"><span class="cl"><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -982,100 +844,50 @@
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">LogisticRegression</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, lr<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0.01</span>, epoch<span style="color:#ff79c6">=</span><span style="color:#bd93f9">10</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># set hyperparameter values</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">=</span> lr  <span style="color:#6272a4"># learning rate</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>epoch <span style="color:#ff79c6">=</span> epoch  <span style="color:#6272a4"># number of epochs</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fit</span>(self, X, y):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of observations, number of features</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_obs, self<span style="color:#ff79c6">.</span>n_features <span style="color:#ff79c6">=</span> X<span style="color:#ff79c6">.</span>shape
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># initialize weights and bias</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_features)
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read data and labels from input</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X <span style="color:#ff79c6">=</span> X
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">=</span> y
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use gradient descent to update weights</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>epoch):
-</span></span><span style="display:flex;"><span>            self<span style="color:#ff79c6">.</span>update_weights()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">update_weights</span>(self):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># use current parameters to predict</span>
-</span></span><span style="display:flex;"><span>        y_pred <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>predict(self<span style="color:#ff79c6">.</span>X)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># calculate gradients with respect to weights</span>
-</span></span><span style="display:flex;"><span>        grad_w <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>np<span style="color:#ff79c6">.</span>dot(self<span style="color:#ff79c6">.</span>X<span style="color:#ff79c6">.</span>T, (self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">-</span> y_pred)) <span style="color:#ff79c6">/</span> self<span style="color:#ff79c6">.</span>n_obs
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># calculate gradients with respect to bias</span>
-</span></span><span style="display:flex;"><span>        grad_b <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span>np<span style="color:#ff79c6">.</span>sum(self<span style="color:#ff79c6">.</span>y <span style="color:#ff79c6">-</span> y_pred) <span style="color:#ff79c6">/</span> self<span style="color:#ff79c6">.</span>n_obs
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># update parameters by substracting lr * gradients</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>w <span style="color:#ff79c6">-</span> self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">*</span> grad_w
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>b <span style="color:#ff79c6">-</span> self<span style="color:#ff79c6">.</span>lr <span style="color:#ff79c6">*</span> grad_b
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">sigmoid</span>(self, z):
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">/</span> (<span style="color:#bd93f9">1</span> <span style="color:#ff79c6">+</span> np<span style="color:#ff79c6">.</span>exp(<span style="color:#ff79c6">-</span>z))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict</span>(self, X):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># linear part</span>
-</span></span><span style="display:flex;"><span>        z <span style="color:#ff79c6">=</span> X<span style="color:#ff79c6">.</span>dot(self<span style="color:#ff79c6">.</span>w) <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>b
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># sigmoid -&gt; transform [0, 1]</span>
-</span></span><span style="display:flex;"><span>        p <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>sigmoid(z)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># make decisions</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> np<span style="color:#ff79c6">.</span>where(p <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">0</span>, <span style="color:#bd93f9">1</span>)</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LogisticRegression</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># set hyperparameter values</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>  <span class="c1"># learning rate</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">epoch</span>  <span class="c1"># number of epochs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of observations, number of features</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># initialize weights and bias</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read data and labels from input</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use gradient descent to update weights</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">update_weights</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># use current parameters to predict</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># calculate gradients with respect to weights</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grad_w</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">))</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># calculate gradients with respect to bias</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grad_b</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_obs</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># update parameters by substracting lr * gradients</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grad_w</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grad_b</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># linear part</span>
+</span></span><span class="line"><span class="cl">        <span class="n">z</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># sigmoid -&gt; transform [0, 1]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># make decisions</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -1244,112 +1056,56 @@ weighted avg       0.93      0.93      0.92       200</code></pre>
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#6272a4"># import library (to get mode)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> scipy.stats <span style="color:#ff79c6">import</span> mode
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">KNeighborsClassifier</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, n_neighbors):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># set hyperparameter value</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_neighbors <span style="color:#ff79c6">=</span> n_neighbors
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fit</span>(self, X_train, y_train):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read train data and labels</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X_train <span style="color:#ff79c6">=</span> X_train
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>y_train <span style="color:#ff79c6">=</span> y_train
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of train observations</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_train <span style="color:#ff79c6">=</span> X_train<span style="color:#ff79c6">.</span>shape[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict</span>(self, X_test):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read test data</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X_test <span style="color:#ff79c6">=</span> X_test
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of test observations</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_test <span style="color:#ff79c6">=</span> X_test<span style="color:#ff79c6">.</span>shape[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># collect predicted labels</span>
-</span></span><span style="display:flex;"><span>        y_pred <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_test)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># loop over all points in test data</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_test):
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># find k nearest neighbors of given point</span>
-</span></span><span style="display:flex;"><span>            p <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>X_test[i]
-</span></span><span style="display:flex;"><span>            neighbors <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_neighbors)
-</span></span><span style="display:flex;"><span>            neighbors <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>find_neighbors(p)
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># take a majority vote on the final label</span>
-</span></span><span style="display:flex;"><span>            y_pred[i] <span style="color:#ff79c6">=</span> mode(neighbors)[<span style="color:#bd93f9">0</span>][<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># return predicted labels</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> y_pred
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">euclidean</span>(self, p1, p2):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># compute Eucleadian distance between two points</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> np<span style="color:#ff79c6">.</span>sqrt(np<span style="color:#ff79c6">.</span>sum((p1 <span style="color:#ff79c6">-</span> p2) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">find_neighbors</span>(self, p):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># compute distance between given point and all train points</span>
-</span></span><span style="display:flex;"><span>        distances <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_train)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># loop over all points in training data</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_train):
-</span></span><span style="display:flex;"><span>            distance <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>euclidean(p, self<span style="color:#ff79c6">.</span>X_train[i])
-</span></span><span style="display:flex;"><span>            distances[i] <span style="color:#ff79c6">=</span> distance
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># sort training labels by distance (ascending)</span>
-</span></span><span style="display:flex;"><span>        _, y_train_sorted <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">zip</span>(<span style="color:#ff79c6">*</span><span style="color:#8be9fd;font-style:italic">sorted</span>(<span style="color:#8be9fd;font-style:italic">zip</span>(distances, y_train)))
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># return top k labeles</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> y_train_sorted[: self<span style="color:#ff79c6">.</span>n_neighbors]</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># import library (to get mode)</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">KNeighborsClassifier</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># set hyperparameter value</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">n_neighbors</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read train data and labels</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of train observations</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read test data</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of test observations</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># collect predicted labels</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_test</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># loop over all points in test data</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># find k nearest neighbors of given point</span>
+</span></span><span class="line"><span class="cl">            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">neighbors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_neighbors</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># take a majority vote on the final label</span>
+</span></span><span class="line"><span class="cl">            <span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return predicted labels</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">y_pred</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">euclidean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># compute Eucleadian distance between two points</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">find_neighbors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># compute distance between given point and all train points</span>
+</span></span><span class="line"><span class="cl">        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># loop over all points in training data</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_train</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">distance</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># sort training labels by distance (ascending)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">_</span><span class="p">,</span> <span class="n">y_train_sorted</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return top k labeles</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">y_train_sorted</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_neighbors</span><span class="p">]</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
@@ -1523,130 +1279,65 @@ weighted avg       1.00      1.00      1.00        30</code></pre>
     </div>
   </aside>
   <p class="sr-only">python code snippet start</p>
-  <div class="highlight"><div style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
-<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">KMeans</span>:
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, n_clusters<span style="color:#ff79c6">=</span><span style="color:#bd93f9">3</span>, epoch<span style="color:#ff79c6">=</span><span style="color:#bd93f9">100</span>):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># initialize hyperparameter values</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_clusters <span style="color:#ff79c6">=</span> n_clusters
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>epoch <span style="color:#ff79c6">=</span> epoch
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fit</span>(self, X_train):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read in the data</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X_train <span style="color:#ff79c6">=</span> X_train
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of training observations</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_train <span style="color:#ff79c6">=</span> X_train<span style="color:#ff79c6">.</span>shape[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># initialize with random centroids (cannot exceed training boundaries)</span>
-</span></span><span style="display:flex;"><span>        min_, max_ <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>min(self<span style="color:#ff79c6">.</span>X_train, axis<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>), np<span style="color:#ff79c6">.</span>max(self<span style="color:#ff79c6">.</span>X_train, axis<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>)
-</span></span><span style="display:flex;"><span>        centroids <span style="color:#ff79c6">=</span> [
-</span></span><span style="display:flex;"><span>            np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>uniform(min_, max_) <span style="color:#ff79c6">for</span> _ <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_clusters)
-</span></span><span style="display:flex;"><span>        ] <span style="color:#6272a4"># this generates n_clusters points with the correct dimensions</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># train for given number of epochs</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>epoch):
-</span></span><span style="display:flex;"><span>            centroids <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>update_centroids(centroids)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># add final centroids to model attributes</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>centroids <span style="color:#ff79c6">=</span> centroids
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> self
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">update_centroids</span>(self, centroids):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># store cluster labels of training data</span>
-</span></span><span style="display:flex;"><span>        clusters <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_train)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># assign each training data point to closest centroid</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_train):
-</span></span><span style="display:flex;"><span>            p <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>X_train[i]  <span style="color:#6272a4"># isolate a data point</span>
-</span></span><span style="display:flex;"><span>            dists <span style="color:#ff79c6">=</span> [self<span style="color:#ff79c6">.</span>euclidean(p, centroid) <span style="color:#ff79c6">for</span> centroid <span style="color:#ff79c6">in</span> centroids]
-</span></span><span style="display:flex;"><span>            clusters[i] <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>argmin(dists)  <span style="color:#6272a4"># index of closest centroid is cluster label</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># update centroids by averaging points in given cluster</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_clusters):
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># all points assigned to given cluster</span>
-</span></span><span style="display:flex;"><span>            points <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>X_train[np<span style="color:#ff79c6">.</span>array(clusters) <span style="color:#ff79c6">==</span> i]
-</span></span><span style="display:flex;"><span>            <span style="color:#6272a4"># update new centroid to be the average point</span>
-</span></span><span style="display:flex;"><span>            centroids[i] <span style="color:#ff79c6">=</span> points<span style="color:#ff79c6">.</span>mean(axis<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> centroids
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">euclidean</span>(self, p1, p2):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># compute Eucleadian distance between two points</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> np<span style="color:#ff79c6">.</span>sqrt(np<span style="color:#ff79c6">.</span>sum((p1 <span style="color:#ff79c6">-</span> p2) <span style="color:#ff79c6">**</span> <span style="color:#bd93f9">2</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">predict</span>(self, X_test):
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># read test data</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>X_test <span style="color:#ff79c6">=</span> X_test
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># number of test observations</span>
-</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>n_test <span style="color:#ff79c6">=</span> X_test<span style="color:#ff79c6">.</span>shape[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># store cluster labels of test data</span>
-</span></span><span style="display:flex;"><span>        clusters <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>zeros(self<span style="color:#ff79c6">.</span>n_test)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># assign each test data point to closest centroid</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(self<span style="color:#ff79c6">.</span>n_test):
-</span></span><span style="display:flex;"><span>            p <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>X_test[i]
-</span></span><span style="display:flex;"><span>            dists <span style="color:#ff79c6">=</span> [self<span style="color:#ff79c6">.</span>euclidean(p, centroid) <span style="color:#ff79c6">for</span> centroid <span style="color:#ff79c6">in</span> self<span style="color:#ff79c6">.</span>centroids]
-</span></span><span style="display:flex;"><span>            clusters[i] <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>argmin(dists)
-</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># return predicted clusters of test data</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> clusters</span></span></code></pre></td></tr></table>
-</div>
-</div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">KMeans</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># initialize hyperparameter values</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">n_clusters</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">epoch</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read in the data</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span> <span class="o">=</span> <span class="n">X_train</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of training observations</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># initialize with random centroids (cannot exceed training boundaries)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">min_</span><span class="p">,</span> <span class="n">max_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">centroids</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">min_</span><span class="p">,</span> <span class="n">max_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span> <span class="c1"># this generates n_clusters points with the correct dimensions</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># train for given number of epochs</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">epoch</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">centroids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_centroids</span><span class="p">(</span><span class="n">centroids</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># add final centroids to model attributes</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">centroids</span> <span class="o">=</span> <span class="n">centroids</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="bp">self</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">update_centroids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">centroids</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># store cluster labels of training data</span>
+</span></span><span class="line"><span class="cl">        <span class="n">clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># assign each training data point to closest centroid</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_train</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># isolate a data point</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dists</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">centroid</span><span class="p">)</span> <span class="k">for</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="n">centroids</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span>  <span class="c1"># index of closest centroid is cluster label</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># update centroids by averaging points in given cluster</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># all points assigned to given cluster</span>
+</span></span><span class="line"><span class="cl">            <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># update new centroid to be the average point</span>
+</span></span><span class="line"><span class="cl">            <span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">centroids</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">euclidean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># compute Eucleadian distance between two points</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">p1</span> <span class="o">-</span> <span class="n">p2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read test data</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># number of test observations</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># store cluster labels of test data</span>
+</span></span><span class="line"><span class="cl">        <span class="n">clusters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_test</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># assign each test data point to closest centroid</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_test</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dists</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">euclidean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">centroid</span><span class="p">)</span> <span class="k">for</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">centroids</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="n">clusters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">dists</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return predicted clusters of test data</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">clusters</span></span></span></code></pre></div>
   <p class="sr-only">python code snippet end</p>
 
   
