@@ -1,5 +1,6 @@
 ---
 title: "About me"
+show_reading_time: false
 ---
 
 Hi, I'm Yuan, a machine learning engineer at DoorDash working on search ranking and query understanding. In my former life as a computational cognitive scientist, I studied common sense causal and social reasoning, for which I received a PhD from Berkeley in 2022.

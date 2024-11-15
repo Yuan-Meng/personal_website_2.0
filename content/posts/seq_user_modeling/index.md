@@ -133,7 +133,7 @@ Despite these optimizations, capturing super long-range dependencies and looking
 
 ### Graph Neural Networks
 
-A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper ([Chang et al. (2021)](https://arxiv.org/pdf/2106.14226) is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \\{\mathcal{V}, \mathcal{E}, A\\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via {{< sidenote "node similarity metric learning" >}}Here, the metric function between node $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.{{< /sidenote >}}. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.  
+A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper ([Chang et al. (2021)](https://arxiv.org/pdf/2106.14226) is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \\{\mathcal{V}, \mathcal{E}, A\\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via {{< sidenote "node similarity metric learning" >}}Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.{{< /sidenote >}}. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.  
 
 {{< figure src="https://www.dropbox.com/scl/fi/629z5iedbo3yv1lrlpoiq/Screenshot-2024-11-13-at-11.59.24-PM.png?rlkey=gfl4zzrrs9tgu2w6m09bzn1fg&st=gfsuhnmz&raw=1" caption="GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user's strongest interest is used for downstream prediction." width="1800">}}
 
@@ -153,27 +153,15 @@ Once the interest graphs are constructed, the Interest-Fusion Graph Convolutiona
 
 ### Next-Action Prediction
 
+TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action)
+
 <!-- BERT-style models. 
 Q: why not GPT style w/ causal mask, which is more natural for future prediction? -->
 
 ## Is Attention What You Need?
 
-> The efficacy of model simplification often hinges on precise prior knowledge, prompting an inquiry into why certain simplifications to the Transformer architecture prove effective and what insights they offer. --- Wang et al., [*ICLR 2024*](https://openreview.net/forum?id=Gny0PVtKz2)
-
-<!-- ### Google: ConvFormer -->
-
 ### Meta: HSTU
 
-<!-- Meta and Google => strip away parts of Transformers -->
-
----
-# Code Examples 
-
-## DIN (Alibaba, 2017)
-
-## TransAct (Pinterest, 2023)
-
-[repo](https://github.com/pinterest/transformer_user_action)
 
 ---
 # References
@@ -184,12 +172,12 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 3. GitHub repos of sequential user modeling 👉 papers ([Awesome-Sequence-Modeling-for-Recommendation](https://github.com/HqWu-HITCS/Awesome-Sequence-Modeling-for-Recommendation)) + code ([FuxiCTR](https://github.com/reczoo/FuxiCTR))
 
 ## Approach: Pre-Transformer
-4. Where sequential recs began 👉 Markov chains: [*Personalized News Recommendation with Context Trees*](https://arxiv.org/abs/1303.0665) (2013) by Garcin et al., *RecSys*.
+4. Markov chains kick-started sequential recs 👉 [*Personalized News Recommendation with Context Trees*](https://arxiv.org/abs/1303.0665) (2013) by Garcin et al., *RecSys*.
 5. RNNs once ruled sequential modeling 👉 LTSM: [*Recurrent Recommender Networks*](https://research.google/pubs/recurrent-recommender-networks/) (2017) by Wu et al., *WSDM*.
     - Other RNN variants: [GRUs](https://arxiv.org/abs/1511.06939), [hierarchical RNNs](https://dl.acm.org/doi/abs/10.1145/3109859.3109896)
-6. Capture union-level dependencies 👉 CNNs: [*Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding*](https://arxiv.org/abs/1809.07426) (2018) by Tang and Wang, *WSDM*.
+6. CNNs capture union-level dependencies 👉 [*Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding*](https://arxiv.org/abs/1809.07426) (2018) by Tang and Wang, *WSDM*.
     - No max pooling: [*A Simple Convolutional Generative Network for Next Item Recommendation*](https://arxiv.org/abs/1808.05163) (2018) by Yuan et al., *WSDM*.
-7. Extract interests from noise 👉 GNNs: [*Sequential Recommendation with Graph Neural Networks*](https://arxiv.org/abs/2106.14226) (2021) by Chang et al., *SIGIR*.
+7. GNNs extract interests from noise 👉 [*Sequential Recommendation with Graph Neural Networks*](https://arxiv.org/abs/2106.14226) (2021) by Chang et al., *SIGIR*.
 
 ## Approach: Target Attention
 8. Overview: [*Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems*](https://mlfrontiers.substack.com/p/target-attention-is-all-you-need) by Samuel Flender.

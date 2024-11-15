@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2469">
+  <meta itemprop="wordCount" content="2428">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT12M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 2469
+  "wordCount": 2428
 }
 </script>
 
@@ -130,7 +130,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     </header>
 
     
-    Reading time: 12 minutes
+    
+      Reading time: 12 minutes
+    
 
     
     
@@ -170,12 +172,6 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
             <li><a href="#meta-hstu">Meta: HSTU</a></li>
           </ul>
         </li>
-      </ul>
-    </li>
-    <li><a href="#code-examples">Code Examples</a>
-      <ul>
-        <li><a href="#din-alibaba-2017">DIN (Alibaba, 2017)</a></li>
-        <li><a href="#transact-pinterest-2023">TransAct (Pinterest, 2023)</a></li>
       </ul>
     </li>
     <li><a href="#references">References</a>
@@ -600,7 +596,7 @@ $$</p>
     >node similarity metric learning</label
   >
   <small id="sidenote-09" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here, the metric function between node $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
   </small>
 </span>
 . Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.</p>
@@ -762,6 +758,7 @@ $$</p>
     </a>
   
 </h4>
+<p>TransAct (Pinterest, 2023) <a href="https://github.com/pinterest/transformer_user_action">repo</a></p>
 <!-- BERT-style models. 
 Q: why not GPT style w/ causal mask, which is more natural for future prediction? -->
 <h3 id="is-attention-what-you-need" class="scroll-mt-8 group">
@@ -789,10 +786,6 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h3>
-<blockquote>
-<p>The efficacy of model simplification often hinges on precise prior knowledge, prompting an inquiry into why certain simplifications to the Transformer architecture prove effective and what insights they offer. &mdash; Wang et al., <a href="https://openreview.net/forum?id=Gny0PVtKz2"><em>ICLR 2024</em></a></p>
-</blockquote>
-<!-- ### Google: ConvFormer -->
 <h4 id="meta-hstu" class="scroll-mt-8 group">
   Meta: HSTU
   
@@ -818,84 +811,6 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h4>
-<!-- Meta and Google => strip away parts of Transformers -->
-<hr>
-<h2 id="code-examples" class="scroll-mt-8 group">
-  Code Examples
-  
-    <a href="#code-examples"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h2>
-<h3 id="din-alibaba-2017" class="scroll-mt-8 group">
-  DIN (Alibaba, 2017)
-  
-    <a href="#din-alibaba-2017"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<h3 id="transact-pinterest-2023" class="scroll-mt-8 group">
-  TransAct (Pinterest, 2023)
-  
-    <a href="#transact-pinterest-2023"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<p><a href="https://github.com/pinterest/transformer_user_action">repo</a></p>
 <hr>
 <h2 id="references" class="scroll-mt-8 group">
   References
@@ -978,18 +893,18 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
   
 </h3>
 <ol start="4">
-<li>Where sequential recs began 👉 Markov chains: <a href="https://arxiv.org/abs/1303.0665"><em>Personalized News Recommendation with Context Trees</em></a> (2013) by Garcin et al., <em>RecSys</em>.</li>
+<li>Markov chains kick-started sequential recs 👉 <a href="https://arxiv.org/abs/1303.0665"><em>Personalized News Recommendation with Context Trees</em></a> (2013) by Garcin et al., <em>RecSys</em>.</li>
 <li>RNNs once ruled sequential modeling 👉 LTSM: <a href="https://research.google/pubs/recurrent-recommender-networks/"><em>Recurrent Recommender Networks</em></a> (2017) by Wu et al., <em>WSDM</em>.
 <ul>
 <li>Other RNN variants: <a href="https://arxiv.org/abs/1511.06939">GRUs</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">hierarchical RNNs</a></li>
 </ul>
 </li>
-<li>Capture union-level dependencies 👉 CNNs: <a href="https://arxiv.org/abs/1809.07426"><em>Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding</em></a> (2018) by Tang and Wang, <em>WSDM</em>.
+<li>CNNs capture union-level dependencies 👉 <a href="https://arxiv.org/abs/1809.07426"><em>Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding</em></a> (2018) by Tang and Wang, <em>WSDM</em>.
 <ul>
 <li>No max pooling: <a href="https://arxiv.org/abs/1808.05163"><em>A Simple Convolutional Generative Network for Next Item Recommendation</em></a> (2018) by Yuan et al., <em>WSDM</em>.</li>
 </ul>
 </li>
-<li>Extract interests from noise 👉 GNNs: <a href="https://arxiv.org/abs/2106.14226"><em>Sequential Recommendation with Graph Neural Networks</em></a> (2021) by Chang et al., <em>SIGIR</em>.</li>
+<li>GNNs extract interests from noise 👉 <a href="https://arxiv.org/abs/2106.14226"><em>Sequential Recommendation with Graph Neural Networks</em></a> (2021) by Chang et al., <em>SIGIR</em>.</li>
 </ol>
 <h3 id="approach-target-attention" class="scroll-mt-8 group">
   Approach: Target Attention

@@ -27,8 +27,10 @@
       {{- end }}
     </header>
 
-    <!-- Reading Time Indicator -->
-    {{ partial "reading-time.html" . }}
+    <!-- Conditional Reading Time Indicator -->
+    {{ if not (eq .Params.show_reading_time false) }}
+      {{ partial "reading-time.html" . }}
+    {{ end }}
 
     <!-- Table of Contents Section -->
     {{ if .Params.toc }}
