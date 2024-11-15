@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-13T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2087">
+  <meta itemprop="wordCount" content="2378">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT10M",
+  "timeRequired": "PT12M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 2087
+  "wordCount": 2378
 }
 </script>
 
@@ -130,7 +130,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     </header>
 
     
-    Reading time: 10 minutes
+    Reading time: 12 minutes
 
     
     
@@ -167,7 +167,6 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         </li>
         <li><a href="#is-attention-what-you-need">Is Attention What You Need?</a>
           <ul>
-            <li><a href="#google-convformer">Google: ConvFormer</a></li>
             <li><a href="#meta-hstu">Meta: HSTU</a></li>
           </ul>
         </li>
@@ -182,6 +181,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#overview--collections">Overview &amp; Collections</a></li>
+        <li><a href="#approach-pre-transformer">Approach: Pre-Transformer</a></li>
         <li><a href="#approach-target-attention">Approach: Target Attention</a></li>
         <li><a href="#approach-language-modeling">Approach: Language Modeling</a></li>
         <li><a href="#approach-beyond-attention">Approach: Beyond Attention</a></li>
@@ -584,6 +584,33 @@ $$</p>
     </a>
   
 </h4>
+<p>A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper (<a href="https://arxiv.org/pdf/2106.14226">Chang et al. (2021)</a> is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \{\mathcal{V}, \mathcal{E}, A\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-09"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-09"
+    for="sidenote-checkbox-09"
+    class="sidenote-mark"
+    >node similarity metric learning</label
+  >
+  <small id="sidenote-09" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Here, the metric function between node $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
+  </small>
+</span>
+. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/629z5iedbo3yv1lrlpoiq/Screenshot-2024-11-13-at-11.59.24-PM.png?rlkey=gfl4zzrrs9tgu2w6m09bzn1fg&amp;st=gfsuhnmz&amp;raw=1"
+    alt="GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user&rsquo;s strongest interest is used for downstream prediction." width="1800"><figcaption>
+      <p>GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user&rsquo;s strongest interest is used for downstream prediction.</p>
+    </figcaption>
+</figure>
+
+<p>Once the interest graphs are constructed, the Interest-Fusion Graph Convolutional layer uses an attention mechanism to weight the importance of each neighbor and aggregates their information to update the node embeddings accordingly. Items that reflect the user&rsquo;s core interests (typically closer to the cluster center) or are related to the query item (i.e., the target item to be scored) receive higher weights. This further reduces noise in the item embeddings and emphasizes the user&rsquo;s long-term and immediate interests. Graph pooling is then used to downsample the graphs, preserving the strongest interest signals from the user. At this point, the noisy user sequence has been converted into a compact representation of user interests, which can be flattened into a 1D sequence for prediction.</p>
 <h3 id="target-attention" class="scroll-mt-8 group">
   Target Attention
   
@@ -765,31 +792,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 <blockquote>
 <p>The efficacy of model simplification often hinges on precise prior knowledge, prompting an inquiry into why certain simplifications to the Transformer architecture prove effective and what insights they offer. &mdash; Wang et al., <a href="https://openreview.net/forum?id=Gny0PVtKz2"><em>ICLR 2024</em></a></p>
 </blockquote>
-<h4 id="google-convformer" class="scroll-mt-8 group">
-  Google: ConvFormer
-  
-    <a href="#google-convformer"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h4>
+<!-- ### Google: ConvFormer -->
 <h4 id="meta-hstu" class="scroll-mt-8 group">
   Meta: HSTU
   
@@ -949,6 +952,37 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 <li>A Meta MLE&rsquo;s awesome post 👉 <a href="https://mlfrontiers.substack.com/p/user-action-sequence-modeling-from"><em>User Action Sequence Modeling: From Attention to Transformers and Beyond</em></a></li>
 <li>GitHub repos of sequential user modeling 👉 papers (<a href="https://github.com/HqWu-HITCS/Awesome-Sequence-Modeling-for-Recommendation">Awesome-Sequence-Modeling-for-Recommendation</a>) + code (<a href="https://github.com/reczoo/FuxiCTR">FuxiCTR</a>)</li>
 </ol>
+<h3 id="approach-pre-transformer" class="scroll-mt-8 group">
+  Approach: Pre-Transformer
+  
+    <a href="#approach-pre-transformer"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="4">
+<li>Markov chains</li>
+<li>CNNs</li>
+<li>RNNs</li>
+<li>GNNs</li>
+</ol>
 <h3 id="approach-target-attention" class="scroll-mt-8 group">
   Approach: Target Attention
   
@@ -974,7 +1008,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h3>
-<ol start="4">
+<ol start="8">
 <li>
 <p>Overview: <a href="https://mlfrontiers.substack.com/p/target-attention-is-all-you-need"><em>Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems</em></a> by Samuel Flender.</p>
 </li>
@@ -986,18 +1020,18 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 </li>
 <li>
 <p>Go crazy on sequence length 👉 SIM: <a href="https://arxiv.org/abs/2006.05639"><em>Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction</em></a> (2020) by Qi et al., <em>CIKM</em>.</p>
+</li>
+</ol>
 <ul>
 <li>Ultra long: <a href="https://arxiv.org/abs/2108.04468">ETA (2021)</a>, <a href="https://arxiv.org/abs/2302.02352">TWIN (2023)</a>, <a href="https://arxiv.org/html/2407.16357v1">TWIN-v2 (2024)</a>, &hellip;</li>
 <li>Review post: <a href="https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling"><em>Towards Life-Long User History Modeling in Recommender Systems</em></a> by Samuel Flender.</li>
 </ul>
-</li>
-<li>
-<p>Squeeze every ounce of sequences 👉 TIM: <a href="2024"><em>Ads Recommendation in a Collapsed and Entangled World</em></a> by Pan et al, <em>KDD</em>.</p>
+<ol start="11">
+<li>Squeeze every ounce of sequences 👉 TIM: <a href="2024"><em>Ads Recommendation in a Collapsed and Entangled World</em></a> by Pan et al, <em>KDD</em>.</li>
+</ol>
 <ul>
 <li>Paper summary: <a href="https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation"><em>Breaking down Tencent&rsquo;s Recommendation Algorithm</em></a> by Samuel Flender.</li>
 </ul>
-</li>
-</ol>
 <h3 id="approach-language-modeling" class="scroll-mt-8 group">
   Approach: Language Modeling
   
@@ -1023,7 +1057,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h3>
-<ol start="8">
+<ol start="12">
 <li>The OG 👉 <a href="https://arxiv.org/abs/1904.06690"><em>BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer</em></a> (2019) by Sun et al., <em>CIKM</em>.</li>
 <li>Play with objectives 👉 <a href="https://arxiv.org/abs/2205.04507"><em>PinnerFormer: Sequence Modeling for User Representation at Pinterest</em></a> (2022) by Pancha et al., <em>KDD</em>.</li>
 <li>Capture short-term interests 👉 <a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2024) by Xia et al., <em>KDD</em>.</li>
@@ -1054,10 +1088,10 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h3>
-<ol start="12">
+<ol start="16">
 <li>Meta AI 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
-<li>Google Research 👉 <a href="https://openreview.net/forum?id=Gny0PVtKz2"><em>ConvFormer: Revisiting Token-mixers for Sequential User Modeling</em></a> (2024) by Wang et al., <em>ICLR</em>.</li>
 </ol>
+<!-- 13. Google Research 👉 [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*. -->
     </div>
   </article>
 

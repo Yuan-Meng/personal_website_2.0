@@ -133,6 +133,12 @@ Despite these optimizations, capturing super long-range dependencies and looking
 
 ### Graph Neural Networks
 
+A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper ([Chang et al. (2021)](https://arxiv.org/pdf/2106.14226) is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \\{\mathcal{V}, \mathcal{E}, A\\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via {{< sidenote "node similarity metric learning" >}}Here, the metric function between node $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.{{< /sidenote >}}. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.  
+
+{{< figure src="https://www.dropbox.com/scl/fi/629z5iedbo3yv1lrlpoiq/Screenshot-2024-11-13-at-11.59.24-PM.png?rlkey=gfl4zzrrs9tgu2w6m09bzn1fg&st=gfsuhnmz&raw=1" caption="GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user's strongest interest is used for downstream prediction." width="1800">}}
+
+Once the interest graphs are constructed, the Interest-Fusion Graph Convolutional layer uses an attention mechanism to weight the importance of each neighbor and aggregates their information to update the node embeddings accordingly. Items that reflect the user's core interests (typically closer to the cluster center) or are related to the query item (i.e., the target item to be scored) receive higher weights. This further reduces noise in the item embeddings and emphasizes the user's long-term and immediate interests. Graph pooling is then used to downsample the graphs, preserving the strongest interest signals from the user. At this point, the noisy user sequence has been converted into a compact representation of user interests, which can be flattened into a 1D sequence for prediction. 
+
 ## Target Attention
 
 <!-- DIN started the target attention traditional. general idea is different items play different roles for the same target.  -->
@@ -154,7 +160,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 
 > The efficacy of model simplification often hinges on precise prior knowledge, prompting an inquiry into why certain simplifications to the Transformer architecture prove effective and what insights they offer. --- Wang et al., [*ICLR 2024*](https://openreview.net/forum?id=Gny0PVtKz2)
 
-### Google: ConvFormer
+<!-- ### Google: ConvFormer -->
 
 ### Meta: HSTU
 
@@ -177,27 +183,33 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 2. A Meta MLE's awesome post 👉 [*User Action Sequence Modeling: From Attention to Transformers and Beyond*](https://mlfrontiers.substack.com/p/user-action-sequence-modeling-from) 
 3. GitHub repos of sequential user modeling 👉 papers ([Awesome-Sequence-Modeling-for-Recommendation](https://github.com/HqWu-HITCS/Awesome-Sequence-Modeling-for-Recommendation)) + code ([FuxiCTR](https://github.com/reczoo/FuxiCTR))
 
-## Approach: Target Attention
-4. Overview: [*Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems*](https://mlfrontiers.substack.com/p/target-attention-is-all-you-need) by Samuel Flender.
+## Approach: Pre-Transformer
+4. Markov chains
+5. CNNs
+6. RNNs
+7. GNNs
 
-5. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2017) by Zhou et al., *KDD*.
+## Approach: Target Attention
+8. Overview: [*Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems*](https://mlfrontiers.substack.com/p/target-attention-is-all-you-need) by Samuel Flender.
+
+9. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2017) by Zhou et al., *KDD*.
    - And its many a Alibaba siblings: [DIEN (2018)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
-6. Go crazy on sequence length 👉 SIM: [*Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction*](https://arxiv.org/abs/2006.05639) (2020) by Qi et al., *CIKM*.
+10. Go crazy on sequence length 👉 SIM: [*Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction*](https://arxiv.org/abs/2006.05639) (2020) by Qi et al., *CIKM*.
    - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-v2 (2024)](https://arxiv.org/html/2407.16357v1), ...
    - Review post: [*Towards Life-Long User History Modeling in Recommender Systems*](https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling) by Samuel Flender.
-7. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](2024) by Pan et al, *KDD*.
+11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](2024) by Pan et al, *KDD*.
    - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.
 
 
 ## Approach: Language Modeling
 
-8. The OG 👉 [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
-9. Play with objectives 👉 [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
-10. Capture short-term interests 👉 [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
-11. Applications at Pinterest 👉 organic ranking ([*Large-scale User Sequences at Pinterest*](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)) + ads ranking ([*User Action Sequence Modeling for Pinterest Ads Engagement Modeling*](https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e))
+12. The OG 👉 [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
+13. Play with objectives 👉 [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
+14. Capture short-term interests 👉 [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
+15. Applications at Pinterest 👉 organic ranking ([*Large-scale User Sequences at Pinterest*](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)) + ads ranking ([*User Action Sequence Modeling for Pinterest Ads Engagement Modeling*](https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e))
 
 
 ## Approach: Beyond Attention
-12. Meta AI 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
-13. Google Research 👉 [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*.
+16. Meta AI 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
+<!-- 13. Google Research 👉 [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*. -->
 
