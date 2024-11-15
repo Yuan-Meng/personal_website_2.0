@@ -1,6 +1,6 @@
 ---
 title: "Down the Rabbit Hole: Sequential User Modeling"
-date: 2024-11-13
+date: 2024-11-14
 math: true
 categories: ["recommender systems", "information retrieval"]
 toc: true
@@ -184,21 +184,22 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 3. GitHub repos of sequential user modeling 👉 papers ([Awesome-Sequence-Modeling-for-Recommendation](https://github.com/HqWu-HITCS/Awesome-Sequence-Modeling-for-Recommendation)) + code ([FuxiCTR](https://github.com/reczoo/FuxiCTR))
 
 ## Approach: Pre-Transformer
-4. Markov chains
-5. CNNs
-6. RNNs
-7. GNNs
+4. Where sequential recs began 👉 Markov chains: [*Personalized News Recommendation with Context Trees*](https://arxiv.org/abs/1303.0665) (2013) by Garcin et al., *RecSys*.
+5. RNNs once ruled sequential modeling 👉 LTSM: [*Recurrent Recommender Networks*](https://research.google/pubs/recurrent-recommender-networks/) (2017) by Wu et al., *WSDM*.
+    - Other RNN variants: [GRUs](https://arxiv.org/abs/1511.06939), [hierarchical RNNs](https://dl.acm.org/doi/abs/10.1145/3109859.3109896)
+6. Capture union-level dependencies 👉 CNNs: [*Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding*](https://arxiv.org/abs/1809.07426) (2018) by Tang and Wang, *WSDM*.
+    - No max pooling: [*A Simple Convolutional Generative Network for Next Item Recommendation*](https://arxiv.org/abs/1808.05163) (2018) by Yuan et al., *WSDM*.
+7. Extract interests from noise 👉 GNNs: [*Sequential Recommendation with Graph Neural Networks*](https://arxiv.org/abs/2106.14226) (2021) by Chang et al., *SIGIR*.
 
 ## Approach: Target Attention
 8. Overview: [*Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems*](https://mlfrontiers.substack.com/p/target-attention-is-all-you-need) by Samuel Flender.
-
 9. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2017) by Zhou et al., *KDD*.
-   - And its many a Alibaba siblings: [DIEN (2018)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
+    - And its many a Alibaba siblings: [DIEN (2018)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
 10. Go crazy on sequence length 👉 SIM: [*Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction*](https://arxiv.org/abs/2006.05639) (2020) by Qi et al., *CIKM*.
-   - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-v2 (2024)](https://arxiv.org/html/2407.16357v1), ...
-   - Review post: [*Towards Life-Long User History Modeling in Recommender Systems*](https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling) by Samuel Flender.
+    - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-v2 (2024)](https://arxiv.org/html/2407.16357v1), ...
+    - Review post: [*Towards Life-Long User History Modeling in Recommender Systems*](https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling) by Samuel Flender.
 11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](2024) by Pan et al, *KDD*.
-   - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.
+    - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.
 
 
 ## Approach: Language Modeling
