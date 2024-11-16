@@ -3,9 +3,9 @@
   lang="en-us"
   dir="ltr"
 >
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=50069&amp;path=livereload" data-no-instant defer></script>
     
-<link rel="stylesheet" href="http://localhost:1313/css/styles.min.30bb45eb22a875545611138569e9d0de6a7f6d840a287bda29b5f6ea87c1d2f1.css">
+<link rel="stylesheet" href="http://localhost:50069/css/styles.min.30bb45eb22a875545611138569e9d0de6a7f6d840a287bda29b5f6ea87c1d2f1.css">
 <meta charset="utf-8" />
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
@@ -14,7 +14,7 @@
 </title>
   <meta name="description" content=" Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded." />
-<meta property="og:url" content="http://localhost:1313/posts/seq_user_modeling/">
+<meta property="og:url" content="http://localhost:50069/posts/seq_user_modeling/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Down the Rabbit Hole: Sequential User Modeling">
   <meta property="og:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2542">
+  <meta itemprop="wordCount" content="3296">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta name="twitter:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
-<link rel="canonical" href="http://localhost:1313/posts/seq_user_modeling/" />
+<link rel="canonical" href="http://localhost:50069/posts/seq_user_modeling/" />
 
     <link rel="stylesheet" href="/css/index.css" />
 
@@ -63,7 +63,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
-  "@id": "http://localhost:1313/posts/seq_user_modeling/",
+  "@id": "http://localhost:50069/posts/seq_user_modeling/",
   "@type": "BlogPosting",
   "articleSection": [
     "Recommender systems",
@@ -73,22 +73,22 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     "@type": "Person",
     "email": "mycaptainmy@gmail.com",
     "name": "Yuan Meng",
-    "url": "http://localhost:1313/about/"
+    "url": "http://localhost:50069/about/"
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2024-11-14",
   "description": " Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?\nYuan’s Amazon browsing history last week; distinct sessions are color-coded.",
   "headline": "Down the Rabbit Hole: Sequential User Modeling",
   "isPartOf": {
-    "@id": "http://localhost:1313/posts/",
+    "@id": "http://localhost:50069/posts/",
     "@type": "Blog",
     "name": "Posts"
   },
-  "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
+  "mainEntityOfPage": "http://localhost:50069/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT12M",
-  "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 2542
+  "timeRequired": "PT16M",
+  "url": "http://localhost:50069/posts/seq_user_modeling/",
+  "wordCount": 3296
 }
 </script>
 
@@ -131,7 +131,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
     
     
-      Reading time: 12 minutes
+      Reading time: 16 minutes
     
 
     
@@ -157,14 +157,14 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         </li>
         <li><a href="#target-attention">Target Attention</a>
           <ul>
-            <li><a href="#one-stage-din-family">One-Stage: DIN Family</a></li>
-            <li><a href="#two-stage-gsu--esu">Two-Stage: GSU + ESU</a></li>
+            <li><a href="#one-stage-din-2017-and-dien-2018">One-Stage: DIN (2017) and DIEN (2018)</a></li>
+            <li><a href="#two-stage-general-search-unit--exact-search-unit">Two-Stage: General Search Unit + Exact Search Unit</a></li>
           </ul>
         </li>
         <li><a href="#language-modeling">&ldquo;Language Modeling&rdquo;</a>
           <ul>
-            <li><a href="#masked-action-modeling">Masked Action Modeling</a></li>
-            <li><a href="#next-action-prediction">Next-Action Prediction</a></li>
+            <li><a href="#masked-action-modeling-bert4rec-2019">Masked Action Modeling: BERT4Rec (2019)</a></li>
+            <li><a href="#generalized-next-action-prediction-transact-2023">(Generalized) Next-Action Prediction: TransAct (2023)</a></li>
           </ul>
         </li>
         <li><a href="#is-attention-what-you-need">Is Attention What You Need?</a>
@@ -596,7 +596,7 @@ $$</p>
     >node similarity metric learning</label
   >
   <small id="sidenote-09" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product (an element-wise operation that takes 2 vectors of the same dimension and multiples the corresponding elements together) and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
   </small>
 </span>
 . Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.</p>
@@ -632,11 +632,11 @@ $$</p>
     </a>
   
 </h3>
-<p>Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it&rsquo;d be a great suggestion. By contrast, other items I&rsquo;ve bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences inform their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, <a href="https://arxiv.org/pdf/1706.06978">Zhou et al., 2017</a>) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling accordingly.</p>
-<h4 id="one-stage-din-family" class="scroll-mt-8 group">
-  One-Stage: DIN Family
+<p>The GNN &ldquo;alchemy&rdquo; is one way to extract interest signals from noisy sequences. A more straightforward approach is via <em>target attention</em>.</p>
+<h4 id="one-stage-din-2017-and-dien-2018" class="scroll-mt-8 group">
+  One-Stage: DIN (2017) and DIEN (2018)
   
-    <a href="#one-stage-din-family"
+    <a href="#one-stage-din-2017-and-dien-2018"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -658,10 +658,90 @@ $$</p>
     </a>
   
 </h4>
-<h4 id="two-stage-gsu--esu" class="scroll-mt-8 group">
-  Two-Stage: GSU + ESU
+<figure><img src="https://www.dropbox.com/scl/fi/7pw0aj09hnr4zi8q7lh36/Screenshot-2024-11-15-at-9.27.07-PM.png?rlkey=ofrz5862p3sel38c9tewe9i9c&amp;st=0qi0yzq3&amp;raw=1"
+    alt="DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model." width="1800"><figcaption>
+      <p>DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model.</p>
+    </figcaption>
+</figure>
+
+<p>Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it&rsquo;d be a great suggestion. By contrast, other items I&rsquo;ve bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, <a href="https://arxiv.org/pdf/1706.06978">Zhou et al., 2017</a>) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.</p>
+<p>Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, <a href="https://arxiv.org/abs/1809.03672">Zhou et al., 2018</a>) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&amp;st=za8nlqsb&amp;raw=1"
+    alt="DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800"><figcaption>
+      <p>DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state.</p>
+    </figcaption>
+</figure>
+
+<p>The DIEN architecture has two components &mdash; an Interest Extractor Layer to extract interest states from user sequences and an Interest Evolution Layer to model interest evolution w.r.t. the target item.</p>
+<ul>
+<li>
+<p><strong>Interest Extractor Layer</strong>: Each hidden state $\mathbf{h}_t$ represents the user interest state after action $i_t$. The output is an interest sequence concatenated from all hidden states, $[\mathbf{h}_1, \ldots, \mathbf{h}_L]$.</p>
+<ul>
+<li><strong>Auxiliary loss</strong>: Only after the final action can we predict the target item. To provide extra supervision in earlier steps, the authors introduced an auxiliary task, predicting the $(t+1)$-th action based on $\{i_1, \ldots, i_t\}$. The actual action $i_{t+1}$ serves as the positive instance, while a randomly sampled action serves as the negative instance. The task is to predict which is positive using the binary cross-entropy loss &mdash;
+$$L_{aux} = -\frac{1}{N} \left( \sum_{i=1}^{N} \sum_{t} \log \sigma(\mathbf{h}_t^i, \mathbf{e}_b^i[t+1]) + \log (1 - \sigma(\mathbf{h}_t^i, \hat{\mathbf{e}}_b^i[t+1])) \right),$$
+where $\mathbf{e}_b^i[t+1])$ and $\hat{\mathbf{e}}_b^i[t+1]$ are positive and negative item embeddings, respectively, and $\sigma(\mathbf{x_1}, \mathbf{x_2}) = \frac{1}{1 + \exp(-[\mathbf{x_1}, \mathbf{x_2}])}$ denotes the <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-13"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-13"
+    for="sidenote-checkbox-13"
+    class="sidenote-mark"
+    >predicted score</label
+  >
+  <small id="sidenote-13" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>The notation is a bit unconventional, but inferring from the context, $-[\mathbf{x_1}, \mathbf{x_2}]$ is not a concatenation but an operation such as a dot product that computes the similarity between two vectors and returns a scalar.<span class="sr-only">)</span>
+  </small>
+</span>
+.</li>
+<li><strong>Global loss</strong>: The global loss for the target item CTR prediction task is given by $L = L_{target} + \alpha \cdot L_{aux}$, where $\alpha$ is a hyperparameter to balance interest representation (from the auxiliary task) and the final CTR prediction.</li>
+</ul>
+</li>
+<li>
+<p><strong>Interest Evolution Layer</strong>: The previous Interest Extractor Layer uses one GRU to learn each interest state up until time step $t$; the Interest Extractor Layer uses a second GRU to generate the final sequence representation. The update to each hidden state is controlled by its attention score with the target item.</p>
+<ul>
+<li>
+<p><strong>Attention function</strong>: The relation between interest state $\mathbb{h}_t$ and the target item $a$ is given by the attention function &mdash;
+$$a_t = \frac{\exp(\mathbb{h_t}We_a)}{\sum_{j=1}^T \exp(\mathbb{h}_jWe_a)},$$
+where $e_a$ represents the target item embedding. A higher attention score indicates a stronger connection between the given interest state and the target item being considered.</p>
+</li>
+<li>
+<p><strong>GRU with attentional update gate (AUGRU)</strong>: The hidden state update is controlled by attention score $a_t$, reducing the impact of interests less related to the target item on the hidden state. This weakens the disturbance from noise.
+$$\tilde{\mathbb{u}}_t^{\prime} = a_t \cdot \mathbb{u}_t^{\prime},$$
+$$\mathbb{h}_t^{\prime} = (1 - \tilde{\mathbb{u}}_t^{\prime}) \circ \mathbb{h}_{t-1}^{\prime} + \tilde{\mathbb{u}}_t^{\prime} \circ \tilde{\mathbb{h}}_t^{\prime},$$
+where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-14"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-14"
+    for="sidenote-checkbox-14"
+    class="sidenote-mark"
+    >update gate</label
+  >
+  <small id="sidenote-14" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>In GRUs, the update gate determines how much of the previous hidden state should be carried forward into the current state.<span class="sr-only">)</span>
+  </small>
+</span>
+ and $\tilde{\mathbb{u}}_t^{\prime}$ is the attention update gate. $\mathbb{h}_t^{\prime}$ (soley based on sequential dependencies) and $\tilde{\mathbb{h}}_t^{\prime}$ (also incorporating target attention) are hidden states in the Interest Extractor Layer and the Interest Evolution Layer, respectively.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="two-stage-general-search-unit--exact-search-unit" class="scroll-mt-8 group">
+  Two-Stage: General Search Unit + Exact Search Unit
   
-    <a href="#two-stage-gsu--esu"
+    <a href="#two-stage-general-search-unit--exact-search-unit"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -683,6 +763,7 @@ $$</p>
     </a>
   
 </h4>
+<p>In both DIN and DIEN, each interest unit is a specific item, which limits the sequence length that can be efficiently modeled. Newer two-stage models breaks through this limitation by <span style="background-color: #abe0bb">first extracting &ldquo;interest topics&rdquo; (General Search Units, &ldquo;GSUs&rdquo;) from sequences and then only computing target attention between items (Exact Search Units, or &ldquo;ESUs&rdquo;) in relevant GSUs and the target item</span>. The GSU + ESU paradigm is essential for modeling very long (in the orders of $10^3$ to $10^5$, or even longer) user sequences that capture their lifelong history.</p>
 <h3 id="language-modeling" class="scroll-mt-8 group">
   &ldquo;Language Modeling&rdquo;
   
@@ -708,10 +789,10 @@ $$</p>
     </a>
   
 </h3>
-<h4 id="masked-action-modeling" class="scroll-mt-8 group">
-  Masked Action Modeling
+<h4 id="masked-action-modeling-bert4rec-2019" class="scroll-mt-8 group">
+  Masked Action Modeling: BERT4Rec (2019)
   
-    <a href="#masked-action-modeling"
+    <a href="#masked-action-modeling-bert4rec-2019"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -733,10 +814,10 @@ $$</p>
     </a>
   
 </h4>
-<h4 id="next-action-prediction" class="scroll-mt-8 group">
-  Next-Action Prediction
+<h4 id="generalized-next-action-prediction-transact-2023" class="scroll-mt-8 group">
+  (Generalized) Next-Action Prediction: TransAct (2023)
   
-    <a href="#next-action-prediction"
+    <a href="#generalized-next-action-prediction-transact-2023"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -758,7 +839,7 @@ $$</p>
     </a>
   
 </h4>
-<p>TransAct (Pinterest, 2023) <a href="https://github.com/pinterest/transformer_user_action">repo</a></p>
+<!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
 <!-- BERT-style models. 
 Q: why not GPT style w/ causal mask, which is more natural for future prediction? -->
 <h3 id="is-attention-what-you-need" class="scroll-mt-8 group">

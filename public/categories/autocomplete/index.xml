@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Autocomplete on Yuan Meng</title>
-    <link>http://localhost:1313/categories/autocomplete/</link>
+    <link>http://localhost:50069/categories/autocomplete/</link>
     <description>Recent content in Autocomplete on Yuan Meng</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -10,12 +10,12 @@
     <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
     <copyright>Yuan Meng</copyright>
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/autocomplete/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:50069/categories/autocomplete/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Autocompletion for Search Enginees</title>
-      <link>http://localhost:1313/posts/autocomplete/</link>
+      <link>http://localhost:50069/posts/autocomplete/</link>
       <pubDate>Sat, 06 Jan 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/posts/autocomplete/</guid>
+      <guid>http://localhost:50069/posts/autocomplete/</guid>
       <description>&lt;p&gt;Autocompletion dates back half a century ago (&lt;a href=&#34;https://www.doc.ic.ac.uk/~shm/MI/mi3.html&#34;&gt;Longuet-Higgins &amp;amp; Ortony, 1968&lt;/a&gt;), initially designed to save keystrokes as people type and help those with physical disabilities type faster. The incomplete user input is the &lt;strong&gt;&amp;ldquo;query prefix&amp;rdquo;&lt;/strong&gt; and suggested ways of extending the prefix into a full query are &lt;strong&gt;&amp;ldquo;query completions&amp;rdquo;&lt;/strong&gt;. This feature is essential to modern text editors and search engines.&lt;/p&gt;</description>
     </item>
   </channel>

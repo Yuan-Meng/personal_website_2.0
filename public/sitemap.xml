@@ -2,122 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://localhost:50069/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/seq_user_modeling/</loc>
+    <loc>http://localhost:50069/posts/seq_user_modeling/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/information-retrieval/</loc>
+    <loc>http://localhost:50069/categories/information-retrieval/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>http://localhost:50069/posts/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>http://localhost:50069/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/recommender-systems/</loc>
+    <loc>http://localhost:50069/categories/recommender-systems/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
+    <loc>http://localhost:50069/notes/how_i_read_papers/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/literature-review/</loc>
+    <loc>http://localhost:50069/categories/literature-review/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/</loc>
+    <loc>http://localhost:50069/notes/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/writing/</loc>
+    <loc>http://localhost:50069/categories/writing/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/mle_interviews/</loc>
+    <loc>http://localhost:50069/posts/mle_interviews/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/career/</loc>
+    <loc>http://localhost:50069/categories/career/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/interview/</loc>
+    <loc>http://localhost:50069/categories/interview/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/machine-learning/</loc>
+    <loc>http://localhost:50069/categories/machine-learning/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/ai/</loc>
+    <loc>http://localhost:50069/categories/ai/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/cognitive-science/</loc>
+    <loc>http://localhost:50069/categories/cognitive-science/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/human_vision/</loc>
+    <loc>http://localhost:50069/posts/human_vision/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/negative-sampling/</loc>
+    <loc>http://localhost:50069/categories/negative-sampling/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/negative_sampling/</loc>
+    <loc>http://localhost:50069/posts/negative_sampling/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/recommender-system/</loc>
+    <loc>http://localhost:50069/categories/recommender-system/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/multi-task-learning/</loc>
+    <loc>http://localhost:50069/categories/multi-task-learning/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/mtml/</loc>
+    <loc>http://localhost:50069/posts/mtml/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/ebr/</loc>
+    <loc>http://localhost:50069/posts/ebr/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/embedding/</loc>
+    <loc>http://localhost:50069/categories/embedding/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/vector-based-search/</loc>
+    <loc>http://localhost:50069/categories/vector-based-search/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/personal-reflections/</loc>
+    <loc>http://localhost:50069/categories/personal-reflections/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/17_going_under/</loc>
+    <loc>http://localhost:50069/notes/17_going_under/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/attention_as_dict/</loc>
+    <loc>http://localhost:50069/posts/attention_as_dict/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/natural-language-processing/</loc>
+    <loc>http://localhost:50069/categories/natural-language-processing/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/ltr/</loc>
+    <loc>http://localhost:50069/posts/ltr/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/learning-to-rank/</loc>
+    <loc>http://localhost:50069/categories/learning-to-rank/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/search/</loc>
+    <loc>http://localhost:50069/categories/search/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/autocomplete/</loc>
+    <loc>http://localhost:50069/categories/autocomplete/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/autocomplete/</loc>
+    <loc>http://localhost:50069/posts/autocomplete/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/perceptron/</loc>
+    <loc>http://localhost:50069/posts/perceptron/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/birthday/</loc>
+    <loc>http://localhost:50069/notes/birthday/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/algorithms/</loc>
+    <loc>http://localhost:50069/categories/algorithms/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/md_coding/</loc>
+    <loc>http://localhost:50069/posts/md_coding/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/empathy/</loc>
+    <loc>http://localhost:50069/notes/empathy/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/newgrads/</loc>
+    <loc>http://localhost:50069/posts/newgrads/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/data-science/</loc>
+    <loc>http://localhost:50069/categories/data-science/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/nothingness/</loc>
+    <loc>http://localhost:50069/notes/nothingness/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/jupyter/</loc>
+    <loc>http://localhost:50069/categories/jupyter/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/python/</loc>
+    <loc>http://localhost:50069/categories/python/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/python_env/</loc>
+    <loc>http://localhost:50069/notes/python_env/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/resolutions-2022/</loc>
+    <loc>http://localhost:50069/notes/resolutions-2022/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/guitar/</loc>
+    <loc>http://localhost:50069/notes/guitar/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/guitar/</loc>
+    <loc>http://localhost:50069/categories/guitar/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/music/</loc>
+    <loc>http://localhost:50069/categories/music/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/causal-inference/</loc>
+    <loc>http://localhost:50069/categories/causal-inference/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/causality/causality/</loc>
+    <loc>http://localhost:50069/posts/causality/causality/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/quasi-experiment/</loc>
+    <loc>http://localhost:50069/categories/quasi-experiment/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/cocosci/</loc>
+    <loc>http://localhost:50069/notes/cocosci/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/metrics/</loc>
+    <loc>http://localhost:50069/posts/metrics/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/metrics/</loc>
+    <loc>http://localhost:50069/categories/metrics/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/product/</loc>
+    <loc>http://localhost:50069/categories/product/</loc>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>http://localhost:50069/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/graph/</loc>
+    <loc>http://localhost:50069/graph/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>http://localhost:50069/tags/</loc>
   </url>
 </urlset>

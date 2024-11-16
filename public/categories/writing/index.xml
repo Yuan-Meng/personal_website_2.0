@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Writing on Yuan Meng</title>
-    <link>http://localhost:1313/categories/writing/</link>
+    <link>http://localhost:50069/categories/writing/</link>
     <description>Recent content in Writing on Yuan Meng</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -10,12 +10,12 @@
     <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
     <copyright>Yuan Meng</copyright>
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/writing/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:50069/categories/writing/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How I Read Papers for Blogposts</title>
-      <link>http://localhost:1313/notes/how_i_read_papers/</link>
+      <link>http://localhost:50069/notes/how_i_read_papers/</link>
       <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/notes/how_i_read_papers/</guid>
+      <guid>http://localhost:50069/notes/how_i_read_papers/</guid>
       <description>&lt;p&gt;Former OpenAI researcher Lilian Weng has taught foundational and SOTA ideas in AI/ML to a generation of machine learning practitioners through her awesome &lt;a href=&#34;https://lilianweng.github.io/faq/&#34;&gt;blogposts&lt;/a&gt;. It all started with her personal learning notes and a passion for learning through teaching.&lt;/p&gt;&#xA;&lt;p&gt;I started my own blog for the same reasons: By sharing my learnings publicly, I motivate myself to articulate my understanding explicitly.&lt;/p&gt;&#xA;&lt;p&gt;So, how do I begin? To dive deeper into search/recommendations/ads (&amp;ldquo;搜广推&amp;rdquo;) topics, for instance, I usually read papers in 3 batches. Take my favorite post &lt;a href=&#34;https://www.yuan-meng.com/posts/ltr/&#34;&gt;&lt;em&gt;An Evolution of Learning to Rank&lt;/em&gt;&lt;/a&gt; as an example &amp;mdash;&lt;/p&gt;</description>
     </item>
   </channel>

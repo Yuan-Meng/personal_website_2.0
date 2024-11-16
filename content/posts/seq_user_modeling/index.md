@@ -133,7 +133,7 @@ Despite these optimizations, capturing super long-range dependencies and looking
 
 ### Graph Neural Networks
 
-A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper ([Chang et al. (2021)](https://arxiv.org/pdf/2106.14226) is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \\{\mathcal{V}, \mathcal{E}, A\\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via {{< sidenote "node similarity metric learning" >}}Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.{{< /sidenote >}}. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.  
+A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper ([Chang et al. (2021)](https://arxiv.org/pdf/2106.14226) is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \\{\mathcal{V}, \mathcal{E}, A\\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via {{< sidenote "node similarity metric learning" >}}Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product (an element-wise operation that takes 2 vectors of the same dimension and multiples the corresponding elements together) and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.{{< /sidenote >}}. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.  
 
 {{< figure src="https://www.dropbox.com/scl/fi/629z5iedbo3yv1lrlpoiq/Screenshot-2024-11-13-at-11.59.24-PM.png?rlkey=gfl4zzrrs9tgu2w6m09bzn1fg&st=gfsuhnmz&raw=1" caption="GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user's strongest interest is used for downstream prediction." width="1800">}}
 
@@ -141,20 +141,48 @@ Once the interest graphs are constructed, the Interest-Fusion Graph Convolutiona
 
 ## Target Attention
 
-Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences inform their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2017](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling accordingly.
+The GNN "alchemy" is one way to extract interest signals from noisy sequences. A more straightforward approach is via *target attention*. 
 
 
-### One-Stage: DIN Family
+### One-Stage: DIN (2017) and DIEN (2018)
 
-### Two-Stage: GSU + ESU
+{{< figure src="https://www.dropbox.com/scl/fi/7pw0aj09hnr4zi8q7lh36/Screenshot-2024-11-15-at-9.27.07-PM.png?rlkey=ofrz5862p3sel38c9tewe9i9c&st=0qi0yzq3&raw=1" caption="DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model." width="1800">}}
+
+Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2017](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.
+
+Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, [Zhou et al., 2018](https://arxiv.org/abs/1809.03672)) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).
+
+{{< figure src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&st=za8nlqsb&raw=1" caption="DIEN uses a variant of RNN --- GRU -- to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800">}}
+
+The DIEN architecture has two components --- an Interest Extractor Layer to extract interest states from user sequences and an Interest Evolution Layer to model interest evolution w.r.t. the target item.
+
+- **Interest Extractor Layer**: Each hidden state $\mathbf{h}_t$ represents the user interest state after action $i_t$. The output is an interest sequence concatenated from all hidden states, $[\mathbf{h}_1, \ldots, \mathbf{h}_L]$.
+    - **Auxiliary loss**: Only after the final action can we predict the target item. To provide extra supervision in earlier steps, the authors introduced an auxiliary task, predicting the $(t+1)$-th action based on $\\{i_1, \ldots, i_t\\}$. The actual action $i_{t+1}$ serves as the positive instance, while a randomly sampled action serves as the negative instance. The task is to predict which is positive using the binary cross-entropy loss --- 
+    $$L_{aux} = -\frac{1}{N} \left( \sum_{i=1}^{N} \sum_{t} \log \sigma(\mathbf{h}_t^i, \mathbf{e}_b^i[t+1]) + \log (1 - \sigma(\mathbf{h}_t^i, \hat{\mathbf{e}}_b^i[t+1])) \right),$$
+    where $\mathbf{e}_b^i[t+1])$ and $\hat{\mathbf{e}}_b^i[t+1]$ are positive and negative item embeddings, respectively, and $\sigma(\mathbf{x_1}, \mathbf{x_2}) = \frac{1}{1 + \exp(-[\mathbf{x_1}, \mathbf{x_2}])}$ denotes the {{< sidenote "predicted score" >}}The notation is a bit unconventional, but inferring from the context, $-[\mathbf{x_1}, \mathbf{x_2}]$ is not a concatenation but an operation such as a dot product that computes the similarity between two vectors and returns a scalar.{{< /sidenote >}}.
+    - **Global loss**: The global loss for the target item CTR prediction task is given by $L = L_{target} + \alpha \cdot L_{aux}$, where $\alpha$ is a hyperparameter to balance interest representation (from the auxiliary task) and the final CTR prediction.
+
+- **Interest Evolution Layer**: The previous Interest Extractor Layer uses one GRU to learn each interest state up until time step $t$; the Interest Extractor Layer uses a second GRU to generate the final sequence representation. The update to each hidden state is controlled by its attention score with the target item.
+    - **Attention function**: The relation between interest state $\mathbb{h}\_t$ and the target item $a$ is given by the attention function ---
+    $$a_t = \frac{\exp(\mathbb{h_t}We_a)}{\sum_{j=1}^T \exp(\mathbb{h}_jWe_a)},$$
+    where $e_a$ represents the target item embedding. A higher attention score indicates a stronger connection between the given interest state and the target item being considered. 
+
+    - **GRU with attentional update gate (AUGRU)**: The hidden state update is controlled by attention score $a_t$, reducing the impact of interests less related to the target item on the hidden state. This weakens the disturbance from noise.
+    $$\tilde{\mathbb{u}}\_t^{\prime} = a_t \cdot \mathbb{u}\_t^{\prime},$$
+    $$\mathbb{h}\_t^{\prime} = (1 - \tilde{\mathbb{u}}\_t^{\prime}) \circ \mathbb{h}\_{t-1}^{\prime} + \tilde{\mathbb{u}}\_t^{\prime} \circ \tilde{\mathbb{h}}\_t^{\prime},$$
+    where $\mathbb{u}^{\prime}_t$ is the original {{< sidenote "update gate" >}}In GRUs, the update gate determines how much of the previous hidden state should be carried forward into the current state.{{< /sidenote >}} and $\tilde{\mathbb{u}}\_t^{\prime}$ is the attention update gate. $\mathbb{h}\_t^{\prime}$ (soley based on sequential dependencies) and $\tilde{\mathbb{h}}\_t^{\prime}$ (also incorporating target attention) are hidden states in the Interest Extractor Layer and the Interest Evolution Layer, respectively. 
+
+### Two-Stage: General Search Unit + Exact Search Unit
+
+In both DIN and DIEN, each interest unit is a specific item, which limits the sequence length that can be efficiently modeled. Newer two-stage models breaks through this limitation by <span style="background-color: #abe0bb">first extracting "interest topics" (General Search Units, "GSUs") from sequences and then only computing target attention between items (Exact Search Units, or "ESUs") in relevant GSUs and the target item</span>. The GSU + ESU paradigm is essential for modeling very long (in the orders of $10^3$ to $10^5$, or even longer) user sequences that capture their lifelong history. 
 
 ## "Language Modeling"
 
-### Masked Action Modeling
+### Masked Action Modeling: BERT4Rec (2019)
 
-### Next-Action Prediction
+### (Generalized) Next-Action Prediction: TransAct (2023)
 
-TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action)
+<!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
 
 <!-- BERT-style models. 
 Q: why not GPT style w/ causal mask, which is more natural for future prediction? -->
@@ -162,7 +190,6 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 ## Is Attention What You Need?
 
 ### Meta: HSTU
-
 
 ---
 # References
