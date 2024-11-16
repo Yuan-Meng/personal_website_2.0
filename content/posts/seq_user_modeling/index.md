@@ -144,13 +144,13 @@ Once the interest graphs are constructed, the Interest-Fusion Graph Convolutiona
 The GNN "alchemy" is one way to extract interest signals from noisy sequences. A more straightforward approach is via *target attention*. 
 
 
-### One-Stage: DIN (2017) and DIEN (2018)
+### One-Stage: DIN (2018) and DIEN (2019)
 
 {{< figure src="https://www.dropbox.com/scl/fi/7pw0aj09hnr4zi8q7lh36/Screenshot-2024-11-15-at-9.27.07-PM.png?rlkey=ofrz5862p3sel38c9tewe9i9c&st=0qi0yzq3&raw=1" caption="DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model." width="1800">}}
 
-Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2017](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.
+Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2018](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.
 
-Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, [Zhou et al., 2018](https://arxiv.org/abs/1809.03672)) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).
+Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, [Zhou et al., 2019](https://arxiv.org/abs/1809.03672)) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).
 
 {{< figure src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&st=za8nlqsb&raw=1" caption="DIEN uses a variant of RNN --- GRU -- to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800">}}
 
@@ -174,7 +174,47 @@ The DIEN architecture has two components --- an Interest Extractor Layer to extr
 
 ### Two-Stage: General Search Unit + Exact Search Unit
 
-In both DIN and DIEN, each interest unit is a specific item, which limits the sequence length that can be efficiently modeled. Newer two-stage models breaks through this limitation by <span style="background-color: #abe0bb">first extracting "interest topics" (General Search Units, "GSUs") from sequences and then only computing target attention between items (Exact Search Units, or "ESUs") in relevant GSUs and the target item</span>. The GSU + ESU paradigm is essential for modeling very long (in the orders of $10^3$ to $10^5$, or even longer) user sequences that capture their lifelong history. 
+The original DIEN models up to 50 most recent actions, which is fine for capturing short-term interests. As the cash cow for e-commerce and social media companies, <span style="background-color: #abe0bb">deep CTR models are getting increasingly more competitive ('卷' 🤑) --- a new hope for performance gain lies in modeling long-term user sequences</span>. Target attention has a time complexity of $O(L \cdot B \cdot d)$, where $L$ is the sequence length, $B$ is the number of target items to score, and $d$ is the hidden dimension of item embeddings. A user's lifelong history can contain $10^3$ to $10^5$ interactions, making training inefficient for ultra-long sequences. An emerging paradigm for long-term sequential user modeling is to cascade sequential modeling into two stages ---
+
+- **General Search Unit (GSU)**: Retrieve top $k$ items from the long-term user sequence that are most similar to the target item;
+- **Exact Search Unit (ESU)**: Only compute target attention between each of the top $k$ items and the target item.
+
+In the ESU step, we can pick a model from the DIN/DIEN family. Two-stage target attention models mainly differ in the GSU step --- i.e., how they retrieve the top $k$ items to balance performance and speed. 
+
+#### [SIM (Alibaba, 2020)](https://arxiv.org/abs/2006.05639)
+
+{{< figure src="https://www.dropbox.com/scl/fi/ogkh0f6g20va4kujl0hea/Screenshot-2024-11-16-at-12.31.56-PM.png?rlkey=4z8p7evygvml1bzsyjbuqvcvw&st=cft0v0gh&raw=1" caption="SIM finds top $k$ most similar items to the target via Maximum Inner Product Search (MIPS) based on item embeddings. The sum pooling of top $k$ item embeddings and the target item embedding are used in CTR predictions." width="1800">}}
+
+Alibaba's Search-based Interest Model (SIM, 2020) is the first two-stage target attention model. The GSU step finds top $k$ items with highest {{< sidenote "relevance scores" >}}The authors didn't elaborate on what scores were used, but they could be the dot product between each interaction embedding and the target item embedding. Embeddings can be pre-trained or learned from end-to-end like in DIEN. {{< /sidenote >}}w.r.t. the target item in one of two ways --- 
+
+- **Hard search**: Only search items in the same category as the target --- $\mathrm{Sign}(C\_t = C\_a)$, where $C_t$ and $C_a$ denote categories of the $t$-th item in the sequence and the target item $a$, respectively;
+- **Soft search**: Assign higher weights to items that are more similar to the target item when conducting Maximum Inner Product Search (MIPS) for top $k$ items --- $(W\_i \mathbb{e}\_t) \odot (W\_a \mathbb{e}\_a)^T$, where $W\_i$ and $W\_a$ are weights of interacted items and the target item, respectively, and $\mathbb{e}_t$ and $\mathbb{e}\_a$ are their embeddings.
+
+The sequence representation from GSU is a weighted sum of item embeddings, $\sum_{t=1}^L r\_t \mathbb{e}_t$, which is concatenated with the target item embedding $\mathbb{e}_a$ before being fed into an MLP layer. GSU and ESU are trained together, with a total loss of $L = \alpha \cdot L\_{GSU} + \beta \cdot L\_{ESU}$.
+
+To save inference time, top $k$ items are calculated offline and stored in an inverted index. This index is updated separately from the model.
+
+#### ETA (Alibaba, 2021)
+
+{{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA" width="1800">}}
+
+
+ETA () is the first end-to-end model. TWIN and TWIN v2 make it faster by clustering items. TIM is part of the agglomeration of all tricks. 
+
+
+#### TWIN (Kuaishou, 2023)
+
+{{< figure src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&st=qal3uxr2&raw=1" caption="TWIN" width="1800">}}
+
+
+#### TWIN v2 (Kuaishou, 2024)
+
+{{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN v2" width="1800">}}
+
+
+#### TIM (Tencent, 2024)
+
+{{< figure src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&st=1b4llezs&raw=1" caption="TIM" width="1800">}}
 
 ## "Language Modeling"
 
@@ -189,7 +229,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 
 ## Is Attention What You Need?
 
-### Meta: HSTU
+### [Replace with Key Idea:] HSTU (2024)
 
 ---
 # References
@@ -209,12 +249,12 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 
 ## Approach: Target Attention
 8. Overview: [*Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems*](https://mlfrontiers.substack.com/p/target-attention-is-all-you-need) by Samuel Flender.
-9. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2017) by Zhou et al., *KDD*.
-    - And its many a Alibaba siblings: [DIEN (2018)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
+9. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2018) by Zhou et al., *KDD*.
+    - And its many a Alibaba siblings: [DIEN (2019)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
 10. Go crazy on sequence length 👉 SIM: [*Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction*](https://arxiv.org/abs/2006.05639) (2020) by Qi et al., *CIKM*.
     - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-v2 (2024)](https://arxiv.org/html/2407.16357v1), ...
     - Review post: [*Towards Life-Long User History Modeling in Recommender Systems*](https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling) by Samuel Flender.
-11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](2024) by Pan et al, *KDD*.
+11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](https://arxiv.org/abs/2403.00793) (2024) by Pan et al, *KDD*.
     - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.
 
 
