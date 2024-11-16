@@ -1,6 +1,6 @@
 ---
 title: "Down the Rabbit Hole: Sequential User Modeling"
-date: 2024-11-14
+date: 2024-11-16
 math: true
 categories: ["recommender systems", "information retrieval"]
 toc: true
@@ -180,7 +180,7 @@ In both DIN and DIEN, each interest unit is a specific item, which limits the se
 
 ### Masked Action Modeling: BERT4Rec (2019)
 
-### (Generalized) Next-Action Prediction: TransAct (2023)
+### (Generalized) Next-Action Prediction: PinnerFormer (2022)
 
 <!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
 
