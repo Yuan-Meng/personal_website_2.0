@@ -141,7 +141,8 @@ Once the interest graphs are constructed, the Interest-Fusion Graph Convolutiona
 
 ## Target Attention
 
-<!-- DIN started the target attention traditional. general idea is different items play different roles for the same target.  -->
+Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences inform their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2017](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling accordingly.
+
 
 ### One-Stage: DIN Family
 
