@@ -264,10 +264,9 @@ While language modeling objectives have been adapted for sequential user modelin
 
 The observation that user interests do not strictly evolve from left to right, but are instead intertwined, inspired Alibaba's [BERT4Rec (2019)](https://arxiv.org/abs/1904.06690). Unlike RNN-based sequential models such as DIEN, BERT4Rec uses bidirectional self-attention to model dependencies in user sequences. 
 
-{{< figure src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&st=d8o2jt2w&raw=1" caption="BERT4Rec." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&st=d8o2jt2w&raw=1" caption="BERT4Rec applies the masked language modeling objective, randomly selecting items to mask and predicting ids of masked items based on bidirectional contexts. The last hidden state of the target item represents the user sequence." width="1800">}}
 
 BERT4Rec is trained with the [masked language modeling](https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling) (MLM) objective: at each training step, $k$ items are randomly chosen in the sequence of length $L$ and replaced with a special `[mask]` token. The model predicts the original ids of the masked items based on their left and right contexts. A bonus point of this setup is data efficiency: random masking gives us $\binom{L}{k}$ training samples over multiple epochs.
-
 
 The target item is always masked, and the last hidden state is used to represent the sequence in downstream recommendation tasks.
 

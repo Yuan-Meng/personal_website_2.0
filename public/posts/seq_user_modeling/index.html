@@ -3,9 +3,9 @@
   lang="en-us"
   dir="ltr"
 >
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=50069&amp;path=livereload" data-no-instant defer></script>
     
-<link rel="stylesheet" href="http://localhost:1313/css/styles.min.30bb45eb22a875545611138569e9d0de6a7f6d840a287bda29b5f6ea87c1d2f1.css">
+<link rel="stylesheet" href="http://localhost:50069/css/styles.min.30bb45eb22a875545611138569e9d0de6a7f6d840a287bda29b5f6ea87c1d2f1.css">
 <meta charset="utf-8" />
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
@@ -14,7 +14,7 @@
 </title>
   <meta name="description" content=" Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded." />
-<meta property="og:url" content="http://localhost:1313/posts/seq_user_modeling/">
+<meta property="og:url" content="http://localhost:50069/posts/seq_user_modeling/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Down the Rabbit Hole: Sequential User Modeling">
   <meta property="og:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5169">
+  <meta itemprop="wordCount" content="5202">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta name="twitter:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
-<link rel="canonical" href="http://localhost:1313/posts/seq_user_modeling/" />
+<link rel="canonical" href="http://localhost:50069/posts/seq_user_modeling/" />
 
     <link rel="stylesheet" href="/css/index.css" />
 
@@ -63,7 +63,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
-  "@id": "http://localhost:1313/posts/seq_user_modeling/",
+  "@id": "http://localhost:50069/posts/seq_user_modeling/",
   "@type": "BlogPosting",
   "articleSection": [
     "Recommender systems",
@@ -73,22 +73,22 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     "@type": "Person",
     "email": "mycaptainmy@gmail.com",
     "name": "Yuan Meng",
-    "url": "http://localhost:1313/about/"
+    "url": "http://localhost:50069/about/"
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2024-11-17",
   "description": " Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?\nYuan’s Amazon browsing history last week; distinct sessions are color-coded.",
   "headline": "Down the Rabbit Hole: Sequential User Modeling",
   "isPartOf": {
-    "@id": "http://localhost:1313/posts/",
+    "@id": "http://localhost:50069/posts/",
     "@type": "Blog",
     "name": "Posts"
   },
-  "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
+  "mainEntityOfPage": "http://localhost:50069/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT25M",
-  "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 5169
+  "url": "http://localhost:50069/posts/seq_user_modeling/",
+  "wordCount": 5202
 }
 </script>
 
@@ -1078,8 +1078,8 @@ $$</p>
 </h4>
 <p>The observation that user interests do not strictly evolve from left to right, but are instead intertwined, inspired Alibaba&rsquo;s <a href="https://arxiv.org/abs/1904.06690">BERT4Rec (2019)</a>. Unlike RNN-based sequential models such as DIEN, BERT4Rec uses bidirectional self-attention to model dependencies in user sequences.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&amp;st=d8o2jt2w&amp;raw=1"
-    alt="BERT4Rec." width="1800"><figcaption>
-      <p>BERT4Rec.</p>
+    alt="BERT4Rec applies the masked language modeling objective, randomly selecting items to mask and predicting ids of masked items based on bidirectional contexts. The last hidden state of the target item represents the user sequence." width="1800"><figcaption>
+      <p>BERT4Rec applies the masked language modeling objective, randomly selecting items to mask and predicting ids of masked items based on bidirectional contexts. The last hidden state of the target item represents the user sequence.</p>
     </figcaption>
 </figure>
 
