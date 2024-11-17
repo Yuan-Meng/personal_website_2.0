@@ -190,21 +190,19 @@ Alibaba's Search-based Interest Model ([SIM, 2020](https://arxiv.org/abs/2006.05
 - **Hard search** (based on a category-based inverted index): Only retrieve items in the same category as the target --- $\mathrm{Sign}(C\_t = C\_a)$, where $C_t$ and $C_a$ denote categories of the $t$-th item in the sequence and the target item $a$, respectively;
 - **Soft search** (based on item embeddings): The relevance score between the item interacted at $t$ and the target item $a$ is defined as $(\mathbf{W}\_i \mathbb{e}\_t) \odot (\mathbf{W}\_a \mathbb{e}\_a)^T$, where $\mathbb{e}_t$ and $\mathbb{e}\_a$ are embeddings of the two items, and $\mathbf{W}\_i$ and $\mathbf{W}\_a$ are weight matrices used to transform embeddings before the similarity calculation. We can conduct Maximum Inner Product Search (MIPS) over weighted item embeddings to find top $k$ items most relevant to the target.
 
-In soft search, the sequence output from GSU is a weighted sum pooling of item embeddings, $\sum_{t=1}^L r\_t \mathbb{e}_t$, which is concatenated with the target item embedding $\mathbb{e}_a$ before being passed into the MLP layer. The GSU and ESU steps are trained jointly, with a total loss given by $L = \alpha \cdot L\_{GSU} + \beta \cdot L\_{ESU}$.
+In soft search, the user sequence representation generated in the GSU step is a weighted sum pooling of item embeddings, $\sum_{t=1}^L r\_t \mathbb{e}_t$, which is then concatenated with the target item embedding $\mathbb{e}_a$ before being passed into the MLP layer. The GSU and ESU steps are trained jointly, with a total loss given by $L = \alpha \cdot L\_{GSU} + \beta \cdot L\_{ESU}$.
 
 In hard search, items are stored in an inverted index keyed by `user_id` and `category_id`. This index is built and updated separately from the model. Hard search is the deployed model because it offers only slightly worse evaluation performance compared to soft search but is much easier to train and serve than the latter.
 
 #### ETA (Alibaba, 2021)
 
-{{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA" width="1800">}}
-
 Due to training and serving challenges, Alibaba opted for hard search in SIM. However, it is slightly jarring to plug offline-generated top $k$ items into an online CTR model. For instance, the pre-built index can become outdated, leading to model degradation. The follow-up End-to-End Target Attention ([ETA, 2021](https://arxiv.org/pdf/2108.04468)) paper used a clever trick to accelerate MISP, enabling end-to-end GSU and ESU in online serving.
+
+{{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA hashes embeddings into binary vectors, reducing $each O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU." width="1800">}}
 
 The trick is to hash real-valued embeddings into binary vectors using [SimHash](https://en.wikipedia.org/wiki/SimHash), reducing vector similarity scoring from a dot product with time complexity $O(L \cdot B \cdot d)$, to a [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) {{< sidenote "calculation" >}}It takes $O(1)$ time to find differing bits between two binary numbers using bitwise XOR (`diffs = x ^ y`) and count 1's in the result (`bin(diffs).count('1')`).{{< /sidenote >}}with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing efficient end-to-end GSU + ESU in both training and serving.
 
-<!-- bitwise XOR takes constant time -->
-
-{{< figure src="https://www.dropbox.com/scl/fi/zuvbjq3ucy43n8pymw179/Screenshot-2024-11-16-at-4.27.27-PM.png?rlkey=91kk6sfm1ceoydjnxjxraswyo&st=l6qoa2xm&raw=1" caption="SimHash is 'locality sensitive', in that similar inputs yield similar outputs." width="600">}}
+{{< figure src="https://www.dropbox.com/scl/fi/zuvbjq3ucy43n8pymw179/Screenshot-2024-11-16-at-4.27.27-PM.png?rlkey=91kk6sfm1ceoydjnxjxraswyo&st=l6qoa2xm&raw=1" caption="SimHash is locality-sensitive, generating similar outputs from similar inputs." width="600">}}
 
 {{< figure src="https://www.dropbox.com/scl/fi/c881roy6bx3lc14mvgquz/Screenshot-2024-11-16-at-4.51.16-PM.png?rlkey=ueh3vfaztbg0a9tnjc51gqrvr&st=k6g338nd&raw=1" width="600">}}
 
