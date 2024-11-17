@@ -254,13 +254,22 @@ where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the t
 
 ## "Language Modeling"
 
-In our profession as ML engineers in search/rec/ads ("搜广推"), there is a common saying: "A user sequence is just like a sentence in a language." But I've come to feel that's not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests --- starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:
+In our profession as ML engineers in search/rec/ads ("搜广推"), there is a common saying: <span style="background-color: #abe0bb">"A user sequence is just like a sentence in a language."</span> But I've come to feel that's not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests --- starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:
 
 > <span style="color: #002676;">I</span>, <span style="color: #002676;">plan</span>, <span style="color: #002676;">to</span>, <span style="color: #002676;">start</span>, <span style="color: #FDB515;">I</span>, <span style="color: #002676;">model</span>, <span style="color: #FDB515;">need</span>, <span style="color: #002676;">training</span>, <span style="color: #FDB515;">to</span>, <span style="color: #002676;">work</span>, <span style="color: #FDB515;">do</span>, <span style="color: #002676;">before</span>, <span style="color: #FDB515;">grocery</span>, <span style="color: #002676;">Monday</span>, <span style="color: #FDB515;">shopping</span>, <span style="color: #FDB515;">on</span>, <span style="color: #FDB515;">Sunday</span>...
 
 While language modeling objectives have been adapted for sequential user modeling, careful domain adaptions are likely a good idea.
 
 ### Masked Action Modeling: BERT4Rec (2019)
+
+The observation that user interests do not strictly evolve from left to right, but are instead intertwined, inspired Alibaba's [BERT4Rec (2019)](https://arxiv.org/abs/1904.06690). Unlike RNN-based sequential models such as DIEN, BERT4Rec uses bidirectional self-attention to model dependencies in user sequences. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&st=d8o2jt2w&raw=1" caption="BERT4Rec." width="1800">}}
+
+BERT4Rec is trained with the [masked language modeling](https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling) (MLM) objective: at each training step, $k$ items are randomly chosen in the sequence of length $L$ and replaced with a special `[mask]` token. The model predicts the original ids of the masked items based on their left and right contexts. A bonus point of this setup is data efficiency: random masking gives us $\binom{L}{k}$ training samples over multiple epochs.
+
+
+The target item is always masked, and the last hidden state is used to represent the sequence in downstream recommendation tasks.
 
 ### (Generalized) Next-Action Prediction: PinnerFormer (2022)
 

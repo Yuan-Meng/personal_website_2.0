@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5041">
+  <meta itemprop="wordCount" content="5169">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT24M",
+  "timeRequired": "PT25M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 5041
+  "wordCount": 5169
 }
 </script>
 
@@ -131,7 +131,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
     
     
-      Reading time: 24 minutes
+      Reading time: 25 minutes
     
 
     
@@ -1046,7 +1046,7 @@ $$</p>
     </a>
   
 </h3>
-<p>In our profession as ML engineers in search/rec/ads (&ldquo;搜广推&rdquo;), there is a common saying: &ldquo;A user sequence is just like a sentence in a language.&rdquo; But I&rsquo;ve come to feel that&rsquo;s not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests &mdash; starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:</p>
+<p>In our profession as ML engineers in search/rec/ads (&ldquo;搜广推&rdquo;), there is a common saying: <span style="background-color: #abe0bb">&ldquo;A user sequence is just like a sentence in a language.&quot;</span> But I&rsquo;ve come to feel that&rsquo;s not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests &mdash; starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:</p>
 <blockquote>
 <p><span style="color: #002676;">I</span>, <span style="color: #002676;">plan</span>, <span style="color: #002676;">to</span>, <span style="color: #002676;">start</span>, <span style="color: #FDB515;">I</span>, <span style="color: #002676;">model</span>, <span style="color: #FDB515;">need</span>, <span style="color: #002676;">training</span>, <span style="color: #FDB515;">to</span>, <span style="color: #002676;">work</span>, <span style="color: #FDB515;">do</span>, <span style="color: #002676;">before</span>, <span style="color: #FDB515;">grocery</span>, <span style="color: #002676;">Monday</span>, <span style="color: #FDB515;">shopping</span>, <span style="color: #FDB515;">on</span>, <span style="color: #FDB515;">Sunday</span>&hellip;</p>
 </blockquote>
@@ -1076,6 +1076,15 @@ $$</p>
     </a>
   
 </h4>
+<p>The observation that user interests do not strictly evolve from left to right, but are instead intertwined, inspired Alibaba&rsquo;s <a href="https://arxiv.org/abs/1904.06690">BERT4Rec (2019)</a>. Unlike RNN-based sequential models such as DIEN, BERT4Rec uses bidirectional self-attention to model dependencies in user sequences.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&amp;st=d8o2jt2w&amp;raw=1"
+    alt="BERT4Rec." width="1800"><figcaption>
+      <p>BERT4Rec.</p>
+    </figcaption>
+</figure>
+
+<p>BERT4Rec is trained with the <a href="https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling">masked language modeling</a> (MLM) objective: at each training step, $k$ items are randomly chosen in the sequence of length $L$ and replaced with a special <code>[mask]</code> token. The model predicts the original ids of the masked items based on their left and right contexts. A bonus point of this setup is data efficiency: random masking gives us $\binom{L}{k}$ training samples over multiple epochs.</p>
+<p>The target item is always masked, and the last hidden state is used to represent the sequence in downstream recommendation tasks.</p>
 <h4 id="generalized-next-action-prediction-pinnerformer-2022" class="scroll-mt-8 group">
   (Generalized) Next-Action Prediction: PinnerFormer (2022)
   
