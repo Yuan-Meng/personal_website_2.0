@@ -206,12 +206,22 @@ The trick is to hash real-valued embeddings into binary vectors using [SimHash](
 
 {{< figure src="https://www.dropbox.com/scl/fi/c881roy6bx3lc14mvgquz/Screenshot-2024-11-16-at-4.51.16-PM.png?rlkey=ueh3vfaztbg0a9tnjc51gqrvr&st=k6g338nd&raw=1" width="600">}}
 
-#### Kuaishou's "TWINs" (2023, 2024)
+#### The Kuaishou TWINs (2023, 2024)
 
-TWIN and TWIN v2 make it faster by clustering items. 
+Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it more critical to retrieve the best $k$ items in GSU so that ESU doesn't miss interesting items or waste compute on irrelevant items. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network ([TWIN, 2023](https://arxiv.org/abs/2302.02352)) and its "twin" ([TWIN v2, 2024](https://arxiv.org/abs/2407.16357)).
 
-{{< figure src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&st=qal3uxr2&raw=1" caption="TWIN" width="1800">}}
+Below are the key observations + innovations behind TWIN ---
 
+{{< figure src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&st=qal3uxr2&raw=1" caption="TWIN optimizes target attention by splitting features into inherent vs. user-item cross features, caching inherent features and simplifying cross-feature projections. Attention scores are used as the relevance metric in GSU + ESU." width="1800">}}
+
+- **Feature splits**: A sequence of length $L$ results in a feature matrix $K \in \mathbb{R}^{L \times M}$, where $M$ is the dimension of each feature vector. When computing target attention between $K$ and the query (i.e., the target item), the linear projection of $K$ is the bottleneck. <span style="background-color: #abe0bb">User and item features are typically split into two parts --- inherent features $K_h \in \mathbb{R}^{L \times H}$ (e.g., video id, author, duration) and user-item cross features $K_c \in \mathbb{R}^{L \times C}$ (e.g., click timestamp, play time)</span>,
+    $$K \triangleq \left[ K_h \quad K_c \right] \in \mathbb{R}^{L \times (H + C)}.$$
+    - **Cache inherent features**: Inherent features are often projected into large hidden dimensions (e.g., $H = 64$). Once projected, they can be shared across sequences (e.g., Bob is always Bob, no matter which video he watches). We can cache the $K_h$ projection to reduce computational costs. 
+    - **Simplify cross features projections**: Cross features cannot be cached since most only appear once (e.g., users {{< sidenote "rarely" >}}A 大佬 once said, the greatest feat of an ML engineer is to tailor a solution to the real business/user problem. The key assumption in TWIN only stands because Kushaisho users don't re-watch videos, but it'd be stupid to assume DoorDash consumers don't reorder dishes.{{< /sidenote >}} watch the same video again), but we can simplify their linear projection. Say we have $J$ cross features ($C = 8J$), each feature $K\_{c, j} \in \mathbb{R}^{L \times 8}$ can be projected into an embedding dimension of 8. Multiplying each cross feature by a weight vector $\mathbf{w}\_j^c \in \mathbb{R}^8$ returns a 1D vector for each feature $K\_{c, 1}\mathbf{w}\_j^c \in \mathbb{R}^L$. This reduces the linear projection to
+    $$K_c W^c \triangleq \left[ K\_{c,1} \mathbf{w}\_1^c, \ldots, K\_{c,J} \mathbf{w}\_J^c \right].$$
+- **Consistency-Preserved GSU (CP-GSU)**: A major issue with previous two-stage models is that GSU and ESU use different relevance metrics, hurting both recall (not all relevant items are returned) and precision (some top $k$ items are irrelevant). TWIN addresses this by using attention scores as a consistent relevance metric in both stages. After feature splitting and simplified linear projections, target attention in TWIN is defined as
+    $$\mathbf{\alpha} = \frac{(K_h W^h)(\mathbf{q}^\top W^q)^\top}{\sqrt{d_k}} + (K_c W^c) \mathbf{\beta},$$
+    where $d_k$ is the dimension of the projected query and key. The cross features serve as the bias term $\mathbf{\beta}$. In GSU, top 10 items with highest attention scores are returned. The same scores are used as weights when performing a weighted average pooling in ESU.
 
 {{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN v2" width="1800">}}
 
