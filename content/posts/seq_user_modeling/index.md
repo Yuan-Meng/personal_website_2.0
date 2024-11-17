@@ -1,6 +1,6 @@
 ---
 title: "Down the Rabbit Hole: Sequential User Modeling"
-date: 2024-11-16
+date: 2024-11-17
 math: true
 categories: ["recommender systems", "information retrieval"]
 toc: true
@@ -208,7 +208,7 @@ The trick is to hash real-valued embeddings into binary vectors using [SimHash](
 
 #### The Kuaishou TWINs (2023, 2024)
 
-Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it more critical to retrieve the best $k$ items in GSU so that ESU doesn't miss interesting items or waste compute on irrelevant items. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network ([TWIN, 2023](https://arxiv.org/abs/2302.02352)) and its "twin" ([TWIN v2, 2024](https://arxiv.org/abs/2407.16357)).
+Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. . The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network ([TWIN, 2023](https://arxiv.org/abs/2302.02352)) and its "twin" ([TWIN-V2, 2024](https://arxiv.org/abs/2407.16357)).
 
 Below are the key observations + innovations behind TWIN ---
 
@@ -223,8 +223,16 @@ Below are the key observations + innovations behind TWIN ---
     $$\mathbf{\alpha} = \frac{(K_h W^h)(\mathbf{q}^\top W^q)^\top}{\sqrt{d_k}} + (K_c W^c) \mathbf{\beta},$$
     where $d_k$ is the dimension of the projected query and key. The cross features serve as the bias term $\mathbf{\beta}$. In GSU, top 10 items with highest attention scores are returned. The same scores are used as weights when performing a weighted average pooling in ESU.
 
-{{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN v2" width="1800">}}
+Feature splits make target attention computations faster for longer sequences, while CP-GSU increases the likelihood that the top $k$ items retrieved in GSU will be the final items of interest in ESU. 
 
+{{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item." width="1800">}}
+
+TWIN-V2 enhances the ability to model ultra-long ($> 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \\{i_1, \ldots, i_L\\}$ to $S = \\{c_1, \ldots, c_{\hat{L}}\\}$, where $\hat{L} \ll L$. Each cluster is represented by a "virtual item" --- for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.
+
+- **GSU**: Retrieve top $k=100$ clusters whose "virtual items" have the highest attention scores with the target item --- TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbb{a}^{\prime} = \mathbb{a} + \ln n$;
+- **ESU**: Compute attention between virtual items and the target.
+
+As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. **Bonus question**: How would you make it crazier?
 
 #### TIM (Tencent, 2024)
 
@@ -269,7 +277,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 9. The OG architecture 👉 DIN: [*Deep Interest Network for Click-Through Rate Prediction*](https://arxiv.org/abs/1706.06978) (2018) by Zhou et al., *KDD*.
     - And its many a Alibaba siblings: [DIEN (2019)](https://arxiv.org/abs/1809.03672), [DSIN (2019)](https://arxiv.org/abs/1905.06482), [DHAN (2020)](https://arxiv.org/abs/2005.12981), [DMIN (2020)](https://dl.acm.org/doi/abs/10.1145/3340531.3412092), [DAIN (2024)](https://arxiv.org/abs/2409.02425), ...
 10. Go crazy on sequence length 👉 SIM: [*Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction*](https://arxiv.org/abs/2006.05639) (2020) by Qi et al., *CIKM*.
-    - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-v2 (2024)](https://arxiv.org/html/2407.16357v1), ...
+    - Ultra long: [ETA (2021)](https://arxiv.org/abs/2108.04468), [TWIN (2023)](https://arxiv.org/abs/2302.02352), [TWIN-V2 (2024)](https://arxiv.org/html/2407.16357v1), ...
     - Review post: [*Towards Life-Long User History Modeling in Recommender Systems*](https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling) by Samuel Flender.
 11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](https://arxiv.org/abs/2403.00793) (2024) by Pan et al, *KDD*.
     - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.

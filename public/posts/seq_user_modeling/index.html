@@ -22,14 +22,14 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-11-16T00:00:00+00:00">
+    <meta property="article:published_time" content="2024-11-17T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Down the Rabbit Hole: Sequential User Modeling">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
-  <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4471">
+  <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="4686">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -76,7 +76,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
     "url": "http://localhost:50069/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2024-11-16",
+  "datePublished": "2024-11-17",
   "description": " Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?\nYuan’s Amazon browsing history last week; distinct sessions are color-coded.",
   "headline": "Down the Rabbit Hole: Sequential User Modeling",
   "isPartOf": {
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:50069/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT21M",
+  "timeRequired": "PT22M",
   "url": "http://localhost:50069/posts/seq_user_modeling/",
-  "wordCount": 4471
+  "wordCount": 4686
 }
 </script>
 
@@ -125,13 +125,13 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         <article class="main">
     <header>
       <h1 class="!mb-1">Down the Rabbit Hole: Sequential User Modeling</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2024-11-16T00:00:00&#43;00:00">November 16, 2024</time>
+          <time class="text-sm italic opacity-80" datetime="2024-11-17T00:00:00&#43;00:00">November 17, 2024</time>
         </div>
     </header>
 
     
     
-      Reading time: 21 minutes
+      Reading time: 22 minutes
     
 
     
@@ -900,7 +900,7 @@ with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing 
     </a>
   
 </h5>
-<p>Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it more critical to retrieve the best $k$ items in GSU so that ESU doesn&rsquo;t miss interesting items or waste compute on irrelevant items. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network (<a href="https://arxiv.org/abs/2302.02352">TWIN, 2023</a>) and its &ldquo;twin&rdquo; (<a href="https://arxiv.org/abs/2407.16357">TWIN v2, 2024</a>).</p>
+<p>Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. . The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network (<a href="https://arxiv.org/abs/2302.02352">TWIN, 2023</a>) and its &ldquo;twin&rdquo; (<a href="https://arxiv.org/abs/2407.16357">TWIN-V2, 2024</a>).</p>
 <p>Below are the key observations + innovations behind TWIN &mdash;</p>
 <figure><img src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&amp;st=qal3uxr2&amp;raw=1"
     alt="TWIN optimizes target attention by splitting features into inherent vs. user-item cross features, caching inherent features and simplifying cross-feature projections. Attention scores are used as the relevance metric in GSU &#43; ESU." width="1800"><figcaption>
@@ -940,12 +940,19 @@ $$K_c W^c \triangleq \left[ K_{c,1} \mathbf{w}_1^c, \ldots, K_{c,J} \mathbf{w}_J
 $$\mathbf{\alpha} = \frac{(K_h W^h)(\mathbf{q}^\top W^q)^\top}{\sqrt{d_k}} + (K_c W^c) \mathbf{\beta},$$
 where $d_k$ is the dimension of the projected query and key. The cross features serve as the bias term $\mathbf{\beta}$. In GSU, top 10 items with highest attention scores are returned. The same scores are used as weights when performing a weighted average pooling in ESU.</li>
 </ul>
+<p>Feature splits make target attention computations faster for longer sequences, while CP-GSU increases the likelihood that the top $k$ items retrieved in GSU will be the final items of interest in ESU.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&amp;st=6xj90rki&amp;raw=1"
-    alt="TWIN v2" width="1800"><figcaption>
-      <p>TWIN v2</p>
+    alt="TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item." width="1800"><figcaption>
+      <p>TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item.</p>
     </figcaption>
 </figure>
 
+<p>TWIN-V2 enhances the ability to model ultra-long ($&gt; 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \{i_1, \ldots, i_L\}$ to $S = \{c_1, \ldots, c_{\hat{L}}\}$, where $\hat{L} \ll L$. Each cluster is represented by a &ldquo;virtual item&rdquo; &mdash; for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.</p>
+<ul>
+<li><strong>GSU</strong>: Retrieve top $k=100$ clusters whose &ldquo;virtual items&rdquo; have the highest attention scores with the target item &mdash; TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbb{a}^{\prime} = \mathbb{a} + \ln n$;</li>
+<li><strong>ESU</strong>: Compute attention between virtual items and the target.</li>
+</ul>
+<p>As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. <strong>Bonus question</strong>: How would you make it crazier?</p>
 <h5 id="tim-tencent-2024" class="scroll-mt-8 group">
   TIM (Tencent, 2024)
   
@@ -1235,7 +1242,7 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 </li>
 <li>Go crazy on sequence length 👉 SIM: <a href="https://arxiv.org/abs/2006.05639"><em>Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction</em></a> (2020) by Qi et al., <em>CIKM</em>.
 <ul>
-<li>Ultra long: <a href="https://arxiv.org/abs/2108.04468">ETA (2021)</a>, <a href="https://arxiv.org/abs/2302.02352">TWIN (2023)</a>, <a href="https://arxiv.org/html/2407.16357v1">TWIN-v2 (2024)</a>, &hellip;</li>
+<li>Ultra long: <a href="https://arxiv.org/abs/2108.04468">ETA (2021)</a>, <a href="https://arxiv.org/abs/2302.02352">TWIN (2023)</a>, <a href="https://arxiv.org/html/2407.16357v1">TWIN-V2 (2024)</a>, &hellip;</li>
 <li>Review post: <a href="https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling"><em>Towards Life-Long User History Modeling in Recommender Systems</em></a> by Samuel Flender.</li>
 </ul>
 </li>
