@@ -206,6 +206,8 @@ The trick is to hash real-valued embeddings into binary vectors using [SimHash](
 
 {{< figure src="https://www.dropbox.com/scl/fi/zuvbjq3ucy43n8pymw179/Screenshot-2024-11-16-at-4.27.27-PM.png?rlkey=91kk6sfm1ceoydjnxjxraswyo&st=l6qoa2xm&raw=1" caption="SimHash is 'locality sensitive', in that similar inputs yield similar outputs." width="600">}}
 
+{{< figure src="https://www.dropbox.com/scl/fi/c881roy6bx3lc14mvgquz/Screenshot-2024-11-16-at-4.51.16-PM.png?rlkey=ueh3vfaztbg0a9tnjc51gqrvr&st=k6g338nd&raw=1" width="600">}}
+
 #### The two "TWINs" (Kuaishou, 2023, 2024)
 
 TWIN and TWIN v2 make it faster by clustering items. 
