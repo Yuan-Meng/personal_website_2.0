@@ -254,6 +254,12 @@ where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the t
 
 ## "Language Modeling"
 
+In our profession as ML engineers in search/rec/ads ("搜广推"), there is a common saying: "A user sequence is just like a sentence in a language." But I've come to feel that's not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests --- starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:
+
+<span style="color: #002676;">I</span>, <span style="color: #002676;">plan</span>, <span style="color: #002676;">to</span>, <span style="color: #002676;">start</span>, <span style="color: #FDB515;">I</span>, <span style="color: #002676;">model</span>, <span style="color: #FDB515;">need</span>, <span style="color: #002676;">training</span>, <span style="color: #FDB515;">to</span>, <span style="color: #002676;">work</span>, <span style="color: #FDB515;">do</span>, <span style="color: #002676;">before</span>, <span style="color: #FDB515;">grocery</span>, <span style="color: #002676;">Monday</span>, <span style="color: #FDB515;">shopping</span>, <span style="color: #FDB515;">on</span>, <span style="color: #FDB515;">Sunday...</span>
+
+While language modeling objectives have been adapted for sequential user modeling, careful domain adaptions are likely a good idea.
+
 ### Masked Action Modeling: BERT4Rec (2019)
 
 ### (Generalized) Next-Action Prediction: PinnerFormer (2022)
