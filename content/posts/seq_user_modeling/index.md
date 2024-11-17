@@ -234,7 +234,23 @@ TWIN-V2 enhances the ability to model ultra-long ($> 10^6$) sequences by aggrega
 - **GSU**: Retrieve top $k=100$ clusters whose "virtual items" have the highest attention scores with the target item --- TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbf{a}^{\prime} = \mathbf{a} + \ln \mathbf{n}$;
 - **ESU**: Compute attention between virtual items and the target.
 
-As far as life-long sequential user modeling goes, TWIN-V2 is the "craziest" thus far. **Bonus question**: How would you make it {{< sidenote "crazier" >}}As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?{{< /sidenote >}}?
+As far as *ultra-long* sequential user modeling goes, TWIN-V2 may be the "craziest" yet. **Bonus question**: How would you make it {{< sidenote "crazier" >}}As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?{{< /sidenote >}}?
+
+#### Temporal Interest Module (TIM, 2024)
+
+> As far as *ultra-long* sequential user modeling goes, TWIN-V2 may be the "craziest" yet.
+
+But in terms of information to encode from a user sequence, it is not 🤯. The Temporal Interest Module (TIM) in a new Tencent paper ([Pan et al., 2024](https://arxiv.org/abs/2403.00793)) crammed everything possible into sequential features. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/mddhbpsmnt4qc2ind8dt0/Screenshot-2024-11-17-at-9.52.10-AM.png?rlkey=zms5sred20ofe12ifrr4eabj6&st=lj0fkzkd&raw=1" caption="TIM is part of a gigantic model used for ads prediction across Tencent products." width="1800">}}
+
+Inspired by positional encoding in Transformer models, TIM introduces a target-aware temporal encoding, $\boldsymbol{p_f}(X_t)$, to capture the relative position or discretized time interval of each interaction in a user sequence. This encoding is added to each interaction’s embedding, producing a temporally encoded embedding: $\boldsymbol{\tilde{e}_t} = \boldsymbol{e_t} \oplus \boldsymbol{p_f}(X_t)$. The encoded user sequence $S = \{i_1, \ldots, i_L\}$ is summarized as:
+
+$$
+\boldsymbol{u_{\text{TIM}}} = \sum_{X_t \in S} \alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a}) \cdot (\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a}),
+$$
+
+where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the target-aware attention between the interaction at time $t$ and the target item $a$, and $(\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a})$ denotes the target-aware representation that captures feature interactions.
 
 ## "Language Modeling"
 
@@ -290,14 +306,12 @@ TIM is part of the agglomeration of all tricks.
 11. Squeeze every ounce of sequences 👉 TIM: [*Ads Recommendation in a Collapsed and Entangled World*](https://arxiv.org/abs/2403.00793) (2024) by Pan et al, *KDD*.
     - Paper summary: [*Breaking down Tencent's Recommendation Algorithm*](https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation) by Samuel Flender.
 
-
 ## Approach: Language Modeling
 
 12. The OG 👉 [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
 13. Play with objectives 👉 [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
 14. Capture short-term interests 👉 [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
 15. Applications at Pinterest 👉 organic ranking ([*Large-scale User Sequences at Pinterest*](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)) + ads ranking ([*User Action Sequence Modeling for Pinterest Ads Engagement Modeling*](https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e))
-
 
 ## Approach: Beyond Attention
 16. Meta AI 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
