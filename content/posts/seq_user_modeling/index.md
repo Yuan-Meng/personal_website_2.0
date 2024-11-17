@@ -232,7 +232,7 @@ TWIN-V2 enhances the ability to model ultra-long ($> 10^6$) sequences by aggrega
 - **GSU**: Retrieve top $k=100$ clusters whose "virtual items" have the highest attention scores with the target item --- TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbb{a}^{\prime} = \mathbb{a} + \ln n$;
 - **ESU**: Compute attention between virtual items and the target.
 
-As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. **Bonus question**: How would you make it crazier?
+As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. **Bonus question**: How would you make it {{< sidenote "crazier" >}}As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?{{< /sidenote >}}?
 
 #### TIM (Tencent, 2024)
 
