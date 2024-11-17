@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4749">
+  <meta itemprop="wordCount" content="4746">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT23M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 4749
+  "wordCount": 4746
 }
 </script>
 
@@ -163,7 +163,6 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
                 <li><a href="#sim-alibaba-2020">SIM (Alibaba, 2020)</a></li>
                 <li><a href="#eta-alibaba-2021">ETA (Alibaba, 2021)</a></li>
                 <li><a href="#the-kuaishou-twins-2023-2024">The Kuaishou TWINs (2023, 2024)</a></li>
-                <li><a href="#tim-tencent-2024">TIM (Tencent, 2024)</a></li>
               </ul>
             </li>
           </ul>
@@ -176,9 +175,15 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         </li>
         <li><a href="#is-attention-what-you-need">Is Attention What You Need?</a>
           <ul>
-            <li><a href="#replace-with-key-idea-hstu-2024">[Replace with Key Idea:] HSTU (2024)</a></li>
+            <li><a href="#sequential-transduction-hstu-2024">Sequential Transduction: HSTU (2024)</a></li>
           </ul>
         </li>
+      </ul>
+    </li>
+    <li><a href="#what-else-is-there">What Else Is There?</a>
+      <ul>
+        <li><a href="#embeddingmlp-paradigm">Embedding&amp;MLP Paradigm</a></li>
+        <li><a href="#up-the-ante-in-the-ranking-game">Up the Ante in the Ranking Game</a></li>
       </ul>
     </li>
     <li><a href="#references">References</a>
@@ -672,7 +677,7 @@ $$</p>
 </figure>
 
 <p>Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it&rsquo;d be a great suggestion. By contrast, other items I&rsquo;ve bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, <a href="https://arxiv.org/pdf/1706.06978">Zhou et al., 2018</a>) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.</p>
-<p>Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, <a href="https://arxiv.org/abs/1809.03672">Zhou et al., 2019</a>) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).</p>
+<p>Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, <a href="https://arxiv.org/abs/1809.03672">Zhou et al., 2019</a>) introduced a year later employs GRUs to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&amp;st=za8nlqsb&amp;raw=1"
     alt="DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800"><figcaption>
       <p>DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state.</p>
@@ -941,69 +946,40 @@ $$\mathbf{\alpha} = \frac{(K_h W^h)(\mathbf{q}^\top W^q)^\top}{\sqrt{d_k}} + (K_
 where $d_k$ is the dimension of the projected query and key. The cross features serve as the bias term $\mathbf{\beta}$. In GSU, top 10 items with highest attention scores are returned. The same scores are used as weights when performing a weighted average pooling in ESU.</li>
 </ul>
 <p>Feature splits make target attention computations faster for longer sequences, while CP-GSU increases the likelihood that the top $k$ items retrieved in GSU will be the final items of interest in ESU.</p>
+<p>TWIN-V2 enhances the ability to model ultra-long ($&gt; 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \{i_1, \ldots, i_L\}$ to $\hat{S} = \{c_1, \ldots, c_{\hat{L}}\}$, where $\hat{L} \ll L$. Each cluster is represented by a &ldquo;virtual item&rdquo; &mdash; for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&amp;st=6xj90rki&amp;raw=1"
     alt="TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item." width="1800"><figcaption>
       <p>TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item.</p>
     </figcaption>
 </figure>
 
-<p>TWIN-V2 enhances the ability to model ultra-long ($&gt; 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \{i_1, \ldots, i_L\}$ to $S = \{c_1, \ldots, c_{\hat{L}}\}$, where $\hat{L} \ll L$. Each cluster is represented by a &ldquo;virtual item&rdquo; &mdash; for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/vvpy0juljindvyhr7oxie/Screenshot-2024-11-17-at-9.26.31-AM.png?rlkey=gcnmh012h719hgxjq6rxzsq92&amp;st=y1muupbn&amp;raw=1" width="600">
+</figure>
+
 <ul>
-<li><strong>GSU</strong>: Retrieve top $k=100$ clusters whose &ldquo;virtual items&rdquo; have the highest attention scores with the target item &mdash; TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbb{a}^{\prime} = \mathbb{a} + \ln n$;</li>
+<li><strong>GSU</strong>: Retrieve top $k=100$ clusters whose &ldquo;virtual items&rdquo; have the highest attention scores with the target item &mdash; TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbf{a}^{\prime} = \mathbf{a} + \ln \mathbf{n}$;</li>
 <li><strong>ESU</strong>: Compute attention between virtual items and the target.</li>
 </ul>
-<p>As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. <strong>Bonus question</strong>: How would you make it <span class="sidenote">
+<p>As far as life-long sequential user modeling goes, TWIN-V2 is the &ldquo;craziest&rdquo; thus far. <strong>Bonus question</strong>: How would you make it <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-23"
+    id="sidenote-checkbox-24"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-23"
-    for="sidenote-checkbox-23"
+    aria-details="sidenote-24"
+    for="sidenote-checkbox-24"
     class="sidenote-mark"
     >crazier</label
   >
-  <small id="sidenote-23" class="sidenote-content">
+  <small id="sidenote-24" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?<span class="sr-only">)</span>
   </small>
 </span>
 ?</p>
-<h5 id="tim-tencent-2024" class="scroll-mt-8 group">
-  TIM (Tencent, 2024)
-  
-    <a href="#tim-tencent-2024"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h5>
-<figure><img src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&amp;st=1b4llezs&amp;raw=1"
-    alt="TIM" width="1800"><figcaption>
-      <p>TIM</p>
-    </figcaption>
-</figure>
-
-<p>TIM is part of the agglomeration of all tricks.</p>
 <h3 id="language-modeling" class="scroll-mt-8 group">
   &ldquo;Language Modeling&rdquo;
   
@@ -1107,10 +1083,10 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h3>
-<h4 id="replace-with-key-idea-hstu-2024" class="scroll-mt-8 group">
-  [Replace with Key Idea:] HSTU (2024)
+<h4 id="sequential-transduction-hstu-2024" class="scroll-mt-8 group">
+  Sequential Transduction: HSTU (2024)
   
-    <a href="#replace-with-key-idea-hstu-2024"
+    <a href="#sequential-transduction-hstu-2024"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1132,6 +1108,92 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
     </a>
   
 </h4>
+<h2 id="what-else-is-there" class="scroll-mt-8 group">
+  What Else Is There?
+  
+    <a href="#what-else-is-there"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="embeddingmlp-paradigm" class="scroll-mt-8 group">
+  Embedding&amp;MLP Paradigm
+  
+    <a href="#embeddingmlp-paradigm"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="up-the-ante-in-the-ranking-game" class="scroll-mt-8 group">
+  Up the Ante in the Ranking Game
+  
+    <a href="#up-the-ante-in-the-ranking-game"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<!-- #### TIM (Tencent, 2024)
+
+<figure><img src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&amp;st=1b4llezs&amp;raw=1"
+    alt="TIM" width="1800"><figcaption>
+      <p>TIM</p>
+    </figcaption>
+</figure>
+
+
+TIM is part of the agglomeration of all tricks. 
+ -->
 <hr>
 <h2 id="references" class="scroll-mt-8 group">
   References
@@ -1330,7 +1392,6 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 <ol start="16">
 <li>Meta AI 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
 </ol>
-<!-- 13. Google Research 👉 [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*. -->
     </div>
   </article>
 

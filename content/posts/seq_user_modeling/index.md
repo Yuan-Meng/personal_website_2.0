@@ -150,7 +150,7 @@ The GNN "alchemy" is one way to extract interest signals from noisy sequences. A
 
 Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it'd be a great suggestion. By contrast, other items I've bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, [Zhou et al., 2018](https://arxiv.org/pdf/1706.06978)) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.
 
-Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, [Zhou et al., 2019](https://arxiv.org/abs/1809.03672)) introduced a year later employs a GRU to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).
+Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, [Zhou et al., 2019](https://arxiv.org/abs/1809.03672)) introduced a year later employs GRUs to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).
 
 {{< figure src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&st=za8nlqsb&raw=1" caption="DIEN uses a variant of RNN --- GRU -- to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800">}}
 
@@ -225,21 +225,16 @@ Below are the key observations + innovations behind TWIN ---
 
 Feature splits make target attention computations faster for longer sequences, while CP-GSU increases the likelihood that the top $k$ items retrieved in GSU will be the final items of interest in ESU. 
 
+TWIN-V2 enhances the ability to model ultra-long ($> 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \\{i_1, \ldots, i_L\\}$ to $\hat{S} = \\{c_1, \ldots, c_{\hat{L}}\\}$, where $\hat{L} \ll L$. Each cluster is represented by a "virtual item" --- for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.
+
 {{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item." width="1800">}}
 
-TWIN-V2 enhances the ability to model ultra-long ($> 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \\{i_1, \ldots, i_L\\}$ to $S = \\{c_1, \ldots, c_{\hat{L}}\\}$, where $\hat{L} \ll L$. Each cluster is represented by a "virtual item" --- for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.
+{{< figure src="https://www.dropbox.com/scl/fi/vvpy0juljindvyhr7oxie/Screenshot-2024-11-17-at-9.26.31-AM.png?rlkey=gcnmh012h719hgxjq6rxzsq92&st=y1muupbn&raw=1" width="600">}}
 
-- **GSU**: Retrieve top $k=100$ clusters whose "virtual items" have the highest attention scores with the target item --- TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbb{a}^{\prime} = \mathbb{a} + \ln n$;
+- **GSU**: Retrieve top $k=100$ clusters whose "virtual items" have the highest attention scores with the target item --- TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbf{a}^{\prime} = \mathbf{a} + \ln \mathbf{n}$;
 - **ESU**: Compute attention between virtual items and the target.
 
-As long as life-long sequential user modeling goes, TWIN-V2 is the best thus far. **Bonus question**: How would you make it {{< sidenote "crazier" >}}As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?{{< /sidenote >}}?
-
-#### TIM (Tencent, 2024)
-
-{{< figure src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&st=1b4llezs&raw=1" caption="TIM" width="1800">}}
-
-TIM is part of the agglomeration of all tricks. 
-
+As far as life-long sequential user modeling goes, TWIN-V2 is the "craziest" thus far. **Bonus question**: How would you make it {{< sidenote "crazier" >}}As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?{{< /sidenote >}}?
 
 ## "Language Modeling"
 
@@ -254,7 +249,20 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 
 ## Is Attention What You Need?
 
-### [Replace with Key Idea:] HSTU (2024)
+### Sequential Transduction: HSTU (2024)
+
+# What Else Is There?
+
+## Embedding&MLP Paradigm 
+
+## Up the Ante in the Ranking Game
+
+<!-- #### TIM (Tencent, 2024)
+
+{{< figure src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&st=1b4llezs&raw=1" caption="TIM" width="1800">}}
+
+TIM is part of the agglomeration of all tricks. 
+ -->
 
 ---
 # References
@@ -293,5 +301,4 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 
 ## Approach: Beyond Attention
 16. Meta AI 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
-<!-- 13. Google Research 👉 [*ConvFormer: Revisiting Token-mixers for Sequential User Modeling*](https://openreview.net/forum?id=Gny0PVtKz2) (2024) by Wang et al., *ICLR*. -->
 
