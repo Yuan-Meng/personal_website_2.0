@@ -841,8 +841,8 @@ where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
 </h5>
 <p>Due to training and serving challenges, Alibaba opted for hard search in SIM. However, it is slightly jarring to plug offline-generated top $k$ items into an online CTR model. For instance, the pre-built index can become outdated, leading to model degradation. The follow-up End-to-End Target Attention (<a href="https://arxiv.org/pdf/2108.04468">ETA, 2021</a>) paper used a clever trick to accelerate MISP, enabling end-to-end GSU and ESU in online serving.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&amp;st=7628vptt&amp;raw=1"
-    alt="ETA hashes embeddings into binary vectors, reducing $each O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU &#43; ESU." width="1800"><figcaption>
-      <p>ETA hashes embeddings into binary vectors, reducing $each O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU.</p>
+    alt="ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU &#43; ESU." width="1800"><figcaption>
+      <p>ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU.</p>
     </figcaption>
 </figure>
 
