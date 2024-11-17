@@ -37,7 +37,9 @@
       "out": []
     },
     "/posts/attention_as_dict/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/autocomplete/": {
@@ -49,11 +51,15 @@
       "out": []
     },
     "/posts/ebr/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/human_vision/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/ltr/": {
@@ -77,7 +83,9 @@
       "out": []
     },
     "/posts/negative_sampling/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/newgrads/": {
@@ -90,7 +98,12 @@
     },
     "/posts/seq_user_modeling/": {
       "in": [],
-      "out": []
+      "out": [
+        "/posts/negative_sampling/",
+        "/posts/human_vision/",
+        "/posts/ebr/",
+        "/posts/attention_as_dict/"
+      ]
     }
   },
   "pages": {

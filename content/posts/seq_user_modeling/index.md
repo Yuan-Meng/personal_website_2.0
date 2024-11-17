@@ -285,6 +285,9 @@ The target item is always masked, and the last hidden state is used to represent
 ## Up the Ante in the Ranking Game
 
 {{< backlink "negative_sampling" >}}
+{{< backlink "human_vision" >}}
+{{< backlink "ebr" >}}
+{{< backlink "attention_as_dict" >}}
 
 <!-- #### TIM (Tencent, 2024)
 
