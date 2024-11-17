@@ -22,7 +22,7 @@ Rather than treating engaged items as a *static*, *unordered* collection, sequen
 
 Sequential user modeling can be framed as a next-item-prediction problem: <span style="background-color: #abe0bb">given a user's action sequence $S = \\{i_1, \ldots, i_L\\}$ and a target item $i_t$, output a utility score for the item $p(i_t|i_{i:L})$</span>. Each interaction $i_j$ consists of a $\langle \mathrm{user}, \mathrm{action}, \mathrm{item} \rangle$ triple, where the action could be a click, an add-to-cart, a conversion, or other meaningful engagements with recommended or sponsored content.
 
-Any methods suitable for modeling sequences (e.g., tokens in language, pixels in images, genes in DNAs) can be applied to this problem, from Markov chains, RNNs, CNNs, and GNNs that pre-date Transformers, to the Transformer architecture (whether using only the attention mechanism or the full encoder) adapted to recommender systems (see [Wang et al. 2019](https://arxiv.org/abs/2001.04830) for a comprehensive review).
+Any methods for modeling sequences (e.g., tokens in language, pixels in images, genes in DNAs) can be applied to this problem, from Markov chains, RNNs, CNNs, and GNNs that pre-date Transformers, to the Transformer architecture (using target attention or the full encoder; see {{< backlink "attention_as_dict" "my post">}} for a refresher) adapted to recommender systems (see [Wang et al. 2019](https://arxiv.org/abs/2001.04830) for a comprehensive review).
 
 {{< figure src="https://www.dropbox.com/scl/fi/bo2lmx0zswr9ntdlofs0c/Screenshot-2024-11-12-at-12.10.38-AM.png?rlkey=d3cmaxh5i1dckdnonvczfwm7i&st=vmlrlwvc&raw=1" caption="An overview of classic sequential user modeling methods ([Wang et al., 2019](https://arxiv.org/abs/2001.04830))." width="600">}}
 
@@ -115,7 +115,7 @@ LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., [Hidas
 
 ### Convolutional Neural Networks
 
-Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a [previous post](https://www.yuan-meng.com/posts/human_vision/#convolutional-neural-network-cnn), I reviewed the CNN architecture in detail.
+Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a {{< backlink "human_vision" "previous post" >}}, I reviewed the CNN architecture in detail.
 
 CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image ([Tang & Kang, 2018](https://arxiv.org/pdf/1809.07426)) or a 1D image whose "color channel" is the embedding dimension ([Yuan et al., 2019](https://arxiv.org/abs/1808.05163)). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action --- this is hard for RNNs which best capture point-level dependencies from one action to another. 
 
@@ -179,7 +179,7 @@ The original DIEN models up to 50 most recent actions, which is fine for capturi
 - **General Search Unit (GSU)**: Retrieve top $k$ items from the long-term user sequence that are most similar to the target item;
 - **Exact Search Unit (ESU)**: Only compute target attention between each of the top $k$ items and the target item.
 
-In the ESU step, we can pick a model from the DIN/DIEN family. Two-stage target attention models mainly differ in the GSU step --- i.e., how they retrieve the top $k$ items to balance performance and speed. 
+For ESU, we can use DIEN or a similar model. Two-stage models mainly differ in the GSU step --- i.e., how they retrieve the top $k$ items to balance performance and speed. For details on the top-$k$ retrieval problem, you can check out my {{< backlink "ebr" "embedding-based retrieval (EBR)">}} post.
 
 #### SIM (Alibaba, 2020)
 
@@ -272,7 +272,21 @@ The target item is always masked, and the last hidden state is used to represent
 
 ### Dense All Action Prediction: PinnerFormer (2022)
 
-<!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
+{{< figure src="https://www.dropbox.com/scl/fi/npxniqu8vfskdmxxoxcft/Screenshot-2024-11-17-at-1.26.40-PM.png?rlkey=io4tqdther3adx72vazdu60at&st=e0c16doh&raw=1" caption="Pinterest's Homefeed ranker uses offline PinnerFormer embeddings for users' long-term interests and TransAct embeddings for their short-term interests." width="1800">}}
+
+Pinterest's Homefeed ranker, *Pinnability*, uses user sequence features concatenated from both long-term ([PinnerFormer, 2022](https://arxiv.org/abs/2205.04507)) and short-term ([TransAct, 2023](https://arxiv.org/abs/2306.00248)) interests. TransAct ([repo](https://github.com/pinterest/transformer_user_action)) is trained with an MLM-like objective, where random time windows are sampled, and all actions within these windows are masked. PinnerFormer, on the other hand, is trained on a more nuanced "Dense All Action Prediction" task.
+
+The predecessor to PinnerFormer, PinnerSage ([Pal et al, 2020](https://arxiv.org/abs/2007.03634)), represents each user's diverse interests with multiple cluster Medoids. However, having multiple embeddings per user creates challenges for embedding storage, model training, and serving latency. PinnerFormer addresses these issues by using a single embedding to represent a user's long-term interests. It learns each user's embedding from their past year's action sequence to predict positive engagements (e.g., repins, close-ups, clicks) over a 14-day future window.
+
+{{< figure src="https://www.dropbox.com/scl/fi/581136ujlfbi1yggmc82o/Screenshot-2024-11-17-at-2.00.16-PM.png?rlkey=scugzxryqznjhk26zeoahrpn3&st=tzba3u6i&raw=1" caption="PinnerFormer plays on training objectives, predicting the next or all actions in a $k$-day window, at the end of sequence or at each sampled time step." width="1800">}}
+
+The input sequence contains a year's worth of <span style="color: #aac1ef;">positive</span> and <span style="color: #d16d6a;">neutral</span> user-pin pairs: $\\{(u_1, p_1), \ldots, (u_B, p_B)\\}$. For each positive pair, we sample a mixture of in-batch and random negatives (to review of negative sampling methods, check out my {{< backlink "negative_sampling" "my post">}}). Since we don't predict neutral pairs, there's no need to sample negatives for them.
+
+The following objectives were explored, with the *Dense All Action* objective yielding the best offline and online performance:
+
+- **Next Action Prediction**: Given a sequence $S = \\{i_1, \ldots, i_{t}\\}$, predict the next action at $(t+1)$. SASRec ([Kang & McAuley, 2018](https://arxiv.org/abs/1808.09781)) extends this objective to predict the next-action at every (sampled) time step. While simple, the hyper-focus on predicting the immediate next action can lead the recommender system down a "rabbit hole": just because you clicked 5 cat pins in a row, you're gonna see cat feed forever...
+- **All Action Prediction**: Given a sequence $S = \\{i_1, \ldots, i_{t}\\}$, predict all actions in a $k$-day future window $[t+1, t+k+1]$. This objective encourages the model to capture broader, long-term interests instead of focusing solely on immediate actions.
+- **Dense All Action Prediction**: Similar to how SASRec extends Next Action Prediction, Dense All Action Prediction extends All Action Prediction by sampling multiple time steps from the sequence and predicting the $k$-day future window at each sampled time step.
 
 ## Is Attention What You Need?
 
@@ -284,10 +298,7 @@ The target item is always masked, and the last hidden state is used to represent
 
 ## Up the Ante in the Ranking Game
 
-{{< backlink "negative_sampling" >}}
-{{< backlink "human_vision" >}}
-{{< backlink "ebr" >}}
-{{< backlink "attention_as_dict" >}}
+{{< backlink "ltr" >}}
 
 <!-- #### TIM (Tencent, 2024)
 
@@ -326,7 +337,7 @@ TIM is part of the agglomeration of all tricks.
 
 12. The OG 👉 [*BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer*](https://arxiv.org/abs/1904.06690) (2019) by Sun et al., *CIKM*.
 13. Play with objectives 👉 [*PinnerFormer: Sequence Modeling for User Representation at Pinterest*](https://arxiv.org/abs/2205.04507) (2022) by Pancha et al., *KDD*.
-14. Capture short-term interests 👉 [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2024) by Xia et al., *KDD*.
+14. Capture short-term interests 👉 [*TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest*](https://arxiv.org/abs/2306.00248) (2023) by Xia et al., *KDD*.
 15. Applications at Pinterest 👉 organic ranking ([*Large-scale User Sequences at Pinterest*](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)) + ads ranking ([*User Action Sequence Modeling for Pinterest Ads Engagement Modeling*](https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e))
 
 ## Approach: Beyond Attention

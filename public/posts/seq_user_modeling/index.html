@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5228">
+  <meta itemprop="wordCount" content="5618">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT25M",
+  "timeRequired": "PT27M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 5228
+  "wordCount": 5618
 }
 </script>
 
@@ -131,7 +131,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
     
     
-      Reading time: 25 minutes
+      Reading time: 27 minutes
     
 
     
@@ -282,7 +282,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   
 </h2>
 <p>Sequential user modeling can be framed as a next-item-prediction problem: <span style="background-color: #abe0bb">given a user&rsquo;s action sequence $S = \{i_1, \ldots, i_L\}$ and a target item $i_t$, output a utility score for the item $p(i_t|i_{i:L})$</span>. Each interaction $i_j$ consists of a $\langle \mathrm{user}, \mathrm{action}, \mathrm{item} \rangle$ triple, where the action could be a click, an add-to-cart, a conversion, or other meaningful engagements with recommended or sponsored content.</p>
-<p>Any methods suitable for modeling sequences (e.g., tokens in language, pixels in images, genes in DNAs) can be applied to this problem, from Markov chains, RNNs, CNNs, and GNNs that pre-date Transformers, to the Transformer architecture (whether using only the attention mechanism or the full encoder) adapted to recommender systems (see <a href="https://arxiv.org/abs/2001.04830">Wang et al. 2019</a> for a comprehensive review).</p>
+<p>Any methods for modeling sequences (e.g., tokens in language, pixels in images, genes in DNAs) can be applied to this problem, from Markov chains, RNNs, CNNs, and GNNs that pre-date Transformers, to the Transformer architecture (using target attention or the full encoder; see <a href="/posts/attention_as_dict/" class="backlink">my post</a>
+  
+   for a refresher) adapted to recommender systems (see <a href="https://arxiv.org/abs/2001.04830">Wang et al. 2019</a> for a comprehensive review).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/bo2lmx0zswr9ntdlofs0c/Screenshot-2024-11-12-at-12.10.38-AM.png?rlkey=d3cmaxh5i1dckdnonvczfwm7i&amp;st=vmlrlwvc&amp;raw=1"
     alt="An overview of classic sequential user modeling methods (Wang et al., 2019)." width="600"><figcaption>
       <p>An overview of classic sequential user modeling methods (<a href="https://arxiv.org/abs/2001.04830">Wang et al., 2019</a>).</p>
@@ -344,18 +346,18 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-03"
+    id="sidenote-checkbox-04"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-03"
-    for="sidenote-checkbox-03"
+    aria-details="sidenote-04"
+    for="sidenote-checkbox-04"
     class="sidenote-mark"
     >Claude</label
   >
-  <small id="sidenote-03" class="sidenote-content">
+  <small id="sidenote-04" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>it only dawned on me after a year that Anthropic's Claude is named after Shannon.<span class="sr-only">)</span>
   </small>
 </span>
@@ -550,7 +552,9 @@ $$</p>
     </a>
   
 </h4>
-<p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a <a href="https://www.yuan-meng.com/posts/human_vision/#convolutional-neural-network-cnn">previous post</a>, I reviewed the CNN architecture in detail.</p>
+<p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a <a href="/posts/human_vision/" class="backlink">previous post</a>
+  
+  , I reviewed the CNN architecture in detail.</p>
 <p>CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image (<a href="https://arxiv.org/pdf/1809.07426">Tang &amp; Kang, 2018</a>) or a 1D image whose &ldquo;color channel&rdquo; is the embedding dimension (<a href="https://arxiv.org/abs/1808.05163">Yuan et al., 2019</a>). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action &mdash; this is hard for RNNs which best capture point-level dependencies from one action to another.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/za225afaopif9mpd6wc23/Screenshot-2024-11-13-at-9.13.07-PM.png?rlkey=ca284r83tx8z6zv4xkswin58d&amp;st=ub0lhkdv&amp;raw=1"
     alt="The first CNN recommender Caser treats the embedding matrix as a 2D &lsquo;image&rsquo;." width="1800"><figcaption>
@@ -597,18 +601,18 @@ $$</p>
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-09"
+    id="sidenote-checkbox-11"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-09"
-    for="sidenote-checkbox-09"
+    aria-details="sidenote-11"
+    for="sidenote-checkbox-11"
     class="sidenote-mark"
     >node similarity metric learning</label
   >
-  <small id="sidenote-09" class="sidenote-content">
+  <small id="sidenote-11" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product (an element-wise operation that takes 2 vectors of the same dimension and multiples the corresponding elements together) and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
   </small>
 </span>
@@ -696,18 +700,18 @@ where $\mathbf{e}_b^i[t+1])$ and $\hat{\mathbf{e}}_b^i[t+1]$ are positive and ne
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-13"
+    id="sidenote-checkbox-15"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-13"
-    for="sidenote-checkbox-13"
+    aria-details="sidenote-15"
+    for="sidenote-checkbox-15"
     class="sidenote-mark"
     >predicted score</label
   >
-  <small id="sidenote-13" class="sidenote-content">
+  <small id="sidenote-15" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>The notation is a bit unconventional, but inferring from the context, $-[\mathbf{x_1}, \mathbf{x_2}]$ is not a concatenation but an operation such as a dot product that computes the similarity between two vectors and returns a scalar.<span class="sr-only">)</span>
   </small>
 </span>
@@ -731,18 +735,18 @@ where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-14"
+    id="sidenote-checkbox-16"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-14"
-    for="sidenote-checkbox-14"
+    aria-details="sidenote-16"
+    for="sidenote-checkbox-16"
     class="sidenote-mark"
     >update gate</label
   >
-  <small id="sidenote-14" class="sidenote-content">
+  <small id="sidenote-16" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>In GRUs, the update gate determines how much of the previous hidden state should be carried forward into the current state.<span class="sr-only">)</span>
   </small>
 </span>
@@ -781,7 +785,9 @@ where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
 <li><strong>General Search Unit (GSU)</strong>: Retrieve top $k$ items from the long-term user sequence that are most similar to the target item;</li>
 <li><strong>Exact Search Unit (ESU)</strong>: Only compute target attention between each of the top $k$ items and the target item.</li>
 </ul>
-<p>In the ESU step, we can pick a model from the DIN/DIEN family. Two-stage target attention models mainly differ in the GSU step &mdash; i.e., how they retrieve the top $k$ items to balance performance and speed.</p>
+<p>For ESU, we can use DIEN or a similar model. Two-stage models mainly differ in the GSU step &mdash; i.e., how they retrieve the top $k$ items to balance performance and speed. For details on the top-$k$ retrieval problem, you can check out my <a href="/posts/ebr/" class="backlink">embedding-based retrieval (EBR)</a>
+  
+   post.</p>
 <h5 id="sim-alibaba-2020" class="scroll-mt-8 group">
   SIM (Alibaba, 2020)
   
@@ -856,18 +862,18 @@ where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-17"
+    id="sidenote-checkbox-20"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-17"
-    for="sidenote-checkbox-17"
+    aria-details="sidenote-20"
+    for="sidenote-checkbox-20"
     class="sidenote-mark"
     >calculation</label
   >
-  <small id="sidenote-17" class="sidenote-content">
+  <small id="sidenote-20" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>It takes $O(1)$ time to find differing bits between two binary numbers using bitwise XOR (`diffs = x ^ y`) and count 1's in the result (`bin(diffs).count('1')`).<span class="sr-only">)</span>
   </small>
 </span>
@@ -923,18 +929,18 @@ $$K \triangleq \left[ K_h \quad K_c \right] \in \mathbb{R}^{L \times (H + C)}.$$
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-21"
+    id="sidenote-checkbox-24"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-21"
-    for="sidenote-checkbox-21"
+    aria-details="sidenote-24"
+    for="sidenote-checkbox-24"
     class="sidenote-mark"
     >rarely</label
   >
-  <small id="sidenote-21" class="sidenote-content">
+  <small id="sidenote-24" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>A 大佬 once said, the greatest feat of an ML engineer is to tailor a solution to the real business/user problem. The key assumption in TWIN only stands because Kushaisho users don't re-watch videos, but it'd be stupid to assume DoorDash consumers don't reorder dishes.<span class="sr-only">)</span>
   </small>
 </span>
@@ -965,18 +971,18 @@ where $d_k$ is the dimension of the projected query and key. The cross features 
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-24"
+    id="sidenote-checkbox-27"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-24"
-    for="sidenote-checkbox-24"
+    aria-details="sidenote-27"
+    for="sidenote-checkbox-27"
     class="sidenote-mark"
     >crazier</label
   >
-  <small id="sidenote-24" class="sidenote-content">
+  <small id="sidenote-27" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?<span class="sr-only">)</span>
   </small>
 </span>
@@ -1110,7 +1116,29 @@ $$</p>
     </a>
   
 </h4>
-<!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
+<figure><img src="https://www.dropbox.com/scl/fi/npxniqu8vfskdmxxoxcft/Screenshot-2024-11-17-at-1.26.40-PM.png?rlkey=io4tqdther3adx72vazdu60at&amp;st=e0c16doh&amp;raw=1"
+    alt="Pinterest&rsquo;s Homefeed ranker uses offline PinnerFormer embeddings for users&rsquo; long-term interests and TransAct embeddings for their short-term interests." width="1800"><figcaption>
+      <p>Pinterest&rsquo;s Homefeed ranker uses offline PinnerFormer embeddings for users&rsquo; long-term interests and TransAct embeddings for their short-term interests.</p>
+    </figcaption>
+</figure>
+
+<p>Pinterest&rsquo;s Homefeed ranker, <em>Pinnability</em>, uses user sequence features concatenated from both long-term (<a href="https://arxiv.org/abs/2205.04507">PinnerFormer, 2022</a>) and short-term (<a href="https://arxiv.org/abs/2306.00248">TransAct, 2023</a>) interests. TransAct (<a href="https://github.com/pinterest/transformer_user_action">repo</a>) is trained with an MLM-like objective, where random time windows are sampled, and all actions within these windows are masked. PinnerFormer, on the other hand, is trained on a more nuanced &ldquo;Dense All Action Prediction&rdquo; task.</p>
+<p>The predecessor to PinnerFormer, PinnerSage (<a href="https://arxiv.org/abs/2007.03634">Pal et al, 2020</a>), represents each user&rsquo;s diverse interests with multiple cluster Medoids. However, having multiple embeddings per user creates challenges for embedding storage, model training, and serving latency. PinnerFormer addresses these issues by using a single embedding to represent a user&rsquo;s long-term interests. It learns each user&rsquo;s embedding from their past year&rsquo;s action sequence to predict positive engagements (e.g., repins, close-ups, clicks) over a 14-day future window.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/581136ujlfbi1yggmc82o/Screenshot-2024-11-17-at-2.00.16-PM.png?rlkey=scugzxryqznjhk26zeoahrpn3&amp;st=tzba3u6i&amp;raw=1"
+    alt="PinnerFormer plays on training objectives, predicting the next or all actions in a $k$-day window, at the end of sequence or at each sampled time step." width="1800"><figcaption>
+      <p>PinnerFormer plays on training objectives, predicting the next or all actions in a $k$-day window, at the end of sequence or at each sampled time step.</p>
+    </figcaption>
+</figure>
+
+<p>The input sequence contains a year&rsquo;s worth of <span style="color: #aac1ef;">positive</span> and <span style="color: #d16d6a;">neutral</span> user-pin pairs: $\{(u_1, p_1), \ldots, (u_B, p_B)\}$. For each positive pair, we sample a mixture of in-batch and random negatives (to review of negative sampling methods, check out my <a href="/posts/negative_sampling/" class="backlink">my post</a>
+  
+  ). Since we don&rsquo;t predict neutral pairs, there&rsquo;s no need to sample negatives for them.</p>
+<p>The following objectives were explored, with the <em>Dense All Action</em> objective yielding the best offline and online performance:</p>
+<ul>
+<li><strong>Next Action Prediction</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict the next action at $(t+1)$. SASRec (<a href="https://arxiv.org/abs/1808.09781">Kang &amp; McAuley, 2018</a>) extends this objective to predict the next-action at every (sampled) time step. While simple, the hyper-focus on predicting the immediate next action can lead the recommender system down a &ldquo;rabbit hole&rdquo;: just because you clicked 5 cat pins in a row, you&rsquo;re gonna see cat feed forever&hellip;</li>
+<li><strong>All Action Prediction</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict all actions in a $k$-day future window $[t+1, t+k+1]$. This objective encourages the model to capture broader, long-term interests instead of focusing solely on immediate actions.</li>
+<li><strong>Dense All Action Prediction</strong>: Similar to how SASRec extends Next Action Prediction, Dense All Action Prediction extends All Action Prediction by sampling multiple time steps from the sequence and predicting the $k$-day future window at each sampled time step.</li>
+</ul>
 <h3 id="is-attention-what-you-need" class="scroll-mt-8 group">
   Is Attention What You Need?
   
@@ -1236,18 +1264,9 @@ $$</p>
     </a>
   
 </h3>
-<p><a href="/posts/negative_sampling/" class="backlink">Negative Sampling for Learning Two-Tower Networks</a>
+<a href="/posts/ltr/" class="backlink">An Evolution of Learning to Rank</a>
   
   
-<a href="/posts/human_vision/" class="backlink">Is Human Vision More like CNN or Vision Transformer?</a>
-  
-  
-<a href="/posts/ebr/" class="backlink">An Introduction to Embedding-Based Retrieval</a>
-  
-  
-<a href="/posts/attention_as_dict/" class="backlink">Attention as Soft Dictionary Lookup</a>
-  
-  </p>
 <!-- #### TIM (Tencent, 2024)
 
 <figure><img src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&amp;st=1b4llezs&amp;raw=1"
@@ -1426,7 +1445,7 @@ TIM is part of the agglomeration of all tricks.
 <ol start="12">
 <li>The OG 👉 <a href="https://arxiv.org/abs/1904.06690"><em>BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer</em></a> (2019) by Sun et al., <em>CIKM</em>.</li>
 <li>Play with objectives 👉 <a href="https://arxiv.org/abs/2205.04507"><em>PinnerFormer: Sequence Modeling for User Representation at Pinterest</em></a> (2022) by Pancha et al., <em>KDD</em>.</li>
-<li>Capture short-term interests 👉 <a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2024) by Xia et al., <em>KDD</em>.</li>
+<li>Capture short-term interests 👉 <a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2023) by Xia et al., <em>KDD</em>.</li>
 <li>Applications at Pinterest 👉 organic ranking (<a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9"><em>Large-scale User Sequences at Pinterest</em></a>) + ads ranking (<a href="https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e"><em>User Action Sequence Modeling for Pinterest Ads Engagement Modeling</em></a>)</li>
 </ol>
 <h3 id="approach-beyond-attention" class="scroll-mt-8 group">
@@ -1572,28 +1591,28 @@ TIM is part of the agglomeration of all tricks.
         <header class="grow">
           <h3>
             <a
-              href="/posts/negative_sampling/"
+              href="/posts/attention_as_dict/"
               class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="Negative Sampling for Learning Two-Tower Networks"
-              >Negative Sampling for Learning Two-Tower Networks</a
+              title="Attention as Soft Dictionary Lookup"
+              >Attention as Soft Dictionary Lookup</a
             >
           </h3>
         </header>
           <ul class="flex flex-row items-center justify-end space-x-2">
               <li>
                 <a
-                  href="/categories/negative-sampling/"
+                  href="/categories/machine-learning/"
                   class="taxonomy"
-                  title="Posts and notes on Negative sampling"
-                  >Negative sampling</a
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
                 >
               </li>
               <li>
                 <a
-                  href="/categories/recommender-system/"
+                  href="/categories/natural-language-processing/"
                   class="taxonomy"
-                  title="Posts and notes on Recommender system"
-                  >Recommender system</a
+                  title="Posts and notes on Natural language processing"
+                  >Natural language processing</a
                 >
               </li>
           </ul>
@@ -1676,28 +1695,68 @@ TIM is part of the agglomeration of all tricks.
         <header class="grow">
           <h3>
             <a
-              href="/posts/attention_as_dict/"
+              href="/posts/negative_sampling/"
               class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="Attention as Soft Dictionary Lookup"
-              >Attention as Soft Dictionary Lookup</a
+              title="Negative Sampling for Learning Two-Tower Networks"
+              >Negative Sampling for Learning Two-Tower Networks</a
             >
           </h3>
         </header>
           <ul class="flex flex-row items-center justify-end space-x-2">
               <li>
                 <a
-                  href="/categories/machine-learning/"
+                  href="/categories/negative-sampling/"
                   class="taxonomy"
-                  title="Posts and notes on Machine learning"
-                  >Machine learning</a
+                  title="Posts and notes on Negative sampling"
+                  >Negative sampling</a
                 >
               </li>
               <li>
                 <a
-                  href="/categories/natural-language-processing/"
+                  href="/categories/recommender-system/"
                   class="taxonomy"
-                  title="Posts and notes on Natural language processing"
-                  >Natural language processing</a
+                  title="Posts and notes on Recommender system"
+                  >Recommender system</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ltr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Evolution of Learning to Rank"
+              >An Evolution of Learning to Rank</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/search/"
+                  class="taxonomy"
+                  title="Posts and notes on Search"
+                  >Search</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/learning-to-rank/"
+                  class="taxonomy"
+                  title="Posts and notes on Learning to rank"
+                  >Learning to rank</a
                 >
               </li>
           </ul>
