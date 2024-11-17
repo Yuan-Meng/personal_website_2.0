@@ -198,7 +198,7 @@ In hard search, items are stored in an inverted index keyed by `user_id` and `ca
 
 Due to training and serving challenges, Alibaba opted for hard search in SIM. However, it is slightly jarring to plug offline-generated top $k$ items into an online CTR model. For instance, the pre-built index can become outdated, leading to model degradation. The follow-up End-to-End Target Attention ([ETA, 2021](https://arxiv.org/pdf/2108.04468)) paper used a clever trick to accelerate MISP, enabling end-to-end GSU and ESU in online serving.
 
-{{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into a $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into an $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU." width="1800">}}
 
 The trick is to hash real-valued embeddings into binary vectors using [SimHash](https://en.wikipedia.org/wiki/SimHash), reducing vector similarity scoring from a dot product with time complexity $O(L \cdot B \cdot d)$, to a [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) {{< sidenote "calculation" >}}It takes $O(1)$ time to find differing bits between two binary numbers using bitwise XOR (`diffs = x ^ y`) and count 1's in the result (`bin(diffs).count('1')`).{{< /sidenote >}}with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing efficient end-to-end GSU + ESU in both training and serving.
 
@@ -206,7 +206,7 @@ The trick is to hash real-valued embeddings into binary vectors using [SimHash](
 
 {{< figure src="https://www.dropbox.com/scl/fi/c881roy6bx3lc14mvgquz/Screenshot-2024-11-16-at-4.51.16-PM.png?rlkey=ueh3vfaztbg0a9tnjc51gqrvr&st=k6g338nd&raw=1" width="600">}}
 
-#### The two "TWINs" (Kuaishou, 2023, 2024)
+#### Kuaishou's "TWINs" (2023, 2024)
 
 TWIN and TWIN v2 make it faster by clustering items. 
 
