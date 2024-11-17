@@ -181,33 +181,37 @@ The original DIEN models up to 50 most recent actions, which is fine for capturi
 
 In the ESU step, we can pick a model from the DIN/DIEN family. Two-stage target attention models mainly differ in the GSU step --- i.e., how they retrieve the top $k$ items to balance performance and speed. 
 
-#### [SIM (Alibaba, 2020)](https://arxiv.org/abs/2006.05639)
+#### SIM (Alibaba, 2020)
 
-{{< figure src="https://www.dropbox.com/scl/fi/ogkh0f6g20va4kujl0hea/Screenshot-2024-11-16-at-12.31.56-PM.png?rlkey=4z8p7evygvml1bzsyjbuqvcvw&st=cft0v0gh&raw=1" caption="SIM finds top $k$ most similar items to the target via Maximum Inner Product Search (MIPS) based on item embeddings. The sum pooling of top $k$ item embeddings and the target item embedding are used in CTR predictions." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/ogkh0f6g20va4kujl0hea/Screenshot-2024-11-16-at-12.31.56-PM.png?rlkey=4z8p7evygvml1bzsyjbuqvcvw&st=cft0v0gh&raw=1" caption="SIM retrieves top $k$ items most similar to the target using Maximum Inner Product Search (soft search) based on item embeddings or from an inverted index based on item categories (hard search). The sum pooling of top $k$ item embeddings and the target item embedding are used in CTR predictions." width="1800">}}
 
-Alibaba's Search-based Interest Model (SIM, 2020) is the first two-stage target attention model. The GSU step finds top $k$ items with highest {{< sidenote "relevance scores" >}}The authors didn't elaborate on what scores were used, but they could be the dot product between each interaction embedding and the target item embedding. Embeddings can be pre-trained or learned from end-to-end like in DIEN. {{< /sidenote >}}w.r.t. the target item in one of two ways --- 
+Alibaba's Search-based Interest Model ([SIM, 2020](https://arxiv.org/abs/2006.05639)) is the first two-stage target attention model. The GSU step in SIM finds the top $k$ items most relevant to the target item in one of two ways --- 
 
-- **Hard search**: Only search items in the same category as the target --- $\mathrm{Sign}(C\_t = C\_a)$, where $C_t$ and $C_a$ denote categories of the $t$-th item in the sequence and the target item $a$, respectively;
-- **Soft search**: Assign higher weights to items that are more similar to the target item when conducting Maximum Inner Product Search (MIPS) for top $k$ items --- $(W\_i \mathbb{e}\_t) \odot (W\_a \mathbb{e}\_a)^T$, where $W\_i$ and $W\_a$ are weights of interacted items and the target item, respectively, and $\mathbb{e}_t$ and $\mathbb{e}\_a$ are their embeddings.
+- **Hard search** (based on a category-based inverted index): Only retrieve items in the same category as the target --- $\mathrm{Sign}(C\_t = C\_a)$, where $C_t$ and $C_a$ denote categories of the $t$-th item in the sequence and the target item $a$, respectively;
+- **Soft search** (based on item embeddings): The relevance score between the item interacted at $t$ and the target item $a$ is defined as $(\mathbf{W}\_i \mathbb{e}\_t) \odot (\mathbf{W}\_a \mathbb{e}\_a)^T$, where $\mathbb{e}_t$ and $\mathbb{e}\_a$ are embeddings of the two items, and $\mathbf{W}\_i$ and $\mathbf{W}\_a$ are weight matrices used to transform embeddings before the similarity calculation. We can conduct Maximum Inner Product Search (MIPS) over weighted item embeddings to find top $k$ items most relevant to the target.
 
-The sequence representation from GSU is a weighted sum of item embeddings, $\sum_{t=1}^L r\_t \mathbb{e}_t$, which is concatenated with the target item embedding $\mathbb{e}_a$ before being fed into an MLP layer. GSU and ESU are trained together, with a total loss of $L = \alpha \cdot L\_{GSU} + \beta \cdot L\_{ESU}$.
+In soft search, the sequence output from GSU is a weighted sum pooling of item embeddings, $\sum_{t=1}^L r\_t \mathbb{e}_t$, which is concatenated with the target item embedding $\mathbb{e}_a$ before being passed into the MLP layer. The GSU and ESU steps are trained jointly, with a total loss given by $L = \alpha \cdot L\_{GSU} + \beta \cdot L\_{ESU}$.
 
-To save inference time, top $k$ items are calculated offline and stored in an inverted index. This index is updated separately from the model.
+In hard search, items are stored in an inverted index keyed by `user_id` and `category_id`. This index is built and updated separately from the model. Hard search is the deployed model because it offers only slightly worse evaluation performance compared to soft search but is much easier to train and serve than the latter.
 
 #### ETA (Alibaba, 2021)
 
 {{< figure src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&st=7628vptt&raw=1" caption="ETA" width="1800">}}
 
+Due to training and serving challenges, Alibaba opted for hard search in SIM. However, it is slightly jarring to plug offline-generated top $k$ items into an online CTR model. For instance, the pre-built index can become outdated, leading to model degradation. The follow-up End-to-End Target Attention ([ETA, 2021](https://arxiv.org/pdf/2108.04468)) paper used a clever trick to accelerate MISP, enabling end-to-end GSU and ESU in online serving.
 
-ETA () is the first end-to-end model. TWIN and TWIN v2 make it faster by clustering items. TIM is part of the agglomeration of all tricks. 
+The trick is to hash real-valued embeddings into binary vectors using [SimHash](https://en.wikipedia.org/wiki/SimHash), reducing vector similarity scoring from a dot product with time complexity $O(L \cdot B \cdot d)$, to a [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) {{< sidenote "calculation" >}}It takes $O(1)$ time to find differing bits between two binary numbers using bitwise XOR (`diffs = x ^ y`) and count 1's in the result (`bin(diffs).count('1')`).{{< /sidenote >}}with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing efficient end-to-end GSU + ESU in both training and serving.
 
+<!-- bitwise XOR takes constant time -->
 
-#### TWIN (Kuaishou, 2023)
+{{< figure src="https://www.dropbox.com/scl/fi/zuvbjq3ucy43n8pymw179/Screenshot-2024-11-16-at-4.27.27-PM.png?rlkey=91kk6sfm1ceoydjnxjxraswyo&st=l6qoa2xm&raw=1" caption="SimHash is 'locality sensitive', in that similar inputs yield similar outputs." width="600">}}
+
+#### The two "TWINs" (Kuaishou, 2023, 2024)
+
+TWIN and TWIN v2 make it faster by clustering items. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&st=qal3uxr2&raw=1" caption="TWIN" width="1800">}}
 
-
-#### TWIN v2 (Kuaishou, 2024)
 
 {{< figure src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&st=6xj90rki&raw=1" caption="TWIN v2" width="1800">}}
 
@@ -215,6 +219,9 @@ ETA () is the first end-to-end model. TWIN and TWIN v2 make it faster by cluster
 #### TIM (Tencent, 2024)
 
 {{< figure src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&st=1b4llezs&raw=1" caption="TIM" width="1800">}}
+
+TIM is part of the agglomeration of all tricks. 
+
 
 ## "Language Modeling"
 
