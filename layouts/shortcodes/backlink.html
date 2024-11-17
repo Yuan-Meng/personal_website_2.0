@@ -1,5 +1,5 @@
-{{- $target := index ( where site.RegularPages "File.BaseFileName" (.Get 0) ) 0 -}}
-<a href="{{ $target.RelPermalink }}" class="backlink">{{ default ($.Get 1) $target.Title }}</a>
+{{- $target := index ( where site.RegularPages "File.ContentBaseName" (.Get 0) ) 0 -}}
+<a href="{{ $target.RelPermalink }}" class="backlink">{{ default $target.Title (.Get 1) }}</a>
 {{- with $target.Page.Scratch.Get "incoming" }}
   {{ $target.Page.Scratch.Add "incoming" $.Page }}
 {{- else }}

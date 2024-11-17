@@ -270,12 +270,9 @@ BERT4Rec is trained with the [masked language modeling](https://huggingface.co/d
 
 The target item is always masked, and the last hidden state is used to represent the sequence in downstream recommendation tasks.
 
-### (Generalized) Next-Action Prediction: PinnerFormer (2022)
+### Dense All Action Prediction: PinnerFormer (2022)
 
 <!-- TransAct (Pinterest, 2023) [repo](https://github.com/pinterest/transformer_user_action) -->
-
-<!-- BERT-style models. 
-Q: why not GPT style w/ causal mask, which is more natural for future prediction? -->
 
 ## Is Attention What You Need?
 
@@ -286,6 +283,8 @@ Q: why not GPT style w/ causal mask, which is more natural for future prediction
 ## Embedding&MLP Paradigm 
 
 ## Up the Ante in the Ranking Game
+
+{{< backlink "negative_sampling" >}}
 
 <!-- #### TIM (Tencent, 2024)
 
