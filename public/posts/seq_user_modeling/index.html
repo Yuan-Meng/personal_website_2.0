@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5986">
+  <meta itemprop="wordCount" content="6019">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 5986
+  "wordCount": 6019
 }
 </script>
 
@@ -550,7 +550,7 @@ $$</p>
 <p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a <a href="/posts/human_vision/" class="backlink">previous post</a>
   
   , I reviewed the CNN architecture in detail.</p>
-<p>CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image (<a href="https://arxiv.org/pdf/1809.07426">Tang &amp; Kang, 2018</a>) or a 1D image whose &ldquo;color channel&rdquo; is the embedding dimension (<a href="https://arxiv.org/abs/1808.05163">Yuan et al., 2019</a>). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action &mdash; this is hard for RNNs which best capture point-level dependencies from one action to another.</p>
+<p>CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image (<a href="https://arxiv.org/pdf/1809.07426">Tang &amp; Kang, 2018</a>) or a 1D image whose &ldquo;color channel&rdquo; is the embedding dimension (<a href="https://arxiv.org/abs/1808.05163">Yuan et al., 2019</a>). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action &mdash; this is hard for RNNs which at best capture point-level dependencies from one action to another.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/za225afaopif9mpd6wc23/Screenshot-2024-11-13-at-9.13.07-PM.png?rlkey=ca284r83tx8z6zv4xkswin58d&amp;st=ub0lhkdv&amp;raw=1"
     alt="The first CNN recommender Caser treats the embedding matrix as a 2D &lsquo;image&rsquo;." width="1800"><figcaption>
       <p>The first CNN recommender <a href="https://arxiv.org/pdf/1809.07426"><em>Caser</em></a> treats the embedding matrix as a 2D &lsquo;image&rsquo;.</p>
@@ -907,7 +907,7 @@ with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing 
     </a>
   
 </h5>
-<p>Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. . The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network (<a href="https://arxiv.org/abs/2302.02352">TWIN, 2023</a>) and its &ldquo;twin&rdquo; (<a href="https://arxiv.org/abs/2407.16357">TWIN-V2, 2024</a>).</p>
+<p>Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network (<a href="https://arxiv.org/abs/2302.02352">TWIN, 2023</a>) and its &ldquo;twin&rdquo; (<a href="https://arxiv.org/abs/2407.16357">TWIN-V2, 2024</a>).</p>
 <p>Below are the key observations + innovations behind TWIN &mdash;</p>
 <figure><img src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&amp;st=qal3uxr2&amp;raw=1"
     alt="TWIN optimizes target attention by splitting features into inherent vs. user-item cross features, caching inherent features and simplifying cross-feature projections. Attention scores are used as the relevance metric in GSU &#43; ESU." width="1800"><figcaption>
@@ -1235,11 +1235,12 @@ $$</p>
     </figcaption>
 </figure>
 
-<p>All of the attention-based models we&rsquo;ve seen have kept the core Transformer architecture intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention mechanisms in sequential recommenders usually serve as token-weight generators for embedding pooling. In their latest work (<a href="https://arxiv.org/abs/2402.17152">Zhai et al., 2024</a>), Meta researchers have revamped the Transformer architecture for recommendation tasks, introducing what they call &ldquo;Hierarchical Sequential Transduction Units (HSTU)&rdquo;. This work has also eliminated the 3 separate steps in traditional DLRMs and instead framed recommendation as a <em>sequential transduction</em> task:</p>
+<p>All the attention-based models above have kept the core Transformer architecture mostly intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention in sequential recommenders typically serves as a token-weight generator for subsequent embedding pooling. In their latest work (<a href="https://arxiv.org/abs/2402.17152">Zhai et al., 2024</a>), Meta researchers re-designed the Transformer blocks into &ldquo;Hierarchical Sequential Transduction Units (HSTU)&rdquo;, treating user actions as a new <em>modality</em> (like language or image) in generative modeling.</p>
+<p>This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a <em>sequential transduction</em> task:</p>
 <blockquote>
 <p>Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \{{\emptyset}\}$), where $y_i = \emptyset$ denotes an undefined output.</p>
 </blockquote>
-<p>I don&rsquo;t pretend to have understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his <a href="https://substack.com/@mlfrontiers">blog</a>. I hope that I might one day bump into the authors at a conference and just ask&hellip;</p>
+<p>At Meta, where recommender systems are already highly optimized, it&rsquo;s incredible that HSTU achieved a 12.4% gain in topline metrics and can serve 285x more recommendations with a 1.50x-2.99x speedup compared to DLRMs. I won&rsquo;t pretend that I understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his <a href="https://substack.com/@mlfrontiers">blog</a>. I hope to one day bump into the authors at a conference and ask&hellip;</p>
 <hr>
 <h2 id="references" class="scroll-mt-8 group">
   References

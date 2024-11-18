@@ -117,7 +117,7 @@ LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., [Hidas
 
 Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a {{< backlink "human_vision" "previous post" >}}, I reviewed the CNN architecture in detail.
 
-CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image ([Tang & Kang, 2018](https://arxiv.org/pdf/1809.07426)) or a 1D image whose "color channel" is the embedding dimension ([Yuan et al., 2019](https://arxiv.org/abs/1808.05163)). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action --- this is hard for RNNs which best capture point-level dependencies from one action to another. 
+CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image ([Tang & Kang, 2018](https://arxiv.org/pdf/1809.07426)) or a 1D image whose "color channel" is the embedding dimension ([Yuan et al., 2019](https://arxiv.org/abs/1808.05163)). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action --- this is hard for RNNs which at best capture point-level dependencies from one action to another. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/za225afaopif9mpd6wc23/Screenshot-2024-11-13-at-9.13.07-PM.png?rlkey=ca284r83tx8z6zv4xkswin58d&st=ub0lhkdv&raw=1" caption="The first CNN recommender [*Caser*](https://arxiv.org/pdf/1809.07426) treats the embedding matrix as a 2D 'image'." width="1800">}}
 
@@ -208,7 +208,7 @@ The trick is to hash real-valued embeddings into binary vectors using [SimHash](
 
 #### The Kuaishou TWINs (2023, 2024)
 
-Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. . The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network ([TWIN, 2023](https://arxiv.org/abs/2302.02352)) and its "twin" ([TWIN-V2, 2024](https://arxiv.org/abs/2407.16357)).
+Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network ([TWIN, 2023](https://arxiv.org/abs/2302.02352)) and its "twin" ([TWIN-V2, 2024](https://arxiv.org/abs/2407.16357)).
 
 Below are the key observations + innovations behind TWIN ---
 
@@ -307,11 +307,13 @@ Despite of new models coming out everyday, Deep Learning Recommender Systems (DL
 
 {{< figure src="https://www.dropbox.com/scl/fi/n2osq9go92py6pfb9dshz/Screenshot-2024-11-17-at-4.36.41-PM.png?rlkey=bmwk05igrqsy2mxqm2rxxfhzi&st=ibgv970a&raw=1" caption="Recommendation reframed as a sequential transduction task in HSTU." width="1800">}}
 
-All of the attention-based models we've seen have kept the core Transformer architecture intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention mechanisms in sequential recommenders usually serve as token-weight generators for embedding pooling. In their latest work ([Zhai et al., 2024](https://arxiv.org/abs/2402.17152)), Meta researchers have revamped the Transformer architecture for recommendation tasks, introducing what they call "Hierarchical Sequential Transduction Units (HSTU)". This work has also eliminated the 3 separate steps in traditional DLRMs and instead framed recommendation as a *sequential transduction* task:
+All the attention-based models above have kept the core Transformer architecture mostly intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention in sequential recommenders typically serves as a token-weight generator for subsequent embedding pooling. In their latest work ([Zhai et al., 2024](https://arxiv.org/abs/2402.17152)), Meta researchers re-designed the Transformer blocks into "Hierarchical Sequential Transduction Units (HSTU)", treating user actions as a new *modality* (like language or image) in generative modeling. 
+
+This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a *sequential transduction* task:
 
 > Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \\{{\emptyset}\\}$), where $y_i = \emptyset$ denotes an undefined output.
 
-I don't pretend to have understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his [blog](https://substack.com/@mlfrontiers). I hope that I might one day bump into the authors at a conference and just ask...
+At Meta, where recommender systems are already highly optimized, it's incredible that HSTU achieved a 12.4% gain in topline metrics and can serve 285x more recommendations with a 1.50x-2.99x speedup compared to DLRMs. I won't pretend that I understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his [blog](https://substack.com/@mlfrontiers). I hope to one day bump into the authors at a conference and ask...
 
 ---
 # References
@@ -349,4 +351,3 @@ I don't pretend to have understood this paper 😂. Meta ML engineer Samuel Flen
 ## Approach: Generative Recommenders 
 16. Meta AI 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
 17. New industry trends to align the collaborative filtering space of RecSys and the semantic space of LLMs 👉 [*Trend of Sparse Features in Recommendation System*](https://pyemma.github.io/Machine-Learning-System-Design-Sparse-Features/) by Coding Monkey 
-
