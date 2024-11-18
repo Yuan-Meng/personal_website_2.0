@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5618">
+  <meta itemprop="wordCount" content="5986">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   },
   "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling/",
   "name": "Down the Rabbit Hole: Sequential User Modeling",
-  "timeRequired": "PT27M",
+  "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 5618
+  "wordCount": 5986
 }
 </script>
 
@@ -131,7 +131,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
 
     
     
-      Reading time: 27 minutes
+      Reading time: 29 minutes
     
 
     
@@ -174,17 +174,12 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
             <li><a href="#dense-all-action-prediction-pinnerformer-2022">Dense All Action Prediction: PinnerFormer (2022)</a></li>
           </ul>
         </li>
-        <li><a href="#is-attention-what-you-need">Is Attention What You Need?</a>
+        <li><a href="#generative-recommenders-a-new-paradigm">Generative Recommenders, a New Paradigm</a>
           <ul>
-            <li><a href="#sequential-transduction-hstu-2024">Sequential Transduction: HSTU (2024)</a></li>
+            <li><a href="#overview-deep-learning-recommender-systems">Overview: Deep Learning Recommender Systems</a></li>
+            <li><a href="#recommendation-as-sequential-transduction-meta-2024">Recommendation as Sequential Transduction (Meta, 2024)</a></li>
           </ul>
         </li>
-      </ul>
-    </li>
-    <li><a href="#what-else-is-there">What Else Is There?</a>
-      <ul>
-        <li><a href="#embeddingmlp-paradigm">Embedding&amp;MLP Paradigm</a></li>
-        <li><a href="#up-the-ante-in-the-ranking-game">Up the Ante in the Ranking Game</a></li>
       </ul>
     </li>
     <li><a href="#references">References</a>
@@ -193,7 +188,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
         <li><a href="#approach-pre-transformer">Approach: Pre-Transformer</a></li>
         <li><a href="#approach-target-attention">Approach: Target Attention</a></li>
         <li><a href="#approach-language-modeling">Approach: Language Modeling</a></li>
-        <li><a href="#approach-beyond-attention">Approach: Beyond Attention</a></li>
+        <li><a href="#approach-generative-recommenders">Approach: Generative Recommenders</a></li>
       </ul>
     </li>
   </ul>
@@ -1135,14 +1130,14 @@ $$</p>
   ). Since we don&rsquo;t predict neutral pairs, there&rsquo;s no need to sample negatives for them.</p>
 <p>The following objectives were explored, with the <em>Dense All Action</em> objective yielding the best offline and online performance:</p>
 <ul>
-<li><strong>Next Action Prediction</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict the next action at $(t+1)$. SASRec (<a href="https://arxiv.org/abs/1808.09781">Kang &amp; McAuley, 2018</a>) extends this objective to predict the next-action at every (sampled) time step. While simple, the hyper-focus on predicting the immediate next action can lead the recommender system down a &ldquo;rabbit hole&rdquo;: just because you clicked 5 cat pins in a row, you&rsquo;re gonna see cat feed forever&hellip;</li>
+<li><strong>Next Action Prediction + SASRec</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict the next action at $(t+1)$. SASRec (<a href="https://arxiv.org/abs/1808.09781">Kang &amp; McAuley, 2018</a>) extends this objective to predict the next-action at every (sampled) time step. While simple, the hyper-focus on predicting the immediate next action can lead the recommender system down a &ldquo;rabbit hole&rdquo;: just because you clicked 5 cat pins in a row, you&rsquo;re gonna see cat feed forever&hellip;</li>
 <li><strong>All Action Prediction</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict all actions in a $k$-day future window $[t+1, t+k+1]$. This objective encourages the model to capture broader, long-term interests instead of focusing solely on immediate actions.</li>
 <li><strong>Dense All Action Prediction</strong>: Similar to how SASRec extends Next Action Prediction, Dense All Action Prediction extends All Action Prediction by sampling multiple time steps from the sequence and predicting the $k$-day future window at each sampled time step.</li>
 </ul>
-<h3 id="is-attention-what-you-need" class="scroll-mt-8 group">
-  Is Attention What You Need?
+<h3 id="generative-recommenders-a-new-paradigm" class="scroll-mt-8 group">
+  Generative Recommenders, a New Paradigm
   
-    <a href="#is-attention-what-you-need"
+    <a href="#generative-recommenders-a-new-paradigm"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1164,10 +1159,10 @@ $$</p>
     </a>
   
 </h3>
-<h4 id="sequential-transduction-hstu-2024" class="scroll-mt-8 group">
-  Sequential Transduction: HSTU (2024)
+<h4 id="overview-deep-learning-recommender-systems" class="scroll-mt-8 group">
+  Overview: Deep Learning Recommender Systems
   
-    <a href="#sequential-transduction-hstu-2024"
+    <a href="#overview-deep-learning-recommender-systems"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1189,95 +1184,62 @@ $$</p>
     </a>
   
 </h4>
-<h2 id="what-else-is-there" class="scroll-mt-8 group">
-  What Else Is There?
-  
-    <a href="#what-else-is-there"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h2>
-<h3 id="embeddingmlp-paradigm" class="scroll-mt-8 group">
-  Embedding&amp;MLP Paradigm
-  
-    <a href="#embeddingmlp-paradigm"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<h3 id="up-the-ante-in-the-ranking-game" class="scroll-mt-8 group">
-  Up the Ante in the Ranking Game
-  
-    <a href="#up-the-ante-in-the-ranking-game"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<a href="/posts/ltr/" class="backlink">An Evolution of Learning to Rank</a>
-  
-  
-<!-- #### TIM (Tencent, 2024)
-
-<figure><img src="https://www.dropbox.com/scl/fi/pb0wk5pm0mahuui0si6hp/Screenshot-2024-11-16-at-12.35.04-PM.png?rlkey=nrpy54qvo2wjmwzxetx7lecjf&amp;st=1b4llezs&amp;raw=1"
-    alt="TIM" width="1800"><figcaption>
-      <p>TIM</p>
+<p>Despite of new models coming out everyday, Deep Learning Recommender Systems (DLRMs) have followed the same paradigm:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/3a2awzduf70r0epdrhdja/Screenshot-2024-11-17-at-4.02.14-PM.png?rlkey=deyc8cun3grs3ro2yjnjw034y&amp;st=kazhd5t3&amp;raw=1"
+    alt="The anatomy of a typical Deep Learning Recommender System (DLRM)." width="300"><figcaption>
+      <p>The anatomy of a typical Deep Learning Recommender System (DLRM).</p>
     </figcaption>
 </figure>
 
+<ul>
+<li><strong>Feature extractions</strong>: DLRMs concatenate 3 types of features (Coding Monkey wrote an awesome <a href="https://pyemma.github.io/Features-in-Recommendation-System/">review</a>) &mdash; (1) dense (numeric) features, (2) sparse ID features, and (3) sequence features.
+<ul>
+<li><strong>Dense features</strong>: Scaled to a standard range, e.g., <code>[0, 1]</code></li>
+<li><strong>Sparse ID features</strong>: Mapped to a fixed-size embedding</li>
+<li><strong>Sequence features</strong>: Initially mapped to an embedding list of a variable length &mdash; all the methods we&rsquo;ve talked about are clever ways to create a pooled embedding of a fixed size</li>
+</ul>
+</li>
+<li><strong>Feature interactions</strong>: Apply some clever methods to capture higher-order feature interactions (e.g., <a href="https://arxiv.org/abs/1703.04247">DeepFM</a>, <a href="https://arxiv.org/abs/1708.05123">DCN</a>, <a href="https://paperswithcode.com/method/dcn-v2">DCN-V2</a>), or combine a bunch of &rsquo;em in an ensemble (e.g., <a href="https://arxiv.org/abs/2203.11014">DHEN</a>).</li>
+<li><strong>Representation transformations</strong>: In multi-task models (e.g., <a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">MMoE</a>, <a href="https://dl.acm.org/doi/10.1145/3383313.3412236">PLE</a>), there&rsquo;s usually a top layer controlling which features to use in which tasks. For a review on the learning-to-rank task common for recommendation, you can check out my <a href="/posts/ltr/" class="backlink">post</a>
+  
+  .</li>
+</ul>
+<h4 id="recommendation-as-sequential-transduction-meta-2024" class="scroll-mt-8 group">
+  Recommendation as Sequential Transduction (Meta, 2024)
+  
+    <a href="#recommendation-as-sequential-transduction-meta-2024"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-TIM is part of the agglomeration of all tricks. 
- -->
+    </a>
+  
+</h4>
+<figure><img src="https://www.dropbox.com/scl/fi/n2osq9go92py6pfb9dshz/Screenshot-2024-11-17-at-4.36.41-PM.png?rlkey=bmwk05igrqsy2mxqm2rxxfhzi&amp;st=ibgv970a&amp;raw=1"
+    alt="Recommendation reframed as a sequential transduction task in HSTU." width="1800"><figcaption>
+      <p>Recommendation reframed as a sequential transduction task in HSTU.</p>
+    </figcaption>
+</figure>
+
+<p>All of the attention-based models we&rsquo;ve seen have kept the core Transformer architecture intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention mechanisms in sequential recommenders usually serve as token-weight generators for embedding pooling. In their latest work (<a href="https://arxiv.org/abs/2402.17152">Zhai et al., 2024</a>), Meta researchers have revamped the Transformer architecture for recommendation tasks, introducing what they call &ldquo;Hierarchical Sequential Transduction Units (HSTU)&rdquo;. This work has also eliminated the 3 separate steps in traditional DLRMs and instead framed recommendation as a <em>sequential transduction</em> task:</p>
+<blockquote>
+<p>Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \{{\emptyset}\}$), where $y_i = \emptyset$ denotes an undefined output.</p>
+</blockquote>
+<p>I don&rsquo;t pretend to have understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his <a href="https://substack.com/@mlfrontiers">blog</a>. I hope that I might one day bump into the authors at a conference and just ask&hellip;</p>
 <hr>
 <h2 id="references" class="scroll-mt-8 group">
   References
@@ -1448,10 +1410,10 @@ TIM is part of the agglomeration of all tricks.
 <li>Capture short-term interests 👉 <a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2023) by Xia et al., <em>KDD</em>.</li>
 <li>Applications at Pinterest 👉 organic ranking (<a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9"><em>Large-scale User Sequences at Pinterest</em></a>) + ads ranking (<a href="https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e"><em>User Action Sequence Modeling for Pinterest Ads Engagement Modeling</em></a>)</li>
 </ol>
-<h3 id="approach-beyond-attention" class="scroll-mt-8 group">
-  Approach: Beyond Attention
+<h3 id="approach-generative-recommenders" class="scroll-mt-8 group">
+  Approach: Generative Recommenders
   
-    <a href="#approach-beyond-attention"
+    <a href="#approach-generative-recommenders"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1475,6 +1437,7 @@ TIM is part of the agglomeration of all tricks.
 </h3>
 <ol start="16">
 <li>Meta AI 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
+<li>New industry trends to align the collaborative filtering space of RecSys and the semantic space of LLMs 👉 <a href="https://pyemma.github.io/Machine-Learning-System-Design-Sparse-Features/"><em>Trend of Sparse Features in Recommendation System</em></a> by Coding Monkey</li>
 </ol>
     </div>
   </article>

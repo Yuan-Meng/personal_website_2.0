@@ -63,7 +63,9 @@
       "out": []
     },
     "/posts/ltr/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/md_coding/": {
@@ -99,10 +101,11 @@
     "/posts/seq_user_modeling/": {
       "in": [],
       "out": [
-        "/posts/negative_sampling/",
+        "/posts/attention_as_dict/",
         "/posts/human_vision/",
         "/posts/ebr/",
-        "/posts/attention_as_dict/"
+        "/posts/negative_sampling/",
+        "/posts/ltr/"
       ]
     }
   },
