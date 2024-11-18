@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6019">
+  <meta itemprop="wordCount" content="6047">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 6019
+  "wordCount": 6047
 }
 </script>
 
@@ -1236,7 +1236,26 @@ $$</p>
 </figure>
 
 <p>All the attention-based models above have kept the core Transformer architecture mostly intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention in sequential recommenders typically serves as a token-weight generator for subsequent embedding pooling. In their latest work (<a href="https://arxiv.org/abs/2402.17152">Zhai et al., 2024</a>), Meta researchers re-designed the Transformer blocks into &ldquo;Hierarchical Sequential Transduction Units (HSTU)&rdquo;, treating user actions as a new <em>modality</em> (like language or image) in generative modeling.</p>
-<p>This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a <em>sequential transduction</em> task:</p>
+<p>This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a sequential <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-36"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-36"
+    for="sidenote-checkbox-36"
+    class="sidenote-mark"
+    >transduction</label
+  >
+  <small id="sidenote-36" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>"Transduction" is just a fancy way of saying transforming an input sequence (e.g., a user action sequence) into an output sequence (e.g., recommendations), without explicit, inductive rules.<span class="sr-only">)</span>
+  </small>
+</span>
+ task:</p>
 <blockquote>
 <p>Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \{{\emptyset}\}$), where $y_i = \emptyset$ denotes an undefined output.</p>
 </blockquote>

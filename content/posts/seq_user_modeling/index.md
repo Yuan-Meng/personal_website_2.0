@@ -309,7 +309,7 @@ Despite of new models coming out everyday, Deep Learning Recommender Systems (DL
 
 All the attention-based models above have kept the core Transformer architecture mostly intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention in sequential recommenders typically serves as a token-weight generator for subsequent embedding pooling. In their latest work ([Zhai et al., 2024](https://arxiv.org/abs/2402.17152)), Meta researchers re-designed the Transformer blocks into "Hierarchical Sequential Transduction Units (HSTU)", treating user actions as a new *modality* (like language or image) in generative modeling. 
 
-This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a *sequential transduction* task:
+This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a sequential {{< sidenote "transduction" >}}"Transduction" is just a fancy way of saying transforming an input sequence (e.g., a user action sequence) into an output sequence (e.g., recommendations), without explicit, inductive rules.{{< /sidenote >}} task:
 
 > Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \\{{\emptyset}\\}$), where $y_i = \emptyset$ denotes an undefined output.
 
