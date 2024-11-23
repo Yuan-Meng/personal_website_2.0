@@ -24,6 +24,10 @@
       "in": [],
       "out": []
     },
+    "/notes/ml_wishlist/": {
+      "in": [],
+      "out": []
+    },
     "/notes/nothingness/": {
       "in": [],
       "out": []
@@ -142,6 +146,11 @@
       "permalink": "/notes/how_i_read_papers/",
       "section": "notes",
       "title": "How I Read Papers for Blogposts"
+    },
+    "/notes/ml_wishlist/": {
+      "permalink": "/notes/ml_wishlist/",
+      "section": "notes",
+      "title": "ML Stuff I Wish to Learn (More) About in 2025"
     },
     "/notes/nothingness/": {
       "permalink": "/notes/nothingness/",

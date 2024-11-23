@@ -4,21 +4,25 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/machine-learning/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/ml_wishlist/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/seq_user_modeling/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/information-retrieval/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/literature-review/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/writing/</loc>
   </url><url>
@@ -27,8 +31,6 @@
     <loc>http://localhost:1313/categories/career/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/interview/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/machine-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/ai/</loc>
   </url><url>

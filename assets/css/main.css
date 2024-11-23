@@ -355,3 +355,19 @@
     @apply hidden;
   }
 }
+
+article.main figure {
+    @apply text-center;
+    img {
+      @apply mb-0 border p-1;
+    }
+    figcaption {
+      @apply mt-1;
+      p {
+        @apply mt-1 italic;
+      }
+    }
+    h4 {
+      @apply mt-0;
+    }
+  }
