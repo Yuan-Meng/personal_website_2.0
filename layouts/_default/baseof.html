@@ -18,6 +18,12 @@
         {{ partial "footer.html" . }}
       </footer>
     </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Go to top">☝️</button>
+
+
+    <!-- Mermaid.js -->
     {{ if .Store.Get "hasMermaid" }}
       <script
         src="https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.min.js"
@@ -32,5 +38,8 @@
         });
       </script>
     {{ end }}
+
+    <!-- External Back to Top JavaScript -->
+    <script src="/js/back-to-top.js"></script>
   </body>
 </html>

@@ -46,3 +46,27 @@
   text-decoration: underline; /* Optional hover and focus effect */
   color: #555; /* Slightly darker color on hover, adjust as needed */
 }
+
+/* Back to Top Button Styling */
+#back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  width: 70px; /* Increased width for larger emoji */
+  height: 70px; /* Increased height for larger emoji */
+  border: none;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Light theme background */
+  color: #333; /* Text color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 36px; /* Larger font size for the emoji */
+  cursor: pointer;
+  z-index: 1000;
+  text-align: center;
+  line-height: 70px; /* Center-align the emoji vertically */
+}
+
+#back-to-top:hover {
+  background-color: #e0e0e0; /* Slightly darker hover effect */
+}

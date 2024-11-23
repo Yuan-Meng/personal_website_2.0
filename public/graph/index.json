@@ -81,7 +81,9 @@
       "out": []
     },
     "/posts/mtml/": {
-      "in": [],
+      "in": [
+        "/posts/seq_user_modeling/"
+      ],
       "out": []
     },
     "/posts/negative_sampling/": {
@@ -105,6 +107,7 @@
         "/posts/human_vision/",
         "/posts/ebr/",
         "/posts/negative_sampling/",
+        "/posts/mtml/",
         "/posts/ltr/"
       ]
     }
