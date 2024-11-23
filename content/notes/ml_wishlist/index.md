@@ -22,21 +22,21 @@ Below are boxes of chocolates that I desire to open in 2025 😋🍫.
 {{< /admonition >}}
 
 # Foundations of Deep Learning
-- **Ilya Sutskever's [reading list](https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE)**: 30 papers curated by Ilya for his friend John Carmack to get up to speed with AI's greatest hits.
+1. **Ilya Sutskever's [reading list](https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE)**: 30 papers curated by Ilya for his friend John Carmack to get up to speed with AI's greatest hits.
 
 # Model Serving and Deployment
 
 **IMO:** It makes no sense to dive into the following papers unless you're working at one of these companies (e.g., Meta, LinkedIn, Pinterest, Google)—after all, who needs detailed instructions on using a platinum cookware set without access to ingredients 🤑?
 
-- **GPU serving:** GPU-accelerated neutral retrieval (Meta [2023](https://arxiv.org/abs/2306.04039v1) & [2024](https://arxiv.org/abs/2407.15462), [LinkedIn 2024](https://arxiv.org/abs/2407.13218)), GPU-based inference (e.g., [Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d))
-- **Mixed precision serving:** originally used in LLM training and inference ([Nvidia](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html)) to reduce costs 👉 adapted by Pinterest to serve their ranking models (e.g., [ads L2 ranking](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html))
+2. **GPU serving:** GPU-accelerated neutral retrieval (Meta [2023](https://arxiv.org/abs/2306.04039v1) & [2024](https://arxiv.org/abs/2407.15462), [LinkedIn 2024](https://arxiv.org/abs/2407.13218)), GPU-based inference (e.g., [Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d))
+3. **Mixed precision serving:** originally used in LLM training and inference ([Nvidia](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html)) to reduce costs 👉 adapted by Pinterest to serve their ranking models (e.g., [ads L2 ranking](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html))
 
 # LLM Trends + Details 
-- **LLM technical reports:** [Claude 3](https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf) by Anthropic, Gemini [1](https://arxiv.org/abs/2312.11805)/[1.5](https://arxiv.org/abs/2403.05530) by Google DeepMind, [GPT-4](https://arxiv.org/abs/2303.08774) by OpenAI, Lllama [1](https://arxiv.org/abs/2302.13971)/[2](https://arxiv.org/abs/2307.09288)/[3](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/) by Meta AI
-- **Multimodal models**: Sebastian Raschka's [summary blog post](https://sebastianraschka.com/blog/2024/understanding-multimodal-llms.html)
-- **Agents**: survey [paper](https://arxiv.org/abs/2401.03568) (Durante et al., 2024) from Fei-Fei Li's group, [XGrammar](https://blog.mlc.ai/2024/11/22/achieving-efficient-flexible-portable-structured-generation-with-xgrammar) (a new framework from [Tianqi Chen](https://tqchen.com/)'s group for generating structured responses), [LLM-Agents-Papers repo](https://github.com/AGI-Edgerunners/LLM-Agents-Papers)
+4. **LLM technical reports:** [Claude 3](https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf) by Anthropic, Gemini [1](https://arxiv.org/abs/2312.11805)/[1.5](https://arxiv.org/abs/2403.05530) by Google DeepMind, [GPT-4](https://arxiv.org/abs/2303.08774) by OpenAI, Lllama [1](https://arxiv.org/abs/2302.13971)/[2](https://arxiv.org/abs/2307.09288)/[3](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/) by Meta AI
+5. **Multimodal models**: Sebastian Raschka's [summary blog post](https://sebastianraschka.com/blog/2024/understanding-multimodal-llms.html)
+6. **Agents**: survey [paper](https://arxiv.org/abs/2401.03568) (Durante et al., 2024) from Fei-Fei Li's group, [XGrammar](https://blog.mlc.ai/2024/11/22/achieving-efficient-flexible-portable-structured-generation-with-xgrammar) (a new framework from [Tianqi Chen](https://tqchen.com/)'s group for generating structured responses), [LLM-Agents-Papers repo](https://github.com/AGI-Edgerunners/LLM-Agents-Papers)
 
 
 # Emerging Topics in RecSys
-- **Semantic ID**: to help with *cold start* and *generalization*, a new id with similar semantic content to an existing id should be hashed into the same bucket 👉 see the DeepMind paper ([RecSys '24](https://arxiv.org/pdf/2306.08121)) for details and the Tencent paper ([KDD '24](https://arxiv.org/abs/2403.00793)) for applications
+7. **Semantic ID**: to help with *cold start* and *generalization*, a new id with similar semantic content to an existing id should be hashed into the same bucket 👉 see the DeepMind paper ([RecSys '24](https://arxiv.org/pdf/2306.08121)) for details and the Tencent paper ([KDD '24](https://arxiv.org/abs/2403.00793)) for applications
 
