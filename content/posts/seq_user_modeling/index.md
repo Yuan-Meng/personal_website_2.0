@@ -252,6 +252,10 @@ $$
 
 where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the target-aware attention between the interaction at time $t$ and the target item $a$, and $(\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a})$ denotes the target-aware representation that captures feature interactions.
 
+TIM is but one among an agglomeration of tricks described by the Tencent authors. I presented this paper at a {{< sidenote "DoorDash" >}}A a colleague asked how I would review this paper as a reviewer. After some rambling, I realized the strangest thing about this paper is the absence of ablation studies. For example, what happens if we use only target-aware attention without target-aware representation? Or for numeric feature encoding, what if we rely on a single numeral system?... {{< /sidenote >}} ML journal club. The slides below also highlight how Tencent addresses other challenges in ads prediction. Feel free to check them out! 👇
+
+<iframe src="https://slides.com/yuanmeng-1/tencent_ads_kdd24/embed" width="576" height="420" title="tencent_ads_kdd24" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
 ## "Language Modeling"
 
 In our profession as ML engineers in search/rec/ads ("搜广推"), there is a common saying: <span style="background-color: #abe0bb">"A user sequence is just like a sentence in a language."</span> But I've come to feel that's not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests --- starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:
@@ -301,7 +305,7 @@ Despite of new models coming out everyday, Deep Learning Recommender Systems (DL
     - **Sparse ID features**: Mapped to a fixed-size embedding
     - **Sequence features**: Initially mapped to an embedding list of a variable length --- all the methods we've talked about are clever ways to create a pooled embedding of a fixed size
 - **Feature interactions**: Apply some clever methods to capture higher-order feature interactions (e.g., [DeepFM](https://arxiv.org/abs/1703.04247), [DCN](https://arxiv.org/abs/1708.05123), [DCN-V2](https://paperswithcode.com/method/dcn-v2)), or combine a bunch of 'em in an ensemble (e.g., [DHEN](https://arxiv.org/abs/2203.11014)).
-- **Representation transformations**: In multi-task models (e.g., [MMoE](https://dl.acm.org/doi/pdf/10.1145/3219819.3220007), [PLE](https://dl.acm.org/doi/10.1145/3383313.3412236)), there's usually a top layer controlling which features to use in which tasks. For a review on the learning-to-rank task common for recommendation, you can check out my {{< backlink "ltr" "post" >}}.
+- **Representation transformations**: In multi-task models (e.g., [MMoE](https://dl.acm.org/doi/pdf/10.1145/3219819.3220007), [PLE](https://dl.acm.org/doi/10.1145/3383313.3412236)), there's usually a top layer controlling which features to use in which tasks. To see how MMoE works in detail, check out my previous {{< backlink "mtml" "post">}}. For a review on the learning-to-rank task common for recommendation, you can check out my other {{< backlink "ltr" "post" >}}. 
 
 ### Recommendation as Sequential Transduction (Meta, 2024)
 

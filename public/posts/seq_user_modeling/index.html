@@ -29,7 +29,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
 Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6047">
+  <meta itemprop="wordCount" content="6164">
   <meta itemprop="keywords" content="Recommender systems,Information retrieval">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
   "name": "Down the Rabbit Hole: Sequential User Modeling",
   "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/seq_user_modeling/",
-  "wordCount": 6047
+  "wordCount": 6164
 }
 </script>
 
@@ -1022,6 +1022,27 @@ where $d_k$ is the dimension of the projected query and key. The cross features 
 \boldsymbol{u_{\text{TIM}}} = \sum_{X_t \in S} \alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a}) \cdot (\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a}),
 $$</p>
 <p>where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the target-aware attention between the interaction at time $t$ and the target item $a$, and $(\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a})$ denotes the target-aware representation that captures feature interactions.</p>
+<p>TIM is but one among an agglomeration of tricks described by the Tencent authors. I presented this paper at a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-29"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-29"
+    for="sidenote-checkbox-29"
+    class="sidenote-mark"
+    >DoorDash</label
+  >
+  <small id="sidenote-29" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>A a colleague asked how I would review this paper as a reviewer. After some rambling, I realized the strangest thing about this paper is the absence of ablation studies. For example, what happens if we use only target-aware attention without target-aware representation? Or for numeric feature encoding, what if we rely on a single numeral system?... <span class="sr-only">)</span>
+  </small>
+</span>
+ ML journal club. The slides below also highlight how Tencent addresses other challenges in ads prediction. Feel free to check them out! 👇</p>
+<iframe src="https://slides.com/yuanmeng-1/tencent_ads_kdd24/embed" width="576" height="420" title="tencent_ads_kdd24" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 <h3 id="language-modeling" class="scroll-mt-8 group">
   &ldquo;Language Modeling&rdquo;
   
@@ -1200,7 +1221,9 @@ $$</p>
 </ul>
 </li>
 <li><strong>Feature interactions</strong>: Apply some clever methods to capture higher-order feature interactions (e.g., <a href="https://arxiv.org/abs/1703.04247">DeepFM</a>, <a href="https://arxiv.org/abs/1708.05123">DCN</a>, <a href="https://paperswithcode.com/method/dcn-v2">DCN-V2</a>), or combine a bunch of &rsquo;em in an ensemble (e.g., <a href="https://arxiv.org/abs/2203.11014">DHEN</a>).</li>
-<li><strong>Representation transformations</strong>: In multi-task models (e.g., <a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">MMoE</a>, <a href="https://dl.acm.org/doi/10.1145/3383313.3412236">PLE</a>), there&rsquo;s usually a top layer controlling which features to use in which tasks. For a review on the learning-to-rank task common for recommendation, you can check out my <a href="/posts/ltr/" class="backlink">post</a>
+<li><strong>Representation transformations</strong>: In multi-task models (e.g., <a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">MMoE</a>, <a href="https://dl.acm.org/doi/10.1145/3383313.3412236">PLE</a>), there&rsquo;s usually a top layer controlling which features to use in which tasks. To see how MMoE works in detail, check out my previous <a href="/posts/mtml/" class="backlink">post</a>
+  
+  . For a review on the learning-to-rank task common for recommendation, you can check out my other <a href="/posts/ltr/" class="backlink">post</a>
   
   .</li>
 </ul>
@@ -1240,18 +1263,18 @@ $$</p>
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-36"
+    id="sidenote-checkbox-38"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-36"
-    for="sidenote-checkbox-36"
+    aria-details="sidenote-38"
+    for="sidenote-checkbox-38"
     class="sidenote-mark"
     >transduction</label
   >
-  <small id="sidenote-36" class="sidenote-content">
+  <small id="sidenote-38" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>"Transduction" is just a fancy way of saying transforming an input sequence (e.g., a user action sequence) into an output sequence (e.g., recommendations), without explicit, inductive rules.<span class="sr-only">)</span>
   </small>
 </span>
@@ -1700,6 +1723,38 @@ $$</p>
                   class="taxonomy"
                   title="Posts and notes on Recommender system"
                   >Recommender system</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/mtml/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="The Annotated Multi-Task Ranker: An MMoE Code Example"
+              >The Annotated Multi-Task Ranker: An MMoE Code Example</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/multi-task-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Multi-task learning"
+                  >Multi-task learning</a
                 >
               </li>
           </ul>
