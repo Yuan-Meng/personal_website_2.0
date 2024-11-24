@@ -4,7 +4,7 @@ date: 2024-11-23
 categories: ["machine learning"]
 ---
 
-MLE friends and colleagues sometimes tell me about a sense of *lack* --- how there's so much to learn about the ML engineering craft --- from mathematical foundations and deep learning history, to state-of-the-art research, industry gold standards, and the nitty-gritty engineering details --- that it never feels like there's time to go deep on anything.
+MLE friends and colleagues sometimes tell me about a sense of *lack*: how there's so much to learn about the ML engineering craft --- from mathematical foundations and deep learning history, to state-of-the-art research, industry gold standards, and the nitty-gritty engineering details --- that it never feels like there's time to go deep on anything.
 
 <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
   <figure style="margin: 0; text-align: center;">
