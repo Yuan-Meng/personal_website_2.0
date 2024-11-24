@@ -3,6 +3,11 @@ title: "About me"
 show_reading_time: false
 ---
 
+<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+    <img src="https://www.dropbox.com/scl/fi/xrjctvfi0f81brcm6vlxr/7DC46823-5C4B-4DD6-B202-6334289DC68F_1_201_a.jpeg?rlkey=2m1109quro2f4jmk5e4qfbkrz&st=qpj4ykua&raw=1" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: block; margin: 0 auto;">
+</div>
+
+
 Hi, I'm Yuan, a machine learning engineer at DoorDash working on search ranking and query understanding. In my former life as a computational cognitive scientist, I studied common sense causal and social reasoning, for which I received a PhD from Berkeley in 2022.
 
 My passions in life: Machine learning (ranking, generative models), cognitively inspired AI, climbing, metal guitar, hot pot, and cats 🐱.
