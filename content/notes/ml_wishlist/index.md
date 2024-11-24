@@ -23,6 +23,7 @@ Below are boxes of chocolates that I desire to open in 2025 😋🍫.
 
 # Foundations of Deep Learning
 1. **Ilya Sutskever's [reading list](https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE)**: 30 papers curated by Ilya for his friend John Carmack to get up to speed with AI's greatest hits.
+2. **Mathematics for deep learning**: XXX
 
 # Model Serving and Deployment
 
@@ -36,6 +37,7 @@ Below are boxes of chocolates that I desire to open in 2025 😋🍫.
 5. **Multimodal models**: Sebastian Raschka's [summary blog post](https://sebastianraschka.com/blog/2024/understanding-multimodal-llms.html)
 6. **Agents**: survey [paper](https://arxiv.org/abs/2401.03568) (Durante et al., 2024) from Fei-Fei Li's group, [XGrammar](https://blog.mlc.ai/2024/11/22/achieving-efficient-flexible-portable-structured-generation-with-xgrammar) (a new framework from [Tianqi Chen](https://tqchen.com/)'s group for generating structured responses), [LLM-Agents-Papers repo](https://github.com/AGI-Edgerunners/LLM-Agents-Papers)
 
+Build a Large Language Model (From Scratch)
 
 # Emerging Topics in RecSys
 7. **Semantic ID**: to help with *cold start* and *generalization*, a new id with similar semantic content to an existing id should be hashed into the same bucket 👉 see the DeepMind paper ([RecSys '24](https://arxiv.org/pdf/2306.08121)) for details and the Tencent paper ([KDD '24](https://arxiv.org/abs/2403.00793)) for applications
