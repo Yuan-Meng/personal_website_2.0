@@ -4,6 +4,10 @@
       "in": [],
       "out": []
     },
+    "/notes/awakening/": {
+      "in": [],
+      "out": []
+    },
     "/notes/birthday/": {
       "in": [],
       "out": []
@@ -37,6 +41,10 @@
       "out": []
     },
     "/notes/resolutions-2022/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/super_weights/": {
       "in": [],
       "out": []
     },
@@ -122,6 +130,11 @@
       "section": "notes",
       "title": "Seventeen Going Under"
     },
+    "/notes/awakening/": {
+      "permalink": "/notes/awakening/",
+      "section": "notes",
+      "title": "Bounded Kindness"
+    },
     "/notes/birthday/": {
       "permalink": "/notes/birthday/",
       "section": "notes",
@@ -166,6 +179,11 @@
       "permalink": "/notes/resolutions-2022/",
       "section": "notes",
       "title": "New Year Resolutions"
+    },
+    "/notes/super_weights/": {
+      "permalink": "/notes/super_weights/",
+      "section": "notes",
+      "title": "The Super Weight in Large Language Models (Apple, 2024)"
     },
     "/posts/attention_as_dict/": {
       "permalink": "/posts/attention_as_dict/",

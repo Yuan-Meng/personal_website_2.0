@@ -1,17 +1,17 @@
 ---
-title: "Bounded Kindness"
+title: "Bounded Kindness (And Office Politics)"
 date: 2024-11-29
 categories: ["personal reflections"]
 math: true
 ---
 
-I recently had 3 separate conversations with 3 colleagues I'm good friends with, all converging on the central theme of my 2024: **Awakening**. Two years into my career, I'm finally awakened to how office politics works, how I wish to play it, and what matters in my life.
+I recently had 3 separate conversations with 3 colleagues I'm good friends with, all converging on the central theme of my 2024: **awakening**. Two years into my career, I'm finally awakened to how office politics works, how I wish to play it, and what matters in my life.
 
 # **Office Politics: No Such Things As "Deserving"**
 
 One colleague expressed indignation over a coasting, even toxic, tech lead getting the same level of recognition --- or at least compensation --- as another tech lead who worked tirelessly and selflessly mentored junior engineers (*"Why should he?"*). I chuckled inside: the world doesn't operate on "shoulds" or "oughts", but only on what is. There are no such things as "deserving" but only (1) aligning yourself with what your organization values and (2) getting rewarded for it. 
 
-Leadership is no fool (even though they may lack product vision) --- they promote and reward exactly those who represent what the organization values. That may well be ML excellence and mentorship, but more often, it's optics, sales pitches, and empire-building. You can't bend the leadership from prioritizing "value" to prioritizing "kindness and ML excellence". The best you can do is find a place where kindness and ML excellence, alongside other things you value, are already arguments to the reward function. This is *what is*.
+Leadership is no fool (even though they may lack product vision) --- they promote and reward exactly those who represent what the organization values. That may well be ML excellence and mentorship, but more often, it's optics, sales pitches, and empire building. You can't bend the leadership from prioritizing "value" to prioritizing "kindness and ML excellence". The best you can do is find a place where kindness and ML excellence, alongside other things you value, are already arguments to the reward function. This is *what is*.
 
 Even the most fair organization doesn't abide by "equal pay for equal work (同工同酬)". Someone who is the same engineering level as you but joined on a  different date may be granted $n$ times more RSUs for doing more or less the same work. If you want to climb the career ladder, you either play by the rules or find a new playground, but there's no use trying to rewrite the game and sighing when you can't.
 
@@ -32,8 +32,8 @@ The list goes on. I summarize my principle as "bounded kindness": don't do evil 
 # **Work to Live, Don't Live to Work**
 
 
-One colleague was hexed that they gave up pleasures and hobbies to compensate for work left "undone" (or so they thought) by colleagues who prioritize family and life, only to find that such efforts did't contribute to promotion, where direction and impact are valued over pure labor. I asked, *"What did you give up your life for?"*" The answer was stereotypically East Asian: working hard is all they know, and seeing things done imperfectly makes them anxious.
+One colleague was hexed that they gave up pleasures and hobbies to compensate for work left "undone" (or so they thought or told me) by colleagues who prioritize family and life, only to find that such efforts did't contribute to promotion, for which direction and impact are valued over pure labor. I asked, *"Then what did you give up your life for?"*" The answer was stereotypically East Asian: working hard is all they know, and seeing things done imperfectly makes them anxious.
 
-I wanted --- and still strive --- to be a "great" (however defined) ML engineer who masters their craft, but my motivation comes from intrinsic curiosity about machine learning: how knowledge is learned and represented in a network, and how architectural or data augmentations improve user experiences. My efforts are for myself. If someone else finds joy in being a good parent, they should focus on spending quality time with their kids. I believe emotions act as reinforcement learning signals: there's no such thing as "success," only finding what you desire and satiating that hunger.
+I wanted --- and still strive --- to be a "great" (however defined) ML engineer who masters their craft, but my motivation comes from intrinsic curiosity about machine learning: how knowledge is learned and represented in a network, and how architectural or data augmentations improve user experiences. My efforts are for myself. If someone else only finds joy in being a good parent, they should focus on spending quality time with their kids accordingly. I believe emotions act as reinforcement learning signals: there's no such thing as "success," only finding what you desire and satiating that hunger.
 
 There are many things I enjoy besides machine learning: spending time in nature, live music, good food, chatting about random topics with friends and partners, and indulging my curiosities. I work to get paid --- if I can create a more joyful experience for users through my work, that's great, but it's not my purpose. I have only < 100 years under the sun, and I live to enjoy the wonders of our universe.
