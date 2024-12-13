@@ -12,10 +12,6 @@
   </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/reading-notes/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/super_weights/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/machine-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/ml_wishlist/</loc>

@@ -44,10 +44,6 @@
       "in": [],
       "out": []
     },
-    "/notes/super_weights/": {
-      "in": [],
-      "out": []
-    },
     "/posts/attention_as_dict/": {
       "in": [
         "/posts/seq_user_modeling/"
@@ -133,7 +129,7 @@
     "/notes/awakening/": {
       "permalink": "/notes/awakening/",
       "section": "notes",
-      "title": "Bounded Kindness"
+      "title": "Bounded Kindness (And Office Politics)"
     },
     "/notes/birthday/": {
       "permalink": "/notes/birthday/",
@@ -179,11 +175,6 @@
       "permalink": "/notes/resolutions-2022/",
       "section": "notes",
       "title": "New Year Resolutions"
-    },
-    "/notes/super_weights/": {
-      "permalink": "/notes/super_weights/",
-      "section": "notes",
-      "title": "The Super Weight in Large Language Models (Apple, 2024)"
     },
     "/posts/attention_as_dict/": {
       "permalink": "/posts/attention_as_dict/",
