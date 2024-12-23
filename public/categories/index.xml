@@ -12,9 +12,16 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Career advice</title>
+      <link>http://localhost:1313/categories/career-advice/</link>
+      <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/career-advice/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Personal reflections</title>
       <link>http://localhost:1313/categories/personal-reflections/</link>
-      <pubDate>Fri, 29 Nov 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Sun, 15 Dec 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/personal-reflections/</guid>
       <description></description>
     </item>

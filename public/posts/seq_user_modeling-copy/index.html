@@ -1,0 +1,1899 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+<link rel="stylesheet" href="http://localhost:1313/css/styles.min.29149e7eece4eab92c5f2dc32ab7ccaad6427a19dd21db0153b88b4ccb8f3645.css">
+<meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    Down the Rabbit Hole: Sequential User Modeling | Yuan Meng
+</title>
+  <meta name="description" content=" Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
+Yuan’s Amazon browsing history last week; distinct sessions are color-coded." />
+<meta property="og:url" content="http://localhost:1313/posts/seq_user_modeling-copy/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="Down the Rabbit Hole: Sequential User Modeling">
+  <meta property="og:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
+Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-17T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="Down the Rabbit Hole: Sequential User Modeling">
+  <meta itemprop="description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
+Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
+  <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="6164">
+  <meta itemprop="keywords" content="Recommender systems,Information retrieval">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Down the Rabbit Hole: Sequential User Modeling">
+  <meta name="twitter:description" content="Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?
+Yuan’s Amazon browsing history last week; distinct sessions are color-coded.">
+
+<link rel="canonical" href="http://localhost:1313/posts/seq_user_modeling-copy/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/seq_user_modeling-copy/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Recommender systems",
+    "Information retrieval"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng",
+    "url": "http://localhost:1313/about/"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2024-11-17",
+  "description": " Catch the Train of Actions Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?\nYuan’s Amazon browsing history last week; distinct sessions are color-coded.",
+  "headline": "Down the Rabbit Hole: Sequential User Modeling",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/seq_user_modeling-copy/",
+  "name": "Down the Rabbit Hole: Sequential User Modeling",
+  "timeRequired": "PT29M",
+  "url": "http://localhost:1313/posts/seq_user_modeling-copy/",
+  "wordCount": 6164
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a href="/about/">About</a
+      >
+    </li>
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">Down the Rabbit Hole: Sequential User Modeling</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2024-11-17T00:00:00&#43;00:00">November 17, 2024</time>
+        </div>
+    </header>
+
+    
+    
+      Reading time: 29 minutes
+    
+
+    
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#catch-the-train-of-actions">Catch the Train of Actions</a></li>
+    <li><a href="#flavors-of-sequence-modeling">Flavors of Sequence Modeling</a>
+      <ul>
+        <li><a href="#pre-transformer">Pre-Transformer</a>
+          <ul>
+            <li><a href="#markov-chains">Markov Chains</a></li>
+            <li><a href="#recurrent-neural-networks">Recurrent Neural Networks</a></li>
+            <li><a href="#convolutional-neural-networks">Convolutional Neural Networks</a></li>
+            <li><a href="#graph-neural-networks">Graph Neural Networks</a></li>
+          </ul>
+        </li>
+        <li><a href="#target-attention">Target Attention</a>
+          <ul>
+            <li><a href="#one-stage-din-2018-and-dien-2019">One-Stage: DIN (2018) and DIEN (2019)</a></li>
+            <li><a href="#two-stage-general-search-unit--exact-search-unit">Two-Stage: General Search Unit + Exact Search Unit</a>
+              <ul>
+                <li><a href="#sim-alibaba-2020">SIM (Alibaba, 2020)</a></li>
+                <li><a href="#eta-alibaba-2021">ETA (Alibaba, 2021)</a></li>
+                <li><a href="#the-kuaishou-twins-2023-2024">The Kuaishou TWINs (2023, 2024)</a></li>
+                <li><a href="#temporal-interest-module-tim-2024">Temporal Interest Module (TIM, 2024)</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#language-modeling">&ldquo;Language Modeling&rdquo;</a>
+          <ul>
+            <li><a href="#masked-action-modeling-bert4rec-2019">Masked Action Modeling: BERT4Rec (2019)</a></li>
+            <li><a href="#dense-all-action-prediction-pinnerformer-2022">Dense All Action Prediction: PinnerFormer (2022)</a></li>
+          </ul>
+        </li>
+        <li><a href="#generative-recommenders-a-new-paradigm">Generative Recommenders, a New Paradigm</a>
+          <ul>
+            <li><a href="#overview-deep-learning-recommender-systems">Overview: Deep Learning Recommender Systems</a></li>
+            <li><a href="#recommendation-as-sequential-transduction-meta-2024">Recommendation as Sequential Transduction (Meta, 2024)</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#overview--collections">Overview &amp; Collections</a></li>
+        <li><a href="#approach-pre-transformer">Approach: Pre-Transformer</a></li>
+        <li><a href="#approach-target-attention">Approach: Target Attention</a></li>
+        <li><a href="#approach-language-modeling">Approach: Language Modeling</a></li>
+        <li><a href="#approach-generative-recommenders">Approach: Generative Recommenders</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
+
+    
+    <div class="content">
+      <h2 id="catch-the-train-of-actions" class="scroll-mt-8 group">
+  Catch the Train of Actions
+  
+    <a href="#catch-the-train-of-actions"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?</p>
+<figure><img src="https://www.dropbox.com/scl/fi/t3fs6pgs8rxlysnpoqeq9/Screenshot-2024-11-11-at-4.25.33-PM.png?rlkey=kv37yorsm6qdlro4y4ot496s8&amp;st=p200ep0j&amp;raw=1"
+    alt="Yuan&rsquo;s Amazon browsing history last week; distinct sessions are color-coded." width="1800"><figcaption>
+      <p>Yuan&rsquo;s Amazon browsing history last week; distinct sessions are color-coded.</p>
+    </figcaption>
+</figure>
+
+<p>A model performing average/sum pooling over engaged items may recommend books, cleaning supplies, or blue shampoos &mdash; these were the items I engaged the most with and align with my long-term interests in tidiness, reading, and paying punk homage. But in this session, I want more pull-up bar recommendations as I&rsquo;m comparing options. After that, I may wanna look at more fitness accessories&hellip;</p>
+<p>Rather than treating engaged items as a <em>static</em>, <em>unordered</em> collection, sequential user modeling traces the train of action sequences to predict the next action, adapting to evolving, dynamic user interests.</p>
+<h2 id="flavors-of-sequence-modeling" class="scroll-mt-8 group">
+  Flavors of Sequence Modeling
+  
+    <a href="#flavors-of-sequence-modeling"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>Sequential user modeling can be framed as a next-item-prediction problem: <span style="background-color: #abe0bb">given a user&rsquo;s action sequence $S = \{i_1, \ldots, i_L\}$ and a target item $i_t$, output a utility score for the item $p(i_t|i_{i:L})$</span>. Each interaction $i_j$ consists of a $\langle \mathrm{user}, \mathrm{action}, \mathrm{item} \rangle$ triple, where the action could be a click, an add-to-cart, a conversion, or other meaningful engagements with recommended or sponsored content.</p>
+<p>Any methods for modeling sequences (e.g., tokens in language, pixels in images, genes in DNAs) can be applied to this problem, from Markov chains, RNNs, CNNs, and GNNs that pre-date Transformers, to the Transformer architecture (using target attention or the full encoder; see <a href="/posts/attention_as_dict/" class="backlink">my post</a>
+  
+   for a refresher) adapted to recommender systems (see <a href="https://arxiv.org/abs/2001.04830">Wang et al. 2019</a> for a comprehensive review).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/bo2lmx0zswr9ntdlofs0c/Screenshot-2024-11-12-at-12.10.38-AM.png?rlkey=d3cmaxh5i1dckdnonvczfwm7i&amp;st=vmlrlwvc&amp;raw=1"
+    alt="An overview of classic sequential user modeling methods (Wang et al., 2019)." width="600"><figcaption>
+      <p>An overview of classic sequential user modeling methods (<a href="https://arxiv.org/abs/2001.04830">Wang et al., 2019</a>).</p>
+    </figcaption>
+</figure>
+
+<p>One thing I find interesting (but also expected) is that, since sequential user modeling borrows heavily from natural language processing (NLP), the evolution of the former closely follows that of the latter.</p>
+<h3 id="pre-transformer" class="scroll-mt-8 group">
+  Pre-Transformer
+  
+    <a href="#pre-transformer"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="markov-chains" class="scroll-mt-8 group">
+  Markov Chains
+  
+    <a href="#markov-chains"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In his <a href="http://cm.bell-labs.com/cm/ms/what/shannonday/shannon1948.pdf"><em>A Mathematical Theory of Communication</em></a> that laid the foundation for information theory, <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-04"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-04"
+    for="sidenote-checkbox-04"
+    class="sidenote-mark"
+    >Claude</label
+  >
+  <small id="sidenote-04" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>it only dawned on me after a year that Anthropic's Claude is named after Shannon.<span class="sr-only">)</span>
+  </small>
+</span>
+ Shannon used a <a href="https://www.cs.princeton.edu/courses/archive/spr05/cos126/assignments/markov.html">Markov chain</a> model to predict the transitional probability from one alphabet to another as an attempt to model natural language. The toy implementation below defines state transitions and randomly selects the next states to generate sequences. Transitional probabilities can be learned.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MarkovChain</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># dictionary to store transitions: {current state : [next state]}</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">addTransition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># add a transition from state v to state w</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pick a transition leaving state v uniformly at random</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># no transitions available</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="p">[</span><span class="n">v</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">toString</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># return a string representation of the Markov chain</span>
+</span></span><span class="line"><span class="cl">        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">state</span><span class="p">,</span> <span class="n">transitions</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transitions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">transitions</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<p>A Markov-chain recommender predicts the transition probability from one action sequence ($S = \{\mathrm{printer}, \mathrm{ink}\}$) to another ($S = \{\mathrm{printer}, \mathrm{ink}, \mathrm{paper}\}$), either directly (e.g., <a href="https://arxiv.org/abs/1303.0665">Garcin et al., 2013</a>) or by embedding Markov chains into a latent space to compute transitional probabilities based on Euclidean distances (e.g., <a href="https://www.ijcai.org/Proceedings/15/Papers/293.pdf">Feng et al., 2015</a>).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/pgjlb1nee84lihensin30/Screenshot-2024-11-12-at-12.59.47-PM.png?rlkey=a43d16ssyuhjjtxmzyldqawpu&amp;st=nfyg4npx&amp;raw=1"
+    alt="Markov chains recommend items by transition probabilities (Feng et al., 2015)." width="600"><figcaption>
+      <p>Markov chains recommend items by transition probabilities (<a href="https://www.ijcai.org/Proceedings/15/Papers/293.pdf">Feng et al., 2015</a>).</p>
+    </figcaption>
+</figure>
+
+<p>A fatal shortcoming of Markov chains lies in the <a href="https://en.wikipedia.org/wiki/Memorylessness">&ldquo;memorylessness&rdquo;</a> assumption &mdash; that future states depend only on the current state, ignoring preceding states. For example, if I bought cat food (because I suddenly remembered 😂) after buying ink, the system won&rsquo;t be more likely to recommend paper to me than if I didn&rsquo;t buy ink at all. Real shoppers jump between diverse interests and engage with unrelated items, which are nuances that Markov chains cannot capture.</p>
+<h4 id="recurrent-neural-networks" class="scroll-mt-8 group">
+  Recurrent Neural Networks
+  
+    <a href="#recurrent-neural-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Instead of relying solely on today&rsquo;s input to predict tomorrow, a Recurrent Neural Network (RNN) maintains a &ldquo;hidden state&rdquo; that serves as a memory of yesterday&rsquo;s activation and that of all days prior. The hidden state is &ldquo;hidden&rdquo; because it doesn&rsquo;t produce any observable output, such as a character or an action. Today&rsquo;s input, combined with the previous hidden state, is used to predict tomorrow. The last hidden state can be used to represent the sequence so far.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/r05faxbpxpevzgtjywz2m/Screenshot-2024-11-12-at-7.18.01-PM.png?rlkey=1p88m4grpfp1imww83d9lf8vx&amp;st=nbyecz33&amp;raw=1"
+    alt="The vanilla RNN architecture that almost nobody uses directly (Wikipedia)." width="1800"><figcaption>
+      <p>The vanilla RNN architecture that almost nobody uses directly (<a href="https://en.wikipedia.org/wiki/Recurrent_neural_network">Wikipedia</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Generally speaking, a RNN maps the input and the hidden state at step $t$, $x_t$ and $h_t$, to an output $y_t$ and an updated hidden state $h_{t+1}$,</p>
+<p>$$
+f_{\theta}(x_t, h_t) \rightarrow (y_t, h_{t+1}),
+$$</p>
+<p>where:</p>
+<ul>
+<li>$x_t$: input vector;</li>
+<li>$h_t$: hidden vector;</li>
+<li>$y_t$: output vector;</li>
+<li>$\theta$: neural network parameters.</li>
+</ul>
+<p>Vanilla RNNs are difficult to train because they are susceptible to the vanishing or exploding gradient problem, where gradients become increasingly small or large when we are backpropagating errors from the last output to the first input. More advanced versions RNNs, such as <a href="https://en.wikipedia.org/wiki/Long_short-term_memory">Long Short-Term Memory (LSTM)</a> and <a href="https://en.wikipedia.org/wiki/Gated_recurrent_unit">Gated Recurrent Units (GRUs)</a>, were invented to address these issues. From the early 2010s until the rise of Transformers around 2017-2018, these RNN variants were state-of-the-art in Natural Language Processing (NLP).</p>
+<p><a href="https://research.google/pubs/recurrent-recommender-networks/">Wu et al. (2017)</a> introduced the Recurrent Recommender Network (RRN), using LSTMs to encode user and movie hidden states, which then help predict how a user might rate a movie at a given time. RRN outperformed <a href="https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)">Matrix Factorization</a> methods such SVD++, which won the Netflix Prize but ignored the temporal dynamics of users and movies. The idea is based on a few clever observations:</p>
+<ul>
+<li><strong>Users evolve with movies and over time</strong>: After watching a great detective movie like <em>Knives Out</em>, I want to see more like it; as I grow older, I appreciate non-action movies more&hellip;</li>
+<li><strong>Movies evolve with audiences and over time</strong>: Every Christmas, <em>Elf</em> sees a resurgence in popularity; winning an award often leads to a sudden spike in appreciation for a film; some &ldquo;sleeper hits&rdquo; take years to build a reputation..</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/qn3dzi4d7ajmmvbc9xgru/Screenshot-2024-11-12-at-9.15.11-PM.png?rlkey=mrud07o647yakehuf7cxw87rq&amp;st=syacksj8&amp;raw=1"
+    alt="RRN uses 2 LTSMs to capture user and movie hidden states (Wu et al., 2017)." width="1800"><figcaption>
+      <p>RRN uses 2 LTSMs to capture user and movie hidden states (<a href="https://research.google/pubs/recurrent-recommender-networks/">Wu et al., 2017</a>).</p>
+    </figcaption>
+</figure>
+
+<p>The authors used one LSTM to model user hidden states and another to model movie hidden states. A time $t$, the predicted rating of user $i$ on movie $j$, $\hat{r}_{ij|t}$, is a combination the user&rsquo;s and the movie&rsquo;s dynamic latent factors (the last hidden states of the LTSMs) and their stationary latent factors (representing stable user and movie traits),</p>
+<p>$$
+\hat{r}_{ij|t} = f(u_{it}, m_{jt}, u_i, m_j) := \langle \tilde{u}_{it}, \tilde{m}_{jt} \rangle + \langle u_i, m_j \rangle,
+$$</p>
+<p>where $\langle \cdot, \cdot \rangle$ denotes an inner product, and:</p>
+<ul>
+<li>$\tilde{u}_{it}$ and $\tilde{m}_{jt}$ are time-varying states $u_{it}$ (for the user) and $m_{jt}$ (for the movie) generated by the LSTM networks;</li>
+<li>$u_i$ and $m_j$ are stationary latent factors for the user (e,.g., profile, long-term interests) and the movie (e.g., genre), respectively.</li>
+</ul>
+<p>The model is trained to minimize the error between the predicted rating $\hat{r}_{ij|t}$ and the actual rating $r_{ij|t}$. It captures exogenous dynamics (e.g., winning an award) and endogenous dynamics (e.g., seasonality) of movies more effectively than models that don&rsquo;t take account of temporal information.</p>
+<p>LTSMs in RRN can be replaced with other RNN variants, such as GRUs (e.g., <a href="https://arxiv.org/abs/1511.06939">Hidasi et al., 2016</a>) and hierarchical RNNs (e.g., <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">Quadrana et al., 2017</a>). Regardless of the specific architecture, RNN-based recommenders share some common drawbacks:</p>
+<ul>
+<li><strong>False dependencies</strong>: Just because I bought cat litter after buying books doesn&rsquo;t mean the two are related. User action sequences contain lots of noise, which RNNs cannot sift through;</li>
+<li><strong>Ignoring union-level dependencies</strong>: Multiple past actions can collectively predict a future action. For example, after buying rum and mint, it makes sense to guess I&rsquo;m making a Mojito and recommend lime juice, but not if I just bought one of them. It&rsquo;s hard for RNNs to capture such &ldquo;union-level dependencies&rdquo;.</li>
+</ul>
+<h4 id="convolutional-neural-networks" class="scroll-mt-8 group">
+  Convolutional Neural Networks
+  
+    <a href="#convolutional-neural-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Convolutional Neural Networks (CNNs) were initially developed for Computer Vision (CV) and are known for their ability to automatically extract image features, eliminating the need to hand-engineer features. In a <a href="/posts/human_vision/" class="backlink">previous post</a>
+  
+  , I reviewed the CNN architecture in detail.</p>
+<p>CNNs apply to recommendation because we can look up item embeddings in a sequence and stack them into a 2D matrix, which we can treat as a 2D image (<a href="https://arxiv.org/pdf/1809.07426">Tang &amp; Kang, 2018</a>) or a 1D image whose &ldquo;color channel&rdquo; is the embedding dimension (<a href="https://arxiv.org/abs/1808.05163">Yuan et al., 2019</a>). Unlike RNNs that process inputs sequentially, CNNs process the entire image in parallel, greatly improving training speed. Moreover, CNNs are capable of capturing union-level dependencies, where multiple actions together determine a future action &mdash; this is hard for RNNs which at best capture point-level dependencies from one action to another.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/za225afaopif9mpd6wc23/Screenshot-2024-11-13-at-9.13.07-PM.png?rlkey=ca284r83tx8z6zv4xkswin58d&amp;st=ub0lhkdv&amp;raw=1"
+    alt="The first CNN recommender Caser treats the embedding matrix as a 2D &lsquo;image&rsquo;." width="1800"><figcaption>
+      <p>The first CNN recommender <a href="https://arxiv.org/pdf/1809.07426"><em>Caser</em></a> treats the embedding matrix as a 2D &lsquo;image&rsquo;.</p>
+    </figcaption>
+</figure>
+
+<p><em>Caser</em> was the first CNN recommender to beat the RNN SOTA in sequential recommendation. Given a user sequence of length $L$, we perform an embedding lookup and stack item embeddings into matrix $\mathbf{E}$ of dimension $L \times d$, where $d$ is the embedding dimension. Horizontal filters of dimension $h \times d$ slide over the rows of $\mathbf{E}$ to capture union-level dependencies (e.g., $(\mathrm{rum}, \mathrm{mint}) \rightarrow \mathrm{lime})$, where $h$ is the height of the filter &mdash; we can think of it as the size of the union. We use max pooling to extract the max value from each horizontal filter. Vertical filters of dimension $L \times 1$ slides over the columns of $\mathbf{E}$ to capture point-level dependencies. No max pooling is needed since we want to keep every item latent dimension.</p>
+<p>Outputs from the convolutional layers are concatenated with the user embedding (generated by a Latent Factor Model) and fed into an MLP layer to predict the probability of each possible next action. We can recommend the top N items with the highest predicted probabilities.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/5tvwhafskm9awdch582kd/Screenshot-2024-11-13-at-8.48.28-PM.png?rlkey=7bp27lrq17dm7b4ho5lzjfktr&amp;st=b2cxqikr&amp;raw=1"
+    alt="Yuan et al., 2019 transformed the 2D image into a 1D representation and applied 1D dilated convolution without max pooling." width="1800"><figcaption>
+      <p>Yuan et al., 2019 transformed the 2D image into a 1D representation and applied 1D dilated convolution without max pooling.</p>
+    </figcaption>
+</figure>
+
+<p>In Caser, max pooling leads to information loss, and small filter sizes make it challenging to capture long-range dependencies. Yuan et al. (2019) addressed these issues by (1) removing max pooling and (2) using dilated convolutions, where some positions are filled with 0&rsquo;s. In general, larger filters increase the numbers of parameters to learn, making CNNs harder to train &mdash; dilated convolution strikes a good balance between the receptive field size and training efficiency.</p>
+<p>Despite these optimizations, capturing super long-range dependencies and looking beyond local patterns is inherently difficult for CNNs.</p>
+<h4 id="graph-neural-networks" class="scroll-mt-8 group">
+  Graph Neural Networks
+  
+    <a href="#graph-neural-networks"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>A common challenge for sequential recommendation is the noise in user actions. None of the methods above (Markov chains, RNNs, CNNs) has a mechanism to distinguish noise (e.g., an accidentally clicked item) from signal (i.e., an item of interest). The solution proposed in the SURGE paper (<a href="https://arxiv.org/pdf/2106.14226">Chang et al. (2021)</a> is converting loose item sequences into tight item-item interest graphs $\mathcal{G} = \{\mathcal{V}, \mathcal{E}, A\}$, where each node $v \in \mathcal{V}$ is an interacted item, $A$ is the adjacency matrix, and $\mathcal{E}$ are edges learned via <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-11"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-11"
+    for="sidenote-checkbox-11"
+    class="sidenote-mark"
+    >node similarity metric learning</label
+  >
+  <small id="sidenote-11" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Here, the metric function between nodes $h_i$ and $h_j$ is a weighted cosine similarity of their embeddings, $M_{ij} = \cos(\vec{\textbf{w}} \odot \vec{h}_i, \vec{\textbf{w}} \odot \vec{h}_j)$, where $\odot$ denotes the Hadamard product (an element-wise operation that takes 2 vectors of the same dimension and multiples the corresponding elements together) and $\vec{\textbf{w}}$ is a trainable weight learned end-to-end in the downstream recommendation task.<span class="sr-only">)</span>
+  </small>
+</span>
+. Noise is dealt with through graph sparsification, where edges with low ranking in learned metrics are pruned, since they are likely accidental.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/629z5iedbo3yv1lrlpoiq/Screenshot-2024-11-13-at-11.59.24-PM.png?rlkey=gfl4zzrrs9tgu2w6m09bzn1fg&amp;st=gfsuhnmz&amp;raw=1"
+    alt="GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user&rsquo;s strongest interest is used for downstream prediction." width="1800"><figcaption>
+      <p>GNNs aggregate item embedding via the interest graph. A sparse graph that represents the user&rsquo;s strongest interest is used for downstream prediction.</p>
+    </figcaption>
+</figure>
+
+<p>Once the interest graphs are constructed, the Interest-Fusion Graph Convolutional layer uses an attention mechanism to weight the importance of each neighbor and aggregates their information to update the node embeddings accordingly. Items that reflect the user&rsquo;s core interests (typically closer to the cluster center) or are related to the query item (i.e., the target item to be scored) receive higher weights. This further reduces noise in the item embeddings and emphasizes the user&rsquo;s long-term and immediate interests. Graph pooling is then used to downsample the graphs, preserving the strongest interest signals from the user. At this point, the noisy user sequence has been converted into a compact representation of user interests, which can be flattened into a 1D sequence for prediction.</p>
+<h3 id="target-attention" class="scroll-mt-8 group">
+  Target Attention
+  
+    <a href="#target-attention"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>The GNN &ldquo;alchemy&rdquo; is one way to extract interest signals from noisy sequences. A more straightforward approach is via <em>target attention</em>.</p>
+<h4 id="one-stage-din-2018-and-dien-2019" class="scroll-mt-8 group">
+  One-Stage: DIN (2018) and DIEN (2019)
+  
+    <a href="#one-stage-din-2018-and-dien-2019"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<figure><img src="https://www.dropbox.com/scl/fi/7pw0aj09hnr4zi8q7lh36/Screenshot-2024-11-15-at-9.27.07-PM.png?rlkey=ofrz5862p3sel38c9tewe9i9c&amp;st=0qi0yzq3&amp;raw=1"
+    alt="DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model." width="1800"><figcaption>
+      <p>DIN calculates the attention score between each item and the target item and uses the scores for weighted sum pooling. It is not itself a sequential model.</p>
+    </figcaption>
+</figure>
+
+<p>Should you show me an ad for a MacBook keyboard cover? Knowing that I bought a MacBook, it&rsquo;d be a great suggestion. By contrast, other items I&rsquo;ve bought, such as cat food or fitness accessories, have no bearing on this particular interest. <span style="background-color: #abe0bb">User interests are diverse, and only parts of user sequences shed light on their interest in the target item</span>. This observation motivated the Deep Interest Network (DIN, <a href="https://arxiv.org/pdf/1706.06978">Zhou et al., 2018</a>) and many target attention models that followed. Rather than doing a simple average or sum pooling over engaged items, this family of models uses target attention to weigh each item by its relevance to the target item and perform weighted sum pooling afterward.</p>
+<p>Note that DIN is not a sequential model, because the attention score between an engaged item and the target item is the same regardless of the position of the engaged item in the sequence. The Deep Interest Evolution Network (DIEN, <a href="https://arxiv.org/abs/1809.03672">Zhou et al., 2019</a>) introduced a year later employs GRUs to capture dependencies between interactions. DIEN was motivated by two key observations: (1) user interests are diverse (e.g., I like electronics and stationery, while my cats enjoy toys and cat food) and (2) each interest evolves independently over time (e.g., I need accessories for newer iPhone/MacBook/Apple Watch models, and my cats are only bothered by cooler toys).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/e7c9rbkvy3wwmjvfiw8zp/Screenshot-2024-11-15-at-9.38.27-PM.png?rlkey=bzxdzlhutqn7xbhfxweb2ixyz&amp;st=za8nlqsb&amp;raw=1"
+    alt="DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state." width="1800"><figcaption>
+      <p>DIEN uses a variant of RNN &mdash; GRU &ndash; to capture dependencies between interactions. Each interaction is represented by its hidden state.</p>
+    </figcaption>
+</figure>
+
+<p>The DIEN architecture has two components &mdash; an Interest Extractor Layer to extract interest states from user sequences and an Interest Evolution Layer to model interest evolution w.r.t. the target item.</p>
+<ul>
+<li>
+<p><strong>Interest Extractor Layer</strong>: Each hidden state $\mathbf{h}_t$ represents the user interest state after action $i_t$. The output is an interest sequence concatenated from all hidden states, $[\mathbf{h}_1, \ldots, \mathbf{h}_L]$.</p>
+<ul>
+<li><strong>Auxiliary loss</strong>: Only after the final action can we predict the target item. To provide extra supervision in earlier steps, the authors introduced an auxiliary task, predicting the $(t+1)$-th action based on $\{i_1, \ldots, i_t\}$. The actual action $i_{t+1}$ serves as the positive instance, while a randomly sampled action serves as the negative instance. The task is to predict which is positive using the binary cross-entropy loss &mdash;
+$$L_{aux} = -\frac{1}{N} \left( \sum_{i=1}^{N} \sum_{t} \log \sigma(\mathbf{h}_t^i, \mathbf{e}_b^i[t+1]) + \log (1 - \sigma(\mathbf{h}_t^i, \hat{\mathbf{e}}_b^i[t+1])) \right),$$
+where $\mathbf{e}_b^i[t+1])$ and $\hat{\mathbf{e}}_b^i[t+1]$ are positive and negative item embeddings, respectively, and $\sigma(\mathbf{x_1}, \mathbf{x_2}) = \frac{1}{1 + \exp(-[\mathbf{x_1}, \mathbf{x_2}])}$ denotes the <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-15"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-15"
+    for="sidenote-checkbox-15"
+    class="sidenote-mark"
+    >predicted score</label
+  >
+  <small id="sidenote-15" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>The notation is a bit unconventional, but inferring from the context, $-[\mathbf{x_1}, \mathbf{x_2}]$ is not a concatenation but an operation such as a dot product that computes the similarity between two vectors and returns a scalar.<span class="sr-only">)</span>
+  </small>
+</span>
+.</li>
+<li><strong>Global loss</strong>: The global loss for the target item CTR prediction task is given by $L = L_{target} + \alpha \cdot L_{aux}$, where $\alpha$ is a hyperparameter to balance interest representation (from the auxiliary task) and the final CTR prediction.</li>
+</ul>
+</li>
+<li>
+<p><strong>Interest Evolution Layer</strong>: The previous Interest Extractor Layer uses one GRU to learn each interest state up until time step $t$; the Interest Extractor Layer uses a second GRU to generate the final sequence representation. The update to each hidden state is controlled by its attention score with the target item.</p>
+<ul>
+<li>
+<p><strong>Attention function</strong>: The relation between interest state $\mathbb{h}_t$ and the target item $a$ is given by the attention function &mdash;
+$$a_t = \frac{\exp(\mathbb{h_t}We_a)}{\sum_{j=1}^T \exp(\mathbb{h}_jWe_a)},$$
+where $e_a$ represents the target item embedding. A higher attention score indicates a stronger connection between the given interest state and the target item being considered.</p>
+</li>
+<li>
+<p><strong>GRU with attentional update gate (AUGRU)</strong>: The hidden state update is controlled by attention score $a_t$, reducing the impact of interests less related to the target item on the hidden state. This weakens the disturbance from noise.
+$$\tilde{\mathbb{u}}_t^{\prime} = a_t \cdot \mathbb{u}_t^{\prime},$$
+$$\mathbb{h}_t^{\prime} = (1 - \tilde{\mathbb{u}}_t^{\prime}) \circ \mathbb{h}_{t-1}^{\prime} + \tilde{\mathbb{u}}_t^{\prime} \circ \tilde{\mathbb{h}}_t^{\prime},$$
+where $\mathbb{u}^{\prime}_t$ is the original <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-16"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-16"
+    for="sidenote-checkbox-16"
+    class="sidenote-mark"
+    >update gate</label
+  >
+  <small id="sidenote-16" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>In GRUs, the update gate determines how much of the previous hidden state should be carried forward into the current state.<span class="sr-only">)</span>
+  </small>
+</span>
+ and $\tilde{\mathbb{u}}_t^{\prime}$ is the attention update gate. $\mathbb{h}_t^{\prime}$ (soley based on sequential dependencies) and $\tilde{\mathbb{h}}_t^{\prime}$ (also incorporating target attention) are hidden states in the Interest Extractor Layer and the Interest Evolution Layer, respectively.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="two-stage-general-search-unit--exact-search-unit" class="scroll-mt-8 group">
+  Two-Stage: General Search Unit + Exact Search Unit
+  
+    <a href="#two-stage-general-search-unit--exact-search-unit"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The original DIEN models up to 50 most recent actions, which is fine for capturing short-term interests. As the cash cow for e-commerce and social media companies, <span style="background-color: #abe0bb">deep CTR models are getting increasingly more competitive (&lsquo;卷&rsquo; 🤑) &mdash; a new hope for performance gain lies in modeling long-term user sequences</span>. Target attention has a time complexity of $O(L \cdot B \cdot d)$, where $L$ is the sequence length, $B$ is the number of target items to score, and $d$ is the hidden dimension of item embeddings. A user&rsquo;s lifelong history can contain $10^3$ to $10^5$ interactions, making training inefficient for ultra-long sequences. An emerging paradigm for long-term sequential user modeling is to cascade sequential modeling into two stages &mdash;</p>
+<ul>
+<li><strong>General Search Unit (GSU)</strong>: Retrieve top $k$ items from the long-term user sequence that are most similar to the target item;</li>
+<li><strong>Exact Search Unit (ESU)</strong>: Only compute target attention between each of the top $k$ items and the target item.</li>
+</ul>
+<p>For ESU, we can use DIEN or a similar model. Two-stage models mainly differ in the GSU step &mdash; i.e., how they retrieve the top $k$ items to balance performance and speed. For details on the top-$k$ retrieval problem, you can check out my <a href="/posts/ebr/" class="backlink">embedding-based retrieval (EBR)</a>
+  
+   post.</p>
+<h5 id="sim-alibaba-2020" class="scroll-mt-8 group">
+  SIM (Alibaba, 2020)
+  
+    <a href="#sim-alibaba-2020"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<figure><img src="https://www.dropbox.com/scl/fi/ogkh0f6g20va4kujl0hea/Screenshot-2024-11-16-at-12.31.56-PM.png?rlkey=4z8p7evygvml1bzsyjbuqvcvw&amp;st=cft0v0gh&amp;raw=1"
+    alt="SIM retrieves top $k$ items most similar to the target using Maximum Inner Product Search (soft search) based on item embeddings or from an inverted index based on item categories (hard search). The sum pooling of top $k$ item embeddings and the target item embedding are used in CTR predictions." width="1800"><figcaption>
+      <p>SIM retrieves top $k$ items most similar to the target using Maximum Inner Product Search (soft search) based on item embeddings or from an inverted index based on item categories (hard search). The sum pooling of top $k$ item embeddings and the target item embedding are used in CTR predictions.</p>
+    </figcaption>
+</figure>
+
+<p>Alibaba&rsquo;s Search-based Interest Model (<a href="https://arxiv.org/abs/2006.05639">SIM, 2020</a>) is the first two-stage target attention model. The GSU step in SIM finds the top $k$ items most relevant to the target item in one of two ways &mdash;</p>
+<ul>
+<li><strong>Hard search</strong> (based on a category-based inverted index): Only retrieve items in the same category as the target &mdash; $\mathrm{Sign}(C_t = C_a)$, where $C_t$ and $C_a$ denote categories of the $t$-th item in the sequence and the target item $a$, respectively;</li>
+<li><strong>Soft search</strong> (based on item embeddings): The relevance score between the item interacted at $t$ and the target item $a$ is defined as $(\mathbf{W}_i \mathbb{e}_t) \odot (\mathbf{W}_a \mathbb{e}_a)^T$, where $\mathbb{e}_t$ and $\mathbb{e}_a$ are embeddings of the two items, and $\mathbf{W}_i$ and $\mathbf{W}_a$ are weight matrices used to transform embeddings before the similarity calculation. We can conduct Maximum Inner Product Search (MIPS) over weighted item embeddings to find top $k$ items most relevant to the target.</li>
+</ul>
+<p>In soft search, the user sequence representation generated in the GSU step is a weighted sum pooling of item embeddings, $\sum_{t=1}^L r_t \mathbb{e}_t$, which is then concatenated with the target item embedding $\mathbb{e}_a$ before being passed into the MLP layer. The GSU and ESU steps are trained jointly, with a total loss given by $L = \alpha \cdot L_{GSU} + \beta \cdot L_{ESU}$.</p>
+<p>In hard search, items are stored in an inverted index keyed by <code>user_id</code> and <code>category_id</code>. This index is built and updated separately from the model. Hard search is the deployed model because it offers only slightly worse evaluation performance compared to soft search but is much easier to train and serve than the latter.</p>
+<h5 id="eta-alibaba-2021" class="scroll-mt-8 group">
+  ETA (Alibaba, 2021)
+  
+    <a href="#eta-alibaba-2021"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>Due to training and serving challenges, Alibaba opted for hard search in SIM. However, it is slightly jarring to plug offline-generated top $k$ items into an online CTR model. For instance, the pre-built index can become outdated, leading to model degradation. The follow-up End-to-End Target Attention (<a href="https://arxiv.org/pdf/2108.04468">ETA, 2021</a>) paper used a clever trick to accelerate MISP, enabling end-to-end GSU and ESU in online serving.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/mzupzfwvu7s7o1ea187k7/Screenshot-2024-11-16-at-12.33.00-PM.png?rlkey=1t8nbpnm5x62cvn650rtuzffd&amp;st=7628vptt&amp;raw=1"
+    alt="ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into an $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU &#43; ESU." width="1800"><figcaption>
+      <p>ETA hashes embeddings into binary vectors, reducing each $O(d)$ dot product operation into an $O(1)$ Hamming distance computation, accelerating top-$k$ retrieval, which allows for end-to-end online serving of GSU + ESU.</p>
+    </figcaption>
+</figure>
+
+<p>The trick is to hash real-valued embeddings into binary vectors using <a href="https://en.wikipedia.org/wiki/SimHash">SimHash</a>, reducing vector similarity scoring from a dot product with time complexity $O(L \cdot B \cdot d)$, to a <a href="https://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a> <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-20"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-20"
+    for="sidenote-checkbox-20"
+    class="sidenote-mark"
+    >calculation</label
+  >
+  <small id="sidenote-20" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It takes $O(1)$ time to find differing bits between two binary numbers using bitwise XOR (`diffs = x ^ y`) and count 1's in the result (`bin(diffs).count('1')`).<span class="sr-only">)</span>
+  </small>
+</span>
+with time complexity $O(L \cdot B)$. This speeds up top-$k$ retrieval, allowing efficient end-to-end GSU + ESU in both training and serving.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/zuvbjq3ucy43n8pymw179/Screenshot-2024-11-16-at-4.27.27-PM.png?rlkey=91kk6sfm1ceoydjnxjxraswyo&amp;st=l6qoa2xm&amp;raw=1"
+    alt="SimHash is locality-sensitive, generating similar outputs from similar inputs." width="600"><figcaption>
+      <p>SimHash is locality-sensitive, generating similar outputs from similar inputs.</p>
+    </figcaption>
+</figure>
+
+<figure><img src="https://www.dropbox.com/scl/fi/c881roy6bx3lc14mvgquz/Screenshot-2024-11-16-at-4.51.16-PM.png?rlkey=ueh3vfaztbg0a9tnjc51gqrvr&amp;st=k6g338nd&amp;raw=1" width="600">
+</figure>
+
+<h5 id="the-kuaishou-twins-2023-2024" class="scroll-mt-8 group">
+  The Kuaishou TWINs (2023, 2024)
+  
+    <a href="#the-kuaishou-twins-2023-2024"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>Alibaba is an e-commerce platform: there are only so many products one wants to browse and has the money to buy. In contrast, short video users watch hundreds of thousands of videos over their lifetime, making it crucial for the GSU to retrieve the top $k$ items from an ultra-long sequence riddled with noise that the ESU will consider relevant. The Chinese short video company Kuaishou is an industry leader in ultra-long sequence modeling, publishing the SOTA TWo-stage Interest Network (<a href="https://arxiv.org/abs/2302.02352">TWIN, 2023</a>) and its &ldquo;twin&rdquo; (<a href="https://arxiv.org/abs/2407.16357">TWIN-V2, 2024</a>).</p>
+<p>Below are the key observations + innovations behind TWIN &mdash;</p>
+<figure><img src="https://www.dropbox.com/scl/fi/z5m19lma0po88rxqxao1i/Screenshot-2024-11-16-at-12.33.36-PM.png?rlkey=dn9ezoosfr8f9j2al3ki5oga9&amp;st=qal3uxr2&amp;raw=1"
+    alt="TWIN optimizes target attention by splitting features into inherent vs. user-item cross features, caching inherent features and simplifying cross-feature projections. Attention scores are used as the relevance metric in GSU &#43; ESU." width="1800"><figcaption>
+      <p>TWIN optimizes target attention by splitting features into inherent vs. user-item cross features, caching inherent features and simplifying cross-feature projections. Attention scores are used as the relevance metric in GSU + ESU.</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Feature splits</strong>: A sequence of length $L$ results in a feature matrix $K \in \mathbb{R}^{L \times M}$, where $M$ is the dimension of each feature vector. When computing target attention between $K$ and the query (i.e., the target item), the linear projection of $K$ is the bottleneck. <span style="background-color: #abe0bb">User and item features are typically split into two parts &mdash; inherent features $K_h \in \mathbb{R}^{L \times H}$ (e.g., video id, author, duration) and user-item cross features $K_c \in \mathbb{R}^{L \times C}$ (e.g., click timestamp, play time)</span>,
+$$K \triangleq \left[ K_h \quad K_c \right] \in \mathbb{R}^{L \times (H + C)}.$$
+<ul>
+<li><strong>Cache inherent features</strong>: Inherent features are often projected into large hidden dimensions (e.g., $H = 64$). Once projected, they can be shared across sequences (e.g., Bob is always Bob, no matter which video he watches). We can cache the $K_h$ projection to reduce computational costs.</li>
+<li><strong>Simplify cross features projections</strong>: Cross features cannot be cached since most only appear once (e.g., users <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-24"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-24"
+    for="sidenote-checkbox-24"
+    class="sidenote-mark"
+    >rarely</label
+  >
+  <small id="sidenote-24" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>A 大佬 once said, the greatest feat of an ML engineer is to tailor a solution to the real business/user problem. The key assumption in TWIN only stands because Kushaisho users don't re-watch videos, but it'd be stupid to assume DoorDash consumers don't reorder dishes.<span class="sr-only">)</span>
+  </small>
+</span>
+ watch the same video again), but we can simplify their linear projection. Say we have $J$ cross features ($C = 8J$), each feature $K_{c, j} \in \mathbb{R}^{L \times 8}$ can be projected into an embedding dimension of 8. Multiplying each cross feature by a weight vector $\mathbf{w}_j^c \in \mathbb{R}^8$ returns a 1D vector for each feature $K_{c, 1}\mathbf{w}_j^c \in \mathbb{R}^L$. This reduces the linear projection to
+$$K_c W^c \triangleq \left[ K_{c,1} \mathbf{w}_1^c, \ldots, K_{c,J} \mathbf{w}_J^c \right].$$</li>
+</ul>
+</li>
+<li><strong>Consistency-Preserved GSU (CP-GSU)</strong>: A major issue with previous two-stage models is that GSU and ESU use different relevance metrics, hurting both recall (not all relevant items are returned) and precision (some top $k$ items are irrelevant). TWIN addresses this by using attention scores as a consistent relevance metric in both stages. After feature splitting and simplified linear projections, target attention in TWIN is defined as
+$$\mathbf{\alpha} = \frac{(K_h W^h)(\mathbf{q}^\top W^q)^\top}{\sqrt{d_k}} + (K_c W^c) \mathbf{\beta},$$
+where $d_k$ is the dimension of the projected query and key. The cross features serve as the bias term $\mathbf{\beta}$. In GSU, top 10 items with highest attention scores are returned. The same scores are used as weights when performing a weighted average pooling in ESU.</li>
+</ul>
+<p>Feature splits make target attention computations faster for longer sequences, while CP-GSU increases the likelihood that the top $k$ items retrieved in GSU will be the final items of interest in ESU.</p>
+<p>TWIN-V2 enhances the ability to model ultra-long ($&gt; 10^6$) sequences by aggregating similar items into clusters and using a cluster to represent many a similar items in it, thereby reducing the sequence from $S = \{i_1, \ldots, i_L\}$ to $\hat{S} = \{c_1, \ldots, c_{\hat{L}}\}$, where $\hat{L} \ll L$. Each cluster is represented by a &ldquo;virtual item&rdquo; &mdash; for numerical features, we take the average across all items in the cluster; for categorical features, we take feature values of the item closest to the centroid.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/99csxcencja4m8wtv3k34/Screenshot-2024-11-16-at-12.34.18-PM.png?rlkey=rx9wm0j01xcb2c1tzhkmojxdp&amp;st=6xj90rki&amp;raw=1"
+    alt="TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item." width="1800"><figcaption>
+      <p>TWIN-V2 clusters similar items and uses a virtual item to represent each cluster. GSU retrieves the top 100 clusters and ESU computes attention scores between the virtual item in each retrieved cluster and the target item.</p>
+    </figcaption>
+</figure>
+
+<figure><img src="https://www.dropbox.com/scl/fi/vvpy0juljindvyhr7oxie/Screenshot-2024-11-17-at-9.26.31-AM.png?rlkey=gcnmh012h719hgxjq6rxzsq92&amp;st=y1muupbn&amp;raw=1" width="600">
+</figure>
+
+<ul>
+<li><strong>GSU</strong>: Retrieve top $k=100$ clusters whose &ldquo;virtual items&rdquo; have the highest attention scores with the target item &mdash; TWIN-V2 adjusts attention scores by cluster sizes $\mathbf{n} \in \mathbb{N}^{\hat{L}}$, $\mathbf{a}^{\prime} = \mathbf{a} + \ln \mathbf{n}$;</li>
+<li><strong>ESU</strong>: Compute attention between virtual items and the target.</li>
+</ul>
+<p>As far as <em>ultra-long</em> sequential user modeling goes, TWIN-V2 may be the &ldquo;craziest&rdquo; yet. <strong>Bonus question</strong>: How would you make it <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-27"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-27"
+    for="sidenote-checkbox-27"
+    class="sidenote-mark"
+    >crazier</label
+  >
+  <small id="sidenote-27" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>As a product ML engineer, I often sigh at the "chasm" between research and reality. The more SOTA papers I read, however, the more I started to realize good ideas often come naturally. For instance, TWIN-V2 is clearly motivated by the need to compress a list vectors and clustering is the path taken. Why not ask ourselves, what else is there?<span class="sr-only">)</span>
+  </small>
+</span>
+?</p>
+<h5 id="temporal-interest-module-tim-2024" class="scroll-mt-8 group">
+  Temporal Interest Module (TIM, 2024)
+  
+    <a href="#temporal-interest-module-tim-2024"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<blockquote>
+<p>As far as <em>ultra-long</em> sequential user modeling goes, TWIN-V2 may be the &ldquo;craziest&rdquo; yet.</p>
+</blockquote>
+<p>But in terms of information to encode from a user sequence, it is not 🤯. The Temporal Interest Module (TIM) in a new Tencent paper (<a href="https://arxiv.org/abs/2403.00793">Pan et al., 2024</a>) crammed everything possible into sequential features.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/mddhbpsmnt4qc2ind8dt0/Screenshot-2024-11-17-at-9.52.10-AM.png?rlkey=zms5sred20ofe12ifrr4eabj6&amp;st=lj0fkzkd&amp;raw=1"
+    alt="TIM is part of a gigantic model used for ads prediction across Tencent products." width="1800"><figcaption>
+      <p>TIM is part of a gigantic model used for ads prediction across Tencent products.</p>
+    </figcaption>
+</figure>
+
+<p>Inspired by positional encoding in Transformer models, TIM introduces a target-aware temporal encoding, $\boldsymbol{p_f}(X_t)$, to capture the relative position or discretized time interval of each interaction in a user sequence. This encoding is added to each interaction’s embedding, producing a temporally encoded embedding: $\boldsymbol{\tilde{e}_t} = \boldsymbol{e_t} \oplus \boldsymbol{p_f}(X_t)$. The encoded user sequence $S = {i_1, \ldots, i_L}$ is summarized as:</p>
+<p>$$
+\boldsymbol{u_{\text{TIM}}} = \sum_{X_t \in S} \alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a}) \cdot (\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a}),
+$$</p>
+<p>where $\alpha(\boldsymbol{\tilde{e}_t}, \boldsymbol{\tilde{v}_a})$ denotes the target-aware attention between the interaction at time $t$ and the target item $a$, and $(\boldsymbol{\tilde{e}_t} \odot \boldsymbol{\tilde{v}_a})$ denotes the target-aware representation that captures feature interactions.</p>
+<p>TIM is but one among an agglomeration of tricks described by the Tencent authors. I presented this paper at a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-29"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-29"
+    for="sidenote-checkbox-29"
+    class="sidenote-mark"
+    >DoorDash</label
+  >
+  <small id="sidenote-29" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>A a colleague asked how I would review this paper as a reviewer. After some rambling, I realized the strangest thing about this paper is the absence of ablation studies. For example, what happens if we use only target-aware attention without target-aware representation? Or for numeric feature encoding, what if we rely on a single numeral system?... <span class="sr-only">)</span>
+  </small>
+</span>
+ ML journal club. The slides below also highlight how Tencent addresses other challenges in ads prediction. Feel free to check them out! 👇</p>
+<iframe src="https://slides.com/yuanmeng-1/tencent_ads_kdd24/embed" width="576" height="420" title="tencent_ads_kdd24" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<h3 id="language-modeling" class="scroll-mt-8 group">
+  &ldquo;Language Modeling&rdquo;
+  
+    <a href="#language-modeling"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>In our profession as ML engineers in search/rec/ads (&ldquo;搜广推&rdquo;), there is a common saying: <span style="background-color: #abe0bb">&ldquo;A user sequence is just like a sentence in a language.&quot;</span> But I&rsquo;ve come to feel that&rsquo;s not quite the case. In natural language, syntactic constraints typically prevent speakers from expressing multiple, entangled thoughts in parallel. In contrast, users often jump between interests &mdash; starting with a search, moving to a stream of random discoveries, and then clicking on an ad along the way. If user sequences were sentences, they might read like this:</p>
+<blockquote>
+<p><span style="color: #002676;">I</span>, <span style="color: #002676;">plan</span>, <span style="color: #002676;">to</span>, <span style="color: #002676;">start</span>, <span style="color: #FDB515;">I</span>, <span style="color: #002676;">model</span>, <span style="color: #FDB515;">need</span>, <span style="color: #002676;">training</span>, <span style="color: #FDB515;">to</span>, <span style="color: #002676;">work</span>, <span style="color: #FDB515;">do</span>, <span style="color: #002676;">before</span>, <span style="color: #FDB515;">grocery</span>, <span style="color: #002676;">Monday</span>, <span style="color: #FDB515;">shopping</span>, <span style="color: #FDB515;">on</span>, <span style="color: #FDB515;">Sunday</span>&hellip;</p>
+</blockquote>
+<p>While language modeling objectives have been adapted for sequential user modeling, careful domain adaptions are likely a good idea.</p>
+<h4 id="masked-action-modeling-bert4rec-2019" class="scroll-mt-8 group">
+  Masked Action Modeling: BERT4Rec (2019)
+  
+    <a href="#masked-action-modeling-bert4rec-2019"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The observation that user interests do not strictly evolve from left to right, but are instead intertwined, inspired Alibaba&rsquo;s <a href="https://arxiv.org/abs/1904.06690">BERT4Rec (2019)</a>. Unlike RNN-based sequential models such as DIEN, BERT4Rec uses bidirectional self-attention to model dependencies in user sequences.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/k95vxf9rbub3rmvfpi395/Screenshot-2024-11-17-at-11.12.04-AM.png?rlkey=vlcbge9e4t20qkw9hvy9wewuy&amp;st=d8o2jt2w&amp;raw=1"
+    alt="BERT4Rec applies the masked language modeling objective, randomly selecting items to mask and predicting ids of masked items based on bidirectional contexts. The last hidden state of the target item represents the user sequence." width="1800"><figcaption>
+      <p>BERT4Rec applies the masked language modeling objective, randomly selecting items to mask and predicting ids of masked items based on bidirectional contexts. The last hidden state of the target item represents the user sequence.</p>
+    </figcaption>
+</figure>
+
+<p>BERT4Rec is trained with the <a href="https://huggingface.co/docs/transformers/en/tasks/masked_language_modeling">masked language modeling</a> (MLM) objective: at each training step, $k$ items are randomly chosen in the sequence of length $L$ and replaced with a special <code>[mask]</code> token. The model predicts the original ids of the masked items based on their left and right contexts. A bonus point of this setup is data efficiency: random masking gives us $\binom{L}{k}$ training samples over multiple epochs.</p>
+<p>The target item is always masked, and the last hidden state is used to represent the sequence in downstream recommendation tasks.</p>
+<h4 id="dense-all-action-prediction-pinnerformer-2022" class="scroll-mt-8 group">
+  Dense All Action Prediction: PinnerFormer (2022)
+  
+    <a href="#dense-all-action-prediction-pinnerformer-2022"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<figure><img src="https://www.dropbox.com/scl/fi/npxniqu8vfskdmxxoxcft/Screenshot-2024-11-17-at-1.26.40-PM.png?rlkey=io4tqdther3adx72vazdu60at&amp;st=e0c16doh&amp;raw=1"
+    alt="Pinterest&rsquo;s Homefeed ranker uses offline PinnerFormer embeddings for users&rsquo; long-term interests and TransAct embeddings for their short-term interests." width="1800"><figcaption>
+      <p>Pinterest&rsquo;s Homefeed ranker uses offline PinnerFormer embeddings for users&rsquo; long-term interests and TransAct embeddings for their short-term interests.</p>
+    </figcaption>
+</figure>
+
+<p>Pinterest&rsquo;s Homefeed ranker, <em>Pinnability</em>, uses user sequence features concatenated from both long-term (<a href="https://arxiv.org/abs/2205.04507">PinnerFormer, 2022</a>) and short-term (<a href="https://arxiv.org/abs/2306.00248">TransAct, 2023</a>) interests. TransAct (<a href="https://github.com/pinterest/transformer_user_action">repo</a>) is trained with an MLM-like objective, where random time windows are sampled, and all actions within these windows are masked. PinnerFormer, on the other hand, is trained on a more nuanced &ldquo;Dense All Action Prediction&rdquo; task.</p>
+<p>The predecessor to PinnerFormer, PinnerSage (<a href="https://arxiv.org/abs/2007.03634">Pal et al, 2020</a>), represents each user&rsquo;s diverse interests with multiple cluster Medoids. However, having multiple embeddings per user creates challenges for embedding storage, model training, and serving latency. PinnerFormer addresses these issues by using a single embedding to represent a user&rsquo;s long-term interests. It learns each user&rsquo;s embedding from their past year&rsquo;s action sequence to predict positive engagements (e.g., repins, close-ups, clicks) over a 14-day future window.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/581136ujlfbi1yggmc82o/Screenshot-2024-11-17-at-2.00.16-PM.png?rlkey=scugzxryqznjhk26zeoahrpn3&amp;st=tzba3u6i&amp;raw=1"
+    alt="PinnerFormer plays on training objectives, predicting the next or all actions in a $k$-day window, at the end of sequence or at each sampled time step." width="1800"><figcaption>
+      <p>PinnerFormer plays on training objectives, predicting the next or all actions in a $k$-day window, at the end of sequence or at each sampled time step.</p>
+    </figcaption>
+</figure>
+
+<p>The input sequence contains a year&rsquo;s worth of <span style="color: #aac1ef;">positive</span> and <span style="color: #d16d6a;">neutral</span> user-pin pairs: $\{(u_1, p_1), \ldots, (u_B, p_B)\}$. For each positive pair, we sample a mixture of in-batch and random negatives (to review of negative sampling methods, check out my <a href="/posts/negative_sampling/" class="backlink">my post</a>
+  
+  ). Since we don&rsquo;t predict neutral pairs, there&rsquo;s no need to sample negatives for them.</p>
+<p>The following objectives were explored, with the <em>Dense All Action</em> objective yielding the best offline and online performance:</p>
+<ul>
+<li><strong>Next Action Prediction + SASRec</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict the next action at $(t+1)$. SASRec (<a href="https://arxiv.org/abs/1808.09781">Kang &amp; McAuley, 2018</a>) extends this objective to predict the next-action at every (sampled) time step. While simple, the hyper-focus on predicting the immediate next action can lead the recommender system down a &ldquo;rabbit hole&rdquo;: just because you clicked 5 cat pins in a row, you&rsquo;re gonna see cat feed forever&hellip;</li>
+<li><strong>All Action Prediction</strong>: Given a sequence $S = \{i_1, \ldots, i_{t}\}$, predict all actions in a $k$-day future window $[t+1, t+k+1]$. This objective encourages the model to capture broader, long-term interests instead of focusing solely on immediate actions.</li>
+<li><strong>Dense All Action Prediction</strong>: Similar to how SASRec extends Next Action Prediction, Dense All Action Prediction extends All Action Prediction by sampling multiple time steps from the sequence and predicting the $k$-day future window at each sampled time step.</li>
+</ul>
+<h3 id="generative-recommenders-a-new-paradigm" class="scroll-mt-8 group">
+  Generative Recommenders, a New Paradigm
+  
+    <a href="#generative-recommenders-a-new-paradigm"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="overview-deep-learning-recommender-systems" class="scroll-mt-8 group">
+  Overview: Deep Learning Recommender Systems
+  
+    <a href="#overview-deep-learning-recommender-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Despite of new models coming out everyday, Deep Learning Recommender Systems (DLRMs) have followed the same paradigm:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/3a2awzduf70r0epdrhdja/Screenshot-2024-11-17-at-4.02.14-PM.png?rlkey=deyc8cun3grs3ro2yjnjw034y&amp;st=kazhd5t3&amp;raw=1"
+    alt="The anatomy of a typical Deep Learning Recommender System (DLRM)." width="300"><figcaption>
+      <p>The anatomy of a typical Deep Learning Recommender System (DLRM).</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Feature extractions</strong>: DLRMs concatenate 3 types of features (Coding Monkey wrote an awesome <a href="https://pyemma.github.io/Features-in-Recommendation-System/">review</a>) &mdash; (1) dense (numeric) features, (2) sparse ID features, and (3) sequence features.
+<ul>
+<li><strong>Dense features</strong>: Scaled to a standard range, e.g., <code>[0, 1]</code></li>
+<li><strong>Sparse ID features</strong>: Mapped to a fixed-size embedding</li>
+<li><strong>Sequence features</strong>: Initially mapped to an embedding list of a variable length &mdash; all the methods we&rsquo;ve talked about are clever ways to create a pooled embedding of a fixed size</li>
+</ul>
+</li>
+<li><strong>Feature interactions</strong>: Apply some clever methods to capture higher-order feature interactions (e.g., <a href="https://arxiv.org/abs/1703.04247">DeepFM</a>, <a href="https://arxiv.org/abs/1708.05123">DCN</a>, <a href="https://paperswithcode.com/method/dcn-v2">DCN-V2</a>), or combine a bunch of &rsquo;em in an ensemble (e.g., <a href="https://arxiv.org/abs/2203.11014">DHEN</a>).</li>
+<li><strong>Representation transformations</strong>: In multi-task models (e.g., <a href="https://dl.acm.org/doi/pdf/10.1145/3219819.3220007">MMoE</a>, <a href="https://dl.acm.org/doi/10.1145/3383313.3412236">PLE</a>), there&rsquo;s usually a top layer controlling which features to use in which tasks. To see how MMoE works in detail, check out my previous <a href="/posts/mtml/" class="backlink">post</a>
+  
+  . For a review on the learning-to-rank task common for recommendation, you can check out my other <a href="/posts/ltr/" class="backlink">post</a>
+  
+  .</li>
+</ul>
+<h4 id="recommendation-as-sequential-transduction-meta-2024" class="scroll-mt-8 group">
+  Recommendation as Sequential Transduction (Meta, 2024)
+  
+    <a href="#recommendation-as-sequential-transduction-meta-2024"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<figure><img src="https://www.dropbox.com/scl/fi/n2osq9go92py6pfb9dshz/Screenshot-2024-11-17-at-4.36.41-PM.png?rlkey=bmwk05igrqsy2mxqm2rxxfhzi&amp;st=ibgv970a&amp;raw=1"
+    alt="Recommendation reframed as a sequential transduction task in HSTU." width="1800"><figcaption>
+      <p>Recommendation reframed as a sequential transduction task in HSTU.</p>
+    </figcaption>
+</figure>
+
+<p>All the attention-based models above have kept the core Transformer architecture mostly intact. Aside from BERT4Rec, which generates end-to-end recommendations, attention in sequential recommenders typically serves as a token-weight generator for subsequent embedding pooling. In their latest work (<a href="https://arxiv.org/abs/2402.17152">Zhai et al., 2024</a>), Meta researchers re-designed the Transformer blocks into &ldquo;Hierarchical Sequential Transduction Units (HSTU)&rdquo;, treating user actions as a new <em>modality</em> (like language or image) in generative modeling.</p>
+<p>This work eliminated the 3 distinct steps in DLRMs and frames recommendation as a sequential <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-38"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-38"
+    for="sidenote-checkbox-38"
+    class="sidenote-mark"
+    >transduction</label
+  >
+  <small id="sidenote-38" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>"Transduction" is just a fancy way of saying transforming an input sequence (e.g., a user action sequence) into an output sequence (e.g., recommendations), without explicit, inductive rules.<span class="sr-only">)</span>
+  </small>
+</span>
+ task:</p>
+<blockquote>
+<p>Given a list of $n$ tokens $x_0, x_1, \ldots, x_{n-1}$ ($x_i \in \mathbb{X}$) ordered chronologically, along with the times they are observed $t_0, t_1, \ldots, t_{n-1}$, a sequential transduction task maps this input sequence to output tokens $y_0, y_1, \ldots, y_{n-1}$ ($y_i \in \mathbb{X} \cup \{{\emptyset}\}$), where $y_i = \emptyset$ denotes an undefined output.</p>
+</blockquote>
+<p>At Meta, where recommender systems are already highly optimized, it&rsquo;s incredible that HSTU achieved a 12.4% gain in topline metrics and can serve 285x more recommendations with a 1.50x-2.99x speedup compared to DLRMs. I won&rsquo;t pretend that I understood this paper 😂. Meta ML engineer Samuel Flender touched on it briefly in his <a href="https://substack.com/@mlfrontiers">blog</a>. I hope to one day bump into the authors at a conference and ask&hellip;</p>
+<hr>
+<h2 id="references" class="scroll-mt-8 group">
+  References
+  
+    <a href="#references"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="overview--collections" class="scroll-mt-8 group">
+  Overview &amp; Collections
+  
+    <a href="#overview--collections"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol>
+<li>&ldquo;Old&rdquo; but popular lit review 👉 <a href="https://arxiv.org/abs/2001.04830"><em>Sequential Recommender Systems: Challenges, Progress and Prospects</em></a> (2019) by Wang et al., <em>IJCAI</em>.</li>
+<li>A Meta MLE&rsquo;s awesome post 👉 <a href="https://mlfrontiers.substack.com/p/user-action-sequence-modeling-from"><em>User Action Sequence Modeling: From Attention to Transformers and Beyond</em></a></li>
+<li>GitHub repos of sequential user modeling 👉 papers (<a href="https://github.com/HqWu-HITCS/Awesome-Sequence-Modeling-for-Recommendation">Awesome-Sequence-Modeling-for-Recommendation</a>) + code (<a href="https://github.com/reczoo/FuxiCTR">FuxiCTR</a>)</li>
+</ol>
+<h3 id="approach-pre-transformer" class="scroll-mt-8 group">
+  Approach: Pre-Transformer
+  
+    <a href="#approach-pre-transformer"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="4">
+<li>Markov chains kick-started sequential recs 👉 <a href="https://arxiv.org/abs/1303.0665"><em>Personalized News Recommendation with Context Trees</em></a> (2013) by Garcin et al., <em>RecSys</em>.</li>
+<li>RNNs once ruled sequential modeling 👉 LTSM: <a href="https://research.google/pubs/recurrent-recommender-networks/"><em>Recurrent Recommender Networks</em></a> (2017) by Wu et al., <em>WSDM</em>.
+<ul>
+<li>Other RNN variants: <a href="https://arxiv.org/abs/1511.06939">GRUs</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3109859.3109896">hierarchical RNNs</a></li>
+</ul>
+</li>
+<li>CNNs capture union-level dependencies 👉 <a href="https://arxiv.org/abs/1809.07426"><em>Personalized Top-N Sequential Recommendation via Convolutional Sequence Embedding</em></a> (2018) by Tang and Wang, <em>WSDM</em>.
+<ul>
+<li>No max pooling: <a href="https://arxiv.org/abs/1808.05163"><em>A Simple Convolutional Generative Network for Next Item Recommendation</em></a> (2018) by Yuan et al., <em>WSDM</em>.</li>
+</ul>
+</li>
+<li>GNNs extract interests from noise 👉 <a href="https://arxiv.org/abs/2106.14226"><em>Sequential Recommendation with Graph Neural Networks</em></a> (2021) by Chang et al., <em>SIGIR</em>.</li>
+</ol>
+<h3 id="approach-target-attention" class="scroll-mt-8 group">
+  Approach: Target Attention
+  
+    <a href="#approach-target-attention"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="8">
+<li>Overview: <a href="https://mlfrontiers.substack.com/p/target-attention-is-all-you-need"><em>Target Attention Is All You Need: Modeling Extremely Long User Action Sequences in Recommender Systems</em></a> by Samuel Flender.</li>
+<li>The OG architecture 👉 DIN: <a href="https://arxiv.org/abs/1706.06978"><em>Deep Interest Network for Click-Through Rate Prediction</em></a> (2018) by Zhou et al., <em>KDD</em>.
+<ul>
+<li>And its many a Alibaba siblings: <a href="https://arxiv.org/abs/1809.03672">DIEN (2019)</a>, <a href="https://arxiv.org/abs/1905.06482">DSIN (2019)</a>, <a href="https://arxiv.org/abs/2005.12981">DHAN (2020)</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412092">DMIN (2020)</a>, <a href="https://arxiv.org/abs/2409.02425">DAIN (2024)</a>, &hellip;</li>
+</ul>
+</li>
+<li>Go crazy on sequence length 👉 SIM: <a href="https://arxiv.org/abs/2006.05639"><em>Search-based User Interest Modeling with Lifelong Sequential Behavior Data for Click-Through Rate Prediction</em></a> (2020) by Qi et al., <em>CIKM</em>.
+<ul>
+<li>Ultra long: <a href="https://arxiv.org/abs/2108.04468">ETA (2021)</a>, <a href="https://arxiv.org/abs/2302.02352">TWIN (2023)</a>, <a href="https://arxiv.org/html/2407.16357v1">TWIN-V2 (2024)</a>, &hellip;</li>
+<li>Review post: <a href="https://mlfrontiers.substack.com/p/towards-life-long-user-history-modeling"><em>Towards Life-Long User History Modeling in Recommender Systems</em></a> by Samuel Flender.</li>
+</ul>
+</li>
+<li>Squeeze every ounce of sequences 👉 TIM: <a href="https://arxiv.org/abs/2403.00793"><em>Ads Recommendation in a Collapsed and Entangled World</em></a> (2024) by Pan et al, <em>KDD</em>.
+<ul>
+<li>Paper summary: <a href="https://mlfrontiers.substack.com/p/breaking-down-tencents-recommendation"><em>Breaking down Tencent&rsquo;s Recommendation Algorithm</em></a> by Samuel Flender.</li>
+</ul>
+</li>
+</ol>
+<h3 id="approach-language-modeling" class="scroll-mt-8 group">
+  Approach: Language Modeling
+  
+    <a href="#approach-language-modeling"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="12">
+<li>The OG 👉 <a href="https://arxiv.org/abs/1904.06690"><em>BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer</em></a> (2019) by Sun et al., <em>CIKM</em>.</li>
+<li>Play with objectives 👉 <a href="https://arxiv.org/abs/2205.04507"><em>PinnerFormer: Sequence Modeling for User Representation at Pinterest</em></a> (2022) by Pancha et al., <em>KDD</em>.</li>
+<li>Capture short-term interests 👉 <a href="https://arxiv.org/abs/2306.00248"><em>TransAct: Transformer-based Realtime User Action Model for Recommendation at Pinterest</em></a> (2023) by Xia et al., <em>KDD</em>.</li>
+<li>Applications at Pinterest 👉 organic ranking (<a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9"><em>Large-scale User Sequences at Pinterest</em></a>) + ads ranking (<a href="https://medium.com/pinterest-engineering/user-action-sequence-modeling-for-pinterest-ads-engagement-modeling-21139cab8f4e"><em>User Action Sequence Modeling for Pinterest Ads Engagement Modeling</em></a>)</li>
+</ol>
+<h3 id="approach-generative-recommenders" class="scroll-mt-8 group">
+  Approach: Generative Recommenders
+  
+    <a href="#approach-generative-recommenders"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="16">
+<li>Meta AI 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
+<li>New industry trends to align the collaborative filtering space of RecSys and the semantic space of LLMs 👉 <a href="https://pyemma.github.io/Machine-Learning-System-Design-Sparse-Features/"><em>Trend of Sparse Features in Recommendation System</em></a> by Coding Monkey</li>
+</ol>
+    </div>
+  </article>
+
+  
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/recommender-systems/" class="taxonomy category">recommender systems</a>
+          </li>
+          <li>
+            <a href="/categories/information-retrieval/" class="taxonomy category">information retrieval</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/seq_user_modeling-copy/"
+></content-network-graph>
+
+    </section>
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-newspaper h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5"
+  />
+  <path d="M10 6h8v4h-8V6Z" />
+</svg>
+
+        <span>Posts</span>
+      </h2>
+        <section class="flex flex-col space-y-1">
+          <h3 class="flex flex-row items-center space-x-2 text-sm font-semibold">
+            <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-arrow-up-from-dot h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path d="m5 9 7-7 7 7M12 16V2" />
+  <circle cx="12" cy="21" r="1" />
+</svg>
+
+            <span>Outgoing</span>
+          </h3>
+
+          <ol class="not-prose ml-6">
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/attention_as_dict/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Attention as Soft Dictionary Lookup"
+              >Attention as Soft Dictionary Lookup</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/natural-language-processing/"
+                  class="taxonomy"
+                  title="Posts and notes on Natural language processing"
+                  >Natural language processing</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/human_vision/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Human Vision More like CNN or Vision Transformer?"
+              >Is Human Vision More like CNN or Vision Transformer?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/ai/"
+                  class="taxonomy"
+                  title="Posts and notes on AI"
+                  >AI</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/cognitive-science/"
+                  class="taxonomy"
+                  title="Posts and notes on Cognitive science"
+                  >Cognitive science</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ebr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Introduction to Embedding-Based Retrieval"
+              >An Introduction to Embedding-Based Retrieval</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/embedding/"
+                  class="taxonomy"
+                  title="Posts and notes on Embedding"
+                  >Embedding</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/vector-based-search/"
+                  class="taxonomy"
+                  title="Posts and notes on Vector-based search"
+                  >Vector-based search</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/negative_sampling/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Negative Sampling for Learning Two-Tower Networks"
+              >Negative Sampling for Learning Two-Tower Networks</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/negative-sampling/"
+                  class="taxonomy"
+                  title="Posts and notes on Negative sampling"
+                  >Negative sampling</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/recommender-system/"
+                  class="taxonomy"
+                  title="Posts and notes on Recommender system"
+                  >Recommender system</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/mtml/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="The Annotated Multi-Task Ranker: An MMoE Code Example"
+              >The Annotated Multi-Task Ranker: An MMoE Code Example</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/multi-task-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Multi-task learning"
+                  >Multi-task learning</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ltr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Evolution of Learning to Rank"
+              >An Evolution of Learning to Rank</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/search/"
+                  class="taxonomy"
+                  title="Posts and notes on Search"
+                  >Search</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/learning-to-rank/"
+                  class="taxonomy"
+                  title="Posts and notes on Learning to rank"
+                  >Learning to rank</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+</ol>
+
+        </section>
+    </section>
+</aside>
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        
+<section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2024, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+
+    
+    <button id="back-to-top" title="Go to top">☝️</button>
+
+
+    
+    
+
+    
+    <script src="/js/back-to-top.js"></script>
+
+     
+    <script src="/js/cat-cursor.js" defer></script>
+  </body>
+</html>

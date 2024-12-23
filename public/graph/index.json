@@ -54,6 +54,10 @@
       "in": [],
       "out": []
     },
+    "/posts/career_reflection/": {
+      "in": [],
+      "out": []
+    },
     "/posts/causality/causality/": {
       "in": [],
       "out": []
@@ -185,6 +189,11 @@
       "permalink": "/posts/autocomplete/",
       "section": "posts",
       "title": "Autocompletion for Search Enginees"
+    },
+    "/posts/career_reflection/": {
+      "permalink": "/posts/career_reflection/",
+      "section": "posts",
+      "title": "Being A Proactive and Likable Engineer"
     },
     "/posts/causality/causality/": {
       "permalink": "/posts/causality/causality/",
