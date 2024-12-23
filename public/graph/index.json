@@ -56,7 +56,9 @@
     },
     "/posts/career_reflection/": {
       "in": [],
-      "out": []
+      "out": [
+        "/posts/mle_interviews/"
+      ]
     },
     "/posts/causality/causality/": {
       "in": [],
@@ -89,7 +91,9 @@
       "out": []
     },
     "/posts/mle_interviews/": {
-      "in": [],
+      "in": [
+        "/posts/career_reflection/"
+      ],
       "out": []
     },
     "/posts/mtml/": {
@@ -193,7 +197,7 @@
     "/posts/career_reflection/": {
       "permalink": "/posts/career_reflection/",
       "section": "posts",
-      "title": "Being A Proactive and Likable Engineer"
+      "title": "How I'd Start My Engineering Career All Over Again"
     },
     "/posts/causality/causality/": {
       "permalink": "/posts/causality/causality/",
