@@ -38,7 +38,7 @@ So, I interviewed with several type-2 and type-3 companies. Ultimately, I decide
 
 > You career will likely be measured in decades, not by performance review cycles. --- *The Software Engineer's Guidebook*, ch. 3, p. 45
 
-I had a straightforward educational path: K-12 $\rightarrow$ undergrad $\rightarrow$ PhD. I used to think a "normal" engineering career would be just as linear: Junior (E3/E4) $\rightarrow$ Senior (E5) $\rightarrow$ Staff (E6) $\rightarrow$ Senior Staff (E7) $\rightarrow$ Principal (E8) $\rightarrow$ Distinguished (E9) $\rightarrow$ [FIRE](https://en.wikipedia.org/wiki/FIRE_movement). Then I realized getting to the Senior level fast means little since everyone gets because sooner or later, as it's the terminal level at most tech companies. By contrast, not everyone can or wants to go beyond that. Getting to Staff+ levels requires luck, budgets, and, more importantly, the very curiosity and passion that drove you to become an engineer in the first place.
+I had a straightforward educational path: K-12 $\rightarrow$ undergrad $\rightarrow$ PhD. I used to think a "normal" engineering career would be just as linear: Junior (E3/E4) $\rightarrow$ Senior (E5) $\rightarrow$ Staff (E6) $\rightarrow$ Senior Staff (E7) $\rightarrow$ Principal (E8) $\rightarrow$ Distinguished (E9) $\rightarrow$ [FIRE](https://en.wikipedia.org/wiki/FIRE_movement). Then I realized getting to the Senior level fast means little since everyone gets there sooner or later, as it's the terminal level at most tech companies. By contrast, not everyone can or wants to go beyond that. Getting to Staff+ levels requires luck, budgets, and, more importantly, the very curiosity and passion that drove you to become an engineer in the first place.
 
 Engineer A might progress through E3/E4 $\rightarrow$ E5 $\rightarrow$ E6 promotions quickly at their current company but struggle to find Staff+ roles elsewhere if all they know is how to make things work in one particular environment. Meanwhile, Engineer B makes a lateral move or gets down-leveled to join a larger, more technically sophisticated company, but may find it easier to land Staff+ positions later on thanks to the technical depth/breadth/complexity they've learned to navigate. Over and again in Merih Taze's and Gergely Orosz's books and from my favorite Staff+ engineers, this message rings true: If you plan to build an engineering career over decades, play the long game. Chase your curiosity and passion, and one day you shall become a force of nature in your field. If this is not a life goal of yours, great --- you have even less of a reason to stress about levels and promotions.
 
@@ -76,32 +76,57 @@ Most engineers are busy and many are kind, so it can be a struggle to turn down 
 - **Say no without saying "No"**: Every "Yes" you say to something is a "No" to something else, unless you decide to work 60 hours a week and risk burning out. The PM asks you to explain a model defect; business partners want you to override a model prediction with business logic; leadership wants you to build a model for a new initiative; your tech lead suggests that you refactor a piece of code... The asks are endless in the life of an engineer, so it's important to track your tasks (e.g., in JIRA or a Google Doc), assign priorities (P0/P1/P2), and keep a backlog of things to revisit. When you really must say no to a task now, don't use the word "No" --- instead, let people know that you're willing to help but can only do it after X, Y, and Z are done. Either they'll wait, or they'll find another available engineer to do it.
 - **Automate tedious tasks**: Early in my career, I spent about one hour each week taking requests from business and product partners to override a query understanding model's output. This one hour might not seem like much on any given week, but it interrupted my focus time, didn't teach me new skills, and added up over time. In hindsight, I should have automated this task the second time I was asked. If a tedious task becomes a recurring pattern, automate it; if it's a common need, you can "sell" your tool to folks doing similar tasks. It will make a great engineering excellence project to showcase in performance reviews.
 - **Set focus blocks**: People will respect it if you set focus blocks during your most productive hours. Use them for the most challenging work, such as writing code for a new model or outlining trade-offs for a new design. However, if your calendar is full of focus blocks, people may find you too unavailable or ignore these blocks and schedule meetings anyway. Use them sparingly.
+- **Acknowledge and respond later**: In grad school, some professors would take 2 weeks to answer my email, and that was considered normal in academia. In the tech industry, people would think you've resigned 😂. Some colleagues told me they got feedback for not answering Slack quickly enough, but if all we do is respond to Slack pings/threads or doc comments, we'd never get anything done. One trick from Merih Taze is to always acknowledge a message that tags you (e.g., by clicking on the "ACK" emoji or typing "ACK! Currently in a meeting/interview/incident. Will take a look by XXX.""). That way, people know you're working (rather than slacking off; no puns) and know when to circle back.
+
 
 ## Adapt to Changes
 > Why is being excited about a situation so important? Because it opens you up instead of closing you down. When fearful, we tend to be protective, pessimistic, ready to right or flee, or jump on the first solution we see. When we are excited, we start having fun with what we are doing. --- *Engineers' Survival Guide*, ch. 8, p. 58
 
-- **See changes as challenges, not problems**: Reorgs, layoffs, attrition, stock drops, etc. --- these are engineers' worst nightmares. You can switch to a more optimistic perspective and see these challenges as opportunities --- reorgs let you learn new parts of the system and build new connections; layoffs either validate the importance of your projects or provide severance for you to find new opportunities with stronger business needs (otherwise, those teams wouldn't be hiring); people quitting lets you drop lower-priority projects you didn't want to own and step up to higher-impact ones; and a lower stock price now means your refresher will be worth more in the future.
+- **See changes as challenges, not problems**: Reorgs, layoffs, attrition, stock drops, etc. --- these are engineers' worst nightmares. You can switch to a more optimistic perspective and see these challenges as opportunities --- reorgs let you learn new parts of the system and build new connections; layoffs either validate the importance of your projects or provide severance for you to find new opportunities with stronger business needs (otherwise, those external teams wouldn't be hiring); people quitting lets you drop lower-priority projects you didn't want to own and step up to higher-impact ones; and a lower stock price now means your refresher will be worth more in the future.
 - **Be excited about the unknowns**: We talked about this in the ["Solve the Problem Right"](https://www.yuan-meng.com/posts/career_reflection/#solve-the-problem-right) section: Driving ambiguity means gradually eliminating unknowns through discussions and alignment. Good engineers not only have to navigate these unknowns but are excited about them, because it gives them the chance to build new skills and become more well-rounded.
+
+## Take Initiatives & Risks
+> The rush in your veins and that excitement of achieving something is what keeps us motivated [...] I realized I was too scared to fail, so I kept playing it safe [...] Death might sound scarier to you than failing a project, but for me, it was vice versa. --- *Engineers' Survival Guide*, ch. 30, p. 114
+
+- **See an opportunity? Run with it**: During my brief stint on the Content Understanding team at DoorDash (or what they call "Catalog"), I worked with an amazing ML engineer who'd think of an idea in the morning, write a proposal in the afternoon, build a prototype the next day, and show a demo the following week. Many of these ideas turned into production models or processes that benefited other engineers. Of course, promotion came quickly, and people loved working with him. Later, I asked this engineer how he had so much energy to explore so many new areas; he said he was excited every time he thought of a good idea, and helping it see the light of the day made him happy. Inspiration is a priceless commodity in our profession yet fleeting --- if you want to do something, do it before the spark is gone!
+- **Don't put all your eggs in one basket**: That said, if all you focus on are big bets, long-term visions, or experimental projects, should they all fail, you'd have nothing to show in your performance reviews and could even be shown the door. My new manager at Pinterest suggested that engineers work on both a primary and a secondary project to balance risks, deliverables, impact, and interest. Coincidentally, this was the approach I took at DoorDash --- at any given time, I was working on at least two projects (sometimes three). It was more demanding in terms of time and energy, but when one project felt stuck, I could gain confidence from making progress on another, then revisit the first once I had new ideas. I've seen teammates commit to a single long-term investment for months and become frustrated. Of course, you might wonder: What if both projects fail? Then it means you need to pick more risk-balanced projects from the start.
+- **Pace yourself between stretching and executing**: When should you take on a second project? Ideally, when the first project is more or less on autopilot --- i.e., after you've familiarized yourself with the domain knowledge and cross-functional (XFN) partners, and it's simply a matter of executing the planned milestones. That's a good time to begin a new project that will "stretch" you to explore unknowns and learn new skills. Stretching between two big unknowns at once, however, can be a terrible idea.
+
+## Delegate with Trust
+> You cannot keep steering engineers left and right and right and left, hoping to stay perfectly aligned. You need to give them room and just set the direction, measure the speed, and know precisely when you will get to your destination. --- *The Software Engineer's Guidebook*, ch. 10, p. 29
+
+- **Let people fail so they can learn**: I know an engineer who was so kind that she treated junior mentees like her "kids" --- to prevent them from failing, she'd make an exhaustive list of potential solutions and rewrite every line of her mentees' design docs. Later, I went on a skiing trip with her. When I was learning to put on snowboarding boots in the rental shop for the first time, she'd lend a hand to help me whenever I missed a step.
+
+	But was it really important for me to get in the boots quickly in the shop? No, because I wasn't snowboarding yet, and learning how to put them on myself was the point. Similarly, was it critical for the junior mentee to deliver their warmup project in 5 weeks instead of 6? Not really, because the goal of onboarding was to learn how to flesh out an idea from a vague direction.
+
+	When I was leaving DoorDash, a new grad joined my team. I resisted the urge to provide full code examples for their new project and instead left building blocks and pointers. If someone had given me the solution when I was a new grad, I‘d never have learned how to build an end-to-end model pipeline on my own.
+- **Read people and their estimates**: When you become a Staff+ engineer, you may not write much code anymore, since your new role is now coming up with visions, setting directions, and coordinating with other teams. It's then up to E3/E4/E5 engineers to execute your vision. Some add extra padding to their estimates, while others don't; some deliver on time, while others need nudging. Reading people and translating their estimates into a rough timeline is an essential skill for a tech lead.
+
+
+## Having Fun
+
+- **Remember your roots**: It may be my sampling bias, but when I ask every MLE colleague and friend why they chose ML engineering as their profession, they always answer that they enjoy modeling and the beauty of AI/ML, at least at some point in their life. But if you sit in any restaurant in the South Bay, you'll overhear people talking about who interviewed where and what package they got, or who tried for a promotion but got denied for pissing off so-and-so. Immersed in this environment, a fixation on levels, promotions, and office politics may become all you see and care about. In the last 6 months, I've been reminding myself: If it weren't for love, would I get so excited reading an ML paper full of clever tricks? If I chose ML for love, then it's fun that I shall have. If I gain new skills, get clever at politics, and get promoted along the way, I'll be thrilled since I can have more fun at scale.
+- **Surround yourself with fun folks**: To the above point --- if you surround yourself with people fixated on levels, promotions, and politics, you'll either become like them or you'll feel stressed out. If so, surround yourself with different people who make you feel relaxed, inspired, enlightened, and closer to your foots.
+- **Network with "partners in crime"**: It could be my [Peter Pan syndrome](https://en.wikipedia.org/wiki/Peter_Pan_syndrome) talking, but in hindsight, I probably should've panicked more instead of treating work as all game and fun. There were times I took on a project without any active service owner or was asked to build a model with no usable data. If I couldn't deliver, I risked being put on a PIP. But instead of panicking, I joked with my colleagues (some of whom are good friends) about the "dire" situation, brainstormed ideas (whether they worked or not), and eventually found solutions after trial and error. It felt like solving a murder mystery: There's no guarantee you'll catch the culprit with limited clues, but it's fun when your reasoning pays off.
+
+	When you're having fun at work, people tend to like you more and often lend a hand when they don't have to. Years later, I realized that's what "networking" really is --- it's not sending cold emails, but building relationships where people know you, trust you, and want to work with you. That is your network.
 
 # Talk the Talk
 
-You need to tell people what you've done
+Your achievements don't speak for themselves. If you've done something well, you gotta tell people. 
+
+<!-- You need to tell people what you've done
 
 Promotion is a combination of skills, impact, and luck. 
 Talked to younger engineers --- "doing the right thing" vs. "getting promoted" => if you're doing the right thing in the right place, you should be promoted. And if you're promoted, you have more power to do the right thing. 
-
-## Find the Fun
-- welcome challenges & questions
-- be likable 
-- sourround yourslef with inspiring peopel: author => sick of people being fixated promo + level; but he got to principle in a few years
-- pace yourself: stretch, execute, coast
-
+ -->
 ## Find A Mentor
 - years of experience in one book 
 - a staff engineer liked my blog => i didn't reach out to anyone
 - a mentor gives you perspective
 - network: people who like you
 - manager: talk about career growth explicitly, not just give status report; also learn long-term visions & projects on other teams
+
 
 ## Be an Owner
 - find an ownership area and become the go-to person => Knowing how a system works, especially if you know its history, is the most valuable thing you can offer (e.g., serving @ Pinterest)
@@ -113,14 +138,6 @@ Talked to younger engineers --- "doing the right thing" vs. "getting promoted" =
 - seek feedback => ask about a specific situation
 - be product-mined: care about the prodyct => dogfooding => proactive + curiosity
 
-## Take Initiatives & Risks
-> The rush in your veins and that excitement of achieving something is what keeps us motivated [...] I realized I was too scared to fail, so I kept playing it safe [...] Death might sound scarier to you than failing a project, but for me, it was vice versa. --- *Engineers' Survival Guide*, Chapter 30, Page 114
-
-- see an opportunity, run with it
-- act, then think => got something to say? say it; want to do something? put the promise out
-- don't put eggs in one basket => have a primary and secondary 
-- take 2nd proj when 1st one is not risky 
-
 ## Being Visible
 - share updates
 - attend design reviews + leave useful/actionable comments 
@@ -130,7 +147,7 @@ Talked to younger engineers --- "doing the right thing" vs. "getting promoted" =
 
 there's a difference between loud and visible 
 
-## Reach a Consensus
+## Reach Consensus
 > This is where the conflict starts with people. They are not against your idea; they just do not have enough data about it. The more data you can provide, the easier it will be for them to believe in it. --- *Engineers' Survival Guide*, Chapter 3, Page 9
 
 - bring data to the gun fight
@@ -140,11 +157,6 @@ there's a difference between loud and visible
 - don't use people's brains => use yours
 - prevent mtg from getting hijacked: write down questions / objections as TODO in design docs; put it on tasks
 - lead people towards your idea using data that you relied yourself to come up with that idea
-
-## Help Effectively
-- say no without using the word no --- make the trade offs clear
-- 3 times manually => automate + make it an engineering excellence project
-- ack & respond reasonably fast
 
 ## Give Credit
 - promo: hard to exactly --- prevent that from planning; share what people have done 
@@ -162,14 +174,3 @@ there's a difference between loud and visible
 - find a different way to contribute to projects
 - don't be a conflict person
 
-## Let People Drive
-> You cannot keep steering engineers left and right and right and left, hoping to stay perfectly aligned. You need to give them room and just set the direction, measure the speed, and know precisely when you will get to your destination.
-
-- I don't like tight monitoring 
-I was putting on snowboarding boots --- if wasn't important for me to wear; it was important for me to learn
-When I was onboarding my replacement, I deliberately left the code 
-
-# Books
-
-1. [*Engineers' Survival Guide: Advice, Tactics, and Tricks*](https://www.engineerssurvivalguide.com/) (2021) by Merih Taze.
-2. [*The Software Engineer's Guidebook*](https://www.engguidebook.com/) (2023) by Gergely Orosz.
