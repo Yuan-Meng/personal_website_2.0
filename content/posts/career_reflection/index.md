@@ -142,9 +142,11 @@ Being visible means doing good work and keeping people in the loop, whereas bein
 - **Learn popular frameworks**: As an ML engineer working on deep learning, there's no excuse not to be familiar with PyTorh for and popular frameworks in your domain (e.g., TorchRec, Transformers, LLM APIs, Ray, etc.). Every brilliant idea ultimately depends on your familiarity with essential tools to get things done.
 
 ## Share Credit And Blame
-有福同享有难同当
-- **Give credit wherever it's due**: the more you give it, the more you will receive => tell to their face + tell to orhers (to use it; mgr)
-- **Take responsibilities**: fuck up something? design a better process around it
+
+Great leaders and teammates "enjoy blessings and endure misfortune together" (有福同享，有难同当), while toxic ones do the opposite. The toxic engineer thinks they can take all the credit and avoid any blame to advance their careers --- this may work if their manager is also toxic or just ignorant of the situation, but the team will fall apart as competent engineers shall leave, and the toxic engineer's career will eventually wither as they have no one left to reap credit from.
+
+- **Give credit wherever it's due**: Some engineers worry that giving too much credit to collaborators will diminish what to write about in performance reviews. Usually, you'll provide artifacts (e.g., docs, code) to show your contribution --- so if you have such a worry, it means you need better documentation. For things other engineers actually did, give them credit in public channels (e.g., launch emails, experiment readouts, the "kudos" system at Google) and private channels (e.g., telling the engineer themself and their manager). The more credit you give, the more you'll receive, and the more people will want to work with you.
+- **Take responsibilities**: If your code takes down the service, don't hide it --- own it. If the engineering culture is fair, people won't blame you; they'd blame the system that didn't catch your bug. Better yet, identify holes in the current system and propose ways to fix them. Leadership is so far removed from the code that they can only vaguely worry about "timed bombs" planted by engineers hiding their mistakes. If you own up to your work, it's a relief to the leadership, and other engineers will trust you more.
 
 ## Resolve Conflicts
 - **Don't be a "conflict" person**: XX
