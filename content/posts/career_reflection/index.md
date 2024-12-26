@@ -1,6 +1,6 @@
 ---
 title: "How I'd Start My Engineering Career All Over Again"
-date: 2024-12-24
+date: 2024-12-25
 math: true
 categories: ["career advice", "personal reflections"]
 toc: true
@@ -14,33 +14,36 @@ I had far too chill parents growing up. The first day they dropped me off at sch
 
 Later, I read [Merih Taze](https://www.engineerssurvivalguide.com/)'s and [Gergely Orosz](https://www.engguidebook.com/)'s witty and pragmatic {{< sidenote "career books" >}}I was once averse to "career books", thinking they were written by cynical engineers monetizing common sense. I was unexpectedly touched by how sincere and even emotional Merih Taze was when recounting his career beginning, and by how much he knows about climbing the career ladder and playing office politics, yet still promotes curiosity and passion rather than being fixated on levels and promotions. My favorite Staff+ engineers are like that, and that's who I aspire to be one day.{{< /sidenote >}}. I've also built a career I'm proud of. Last week, I began my second job at Pinterest, one of my dream companies as an ML engineer. Now feels like a good time to share lessons from the books and re-imagine how I'd start my career all over again to advocate for myself more explicitly and aim for longer-term growth. I share this post with ambitious yet perhaps confused early career engineers.
 
-# Choose A Company
+# Play the Long Game
 
-## Hexagon of Impossibility
+## Choose A Company
 
 Everyone dreams of working for a company that offers competitive compensation, rapid career growth, excellent work-life balance, high job security, and hopefully visa sponsorship. A company meeting all 6 criteria may exist, but only during 2021-2022 tech boom or in your dreams. If there is such a place right now, nobody wants to leave, so no headcount can be created 😅. Something's gotta give.
 
-{{< figure src="https://www.dropbox.com/scl/fi/nbcj1mzc1zkjbi1d36nsr/Screenshot-2024-12-21-at-11.44.01-PM.png?rlkey=ye7lujw71w0ql5zts1ywavf1x&st=u98le99e&raw=1" caption="No companies hiring right now can satisfy all requirements of a dream job..." width="600">}}
-
-## Something's Gotta Give
+{{< figure src="https://www.dropbox.com/scl/fi/nbcj1mzc1zkjbi1d36nsr/Screenshot-2024-12-21-at-11.44.01-PM.png?rlkey=ye7lujw71w0ql5zts1ywavf1x&st=u98le99e&raw=1" caption="Hexagon of impossibility: No companies hiring right now can satisfy all requirements of a dream job..." width="600">}}
 
 As an immigrant living in an HCOL area, I think of good compensation, visa sponsorship, and job security as must-haves for me. Companies that satisfy these constraints have to trade off among great WLB, rapid growth, and transferable (as opposed to niche/internal) skills:
 
 1. **High-growth established companies**: At famously fast-paced companies like Meta and DoorDash, promotions at lower levels (E3 $\rightarrow$ E4 $\rightarrow$ E5) come quickly if you work hard on a core team with strong business needs, and compensation can be exceptional if you join when the stock price is low. However, WLB may take a toll, as stakeholders and leadership will monitor your work very closely, and you'll likely work on launch after launch non-stop.
 2. **High-growth startups**: At top AI startups like OpenAI or Anthropic, base salaries are even higher (e.g., ~$300K for E5, which beats E7 base salaries at most tech companies), but the stock compensation is paper money and WLB is more challenging since the work is more cutting-edge, the teams are smaller, priorities shift faster, and your job depends on the launches.
-3. **Stable established companies**: Companies such as LinkedIn, Google, Airbnb, and Pinterest were once known for good WLB but slower promotion to the senior (E5) level --- particularly the first two. In this market, however, w culture has become more intense almost everywhere, especially on cash cow 🐮 teams.
+3. **Stable established companies**: Companies such as LinkedIn, Google, Airbnb, and Pinterest were once known for good WLB but slower promotion to the senior (E5) level --- particularly the first two. In this market, however, work culture has become more intense almost everywhere, especially on cash cow 🐮 teams.
 
 When choosing my first job, I had just moved to the other side of the Bay and didn't have many friends around. My priority was to cram as much engineering knowledge as possible and take on as much work as I could to make up for a lack of direct impact I felt during my PhD. DoorDash was the perfect choice for that phase, and probably so was Meta. Over time, I wanted to become an expert of one domain, even at the expense of some {{< sidenote "scope" >}}DoorDash Ads has 10 MLE's working on ranking, whereas at Pinterest, several dozens of MLEs across multiple teams work on different stages of ranking. Naturally, MLEs at the same level own a much larger scope at the former.{{< /sidenote >}} and impact. Some friends thought I was crazy, whereas others supported my belief that career growth is not a sprint but a marathon, for which deep domain expertise goes a long way --- if you want to tech lead a cutting-edge ML team  someday. 
 
 So, I interviewed with several type-2 and type-3 companies. Ultimately, I decided to join a type-3 company because, outside of work, I wanted to explore more of nature, invest more in personal relationships, be more active in sports, and enjoy more great food, sights, and conversations. I'm fine with being reasonably busy (~50 hours per week, maybe 60 before launches), but a 70-hour week at OpenAI or Anthropic might just be too much. In today's employer's market, you may not have many choices (you'll have some if you ace interviews; see {{< backlink "mle_interviews" "my post">}} for MLE interview tips). If you can decide what to do, be honest about what makes *your life* more fulfilling as a whole --- being a great ML engineer may just be a small part of it.
 
-## Play the Long Game
+## Whole Career Optimization
 
 > You career will likely be measured in decades, not by performance review cycles. --- *The Software Engineer's Guidebook*, ch. 3, p. 45
 
 I had a straightforward educational path: K-12 $\rightarrow$ undergrad $\rightarrow$ PhD. I used to think a "normal" engineering career would be just as linear: Junior (E3/E4) $\rightarrow$ Senior (E5) $\rightarrow$ Staff (E6) $\rightarrow$ Senior Staff (E7) $\rightarrow$ Principal (E8) $\rightarrow$ Distinguished (E9) $\rightarrow$ [FIRE](https://en.wikipedia.org/wiki/FIRE_movement). Then I realized getting to the Senior level fast means little since everyone gets there sooner or later, as it's the terminal level at most tech companies. By contrast, not everyone can or wants to go beyond that. Getting to Staff+ levels requires luck, budgets, and, more importantly, the very curiosity and passion that drove you to become an engineer in the first place.
 
 Engineer A might progress through E3/E4 $\rightarrow$ E5 $\rightarrow$ E6 promotions quickly at their current company but struggle to find Staff+ roles elsewhere if all they know is how to make things work in one particular environment. Meanwhile, Engineer B makes a lateral move or gets down-leveled to join a larger, more technically sophisticated company, but may find it easier to land Staff+ positions later on thanks to the technical depth/breadth/complexity they've learned to navigate. Over and again in Merih Taze's and Gergely Orosz's books and from my favorite Staff+ engineers, this message rings true: If you plan to build an engineering career over decades, play the long game. Chase your curiosity and passion, and one day you shall become a force of nature in your field. If this is not a life goal of yours, great --- you have even less of a reason to stress about levels and promotions.
+
+## Find A Mentor
+- **Mentor `==` personalized career book**: Every realization you reach with blood, sweat, and tears may be learned more painlessly from a trusted mentor who has years of experience and can tailor their answers to your specific problem. My biggest regret at DoorDash was not seeking out a mentor earlier --- a Staff engineer liked my blog and reached out to me in my last 6 months, but the advice came but too late. Find a mentor early!
+- **What's in it for them?**: My biggest fear is wasting someone's time without giving anything in return. I have a lot to gain from a mentor, but what's in it for them? I asked several seasoned engineers this, and their answer was almost always that they enjoy seeing bright, motivated junior engineers grow --- like watching their younger selves. So the best you can do is show up to 1:1's with thoughtful questions, demonstrate consistent progress, and pay it forward to future junior engineers.
+- **Mentors provide perspectives**: Junior engineers may not lack technical depth --- they could be fresh PhDs who've published in the domain you're working on and interned at several big tech companies. What they usually lack is perspective: Is project X a gold mine or a landmine? Is person Y being mean or normal?... Having a mentor shed light on what you're going through helps you find the silver lining in what you otherwise see as a dead end.
 
 # Walk the Walk
 
@@ -78,7 +81,6 @@ Most engineers are busy and many are kind, so it can be a struggle to turn down 
 - **Set focus blocks**: People will respect it if you set focus blocks during your most productive hours. Use them for the most challenging work, such as writing code for a new model or outlining trade-offs for a new design. However, if your calendar is full of focus blocks, people may find you too unavailable or ignore these blocks and schedule meetings anyway. Use them sparingly.
 - **Acknowledge and respond later**: In grad school, some professors would take 2 weeks to answer my email, and that was considered normal in academia. In the tech industry, people would think you've resigned 😂. Some colleagues told me they got feedback for not answering Slack quickly enough, but if all we do is respond to Slack pings/threads or doc comments, we'd never get anything done. One trick from Merih Taze is to always acknowledge a message that tags you (e.g., by clicking on the "ACK" emoji or typing "ACK! Currently in a meeting/interview/incident. Will take a look by XXX.""). That way, people know you're working (rather than slacking off; no puns) and know when to circle back.
 
-
 ## Adapt to Changes
 > Why is being excited about a situation so important? Because it opens you up instead of closing you down. When fearful, we tend to be protective, pessimistic, ready to right or flee, or jump on the first solution we see. When we are excited, we start having fun with what we are doing. --- *Engineers' Survival Guide*, ch. 8, p. 58
 
@@ -95,9 +97,9 @@ Most engineers are busy and many are kind, so it can be a struggle to turn down 
 ## Delegate with Trust
 > You cannot keep steering engineers left and right and right and left, hoping to stay perfectly aligned. You need to give them room and just set the direction, measure the speed, and know precisely when you will get to your destination. --- *The Software Engineer's Guidebook*, ch. 10, p. 29
 
-- **Let people fail so they can learn**: I know an engineer who was so kind that she treated junior mentees like her "kids" --- to prevent them from failing, she'd make an exhaustive list of potential solutions and rewrite every line of her mentees' design docs. Later, I went on a skiing trip with her. When I was learning to put on snowboarding boots in the rental shop for the first time, she'd lend a hand to help me whenever I missed a step.
+- **Let people fail so they can learn**: I know an engineer who was so exceptionally kind that she treated junior mentees like her "kids" --- to prevent them from failing, she'd list every potential solution to try and rewrite every line of their design docs. Later, I went on a skiing trip with this engineer. When I was learning to put on snowboarding boots for the first time in the rental shop, she'd reach her hand out and do it for me whenever I missed a step.
 
-	But was it really important for me to get in the boots quickly in the shop? No, because I wasn't snowboarding yet, and learning how to put them on myself was the point. Similarly, was it critical for the junior mentee to deliver their warmup project in 5 weeks instead of 6? Not really, because the goal of onboarding was to learn how to flesh out an idea from a vague direction.
+	But was it really important for me to immediately get into the boots in the shop? No, because I wasn't actually snowboarding yet, and the point was to learn how to do it myself on the mountains. Similarly, was it critical for the junior mentee to deliver their warmup project in 5 weeks instead of 6? No, because they weren't yet committing to a team KR, and the point was to learn how to flesh out an idea from a vague direction while on the job.
 
 	When I was leaving DoorDash, a new grad joined my team. I resisted the urge to provide full code examples for their new project and instead left building blocks and pointers. If someone had given me the solution when I was a new grad, I‘d never have learned how to build an end-to-end model pipeline on my own.
 - **Read people and their estimates**: When you become a Staff+ engineer, you may not write much code anymore, since your new role is now coming up with visions, setting directions, and coordinating with other teams. It's then up to E3/E4/E5 engineers to execute your vision. Some add extra padding to their estimates, while others don't; some deliver on time, while others need nudging. Reading people and translating their estimates into a rough timeline is an essential skill for a tech lead.
@@ -113,64 +115,47 @@ Most engineers are busy and many are kind, so it can be a struggle to turn down 
 
 # Talk the Talk
 
-Your achievements don't speak for themselves. If you've done something well, you gotta tell people. 
+Your achievements don't speak for themselves. If you've done something well, you gotta let people know (e.g., your manager, skip manager, higher-ups, tech lead, mentor, peer reviewers, etc.). If there's one thing to remember from the books and experience, it's that while good managers advocate and fight for you, you are the ultimate owner of your career. If you don't speak for yourself, someone else may speak for you if you're very lucky, but luck is rare and out of your control.
 
-<!-- You need to tell people what you've done
-
-Promotion is a combination of skills, impact, and luck. 
-Talked to younger engineers --- "doing the right thing" vs. "getting promoted" => if you're doing the right thing in the right place, you should be promoted. And if you're promoted, you have more power to do the right thing. 
- -->
-## Find A Mentor
-- years of experience in one book 
-- a staff engineer liked my blog => i didn't reach out to anyone
-- a mentor gives you perspective
-- network: people who like you
-- manager: talk about career growth explicitly, not just give status report; also learn long-term visions & projects on other teams
-
-
-## Be an Owner
-- find an ownership area and become the go-to person => Knowing how a system works, especially if you know its history, is the most valuable thing you can offer (e.g., serving @ Pinterest)
-- unblock yourself
-- search before you ask: google, slack, drive, code, wiki
-- learn the jargon
-- learn popular frameworks
-- not your company 
-- seek feedback => ask about a specific situation
-- be product-mined: care about the prodyct => dogfooding => proactive + curiosity
+I recently had a bizarre conversation with a younger engineer who proudly told me their goal was to "do the right thing" rather than "get promoted". The false dichotomy was bizarre --- if you're doing the right thing in the right place and telling the right people, you will get promoted. If so, you'll have more power to do the right thing. If not, then you should either change the place or find more allies.
 
 ## Being Visible
-- share updates
-- attend design reviews + leave useful/actionable comments 
-- answer in public
-- open-source tool, code, and docs
-- keep a bragging doc
 
-there's a difference between loud and visible 
+A former colleague and good friend of mine used to share 3 separate laughs with me whenever we heard the word "visibility". That's because we once worked with an engineer who'd push people to adopt his experimental features and models without evaluating them or even providing reproducible code or documentation. He'd advertise his work to anyone and everyone who would listen. That's not visibility --- there's a difference between being visible and being loud.
 
-## Reach Consensus
-> This is where the conflict starts with people. They are not against your idea; they just do not have enough data about it. The more data you can provide, the easier it will be for them to believe in it. --- *Engineers' Survival Guide*, Chapter 3, Page 9
+Visibility means doing solid work and keeping people in the loop, whereas being loud is repeating an invalidated idea till it sounds OK.
 
-- bring data to the gun fight
-- work on a prototype fast
-- odd number of people 
-- have small group review first 
-- don't use people's brains => use yours
-- prevent mtg from getting hijacked: write down questions / objections as TODO in design docs; put it on tasks
-- lead people towards your idea using data that you relied yourself to come up with that idea
+- **Share updates**: To help stakeholders and internal team members keep track of your progress, share updates during workstream syncs, post meeting and action item summaries in Slack channels, and track progress/blockers/ETAs in widely shared docs for people to check asynchronously. Don't keep people in the dark.
+- **Attend design reviews**: Attend design reviews on your team and sister teams, and leave insightful, {{< sidenote "actionable" >}}You should only leave a comment if you're genuinely curious or want to help. If your intention is to show off something you know (and think others don't), people will see right through you and find you pretentious.{{< /sidenote >}} comments in design docs. This also keeps you informed about what's happening in your organization and to find opportunities to collaborate with other teams --- perhaps scattered tech stacks can be streamlined, and perhaps modeling ideas and features can be shared.
+- **Answer questions in public"**: This ties back to ["Manage Time Wisely"](https://www.yuan-meng.com/posts/career_reflection/#manage-time-wisely) --- if someone asks you something other engineers would benefit from knowing, ask them to post the question in a public channel and answer it there. This way, future engineers can search Slack for the answers (or you can share the link at least), and your teammates and manager can see your effort, which builds your reputation as helpful and the go-to domain expert.
+- **Open-source internally**: Apart from my immediate collaborators, the engineers I remember and admire most are those who open-sourced handy tools to make life easier, wrote detailed wikis and docs explaining how things work in their team/org, and created libraries or packages to capture recurring design patterns for other engineers to reuse. Be one of them!
+- **Do knowledge sharing**: If you've created an open-source tool like the ones above, schedule a session to show people how to use it. If you've learned a good practice or read relevant papers from academia or industry, share the knowledge with the team. While engineers are busy, I've found most make time for knowledge sharing --- learning something cool is often the highlight of our day, and we remember those who bring knowledge and joy.
+- **Keep a "bragging doc"**: Instead of writing down your achievements once or twice a year for performance reviews, note them as soon as they happen in a “bragging doc". It's not at all about bragging to your teammates, but rather helping your manager see your progress at a glance and preparing yourself for future performance reviews and promotion cases.
 
-## Give Credit
-- promo: hard to exactly --- prevent that from planning; share what people have done 
-- the more you give it, the more you will receive => tell to their face + tell to orhers (to use it; mgr)
+## Be An Owner
+- **Find an ownership area**: find an ownership area and become the go-to person => Knowing how a system works, especially if you know its history, is the most valuable thing you can offer (e.g., serving @ Pinterest)
+- **Be product-minded**: care about the prodyct => dogfooding => proactive + curiosity
+- **Unblock yourself**: Search before you ask => google, slack, drive, code, wiki
+- **Learn the jargon**: 
+- **Learn popular frameworks**: XX
+- **Seek feedback**: against nature to seek and share feedback => ask about a specific situation
 
-## Take Responsibilities
-- fuck up something? design a better process around it
-- people see your shortcomings clearly --- better own up and improve
+## Reach A Consensus
+> This is where the conflict starts with people. They are not against your idea; they just do not have enough data about it. The more data you can provide, the easier it will be for them to believe in it. --- *Engineers' Survival Guide*, ch. 3, p. 9
+
+- **No one argues with data**: bring data to the gun fight; - lead people towards your idea using data that you relied yourself to come up with that idea
+- **Prototype fast**: work on a prototype fast => don't talk in the abstract
+- **Invite an odd number of tie-breakers**: for important meetings
+- **Review in small groups first**: have small group review first 
+- **Write questions**: prevent mtg from getting hijacked: write down questions / objections as TODO in design docs; put it on tasks
+
+## Share Credit And Blame
+有福同享有难同当
+- **Give credit wherever it's due**: the more you give it, the more you will receive => tell to their face + tell to orhers (to use it; mgr)
+- **Take responsibilities**: fuck up something? design a better process around it
 
 ## Resolve Conflicts
-- have empathy (e.g., song in a hurry)
-- document conflicts to refer to
-- change communication style
-- take a break 
-- find a different way to contribute to projects
-- don't be a conflict person
-
+- **Don't be a "conflict" person**: XX
+- **Find a way to collaborate**: hange communication style; - find a different way to contribute to projects
+- **Take a break**: rather than react 
+- **Document conflicts**: have a new perspective
