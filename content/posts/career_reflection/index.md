@@ -149,10 +149,13 @@ Great leaders and teammates "enjoy blessings and endure misfortune together" (æœ
 - **Take responsibilities**: If your code takes down the service, don't hide it --- own it. If the engineering culture is fair, people won't blame you; they'd blame the system that didn't catch your bug. Better yet, identify holes in the current system and propose ways to fix them. Leadership is so far removed from the code that they can only vaguely worry about "timed bombs" planted by engineers hiding their mistakes. If you own up to your work, it's a relief to the leadership, and other engineers will trust you more.
 
 ## Resolve Conflicts
-- **Don't be a "conflict" person**: XX
-- **Find a way to collaborate**: hange communication style; - find a different way to contribute to projects
-- **Take a break**: rather than react 
-- **Document conflicts**: have a new perspective
+
+If someone had asked me about conflicts during my first year at DoorDash, I couldn't say any --- partly because I was so new that the scopes of my projects were limited to the internal team where people were already aligned, and partly because I became quick friends with my teammates and was too happy working with them to have conflicts. Yet in my last year at DoorDash, I learned a lot about conflicts --- first, they can often be handled better by taking an impersonal perspective; second, not all conflicts can be resolved in the current environment, so a change of environment may be necessary.
+
+- **Don't be a "conflict" person**: Escalating to your manager may be a textbook way to handle conflicts, but you can only do it so many times before you're seen as a "conflict" person on the team. If you can handle conflicts yourself, do so first. This is your last resort.
+- **Find a way to collaborate**: If someone is hard to work with in one way, find another way to work with them. For example, if someone takes up all the meeting time and derails the agenda, ask for their opinions asynchronously. If the two of you can't productively work on the same part of a project, find a different area to contribute so your work has minimal interference.
+- **Take a break**: If someone does something that pushes your buttons, close your laptop and take a walk --- don't react immediately. Maybe their action is normal, or maybe not; ask your mentor for their opinion. If the action is normal but just rude, share that feedback with them. If it's out of line and blocking your project, leverage data, your manager, and XFN partners for support. Only react when you have a clear perspective.
+- **Document conflicts**: If you escalate a conflict to your manager, don't  do it verbally --- document the cause of the conflict and each party's actions so your manager can review the evidence and reach a fair conclusion. If they review the evidence and reach a biased confusion, you have a bigger problem --- your manager isn't fair, and you may need to change your team or company.
 
 # Last but Not Least: Having Fun!
 
