@@ -23,6 +23,6 @@ In 2025, one of my top wishes is to travel outside of the United States. Traveli
 
 Each step is a moving piece, but if all I have is a vague desire to travel, I'd never get started. Besides traveling, in 2025, I want to make more friends through hobbies, explore more of nature, resume therapy and gender affirmation, and become a competent ML engineer in deep learning ranking, among other personal goals. I put these wishes on a Notion page and attached artificial deadlines, the same way I tackled ML interviews (e.g., coding, system design, behavioral, etc.).
 
-{{< figure src="https://www.dropbox.com/scl/fi/adlsgg80fjeetois4u4ic/Screenshot-2024-12-31-at-6.47.04-PM.png?rlkey=mskaf5vhbxe6tc1ln5bvkr91a&st=kzpw1qey&raw=1" width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/r33ejsav9izo4kuc0vuln/Screenshot-2025-01-01-at-10.47.52-AM.png?rlkey=1koksvu6yf42r16j4mxdst632&st=q8xxjivo&raw=1" width="1800">}}
 
 To my friends: I hope you fulfill your heart's desires in 2025 (the "arbitrary deadline") by being honest about what makes you happy, and then attach deadlines and actions to make it real.
