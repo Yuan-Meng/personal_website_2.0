@@ -36,6 +36,10 @@
       "in": [],
       "out": []
     },
+    "/notes/power_of_wish/": {
+      "in": [],
+      "out": []
+    },
     "/notes/python_env/": {
       "in": [],
       "out": []
@@ -173,6 +177,11 @@
       "permalink": "/notes/nothingness/",
       "section": "notes",
       "title": "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
+    },
+    "/notes/power_of_wish/": {
+      "permalink": "/notes/power_of_wish/",
+      "section": "notes",
+      "title": "The Power of A Wish"
     },
     "/notes/python_env/": {
       "permalink": "/notes/python_env/",
