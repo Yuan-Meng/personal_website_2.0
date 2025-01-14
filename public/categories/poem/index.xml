@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Poem on Yuan Meng</title>
+    <link>http://localhost:1313/categories/poem/</link>
+    <description>Recent content in Poem on Yuan Meng</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <managingEditor>mycaptainmy@gmail.com (Yuan Meng)</managingEditor>
+    <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
+    <copyright>Yuan Meng</copyright>
+    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/poem/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Glimpse of Happiness</title>
+      <link>http://localhost:1313/notes/poem/</link>
+      <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/poem/</guid>
+      <description>&lt;p&gt;I loved it when you invited me in;&#xA;you giggled when I tickled you and pretended to smother you with your beloved bed sheet.&#xA;I examined your eyes, acne, and lips so closely,&#xA;as if I was trying to register your everything in my brain.&#xA;We chatted about how you got your orange-legged glasses in high school&#xA;and put them on in a haste before morning meetings.&#xA;So many little things that I never thought of or cared about&#xA;suddenly mattered because of you.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
