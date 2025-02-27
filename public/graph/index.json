@@ -8,6 +8,10 @@
       "in": [],
       "out": []
     },
+    "/notes/beauty_of_dnn/": {
+      "in": [],
+      "out": []
+    },
     "/notes/birthday/": {
       "in": [],
       "out": []
@@ -33,6 +37,10 @@
       "out": []
     },
     "/notes/nothingness/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/poem/": {
       "in": [],
       "out": []
     },
@@ -143,6 +151,11 @@
       "section": "notes",
       "title": "Bounded Kindness (And Office Politics)"
     },
+    "/notes/beauty_of_dnn/": {
+      "permalink": "/notes/beauty_of_dnn/",
+      "section": "notes",
+      "title": "What Makes Deep Learning Ranking Beautiful"
+    },
     "/notes/birthday/": {
       "permalink": "/notes/birthday/",
       "section": "notes",
@@ -177,6 +190,11 @@
       "permalink": "/notes/nothingness/",
       "section": "notes",
       "title": "The Ph.D. Grind: Doing Nothing Is the Hardest Thing"
+    },
+    "/notes/poem/": {
+      "permalink": "/notes/poem/",
+      "section": "notes",
+      "title": "A Glimpse of Happiness"
     },
     "/notes/power_of_wish/": {
       "permalink": "/notes/power_of_wish/",

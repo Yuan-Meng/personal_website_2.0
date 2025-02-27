@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/personal-reflections/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>What Makes Deep Learning Ranking Beautiful</title>
+      <link>http://localhost:1313/notes/beauty_of_dnn/</link>
+      <pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/beauty_of_dnn/</guid>
+      <description>&lt;p&gt;My former manager at DoorDash criticized me for including necessary details for collaboration in my design doc, saying such efforts would go unnoticed by leadership and were therefore wasted. The manager before him criticized me for having a &amp;ldquo;narrow interest&amp;rdquo; in deep learning ranking, saying one could &amp;ldquo;code up a DNN ranker in an afternoon&amp;rdquo; and that I should pursue scope and visibility instead.&lt;/p&gt;&#xA;&lt;p&gt;When you&amp;rsquo;re early in your career, it&amp;rsquo;s not easy to stay cool when people much more senior than you doubt your passion, value, and future. Back then, it didn&amp;rsquo;t help that I couldn&amp;rsquo;t fully articulate why I was so drawn to deep learning ranking. Sure, even textbooks from years ago talk about how deep learning automates feature engineering and can approximate arbitrarily complex functional forms. But was that kind of power and expressiveness what drove me? Not quite. Still, I trusted my gut and left.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>The Power of A Wish</title>
       <link>http://localhost:1313/notes/power_of_wish/</link>
       <pubDate>Wed, 01 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
