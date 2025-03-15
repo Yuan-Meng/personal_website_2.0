@@ -6,15 +6,29 @@ categories: ["gpu", "transformers", "ml systems"]
 toc: true
 ---
 
-Coming soon...
+# GPU: How a Game Card is Born for Deep Learning
+
+Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the [game engine](https://en.wikipedia.org/wiki/Game_engine) determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold one pixel at a time, making any game unplayable.
+
+{{< figure src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&st=g3s1ufu5&raw=1" caption="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="600">}}
+
+Many matrix operations underlying deep learning can also be broken into small units and processed in parallel --- a task GPUs are born for.
 
 <!--more-->
+
+{{< figure src="https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&st=269p6gyk&raw=1" caption="Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition." width="600">}}
+
+For instance, $\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be broken down into $n \times m$ inner products between two $k$-vectors, which can be executed at once. Then, each inner product can be decomposed into $k$ element-wise multiplications, which can also be executed in parallel, followed by $(k-1)$ additions to sum up the pairwise products.
+
+<!-- # Attention is IO-Bound
+FlashAttention 1, 2, 3 -->
+
 
 <!-- how GPU works => why a game card is born for transformers and what kind(s) of computations it's optimized for or not
 
 the Triton language
 
-FlashAttention 1, 2, 3
+
 Mamba
 sparse transformers
 
