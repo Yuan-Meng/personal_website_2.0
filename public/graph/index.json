@@ -82,6 +82,10 @@
       ],
       "out": []
     },
+    "/posts/hardware_aware_transformers/": {
+      "in": [],
+      "out": []
+    },
     "/posts/human_vision/": {
       "in": [
         "/posts/seq_user_modeling/"
@@ -235,6 +239,11 @@
       "permalink": "/posts/ebr/",
       "section": "posts",
       "title": "An Introduction to Embedding-Based Retrieval"
+    },
+    "/posts/hardware_aware_transformers/": {
+      "permalink": "/posts/hardware_aware_transformers/",
+      "section": "posts",
+      "title": "Hardware-Aware Transformers"
     },
     "/posts/human_vision/": {
       "permalink": "/posts/human_vision/",

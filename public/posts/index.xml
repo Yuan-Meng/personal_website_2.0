@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Hardware-Aware Transformers for Long Sequence Modeling</title>
+      <link>http://localhost:1313/posts/hardware_aware_transformers/</link>
+      <pubDate>Sat, 15 Mar 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/posts/hardware_aware_transformers/</guid>
+      <description>&lt;p&gt;Coming soon&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>How I&#39;d Start My Engineering Career All Over Again</title>
       <link>http://localhost:1313/posts/career_reflection/</link>
       <pubDate>Wed, 25 Dec 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>

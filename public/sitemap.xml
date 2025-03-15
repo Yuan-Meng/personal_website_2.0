@@ -4,11 +4,19 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/gpu/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/hardware_aware_transformers/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/transformers/</loc>
+  </url><url>
     <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/beauty_of_dnn/</loc>
   </url><url>
@@ -21,8 +29,6 @@
     <loc>http://localhost:1313/categories/career-advice/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/career_reflection/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/awakening/</loc>
   </url><url>
