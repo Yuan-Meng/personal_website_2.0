@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Hardware-Aware Transformers for Long Sequence Modeling">
   <meta itemprop="description" content="Coming soon…">
   <meta itemprop="datePublished" content="2025-03-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="223">
+  <meta itemprop="wordCount" content="220">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "Hardware-Aware Transformers for Long Sequence Modeling",
   "timeRequired": "PT2M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 223
+  "wordCount": 220
 }
 </script>
 
@@ -146,6 +146,7 @@
         <li><a href="#understand-deep-learning-systems">Understand Deep Learning Systems</a></li>
         <li><a href="#flashattention-io-aware-exact-attention">FlashAttention: IO-Aware, Exact Attention</a></li>
         <li><a href="#fast--accurate-attention-approximations">Fast &amp; Accurate Attention Approximations</a></li>
+        <li><a href="#mamba-beyond-attention">Mamba: Beyond Attention</a></li>
       </ul>
     </li>
   </ul>
@@ -236,8 +237,8 @@ how it informs sequence modeling for recommender systems -->
 </h3>
 <ol>
 <li>Deep learning efficiency = compute + memory + overhead 👉 <a href="https://horace.io/brrr_intro.html"><em>Making Deep Learning Go Brrrr From First Principles</em></a> by Horace He.</li>
-<li>Software-hardware co-design 👉 <a href="https://www.youtube.com/watch?v=foG0ebzuw34"><em>Hardware-aware Algorithms for Sequence Modeling</em></a> by <a href="https://tridao.me/">Tri Dao</a> (OG of FlashAttention + Mamba).</li>
-<li>Triton, the lingua franca for GPU programming 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
+<li>Software-hardware co-design 👉 <em>Hardware-aware Algorithms for Sequence Modeling</em> by Tri Dao, <a href="https://www.youtube.com/live/foG0ebzuw34?si=6FSChDzXjBUqAQX8&amp;t=242">talk</a> + <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a> at Stanford MLSys.</li>
+<li><a href="https://openai.com/index/triton/">Triton</a>, the lingua franca for GPU programming 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
 </ol>
 <h3 id="flashattention-io-aware-exact-attention" class="scroll-mt-8 group">
   FlashAttention: IO-Aware, Exact Attention
@@ -295,11 +296,38 @@ how it informs sequence modeling for recommender systems -->
   
 </h3>
 <ol start="7">
+<li>Low-rank approximation 👉 <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a> (2020), <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a> (ICML 2020), <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a> (ICLR 2021), <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a> (NeurIPS 2024),</li>
+<li>Sparse attention 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</li>
+<li>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
+</ol>
+<h3 id="mamba-beyond-attention" class="scroll-mt-8 group">
+  Mamba: Beyond Attention
+  
+    <a href="#mamba-beyond-attention"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="10">
 <li>Mamba 1.0 👉 <a href="https://arxiv.org/abs/2312.00752"><em>Mamba: Linear-Time Sequence Modeling with Selective State Spaces</em></a> (2023) by Gu and Dao, <em>COLM</em>.</li>
 <li>Mamba 2.0 👉 <a href="https://arxiv.org/abs/2405.21060"><em>Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality</em></a> (2024) by Dao and Gu, <em>ICML</em>.</li>
-<li>Low-rank approximation 👉 one example&hellip; <a href="https://arxiv.org/abs/2406.02542"><em>Loki: Low-rank Keys for Efficient Sparse Attention</em></a> (2024) by Singhania et al., <em>NeurIPS</em>.</li>
-<li>Sparse attention 👉 among many&hellip; <a href="https://arxiv.org/abs/1904.10509"><em>Generating Long Sequences with Sparse Transformers</em></a> (2019) by Child et al., <em>arXiv</em>.</li>
-<li>DeepSeekMoE throws in blockwise representation/selection + sliding window 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
 </ol>
     </div>
   </article>
