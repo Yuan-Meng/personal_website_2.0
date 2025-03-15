@@ -8,7 +8,7 @@ toc: true
 
 # Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning
 
-Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the [game engine](https://en.wikipedia.org/wiki/Game_engine) determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game unplayable.
+Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the [game engine](https://en.wikipedia.org/wiki/Game_engine) determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.
 
 {{< figure src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&st=g3s1ufu5&raw=1" caption="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="500">}}
 
