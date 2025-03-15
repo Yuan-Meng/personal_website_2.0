@@ -12,12 +12,12 @@ Inside your Nintendo Switch are graphics processing units (GPUs) that render lif
 
 {{< figure src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&st=g3s1ufu5&raw=1" caption="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="500">}}
 
-Turns out many matrix operations --- the building blocks of modern deep learning --- can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.
+Turns out matrix multiplications --- the building blocks of modern deep learning --- can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.
 <!--more-->
 
 {{< figure src="https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&st=269p6gyk&raw=1" caption="Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition." width="600">}}
 
-For instance, $\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be broken down into $n \times m$ inner products between two $k$-vectors, of all which can be executed at once. Furthermore, each inner product can be decomposed into $k$ element-wise multiplications, which can also be executed in parallel, followed by $(k-1)$ additions to sum up the pairwise products.
+$\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be broken down into $n \times m$ inner products between two $k$-vectors, of all which can be executed at once. Furthermore, each inner product can be decomposed into $k$ element-wise multiplications, which can also be executed in parallel, followed by $(k-1)$ additions to sum up the pairwise products.
 
 {{< figure src="https://www.dropbox.com/scl/fi/5g3edyxzwq1q83gj6cj46/Screenshot-2025-03-15-at-4.26.31-PM.png?rlkey=8h6wet9gim1ofjksu8ibbitk8&st=5k6f3fq2&raw=1" caption="The GPU memory hierarchy (source: Tri Dao's [slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf))." width="800">}}
 
