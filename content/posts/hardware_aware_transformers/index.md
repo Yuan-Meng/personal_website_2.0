@@ -88,6 +88,13 @@ Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $
 
 ## Recomputation
 
+Each input token's $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in \mathbf{V}$ projections are learnable --- by updating them through backpropagation, we train the model to make better predictions. To calculate gradients w.r.t. $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ in the backward pass, we normally store intermediate matrices such as $\mathbf{S}$ and $\mathbf{A}$ to avoid recomputation. However, by keeping {{< sidenote "only" >}}If the input sequence is masked, we also need to store the pseudo-random number generator states so we can generate correct `MASK` tokens on the fly.{{< /sidenote >}} $\mathbf{O}$ (output) and $\bm{l}$ (softmax denominators), $\mathbf{S}$ and $\mathbf{A}$ can be recomputed in SRAM. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/ap9fxmtuw3xt2w27c2uvn/Screenshot-2025-03-16-at-2.34.46-PM.png?rlkey=t1f82pgzksr0hrhga5jfumnz0&st=wkfpees1&raw=1" caption="By recomputing $\mathbf{S}$ and $\mathbf{A}$ in SRAM, we trade off extra work for memory saving (source: Tri Dao's [talk](https://horace.io/brrr_intro.html))." width="500">}}
+
+By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ to $O(N)$, increasing the overall training throughput. 
+
+
 # Wanna Reduce Compute Anyways? Approximate Attention
 
 ## Low-Rank Approximation 

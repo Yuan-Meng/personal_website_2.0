@@ -29,7 +29,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1752">
+  <meta itemprop="wordCount" content="1891">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -89,7 +89,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
   "timeRequired": "PT9M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 1752
+  "wordCount": 1891
 }
 </script>
 
@@ -518,6 +518,33 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
+<p>Each input token&rsquo;s $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in \mathbf{V}$ projections are learnable &mdash; by updating them through backpropagation, we train the model to make better predictions. To calculate gradients w.r.t. $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ in the backward pass, we normally store intermediate matrices such as $\mathbf{S}$ and $\mathbf{A}$ to avoid recomputation. However, by keeping <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-11"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-11"
+    for="sidenote-checkbox-11"
+    class="sidenote-mark"
+    >only</label
+  >
+  <small id="sidenote-11" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>If the input sequence is masked, we also need to store the pseudo-random number generator states so we can generate correct `MASK` tokens on the fly.<span class="sr-only">)</span>
+  </small>
+</span>
+ $\mathbf{O}$ (output) and $\bm{l}$ (softmax denominators), $\mathbf{S}$ and $\mathbf{A}$ can be recomputed in SRAM.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/ap9fxmtuw3xt2w27c2uvn/Screenshot-2025-03-16-at-2.34.46-PM.png?rlkey=t1f82pgzksr0hrhga5jfumnz0&amp;st=wkfpees1&amp;raw=1"
+    alt="By recomputing $\mathbf{S}$ and $\mathbf{A}$ in SRAM, we trade off extra work for memory saving (source: Tri Dao&rsquo;s talk)." width="500"><figcaption>
+      <p>By recomputing $\mathbf{S}$ and $\mathbf{A}$ in SRAM, we trade off extra work for memory saving (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
+    </figcaption>
+</figure>
+
+<p>By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ to $O(N)$, increasing the overall training throughput.</p>
 <h2 id="wanna-reduce-compute-anyways-approximate-attention" class="scroll-mt-8 group">
   Wanna Reduce Compute Anyways? Approximate Attention
   
