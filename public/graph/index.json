@@ -58,6 +58,7 @@
     },
     "/posts/attention_as_dict/": {
       "in": [
+        "/posts/hardware_aware_transformers/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
@@ -84,7 +85,9 @@
     },
     "/posts/hardware_aware_transformers/": {
       "in": [],
-      "out": []
+      "out": [
+        "/posts/attention_as_dict/"
+      ]
     },
     "/posts/human_vision/": {
       "in": [
@@ -243,7 +246,7 @@
     "/posts/hardware_aware_transformers/": {
       "permalink": "/posts/hardware_aware_transformers/",
       "section": "posts",
-      "title": "Hardware-Aware Transformers for Long Sequence Modeling"
+      "title": "Hardware-Aware Attention for Long Sequence Modeling"
     },
     "/posts/human_vision/": {
       "permalink": "/posts/human_vision/",

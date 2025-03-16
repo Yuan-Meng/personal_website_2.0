@@ -1,6 +1,6 @@
 ---
-title: "Hardware-Aware Transformers for Long Sequence Modeling"
-date: 2025-03-15
+title: "Hardware-Aware Attention for Long Sequence Modeling"
+date: 2025-03-16
 math: true
 categories: ["gpu", "transformers", "ml systems"]
 toc: true
@@ -8,22 +8,19 @@ toc: true
 
 # Attention Is All You Need --- if You Can Afford the $O(N^2)$ Complexity
 
-Attention is key to the success of modern large language models (LLMs), which overcomes RNNs' difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients. 
-
-With the power to "see all" comes a time complexity of {{< sidenote "$O(N^2d)$" >}}Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.{{< /sidenote >}} and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs' difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to "attend to all" comes hefty costs. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&st=r3h14cla&raw=1" caption="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600">}}
 
 <!--more-->
 
-It takes 5 steps to compute input contextual embeddings via the attention mechanism (for an intuitive explanation, check out my {{< backlink "attention_as_dict" "post" >}}):
-1. **Input embeddings**: Look up the token embedding and generate the positional encoding of each input token 👉 add them together. 
-2. **$\mathbf{Q}$, $\mathbf{K}$, $\mathbf{V}$ projections**: Project the $N \times d$ input embedding matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).
-3. **$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$**: Compute raw attention scores. 
-4. **$\mathbf{P} = \mathrm{softmax}(\frac{\mathbf{S}}{\sqrt{d_{\mathbf{K}}}}) \in \mathbb{R}^{N \times N}$**: Apply row-wise softmax so that each row sums to 1 ; for gradient updating stability, scale each element by $\sqrt{d_{\mathbf{K}}}$, where $d_{\mathbf{K}}$ is the hidden  dimension of $\mathbf{K}$.
-5. **$\mathbf{O}=\mathbf{P}\mathbf{V} \in \mathbb{R}^{N \times d}$**: Compute the output matrix, which represents the "contextual embedding" of each input token.
+Matrix multiplications and scaling take {{< sidenote "$O(N^2d)$" >}}Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.{{< /sidenote >}} time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory ([SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory)) near the GPU compute has no room to store the resulting $N \times N$ matrices --- ferrying them to the slow high-bandwidth memory ([HBM](https://en.wikipedia.org/wiki/High_Bandwidth_Memory)) takes $O(N^2)$ time. As such, vanilla attention doesn't scale well with $N$ 💀. 
 
-The space complexity is $O(N^2)$, since in steps 3-5, we write $\mathbf{S}$, $\mathbf{P}$, and $\mathbf{O}$ to memory. Both complexities have room for improvement. Ingenuous solutions require a deep understanding of both the attention algorithm itself and the hardware it lives on. This post talks about software-hardware co-designs for faster and better attention by folks like [Tri Dao](https://tridao.me/) and [Horace He](https://horace.io/index.html). First, let's take a look at the "metal".
+Many flavors of "efficient attention" (see Lilian Weng's [blog](https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention) for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., [*Sparse Transformers*](https://arxiv.org/abs/1904.10509), [*Reformer*](https://arxiv.org/abs/2001.04451), [*Routing Transformer*](https://arxiv.org/abs/2003.05997)) or low-rank (e.g., [*Linformer*](https://arxiv.org/abs/2006.04768), [*Linear Transformer*](https://arxiv.org/abs/2006.16236), [*Performer*](https://openreview.net/forum?id=Ua6zuk0WRH), [*Loki*](https://arxiv.org/abs/2406.02542)) approximations. Strangely, they don't always reduce the wall time. 
+
+Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">To optimize any system, first identify its bottleneck; otherwise, you're wasting your time</span>. Horace He's [insight](https://horace.io/brrr_intro.html) inspired [FlashAttention](https://arxiv.org/abs/2205.14135) by Tri Dao's team: With a large enough $N$, attention is actually *not* bottlenecked by compute but by data movements between SRAM and HBM. So fitting everything on SRAM whenever possible will give us a true speedup. 
+
+I've been increasingly fascinated by this type of software-hardware co-design for attention (or deep learning in general) and will review some classic works in this post. First, let's take a look at the "metal", GPUs.
 
 # Know Your GPUs
 
@@ -61,22 +58,45 @@ Horace He proposed an elegant method for distinguishing memory-bound vs. compute
 
 To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (sending "instructions") and GPU kernels (ferrying between HBM and SRAM and computing).
 
-# Attention Is Bandwidth-Bound: Read/Write Less!
-## FlashAttention 1.0
+# FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes
 
-<!-- FlashAttention does a bit more compute to reduce the reads and writes between HBM and SRAM. -->
+If there's no room in the factory to store intermediate outputs and moving them to a distant warehouse is a waste of time, we can assemble one small part at a time and combine them into the final product. As long as each small part stays in the factory, we save time on transportation. This is the key intuition behind FlashAttention. 
 
-## FlashAttention 2.0
+First, let's review how vanilla attention is computed (see my {{< backlink "attention_as_dict" "post" >}} for an intuitive explanation). To begin, we look up token embeddings and add them with positional encodings. Then we project the $N \times d$ input matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).
 
-## FlashAttention 23.0
+{{< figure src="https://www.dropbox.com/scl/fi/e8frszo46hrpklzlhh363/Screenshot-2025-03-16-at-12.32.41-PM.png?rlkey=6r8hdpupn6m5va0u8wbtknnay&st=lvcue89u&raw=1" caption="xxx (source: Tri Dao's [talk](https://horace.io/brrr_intro.html))." width="800">}}
 
-# Wanna Improve Compute Anyways? Approximate Attention
+We carry out a series of matrix operations in order to eventually obtain the "contextual embedding" of each input token:
+1. Compute raw attention scores, **$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$**;
+2. Apply row-wise softmax on $\mathbf{S}$ so that each row sums to 1. In practice, we can keep 2 separate components:
+   - Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;
+   - Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$;
+3. Compute the output matrix, $\mathbf{O}=\frac{\mathbf{A}}{\bm{l}}\mathbf{V} \in \mathbb{R}^{N \times d}$, which represents the "contextual embedding" of each input token.
+
+Fitting $\mathbf{S}$ and $\mathbf{A}$ on SRAM is not possible for long sequences, so they are moved to HBM with an $O(N^2)$ IO complexity. *If we can split the inputs, may the intermediate results will fit?* People thought about it but hesitated. While inputs are naturally split along the $\mathbf{Q}$ dimension, it seems wrong to further split them along $\mathbf{K}$ and $\mathbf{V}$ since computing the softmax requires summing over each row in the *full* $\mathbf{A}$ matrix. 
+
+## Tiling
+
+With simple rescaling, we can obtain correct softmax results even when splitting inputs along $\mathbf{K}$ and $\mathbf{V}$. "Softmax + rescaling" is the key innovation behind *tiling* in FlashAttention ([Dao et al., 2022](https://arxiv.org/abs/2205.14135)).
+
+
+Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $\mathbf{S}^{(1)}$ and $\mathbf{S}^{(2)}$ without issue since matrix multiplications in one block don't interfere with those in another. Similarly, we can obtain $\mathbf{A}^{(1)}$ and $\mathbf{A}^{(2)}$ with issue since element-wise exponentiation is independent.
+
+{{< figure src="https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&st=hgq348vi&raw=1" caption="xxx (source: Tri Dao's [talk](https://horace.io/brrr_intro.html))." width="1000">}}
+
+ However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens *sequentially*, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.
+
+## Recomputation
+
+# Wanna Reduce Compute Anyways? Approximate Attention
 
 ## Low-Rank Approximation 
 
 ## Sparse Approximation
 
 ## Try 'Em All: DeepSeekMoE
+
+# Implications for User Sequence Modeling
 
 # References
 

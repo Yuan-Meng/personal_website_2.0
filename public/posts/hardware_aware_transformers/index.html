@@ -10,35 +10,31 @@
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
-    Hardware-Aware Transformers for Long Sequence Modeling | Yuan Meng
+    Hardware-Aware Attention for Long Sequence Modeling | Yuan Meng
 </title>
-  <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
-With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+  <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." />
 <meta property="og:url" content="http://localhost:1313/posts/hardware_aware_transformers/">
   <meta property="og:site_name" content="Yuan Meng">
-  <meta property="og:title" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
-With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+  <meta property="og:title" content="Hardware-Aware Attention for Long Sequence Modeling">
+  <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-15T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-03-16T00:00:00+00:00">
 
 
-  <meta itemprop="name" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
-With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+  <meta itemprop="name" content="Hardware-Aware Attention for Long Sequence Modeling">
+  <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
-  <meta itemprop="datePublished" content="2025-03-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1247">
+  <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1713">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
-With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+  <meta name="twitter:title" content="Hardware-Aware Attention for Long Sequence Modeling">
+  <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
 
 <link rel="canonical" href="http://localhost:1313/posts/hardware_aware_transformers/" />
@@ -81,19 +77,19 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-03-15",
-  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.\nWith the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \\times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
-  "headline": "Hardware-Aware Transformers for Long Sequence Modeling",
+  "datePublished": "2025-03-16",
+  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
+  "headline": "Hardware-Aware Attention for Long Sequence Modeling",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
     "@type": "Blog",
     "name": "Posts"
   },
   "mainEntityOfPage": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "name": "Hardware-Aware Transformers for Long Sequence Modeling",
-  "timeRequired": "PT6M",
+  "name": "Hardware-Aware Attention for Long Sequence Modeling",
+  "timeRequired": "PT9M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 1247
+  "wordCount": 1713
 }
 </script>
 
@@ -129,14 +125,14 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
       <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
         <article class="main">
     <header>
-      <h1 class="!mb-1">Hardware-Aware Transformers for Long Sequence Modeling</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-03-15T00:00:00&#43;00:00">March 15, 2025</time>
+      <h1 class="!mb-1">Hardware-Aware Attention for Long Sequence Modeling</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2025-03-16T00:00:00&#43;00:00">March 16, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 6 minutes
+      Reading time: 9 minutes
     
 
     
@@ -157,20 +153,20 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <li><a href="#are-you-bound-by-memory-compute-or-overhead">Are You Bound by Memory, Compute, or Overhead?</a></li>
       </ul>
     </li>
-    <li><a href="#attention-is-bandwidth-bound-readwrite-less">Attention Is Bandwidth-Bound: Read/Write Less!</a>
+    <li><a href="#flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites">FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes</a>
       <ul>
-        <li><a href="#flashattention-10">FlashAttention 1.0</a></li>
-        <li><a href="#flashattention-20">FlashAttention 2.0</a></li>
-        <li><a href="#flashattention-230">FlashAttention 23.0</a></li>
+        <li><a href="#tiling">Tiling</a></li>
+        <li><a href="#recomputation">Recomputation</a></li>
       </ul>
     </li>
-    <li><a href="#wanna-improve-compute-anyways-approximate-attention">Wanna Improve Compute Anyways? Approximate Attention</a>
+    <li><a href="#wanna-reduce-compute-anyways-approximate-attention">Wanna Reduce Compute Anyways? Approximate Attention</a>
       <ul>
         <li><a href="#low-rank-approximation">Low-Rank Approximation</a></li>
         <li><a href="#sparse-approximation">Sparse Approximation</a></li>
         <li><a href="#try-em-all-deepseekmoe">Try &lsquo;Em All: DeepSeekMoE</a></li>
       </ul>
     </li>
+    <li><a href="#implications-for-user-sequence-modeling">Implications for User Sequence Modeling</a></li>
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#understand-deep-learning-systems">Understand Deep Learning Systems</a></li>
@@ -230,44 +226,36 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h2>
-<p>Attention is key to the success of modern large language models (LLMs), which overcomes RNNs&rsquo; difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.</p>
-<p>With the power to &ldquo;see all&rdquo; comes a time complexity of <span class="sidenote">
-  <input
-    aria-label="Show sidenote"
-    type="checkbox"
-    id="sidenote-checkbox-01"
-    class="sidenote-checkbox hidden"
-  />
-  <label
-    tabindex="0"
-    role="mark"
-    aria-details="sidenote-01"
-    for="sidenote-checkbox-01"
-    class="sidenote-mark"
-    >$O(N^2d)$</label
-  >
-  <small id="sidenote-01" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
-  </small>
-</span>
- and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.</p>
+<p>Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
     alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
       <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
     </figcaption>
 </figure>
 
-<p>It takes 5 steps to compute input contextual embeddings via the attention mechanism (for an intuitive explanation, check out my <a href="/posts/attention_as_dict/" class="backlink">post</a>
-  
-  ):</p>
-<ol>
-<li><strong>Input embeddings</strong>: Look up the token embedding and generate the positional encoding of each input token 👉 add them together.</li>
-<li><strong>$\mathbf{Q}$, $\mathbf{K}$, $\mathbf{V}$ projections</strong>: Project the $N \times d$ input embedding matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).</li>
-<li><strong>$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$</strong>: Compute raw attention scores.</li>
-<li><strong>$\mathbf{P} = \mathrm{softmax}(\frac{\mathbf{S}}{\sqrt{d_{\mathbf{K}}}}) \in \mathbb{R}^{N \times N}$</strong>: Apply row-wise softmax so that each row sums to 1 ; for gradient updating stability, scale each element by $\sqrt{d_{\mathbf{K}}}$, where $d_{\mathbf{K}}$ is the hidden  dimension of $\mathbf{K}$.</li>
-<li><strong>$\mathbf{O}=\mathbf{P}\mathbf{V} \in \mathbb{R}^{N \times d}$</strong>: Compute the output matrix, which represents the &ldquo;contextual embedding&rdquo; of each input token.</li>
-</ol>
-<p>The space complexity is $O(N^2)$, since in steps 3-5, we write $\mathbf{S}$, $\mathbf{P}$, and $\mathbf{O}$ to memory. Both complexities have room for improvement. Ingenuous solutions require a deep understanding of both the attention algorithm itself and the hardware it lives on. This post talks about software-hardware co-designs for faster and better attention by folks like <a href="https://tridao.me/">Tri Dao</a> and <a href="https://horace.io/index.html">Horace He</a>. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;.</p>
+<p>Matrix multiplications and scaling take <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-02"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-02"
+    for="sidenote-checkbox-02"
+    class="sidenote-mark"
+    >$O(N^2d)$</label
+  >
+  <small id="sidenote-02" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
+  </small>
+</span>
+ time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory (<a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a>) near the GPU compute has no room to store the resulting $N \times N$ matrices &mdash; ferrying them to the slow high-bandwidth memory (<a href="https://en.wikipedia.org/wiki/High_Bandwidth_Memory">HBM</a>) takes $O(N^2)$ time. As such, vanilla attention doesn&rsquo;t scale well with $N$ 💀.</p>
+<p>Many flavors of &ldquo;efficient attention&rdquo; (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention">blog</a> for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a>, <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a>, <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a>) or low-rank (e.g., <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a>, <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a>, <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a>, <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a>) approximations. Strangely, they don&rsquo;t always reduce the wall time.</p>
+<p>Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">To optimize any system, first identify its bottleneck; otherwise, you&rsquo;re wasting your time</span>. Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">insight</a> inspired <a href="https://arxiv.org/abs/2205.14135">FlashAttention</a> by Tri Dao&rsquo;s team: With a large enough $N$, attention is actually <em>not</em> bottlenecked by compute but by data movements between SRAM and HBM. So fitting everything on SRAM whenever possible will give us a true speedup.</p>
+<p>I&rsquo;ve been increasingly fascinated by this type of software-hardware co-design for attention (or deep learning in general) and will review some classic works in this post. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;, GPUs.</p>
 <h2 id="know-your-gpus" class="scroll-mt-8 group">
   Know Your GPUs
   
@@ -407,27 +395,27 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-08"
+    id="sidenote-checkbox-07"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-08"
-    for="sidenote-checkbox-08"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
     class="sidenote-mark"
     >compute intensity</label
   >
-  <small id="sidenote-08" class="sidenote-content">
+  <small id="sidenote-07" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>It's the ratio of the number of calculations to the amount of data moved, typically measured in FLOPs per byte.<span class="sr-only">)</span>
   </small>
 </span>
  (e.g., repeat a toy operation $n$ times, make input matrix dimensions larger, use higher-precision numeric representations) but the runtime doesn&rsquo;t increase, you&rsquo;re likely memory-bound: some of your compute sits idle, ready to process any incoming data ASAP. If runtime starts to increase with compute intensity, you&rsquo;re compute-bound since all your compute is occupied.</p>
 <p>To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (sending &ldquo;instructions&rdquo;) and GPU kernels (ferrying between HBM and SRAM and computing).</p>
-<h2 id="attention-is-bandwidth-bound-readwrite-less" class="scroll-mt-8 group">
-  Attention Is Bandwidth-Bound: Read/Write Less!
+<h2 id="flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites" class="scroll-mt-8 group">
+  FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes
   
-    <a href="#attention-is-bandwidth-bound-readwrite-less"
+    <a href="#flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -449,10 +437,32 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h2>
-<h3 id="flashattention-10" class="scroll-mt-8 group">
-  FlashAttention 1.0
+<p>If there&rsquo;s no room in the factory to store intermediate outputs and moving them to a distant warehouse is a waste of time, we can assemble one small part at a time and combine them into the final product. As long as each small part stays in the factory, we save time on transportation. This is the key intuition behind FlashAttention.</p>
+<p>First, let&rsquo;s review how vanilla attention is computed (see my <a href="/posts/attention_as_dict/" class="backlink">post</a>
   
-    <a href="#flashattention-10"
+   for an intuitive explanation). To begin, we look up token embeddings and add them with positional encodings. Then we project the $N \times d$ input matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/e8frszo46hrpklzlhh363/Screenshot-2025-03-16-at-12.32.41-PM.png?rlkey=6r8hdpupn6m5va0u8wbtknnay&amp;st=lvcue89u&amp;raw=1"
+    alt="xxx (source: Tri Dao&rsquo;s talk)." width="800"><figcaption>
+      <p>xxx (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
+    </figcaption>
+</figure>
+
+<p>We carry out a series of matrix operations in order to eventually obtain the &ldquo;contextual embedding&rdquo; of each input token:</p>
+<ol>
+<li>Compute raw attention scores, <strong>$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$</strong>;</li>
+<li>Apply row-wise softmax on $\mathbf{S}$ so that each row sums to 1. In practice, we can keep 2 separate components:
+<ul>
+<li>Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;</li>
+<li>Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$;</li>
+</ul>
+</li>
+<li>Compute the output matrix, $\mathbf{O}=\frac{\mathbf{A}}{\bm{l}}\mathbf{V} \in \mathbb{R}^{N \times d}$, which represents the &ldquo;contextual embedding&rdquo; of each input token.</li>
+</ol>
+<p>Fitting $\mathbf{S}$ and $\mathbf{A}$ on SRAM is not possible for long sequences, so they are moved to HBM with an $O(N^2)$ IO complexity. <em>If we can split the inputs, may the intermediate results will fit?</em> People thought about it but hesitated. While inputs are naturally split along the $\mathbf{Q}$ dimension, it seems wrong to further split them along $\mathbf{K}$ and $\mathbf{V}$ since computing the softmax requires summing over each row in the <em>full</em> $\mathbf{A}$ matrix.</p>
+<h3 id="tiling" class="scroll-mt-8 group">
+  Tiling
+  
+    <a href="#tiling"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -474,11 +484,19 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<!-- FlashAttention does a bit more compute to reduce the reads and writes between HBM and SRAM. -->
-<h3 id="flashattention-20" class="scroll-mt-8 group">
-  FlashAttention 2.0
+<p>With simple rescaling, we can obtain correct softmax results even when splitting inputs along $\mathbf{K}$ and $\mathbf{V}$. &ldquo;Softmax + rescaling&rdquo; is the key innovation behind <em>tiling</em> in FlashAttention (<a href="https://arxiv.org/abs/2205.14135">Dao et al., 2022</a>).</p>
+<p>Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $\mathbf{S}^{(1)}$ and $\mathbf{S}^{(2)}$ without issue since matrix multiplications in one block don&rsquo;t interfere with those in another. Similarly, we can obtain $\mathbf{A}^{(1)}$ and $\mathbf{A}^{(2)}$ with issue since element-wise exponentiation is independent.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&amp;st=hgq348vi&amp;raw=1"
+    alt="xxx (source: Tri Dao&rsquo;s talk)." width="1000"><figcaption>
+      <p>xxx (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
+    </figcaption>
+</figure>
+
+<p>However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens <em>sequentially</em>, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.</p>
+<h3 id="recomputation" class="scroll-mt-8 group">
+  Recomputation
   
-    <a href="#flashattention-20"
+    <a href="#recomputation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -500,35 +518,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<h3 id="flashattention-230" class="scroll-mt-8 group">
-  FlashAttention 23.0
+<h2 id="wanna-reduce-compute-anyways-approximate-attention" class="scroll-mt-8 group">
+  Wanna Reduce Compute Anyways? Approximate Attention
   
-    <a href="#flashattention-230"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<h2 id="wanna-improve-compute-anyways-approximate-attention" class="scroll-mt-8 group">
-  Wanna Improve Compute Anyways? Approximate Attention
-  
-    <a href="#wanna-improve-compute-anyways-approximate-attention"
+    <a href="#wanna-reduce-compute-anyways-approximate-attention"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -625,6 +618,31 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
+<h2 id="implications-for-user-sequence-modeling" class="scroll-mt-8 group">
+  Implications for User Sequence Modeling
+  
+    <a href="#implications-for-user-sequence-modeling"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
 <h2 id="references" class="scroll-mt-8 group">
   References
   

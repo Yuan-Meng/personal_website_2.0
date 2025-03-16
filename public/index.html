@@ -27,7 +27,7 @@ In the mood for a Sudoku challenge? 🍀 Solve Reset">
   <meta itemprop="name" content="Probably Approximately Correct">
   <meta itemprop="description" content="An ML engineer’s musings on machine learning and life…
 In the mood for a Sudoku challenge? 🍀 Solve Reset">
-  <meta itemprop="datePublished" content="2025-03-15T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
   <meta itemprop="wordCount" content="19">
 
   <meta name="twitter:card" content="summary">
@@ -323,17 +323,17 @@ document.addEventListener("DOMContentLoaded", function () {
               <a
                 href="/posts/hardware_aware_transformers/"
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-                >Hardware-Aware Transformers for Long Sequence Modeling</a
+                >Hardware-Aware Attention for Long Sequence Modeling</a
               >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-15T00:00:00&#43;00:00"
-              >March 15, 2025</time
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-16T00:00:00&#43;00:00"
+              >March 16, 2025</time
             >
           </header>
 
-          <div class="text-sm"><h2 id="graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning" class="scroll-mt-8 group">
-  Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning
+          <div class="text-sm"><h2 id="attention-is-all-you-need-----if-you-can-afford-the-on2-complexity" class="scroll-mt-8 group">
+  Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity
   
-    <a href="#graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning"
+    <a href="#attention-is-all-you-need-----if-you-can-afford-the-on2-complexity"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -355,14 +355,12 @@ document.addEventListener("DOMContentLoaded", function () {
     </a>
   
 </h2>
-<p>Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the <a href="https://en.wikipedia.org/wiki/Game_engine">game engine</a> determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.</p>
-<figure><img src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&amp;st=g3s1ufu5&amp;raw=1"
-    alt="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="500"><figcaption>
-      <p>Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.</p>
+<p>Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
+    alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
+      <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
     </figcaption>
-</figure>
-
-<p>Turns out matrix multiplications &mdash; the building blocks of modern deep learning &mdash; can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.</p></div>
+</figure></div>
         </article>
       </li>
       <li class="mb-6">
