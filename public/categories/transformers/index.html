@@ -23,7 +23,7 @@
 
   <meta itemprop="name" content="Transformers">
   <meta itemprop="description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
-  <meta itemprop="datePublished" content="2025-03-15T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Transformers">
@@ -100,8 +100,8 @@
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
                 >Hardware-Aware Attention for Long Sequence Modeling</a
               >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-15T00:00:00&#43;00:00"
-              >March 15, 2025</time
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-16T00:00:00&#43;00:00"
+              >March 16, 2025</time
             >
           </header>
 
@@ -130,27 +130,7 @@
     </a>
   
 </h2>
-<p>Attention is key to the success of modern large language models (LLMs), which overcomes RNNs&rsquo; difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.</p>
-<p>With the power to &ldquo;see all&rdquo; comes a time complexity of <span class="sidenote">
-  <input
-    aria-label="Show sidenote"
-    type="checkbox"
-    id="sidenote-checkbox-01"
-    class="sidenote-checkbox hidden"
-  />
-  <label
-    tabindex="0"
-    role="mark"
-    aria-details="sidenote-01"
-    for="sidenote-checkbox-01"
-    class="sidenote-mark"
-    >$O(N^2d)$</label
-  >
-  <small id="sidenote-01" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
-  </small>
-</span>
- and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension. Such complexity makes vanilla attention hard to scale with input length 💀.</p>
+<p>Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
     alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
       <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>

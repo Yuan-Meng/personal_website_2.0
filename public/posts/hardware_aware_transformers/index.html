@@ -29,7 +29,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1713">
+  <meta itemprop="wordCount" content="1752">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -89,7 +89,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
   "timeRequired": "PT9M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 1713
+  "wordCount": 1752
 }
 </script>
 
@@ -249,7 +249,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     >$O(N^2d)$</label
   >
   <small id="sidenote-02" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed, which is $N \times N$ in self-attention. The inner dimension tells us the complexity of each inner product, which is $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions) in this case. Row-wise softmax takes $O(N^2)$ time, which is dominated by the $O(N^2d)$ matrix multiplication time.<span class="sr-only">)</span>
   </small>
 </span>
  time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory (<a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a>) near the GPU compute has no room to store the resulting $N \times N$ matrices &mdash; ferrying them to the slow high-bandwidth memory (<a href="https://en.wikipedia.org/wiki/High_Bandwidth_Memory">HBM</a>) takes $O(N^2)$ time. As such, vanilla attention doesn&rsquo;t scale well with $N$ 💀.</p>
@@ -442,8 +442,8 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   
    for an intuitive explanation). To begin, we look up token embeddings and add them with positional encodings. Then we project the $N \times d$ input matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/e8frszo46hrpklzlhh363/Screenshot-2025-03-16-at-12.32.41-PM.png?rlkey=6r8hdpupn6m5va0u8wbtknnay&amp;st=lvcue89u&amp;raw=1"
-    alt="xxx (source: Tri Dao&rsquo;s talk)." width="800"><figcaption>
-      <p>xxx (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
+    alt="Computing attention requires us to materialize large $N \times N$ matrices in HBM, which is the bottleneck for long sequence modeling (source: Tri Dao&rsquo;s talk)." width="800"><figcaption>
+      <p>Computing attention requires us to materialize large $N \times N$ matrices in HBM, which is the bottleneck for long sequence modeling (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
     </figcaption>
 </figure>
 
@@ -487,8 +487,8 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 <p>With simple rescaling, we can obtain correct softmax results even when splitting inputs along $\mathbf{K}$ and $\mathbf{V}$. &ldquo;Softmax + rescaling&rdquo; is the key innovation behind <em>tiling</em> in FlashAttention (<a href="https://arxiv.org/abs/2205.14135">Dao et al., 2022</a>).</p>
 <p>Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $\mathbf{S}^{(1)}$ and $\mathbf{S}^{(2)}$ without issue since matrix multiplications in one block don&rsquo;t interfere with those in another. Similarly, we can obtain $\mathbf{A}^{(1)}$ and $\mathbf{A}^{(2)}$ with issue since element-wise exponentiation is independent.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&amp;st=hgq348vi&amp;raw=1"
-    alt="xxx (source: Tri Dao&rsquo;s talk)." width="1000"><figcaption>
-      <p>xxx (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
+    alt="By splitting $\mathbf{K}$ and $\mathbf{V}$ into blocks and computing outputs block by block, we keep computations within the fast SRAM and never materialize large matrices, thereby breaking through the IO bottleneck (source: Tri Dao&rsquo;s talk)." width="1000"><figcaption>
+      <p>By splitting $\mathbf{K}$ and $\mathbf{V}$ into blocks and computing outputs block by block, we keep computations within the fast SRAM and never materialize large matrices, thereby breaking through the IO bottleneck (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).</p>
     </figcaption>
 </figure>
 
