@@ -12,15 +12,15 @@
 <title>
     Hardware-Aware Transformers for Long Sequence Modeling | Yuan Meng
 </title>
-  <meta name="description" content=" Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the game engine determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.
-Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.
-Turns out matrix multiplications — the building blocks of modern deep learning — can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for." />
+  <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
+With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." />
 <meta property="og:url" content="http://localhost:1313/posts/hardware_aware_transformers/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta property="og:description" content="Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the game engine determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.
-Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.
-Turns out matrix multiplications — the building blocks of modern deep learning — can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.">
+  <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
+With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -28,18 +28,18 @@ Turns out matrix multiplications — the building blocks of modern deep learning
 
 
   <meta itemprop="name" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta itemprop="description" content="Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the game engine determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.
-Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.
-Turns out matrix multiplications — the building blocks of modern deep learning — can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.">
+  <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
+With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="468">
+  <meta itemprop="wordCount" content="1247">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Hardware-Aware Transformers for Long Sequence Modeling">
-  <meta name="twitter:description" content="Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the game engine determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.
-Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.
-Turns out matrix multiplications — the building blocks of modern deep learning — can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.">
+  <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.
+With the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here&#39;s the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it&#39;s $2d - 1$ = $d$ (element-wise products) &#43; $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.
+In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
 
 <link rel="canonical" href="http://localhost:1313/posts/hardware_aware_transformers/" />
 
@@ -82,7 +82,7 @@ Turns out matrix multiplications — the building blocks of modern deep learning
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2025-03-15",
-  "description": " Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the game engine determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.\nGame graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.\nTurns out matrix multiplications — the building blocks of modern deep learning — can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.",
+  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs), which overcomes RNNs’ difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.\nWith the power to “see all” comes a time complexity of $O(N^2d)$ (sidenote: Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \\times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.) and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
   "headline": "Hardware-Aware Transformers for Long Sequence Modeling",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
@@ -91,9 +91,9 @@ Turns out matrix multiplications — the building blocks of modern deep learning
   },
   "mainEntityOfPage": "http://localhost:1313/posts/hardware_aware_transformers/",
   "name": "Hardware-Aware Transformers for Long Sequence Modeling",
-  "timeRequired": "PT3M",
+  "timeRequired": "PT6M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 468
+  "wordCount": 1247
 }
 </script>
 
@@ -136,7 +136,7 @@ Turns out matrix multiplications — the building blocks of modern deep learning
 
     
     
-      Reading time: 3 minutes
+      Reading time: 6 minutes
     
 
     
@@ -149,15 +149,36 @@ Turns out matrix multiplications — the building blocks of modern deep learning
         <nav id="TableOfContents" class="toc-content">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning">Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning</a></li>
+    <li><a href="#attention-is-all-you-need-----if-you-can-afford-the-on2-complexity">Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity</a></li>
+    <li><a href="#know-your-gpus">Know Your GPUs</a>
+      <ul>
+        <li><a href="#game-cards-born-for-deep-learning">Game Cards Born for Deep Learning</a></li>
+        <li><a href="#gpu-memory-hierarchy">GPU Memory Hierarchy</a></li>
+        <li><a href="#are-you-bound-by-memory-compute-or-overhead">Are You Bound by Memory, Compute, or Overhead?</a></li>
+      </ul>
+    </li>
+    <li><a href="#attention-is-bandwidth-bound-readwrite-less">Attention Is Bandwidth-Bound: Read/Write Less!</a>
+      <ul>
+        <li><a href="#flashattention-10">FlashAttention 1.0</a></li>
+        <li><a href="#flashattention-20">FlashAttention 2.0</a></li>
+        <li><a href="#flashattention-230">FlashAttention 23.0</a></li>
+      </ul>
+    </li>
+    <li><a href="#wanna-improve-compute-anyways-approximate-attention">Wanna Improve Compute Anyways? Approximate Attention</a>
+      <ul>
+        <li><a href="#low-rank-approximation">Low-Rank Approximation</a></li>
+        <li><a href="#sparse-approximation">Sparse Approximation</a></li>
+        <li><a href="#try-em-all-deepseekmoe">Try &lsquo;Em All: DeepSeekMoE</a></li>
+      </ul>
+    </li>
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#understand-deep-learning-systems">Understand Deep Learning Systems</a></li>
         <li><a href="#flashattention-io-aware-exact-attention">FlashAttention: IO-Aware, Exact Attention</a></li>
         <li><a href="#fast--accurate-attention-approximations">Fast &amp; Accurate Attention Approximations</a></li>
-        <li><a href="#mamba-attention-is-not-what-you-need">Mamba: Attention is Not What You Need</a></li>
       </ul>
     </li>
+    <li><a href="#gpu-terminology">GPU Terminology</a></li>
   </ul>
 </nav>
         </nav>
@@ -184,10 +205,10 @@ Turns out matrix multiplications — the building blocks of modern deep learning
 
     
     <div class="content">
-      <h2 id="graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning" class="scroll-mt-8 group">
-  Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning
+      <h2 id="attention-is-all-you-need-----if-you-can-afford-the-on2-complexity" class="scroll-mt-8 group">
+  Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity
   
-    <a href="#graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning"
+    <a href="#attention-is-all-you-need-----if-you-can-afford-the-on2-complexity"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -209,40 +230,401 @@ Turns out matrix multiplications — the building blocks of modern deep learning
     </a>
   
 </h2>
-<p>Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the <a href="https://en.wikipedia.org/wiki/Game_engine">game engine</a> determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.</p>
+<p>Attention is key to the success of modern large language models (LLMs), which overcomes RNNs&rsquo; difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.</p>
+<p>With the power to &ldquo;see all&rdquo; comes a time complexity of <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >$O(N^2d)$</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
+  </small>
+</span>
+ and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
+    alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
+      <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
+    </figcaption>
+</figure>
+
+<p>It takes 5 steps to compute input contextual embeddings via the attention mechanism (for an intuitive explanation, check out my <a href="/posts/attention_as_dict/" class="backlink">post</a>
+  
+  ):</p>
+<ol>
+<li><strong>Input embeddings</strong>: Look up the token embedding and generate the positional encoding of each input token 👉 add them together.</li>
+<li><strong>$\mathbf{Q}$, $\mathbf{K}$, $\mathbf{V}$ projections</strong>: Project the $N \times d$ input embedding matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).</li>
+<li><strong>$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$</strong>: Compute raw attention scores.</li>
+<li><strong>$\mathbf{P} = \mathrm{softmax}(\frac{\mathbf{S}}{\sqrt{d_{\mathbf{K}}}}) \in \mathbb{R}^{N \times N}$</strong>: Apply row-wise softmax so that each row sums to 1 ; for gradient updating stability, scale each element by $\sqrt{d_{\mathbf{K}}}$, where $d_{\mathbf{K}}$ is the hidden  dimension of $\mathbf{K}$.</li>
+<li><strong>$\mathbf{O}=\mathbf{P}\mathbf{V} \in \mathbb{R}^{N \times d}$</strong>: Compute the output matrix, which represents the &ldquo;contextual embedding&rdquo; of each input token.</li>
+</ol>
+<p>The space complexity is $O(N^2)$, since in steps 3-5, we write $\mathbf{S}$, $\mathbf{P}$, and $\mathbf{O}$ to memory. Both complexities have room for improvement. Ingenuous solutions require a deep understanding of both the attention algorithm itself and the hardware it lives on. This post talks about software-hardware co-designs for faster and better attention by folks like <a href="https://tridao.me/">Tri Dao</a> and <a href="https://horace.io/index.html">Horace He</a>. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;.</p>
+<h2 id="know-your-gpus" class="scroll-mt-8 group">
+  Know Your GPUs
+  
+    <a href="#know-your-gpus"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="game-cards-born-for-deep-learning" class="scroll-mt-8 group">
+  Game Cards Born for Deep Learning
+  
+    <a href="#game-cards-born-for-deep-learning"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the <a href="https://en.wikipedia.org/wiki/Game_engine">game engine</a> determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each unit simultaneously. Without this parallelism, the game world unfolds slowly, making any game too stuck to play.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&amp;st=g3s1ufu5&amp;raw=1"
     alt="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="500"><figcaption>
       <p>Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.</p>
     </figcaption>
 </figure>
 
-<p>Turns out matrix multiplications &mdash; the building blocks of modern deep learning &mdash; can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.</p>
+<p>Turns out matrix multiplications &mdash; the building blocks of modern deep learning &mdash; can similarly be broken down into small units and get processed in parallel. This is the very task GPUs are born for.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&amp;st=269p6gyk&amp;raw=1"
     alt="Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition." width="600"><figcaption>
       <p>Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition.</p>
     </figcaption>
 </figure>
 
-<p>$\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be broken down into $n \times m$ inner products between two $k$-vectors, of all which can be executed at once. Furthermore, each inner product can be decomposed into $k$ element-wise multiplications, which can also be executed in parallel, followed by $(k-1)$ additions to sum up the pairwise products.</p>
+<p>$\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be broken down into $n \times m$ inner products between two $k$-vectors (the $i$-th row vector in $\mathbf{A}$ and the $j$-th column vector in $\mathbf{B}$) to be executed at once. Each inner product can be further decomposed into $k$ parallel element-wise multiplications, followed by $(k-1)$ additions to sum up $k$ products.</p>
+<h3 id="gpu-memory-hierarchy" class="scroll-mt-8 group">
+  GPU Memory Hierarchy
+  
+    <a href="#gpu-memory-hierarchy"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>While the terminology might differ, a GPU is similar to many computer systems in that it has a static random-access memory (SRAM) that&rsquo;s physically close to the compute but limited in memory bandwidth, and a high-bandwidth memory (HBM) that computes slowly. Horace He has a wonderful <a href="https://horace.io/brrr_intro.html">analogy</a> that the HBM is like a warehouse where raw materials and finished products are stored, whereas the SRAM is the storage in the factory where new products are being produced.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/5g3edyxzwq1q83gj6cj46/Screenshot-2025-03-15-at-4.26.31-PM.png?rlkey=8h6wet9gim1ofjksu8ibbitk8&amp;st=5k6f3fq2&amp;raw=1"
     alt="The GPU memory hierarchy (source: Tri Dao&rsquo;s slides)." width="800"><figcaption>
       <p>The GPU memory hierarchy (source: Tri Dao&rsquo;s <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a>).</p>
     </figcaption>
 </figure>
 
-<!-- SRAM: cache, physically close to compute
-HBM: far from compute, more space -->
-<!-- # Attention is IO-Bound
-FlashAttention 1, 2, 3 -->
-<!-- how GPU works => why a game card is born for transformers and what kind(s) of computations it's optimized for or not
+<p>As the GPU carries out an operation (called a &ldquo;kernel&rdquo;), it read inputs from HBM into SRAM and writes outputs from SRAM back to HBM. There are 3 types of costs associated with any GPU systems:</p>
+<ul>
+<li><strong>Bandwidth costs</strong>: The time spent ferrying data between HBM and SRAM. Also known as &ldquo;memory bandwidth&rdquo; or IO cost.</li>
+<li><strong>Compute costs</strong>: The time actually spent in the &ldquo;factory&rdquo; (SRAM) computing, often measured by FLOPs (floating points per second). This is what people think/hope they pay NVIDIA for.</li>
+<li><strong>Overhead costs</strong>: All else &mdash; e.g., deciding to which factory to send what materials for what products, or spinning up an idle factory.</li>
+</ul>
+<p>Understanding the bottleneck of your system is key to efficiency improvements. For instance, if you can&rsquo;t ferry materials fast enough into the factories, then buying more expensive factory machines won&rsquo;t help increase your output. The million-dollar question is: how do you know if you&rsquo;re bound by memory, compute, or overhead?</p>
+<h3 id="are-you-bound-by-memory-compute-or-overhead" class="scroll-mt-8 group">
+  Are You Bound by Memory, Compute, or Overhead?
+  
+    <a href="#are-you-bound-by-memory-compute-or-overhead"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-the Triton language
+    </a>
+  
+</h3>
+<figure><img src="https://www.dropbox.com/scl/fi/63qnev0qkwnmynp99kj31/Screenshot-2025-03-15-at-8.09.27-PM.png?rlkey=92ofkzpw8qxrhb6xwapsedkds&amp;st=fqr7ekik&amp;raw=1"
+    alt="Diagnose the bottleneck of your system by gradually intensifying compute and measuring wall time (source: Horace He&rsquo;s blog)." width="800"><figcaption>
+      <p>Diagnose the bottleneck of your system by gradually intensifying compute and measuring wall time (source: Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">blog</a>).</p>
+    </figcaption>
+</figure>
 
+<p>Horace He proposed an elegant method for distinguishing memory-bound vs. compute-bound workloads &mdash; all else being equal, if you increase the <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-08"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-08"
+    for="sidenote-checkbox-08"
+    class="sidenote-mark"
+    >compute intensity</label
+  >
+  <small id="sidenote-08" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It's the ratio of the number of calculations to the amount of data moved, typically measured in FLOPs per byte.<span class="sr-only">)</span>
+  </small>
+</span>
+ (e.g., repeat a toy operation $n$ times, make input matrix dimensions larger, use higher-precision numeric representations) but the runtime doesn&rsquo;t increase, you&rsquo;re likely memory-bound: some of your compute sits idle, ready to process any incoming data ASAP. If runtime starts to increase with compute intensity, you&rsquo;re compute-bound since all your compute is occupied.</p>
+<p>To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (sending &ldquo;instructions&rdquo;) and GPU kernels (ferrying between HBM and SRAM and computing).</p>
+<h2 id="attention-is-bandwidth-bound-readwrite-less" class="scroll-mt-8 group">
+  Attention Is Bandwidth-Bound: Read/Write Less!
+  
+    <a href="#attention-is-bandwidth-bound-readwrite-less"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-Mamba
-sparse transformers
+    </a>
+  
+</h2>
+<h3 id="flashattention-10" class="scroll-mt-8 group">
+  FlashAttention 1.0
+  
+    <a href="#flashattention-10"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-how it informs sequence modeling for recommender systems --> 
+    </a>
+  
+</h3>
+<!-- FlashAttention does a bit more compute to reduce the reads and writes between HBM and SRAM. -->
+<h3 id="flashattention-20" class="scroll-mt-8 group">
+  FlashAttention 2.0
+  
+    <a href="#flashattention-20"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="flashattention-230" class="scroll-mt-8 group">
+  FlashAttention 23.0
+  
+    <a href="#flashattention-230"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h2 id="wanna-improve-compute-anyways-approximate-attention" class="scroll-mt-8 group">
+  Wanna Improve Compute Anyways? Approximate Attention
+  
+    <a href="#wanna-improve-compute-anyways-approximate-attention"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="low-rank-approximation" class="scroll-mt-8 group">
+  Low-Rank Approximation
+  
+    <a href="#low-rank-approximation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="sparse-approximation" class="scroll-mt-8 group">
+  Sparse Approximation
+  
+    <a href="#sparse-approximation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="try-em-all-deepseekmoe" class="scroll-mt-8 group">
+  Try &lsquo;Em All: DeepSeekMoE
+  
+    <a href="#try-em-all-deepseekmoe"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -356,13 +738,13 @@ how it informs sequence modeling for recommender systems -->
 </h3>
 <ol start="8">
 <li>Low-rank approximation 👉 <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a> (2020), <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a> (ICML 2020), <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a> (ICLR 2021), <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a> (NeurIPS 2024),</li>
-<li>Sparse attention 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</li>
+<li>Sparse approximation 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</li>
 <li>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
 </ol>
-<h3 id="mamba-attention-is-not-what-you-need" class="scroll-mt-8 group">
-  Mamba: Attention is Not What You Need
+<h2 id="gpu-terminology" class="scroll-mt-8 group">
+  GPU Terminology
   
-    <a href="#mamba-attention-is-not-what-you-need"
+    <a href="#gpu-terminology"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -383,11 +765,22 @@ how it informs sequence modeling for recommender systems -->
 
     </a>
   
-</h3>
-<ol start="11">
-<li>Mamba 1.0 👉 <a href="https://arxiv.org/abs/2312.00752"><em>Mamba: Linear-Time Sequence Modeling with Selective State Spaces</em></a> (2023) by Gu and Dao, <em>COLM</em>.</li>
-<li>Mamba 2.0 👉 <a href="https://arxiv.org/abs/2405.21060"><em>Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality</em></a> (2024) by Dao and Gu, <em>ICML</em>.</li>
-</ol>
+</h2>
+<ul>
+<li><strong>HBM</strong>: XX</li>
+<li><strong>SRAM</strong>: XX</li>
+<li><strong>Compute intensity</strong>: XX</li>
+<li><strong>FLOPs</strong>: XX</li>
+<li><strong>Kernel</strong>: an operation</li>
+<li><strong>Kernel fusion</strong>: xx</li>
+<li><strong>Tensor core</strong>: xx</li>
+<li><strong>Wrap</strong>: NVIDIA; AMD has a different name</li>
+<li><strong>CUDA</strong>: a platform</li>
+<li><strong>Triton</strong>: a programming language</li>
+</ul>
+<!-- ## Mamba: Attention is Not What You Need
+11. Mamba 1.0 👉 [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) (2023) by Gu and Dao, *COLM*.
+12. Mamba 2.0 👉 [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060) (2024) by Dao and Gu, *ICML*. -->
     </div>
   </article>
 
@@ -458,6 +851,84 @@ how it informs sequence modeling for recommender systems -->
   page="/posts/hardware_aware_transformers/"
 ></content-network-graph>
 
+    </section>
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-newspaper h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5"
+  />
+  <path d="M10 6h8v4h-8V6Z" />
+</svg>
+
+        <span>Posts</span>
+      </h2>
+        <section class="flex flex-col space-y-1">
+          <h3 class="flex flex-row items-center space-x-2 text-sm font-semibold">
+            <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-arrow-up-from-dot h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path d="m5 9 7-7 7 7M12 16V2" />
+  <circle cx="12" cy="21" r="1" />
+</svg>
+
+            <span>Outgoing</span>
+          </h3>
+
+          <ol class="not-prose ml-6">
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/attention_as_dict/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Attention as Soft Dictionary Lookup"
+              >Attention as Soft Dictionary Lookup</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/natural-language-processing/"
+                  class="taxonomy"
+                  title="Posts and notes on Natural language processing"
+                  >Natural language processing</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+</ol>
+
+        </section>
     </section>
 </aside>
 

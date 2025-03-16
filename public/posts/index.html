@@ -135,10 +135,10 @@
             >
           </header>
 
-          <div class="text-sm"><h2 id="graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning" class="scroll-mt-8 group">
-  Graphics Processing Units (GPUs): How Game Cards Are Born for Deep Learning
+          <div class="text-sm"><h2 id="attention-is-all-you-need-----if-you-can-afford-the-on2-complexity" class="scroll-mt-8 group">
+  Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity
   
-    <a href="#graphics-processing-units-gpus-how-game-cards-are-born-for-deep-learning"
+    <a href="#attention-is-all-you-need-----if-you-can-afford-the-on2-complexity"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -160,14 +160,32 @@
     </a>
   
 </h2>
-<p>Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. After the <a href="https://en.wikipedia.org/wiki/Game_engine">game engine</a> determines how characters act and what objects look like based on rules and physics, GPUs break down the scene into small units (e.g., triangles and vertices) and render pixels, lighting, textures, and other graph elements in each simultaneously. Without this parallelism, the game world will unfold slowly, making any game stuck and unplayable.</p>
-<figure><img src="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&amp;st=g3s1ufu5&amp;raw=1"
-    alt="Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power." width="500"><figcaption>
-      <p>Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.</p>
+<p>Attention is key to the success of modern large language models (LLMs), which overcomes RNNs&rsquo; difficulty in modeling long-range dependencies by attending to every token in the input sequence at once, without suffering from vanishing or exploding gradients.</p>
+<p>With the power to &ldquo;see all&rdquo; comes a time complexity of <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >$O(N^2d)$</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed. In step 3, for instance, we got $N \times N$. The inner dimension tells us the complexity of each inner product. In step 3, it's $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions). The total complexity of step 3 is therefore $O(N^2d)$. Turns out steps 3 and 5 are equally expensive, dominating the final time complexity.<span class="sr-only">)</span>
+  </small>
+</span>
+ and a space complexity of $O(N^2)$, where $N$ is the length of the input sequence (# tokens) and $d$ the hidden embedding dimension.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
+    alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
+      <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
     </figcaption>
-</figure>
-
-<p>Turns out many matrix operations &mdash; the building blocks of modern deep learning &mdash; can similarly be broken into many small units and get processed in parallel, the very task that GPUs are born for.</p></div>
+</figure></div>
         </article>
       </li>
   </ol>
