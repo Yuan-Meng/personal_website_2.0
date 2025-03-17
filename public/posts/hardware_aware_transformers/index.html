@@ -29,7 +29,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2573">
+  <meta itemprop="wordCount" content="2574">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -89,7 +89,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
   "timeRequired": "PT13M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 2573
+  "wordCount": 2574
 }
 </script>
 
@@ -248,12 +248,12 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     >$O(N^2d)$</label
   >
   <small id="sidenote-02" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: The outer dimensions tell us how many inner products are performed, which is $N \times N$ in self-attention. The inner dimension tells us the complexity of each inner product, which is $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions) in this case. Row-wise softmax takes $O(N^2)$ time, which is dominated by the $O(N^2d)$ matrix multiplication time.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Here's the trick for counting matrix multiplication complexity: the outer dimensions tell us how many inner products are performed, which is $N \times N$ in self-attention. The inner dimension tells us the complexity of each inner product, which is $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions) in this case. Row-wise softmax takes $O(N^2)$ time, which is dominated by the $O(N^2d)$ matrix multiplication time.<span class="sr-only">)</span>
   </small>
 </span>
  time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory (<a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a>) near the GPU compute has no room to store the resulting $N \times N$ matrices &mdash; ferrying them to the slow high-bandwidth memory (<a href="https://en.wikipedia.org/wiki/High_Bandwidth_Memory">HBM</a>) takes $O(N^2)$ time. As such, vanilla attention doesn&rsquo;t scale well with $N$ 💀.</p>
 <p>Many flavors of &ldquo;efficient attention&rdquo; (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention">blog</a> for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a>, <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a>, <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a>) or low-rank (e.g., <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a>, <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a>, <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a>, <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a>) approximations. Strangely, they don&rsquo;t always reduce the wall time.</p>
-<p>Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">To optimize any system, first identify its bottleneck; otherwise, you&rsquo;re wasting your time</span>. Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">insight</a> inspired <a href="https://arxiv.org/abs/2205.14135">FlashAttention</a> by Tri Dao&rsquo;s team: With a large enough $N$, attention is actually <em>not</em> bottlenecked by compute but by data movements between SRAM and HBM. So fitting everything on SRAM whenever possible will give us a true speedup.</p>
+<p>Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">to optimize any system, first identify its bottleneck; otherwise, you&rsquo;re wasting your time</span>. Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">insight</a> inspired <a href="https://arxiv.org/abs/2205.14135">FlashAttention</a> by Tri Dao&rsquo;s team: with a large enough $N$, attention is actually <em>not</em> bottlenecked by compute but by data movements between SRAM and HBM. So fitting everything on SRAM whenever possible will give us a true speedup.</p>
 <p>I&rsquo;ve been increasingly fascinated by this type of software-hardware co-design for attention (or deep learning in general) and will review some classic works in this post. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;, GPUs.</p>
 <h2 id="know-your-gpus" class="scroll-mt-8 group">
   Know Your GPUs
@@ -770,10 +770,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   
 </h3>
 <ol>
-<li>Why GPUs are born for parallel processing 👉 <a href="https://medium.com/accredian/harnessing-parallelism-how-gpus-revolutionize-computing-597f3479d955#:~:text=A%20GPU%20consists%20of%20a,which%20allows%20for%20parallel%20processing."><em>Harnessing Parallelism: How GPUs Revolutionize Computing</em></a> by Harshita Sharma.</li>
 <li>Deep learning efficiency = compute + memory + overhead 👉 <a href="https://horace.io/brrr_intro.html"><em>Making Deep Learning Go Brrrr From First Principles</em></a> by Horace He.</li>
 <li>Software-hardware co-design 👉 <em>Hardware-aware Algorithms for Sequence Modeling</em> by Tri Dao, <a href="https://www.youtube.com/live/foG0ebzuw34?si=6FSChDzXjBUqAQX8&amp;t=242">talk</a> + <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a> at Stanford MLSys.</li>
-<li><a href="https://openai.com/index/triton/">Triton</a>, the lingua franca for GPU programming 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
+<li><a href="https://openai.com/index/triton/">Triton</a>, the most popular language for GPU programming 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
+<li>Why GPUs are born for parallel processing 👉 <a href="https://medium.com/accredian/harnessing-parallelism-how-gpus-revolutionize-computing-597f3479d955#:~:text=A%20GPU%20consists%20of%20a,which%20allows%20for%20parallel%20processing."><em>Harnessing Parallelism: How GPUs Revolutionize Computing</em></a> by Harshita Sharma.</li>
 </ol>
 <h3 id="flashattention-io-aware-exact-attention" class="scroll-mt-8 group">
   FlashAttention: IO-Aware, Exact Attention
@@ -802,7 +802,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </h3>
 <ol start="5">
 <li>FlashAttention 1.0 👉 <a href="https://arxiv.org/abs/2205.14135"><em>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</em></a> (2022) by Dao et al., <em>NeurIPS</em>.</li>
-<li>FlashAttention 2.0 👉 <a href="https://arxiv.org/abs/2307.08691"><em>FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning</em></a> (2024) by Dao, <em>ICLR</em>.</li>
+<li>FlashAttention 2.0 👉 <a href="https://arxiv.org/abs/2307.08691"><em>FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning</em></a> (2023) by Dao, <em>ICLR</em>.</li>
 <li>FlashAttention 3.0 👉 <a href="https://arxiv.org/abs/2407.08608"><em>FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision</em></a> (2024) by Shah et al., <em>arXiv</em>.</li>
 </ol>
 <h3 id="fast--accurate-attention-approximations" class="scroll-mt-8 group">
