@@ -12,12 +12,12 @@
 <title>
     Hardware-Aware Attention for Long Sequence Modeling | Yuan Meng
 </title>
-  <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
+  <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." />
 <meta property="og:url" content="http://localhost:1313/posts/hardware_aware_transformers/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Hardware-Aware Attention for Long Sequence Modeling">
-  <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
+  <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
@@ -26,15 +26,15 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 
 
   <meta itemprop="name" content="Hardware-Aware Attention for Long Sequence Modeling">
-  <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
+  <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2288">
+  <meta itemprop="wordCount" content="2573">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Hardware-Aware Attention for Long Sequence Modeling">
-  <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
+  <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
 
 <link rel="canonical" href="http://localhost:1313/posts/hardware_aware_transformers/" />
@@ -78,7 +78,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2025-03-16",
-  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
+  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
   "headline": "Hardware-Aware Attention for Long Sequence Modeling",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
@@ -87,9 +87,9 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   },
   "mainEntityOfPage": "http://localhost:1313/posts/hardware_aware_transformers/",
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
-  "timeRequired": "PT11M",
+  "timeRequired": "PT13M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 2288
+  "wordCount": 2573
 }
 </script>
 
@@ -132,7 +132,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 
     
     
-      Reading time: 11 minutes
+      Reading time: 13 minutes
     
 
     
@@ -153,12 +153,11 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <li><a href="#are-you-bound-by-memory-compute-or-overhead">Are You Bound by Memory, Compute, or Overhead?</a></li>
       </ul>
     </li>
-    <li><a href="#flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites">FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes</a>
+    <li><a href="#flashattention-minimize-memory-readwrites">FlashAttention: Minimize Memory Read/Writes</a>
       <ul>
-        <li><a href="#tiling">Tiling</a></li>
-        <li><a href="#recomputation">Recomputation</a></li>
+        <li><a href="#flashattention-1-tiling--recomputation">FlashAttention-1: Tiling + Recomputation</a></li>
         <li><a href="#flashattention-2-fewer-non-matmul-flops--better-parallelism">FlashAttention-2: Fewer Non-<code>matmul</code> FLOPs + Better Parallelism</a></li>
-        <li><a href="#flashattention-3-xx-and-xx">FlashAttention-3: XX and XX</a></li>
+        <li><a href="#flashattention-3-asynchrony--low-precision">FlashAttention-3: Asynchrony + Low-Precision</a></li>
       </ul>
     </li>
     <li><a href="#wanna-reduce-compute-anyways-approximate-attention">Wanna Reduce Compute Anyways? Approximate Attention</a>
@@ -168,7 +167,6 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <li><a href="#try-em-all-deepseekmoe">Try &lsquo;Em All: DeepSeekMoE</a></li>
       </ul>
     </li>
-    <li><a href="#implications-for-user-sequence-modeling">Implications for User Sequence Modeling</a></li>
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#understand-deep-learning-systems">Understand Deep Learning Systems</a></li>
@@ -176,7 +174,6 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <li><a href="#fast--accurate-attention-approximations">Fast &amp; Accurate Attention Approximations</a></li>
       </ul>
     </li>
-    <li><a href="#gpu-terminology">GPU Terminology</a></li>
   </ul>
 </nav>
         </nav>
@@ -228,7 +225,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h2>
-<p>Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
+<p>Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
     alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
       <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
@@ -414,10 +411,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </span>
  (e.g., repeat a toy operation $n$ times, make input matrix dimensions larger, use higher-precision numeric representations) but the runtime doesn&rsquo;t increase, you&rsquo;re likely memory-bound: some of your compute sits idle, ready to process any incoming data ASAP. If runtime starts to increase with compute intensity, you&rsquo;re compute-bound since all your compute is occupied.</p>
 <p>To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (sending &ldquo;instructions&rdquo;) and GPU kernels (ferrying between HBM and SRAM and computing).</p>
-<h2 id="flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites" class="scroll-mt-8 group">
-  FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes
+<h2 id="flashattention-minimize-memory-readwrites" class="scroll-mt-8 group">
+  FlashAttention: Minimize Memory Read/Writes
   
-    <a href="#flashattention-fit-stuff-on-sram-to-reduce-hbm-readwrites"
+    <a href="#flashattention-minimize-memory-readwrites"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -454,17 +451,21 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 <li>Compute raw attention scores, <strong>$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$</strong>;</li>
 <li>Apply row-wise softmax on $\mathbf{S}$ so that each row sums to 1. In practice, we can keep 2 separate components:
 <ul>
-<li>Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;</li>
-<li>Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$;</li>
+<li>Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;
+<ul>
+<li>For better numerical stability, we could also subtract the row maximum $\bm{m}$ from each row element before exponentiating it, $\mathbf{A} = \exp(\mathbf{S} - \bm{m}) \in \mathbb{R}^{N \times N}$</li>
+</ul>
+</li>
+<li>Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$ or $\bm{l} = \sum_i \exp(\mathbf{S} - \bm{m})_i$, which will be the softmax denominators;</li>
 </ul>
 </li>
 <li>Compute the output matrix, $\mathbf{O}=\frac{\mathbf{A}}{\bm{l}}\mathbf{V} \in \mathbb{R}^{N \times d}$, which represents the &ldquo;contextual embedding&rdquo; of each input token.</li>
 </ol>
 <p>Fitting $\mathbf{S}$ and $\mathbf{A}$ on SRAM is not possible for long sequences, so they are moved to HBM with an $O(N^2)$ IO complexity. <em>If we can split the inputs, may the intermediate results will fit?</em> People thought about it but hesitated. While inputs are naturally split along the $\mathbf{Q}$ dimension, it seems wrong to further split them along $\mathbf{K}$ and $\mathbf{V}$ since computing the softmax requires summing over each row in the <em>full</em> $\mathbf{A}$ matrix.</p>
-<h3 id="tiling" class="scroll-mt-8 group">
-  Tiling
+<h3 id="flashattention-1-tiling--recomputation" class="scroll-mt-8 group">
+  FlashAttention-1: Tiling + Recomputation
   
-    <a href="#tiling"
+    <a href="#flashattention-1-tiling--recomputation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -495,31 +496,6 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </figure>
 
 <p>However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens <em>sequentially</em>, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.</p>
-<h3 id="recomputation" class="scroll-mt-8 group">
-  Recomputation
-  
-    <a href="#recomputation"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
 <p>Each input token&rsquo;s $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in \mathbf{V}$ projections are learnable &mdash; by updating them through backpropagation, we train the model to make better predictions. To calculate gradients w.r.t. $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ in the backward pass, we normally store intermediate matrices such as $\mathbf{S}$ and $\mathbf{A}$ to avoid recomputation. However, by keeping <span class="sidenote">
   <input
     aria-label="Show sidenote"
@@ -572,7 +548,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<p>Once FlashAttention overcame the IO bottleneck, compute became a concern again &mdash; GPUs are optimized for matrix multiplications (<code>matmul</code>) but significantly slower in non-<code>matmul</code> tasks like element-wise operations (e.g., scaling each element in $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$). Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 (<a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>) was developed to (1) reduce non-<code>matmul</code> FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between <span class="sidenote">
+<p>Once FlashAttention reduces the IO bottleneck, compute again becomes a concern &mdash; matrix multiplications are  fast because they are executed on Tensor Cores, which are specialized for <code>matmul</code>. Non-<code>matmul</code> operations such as element-wise exponentiation or scaling are slow because they are executed on other parts of the hardware. Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 (<a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>) was developed to (1) reduce non-<code>matmul</code> FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
@@ -588,7 +564,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     >warps</label
   >
   <small id="sidenote-13" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Each GPU has many thread blocks; each thread block has many threads, organized in groups of 32, each called a "warp".<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Execution units on the GPU are called "threads". A group of 32 threads are a "warp". 4 contiguous warps form a warpgroup. A thread block typically contains one or two warpgroups. Hopper H100 GPUs have thread block clusters.<span class="sr-only">)</span>
   </small>
 </span>
 , achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.</p>
@@ -607,10 +583,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </figure>
 
 <p>FlashAttention 1.0 was motivated by the fact that data transfer is slow between SRAM and HBM. Even inside the compute, communication speed differs within vs. between warps, with the former being much faster. FlashAttention 1.0 splits $\mathbf{K}$ and $\mathbf{V}$ into 4 warps &mdash; each warp computes a slice of $\mathbf{S}$ and writes it to the shared memory. To reduce shared memory reads/writes and achieve a speedup, FlashAttention 2.0 splits $\mathbf{Q}$ into 4 warps, allowing each query&rsquo;s output to be computed independently without communication between warps.</p>
-<h3 id="flashattention-3-xx-and-xx" class="scroll-mt-8 group">
-  FlashAttention-3: XX and XX
+<h3 id="flashattention-3-asynchrony--low-precision" class="scroll-mt-8 group">
+  FlashAttention-3: Asynchrony + Low-Precision
   
-    <a href="#flashattention-3-xx-and-xx"
+    <a href="#flashattention-3-asynchrony--low-precision"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -632,6 +608,15 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
+<p>As mentioned in the beginning, FlashAttention is fascinating and effective because it emerges from careful <em>software-hardware co-design</em>. Both FlashAttention 1.0 and FlashAttention 2.0 are optimized for the <a href="https://en.wikipedia.org/wiki/Ampere_(microarchitecture)">Ampere A100 GPU</a>. The newer <a href="https://en.wikipedia.org/wiki/Hopper_(microarchitecture)">Hopper H100 GPU</a> has its own characteristics, notably asynchronous Tensor Cores and low-precision number formats (FP8), for which FlashAttention 3.0 is optimized. Tri Dao&rsquo;s lab wrote a wonderful <a href="https://tridao.me/blog/2024/flash3/">blogpost</a> on FlashAttention 3.0.</p>
+<p>To take advantage of the asynchrony of Hopper Tensor Cores, we can manually enforce &ldquo;pingpong scheduling&rdquo;: whenever one warpgroup is performing the slow softmax, we can schedule a fast general matrix multiplication (GEMM) on another warpgroup. The goal is to &ldquo;hide&rdquo; the cost of softmax by GEMMs. Pingpong scheduling can be done not just between warpgroups but also warps within the same warpgroup.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/csm5056r9jg7vdjaxz12o/Screenshot-2025-03-16-at-10.44.12-PM.png?rlkey=jnwo9ewhmkpybxav4mpkfhcpu&amp;st=i1v498vd&amp;raw=1"
+    alt="Whenever one warpgroup is performing softmax, schedule GEMM on the other warpgroup to make use of this time (source: Shah et al., 2024)." width="1000"><figcaption>
+      <p>Whenever one warpgroup is performing softmax, schedule GEMM on the other warpgroup to make use of this time (source: <a href="https://arxiv.org/abs/2407.08608">Shah et al., 2024</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Quantizing to FP8 can cause errors because large models&rsquo; activation often has outliers. A clever trick, &ldquo;incoherent processing&rdquo;, multiplies $\mathbf{Q}$ and $\mathbf{K}$ each by a random orthogonal matrix $\mathbf{M}$ before quantization. This doesn&rsquo;t affect attention outputs, since $(\mathbf{Q}\mathbf{M})(\mathbf{K}\mathbf{M})^{\top} = \mathbf{Q}\mathbf{K}^{\top}$ and $\mathbf{M}\mathbf{M}^{\top} = \bm{I}$. However, the random $\mathbf{M}$ &ldquo;spreads out&rdquo; potential outliers in $\mathbf{Q}\mathbf{M}$ and $\mathbf{K}\mathbf{M}$, thereby reducing quantization errors.</p>
 <h2 id="wanna-reduce-compute-anyways-approximate-attention" class="scroll-mt-8 group">
   Wanna Reduce Compute Anyways? Approximate Attention
   
@@ -657,6 +642,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h2>
+<p>The funny thing about optimization is, once you break through a bottleneck, another process inevitably becomes the new bottleneck. In an imaginary world where memory reads/writes are no longer a concern for long-context attention, we need to make attention computation itself faster to get a wallclock speedup.</p>
 <h3 id="low-rank-approximation" class="scroll-mt-8 group">
   Low-Rank Approximation
   
@@ -732,31 +718,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<h2 id="implications-for-user-sequence-modeling" class="scroll-mt-8 group">
-  Implications for User Sequence Modeling
-  
-    <a href="#implications-for-user-sequence-modeling"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h2>
+<!-- # Implications for User Sequence Modeling -->
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -873,43 +835,18 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 <li>Sparse approximation 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</li>
 <li>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
 </ol>
-<h2 id="gpu-terminology" class="scroll-mt-8 group">
-  GPU Terminology
-  
-    <a href="#gpu-terminology"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h2>
-<ul>
-<li><strong>HBM</strong>: XX</li>
-<li><strong>SRAM</strong>: XX</li>
-<li><strong>Compute intensity</strong>: XX</li>
-<li><strong>FLOPs</strong>: XX</li>
-<li><strong>Kernel</strong>: an operation</li>
-<li><strong>Kernel fusion</strong>: xx</li>
-<li><strong>Tensor core</strong>: xx</li>
-<li><strong>Wrap</strong>: NVIDIA; AMD has a different name</li>
-<li><strong>CUDA</strong>: a platform</li>
-<li><strong>Triton</strong>: a programming language</li>
-</ul>
+<!-- ## GPU Terminology
+- **HBM**: XX
+- **SRAM**: XX
+- **Compute intensity**: XX
+- **FLOPs**: XX
+- **Kernel**: an operation
+- **Kernel fusion**: xx
+- **Tensor core**: xx
+- **Wrap**: NVIDIA; AMD has a different name
+- **CUDA**: a platform
+- **Triton**: a programming language
+ -->
 <!-- ## Mamba: Attention is Not What You Need
 11. Mamba 1.0 👉 [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) (2023) by Gu and Dao, *COLM*.
 12. Mamba 2.0 👉 [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060) (2024) by Dao and Gu, *ICML*. -->

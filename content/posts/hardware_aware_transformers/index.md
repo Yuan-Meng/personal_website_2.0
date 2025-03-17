@@ -8,7 +8,7 @@ toc: true
 
 # Attention Is All You Need --- if You Can Afford the $O(N^2)$ Complexity
 
-Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs' difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to "attend to all" comes hefty costs. 
+Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs' difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to "attend to all" comes hefty costs. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&st=r3h14cla&raw=1" caption="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600">}}
 
@@ -58,7 +58,7 @@ Horace He proposed an elegant method for distinguishing memory-bound vs. compute
 
 To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (sending "instructions") and GPU kernels (ferrying between HBM and SRAM and computing).
 
-# FlashAttention: Fit Stuff on SRAM to Reduce HBM Read/Writes
+# FlashAttention: Minimize Memory Read/Writes
 
 If there's no room in the factory to store intermediate outputs and moving them to a distant warehouse is a waste of time, we can assemble one small part at a time and combine them into the final product. As long as each small part stays in the factory, we save time on transportation. This is the key intuition behind FlashAttention. 
 
@@ -70,12 +70,13 @@ We carry out a series of matrix operations in order to eventually obtain the "co
 1. Compute raw attention scores, **$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$**;
 2. Apply row-wise softmax on $\mathbf{S}$ so that each row sums to 1. In practice, we can keep 2 separate components:
    - Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;
-   - Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$;
+   	 - For better numerical stability, we could also subtract the row maximum $\bm{m}$ from each row element before exponentiating it, $\mathbf{A} = \exp(\mathbf{S} - \bm{m}) \in \mathbb{R}^{N \times N}$
+   - Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$ or $\bm{l} = \sum_i \exp(\mathbf{S} - \bm{m})_i$, which will be the softmax denominators;
 3. Compute the output matrix, $\mathbf{O}=\frac{\mathbf{A}}{\bm{l}}\mathbf{V} \in \mathbb{R}^{N \times d}$, which represents the "contextual embedding" of each input token.
 
 Fitting $\mathbf{S}$ and $\mathbf{A}$ on SRAM is not possible for long sequences, so they are moved to HBM with an $O(N^2)$ IO complexity. *If we can split the inputs, may the intermediate results will fit?* People thought about it but hesitated. While inputs are naturally split along the $\mathbf{Q}$ dimension, it seems wrong to further split them along $\mathbf{K}$ and $\mathbf{V}$ since computing the softmax requires summing over each row in the *full* $\mathbf{A}$ matrix. 
 
-## Tiling
+## FlashAttention-1: Tiling + Recomputation
 
 With simple rescaling, we can obtain correct softmax results even when splitting inputs along $\mathbf{K}$ and $\mathbf{V}$. "Softmax + rescaling" is the key innovation behind *tiling* in FlashAttention ([Dao et al., 2022](https://arxiv.org/abs/2205.14135)).
 
@@ -84,9 +85,7 @@ Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $
 
 {{< figure src="https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&st=hgq348vi&raw=1" caption="By splitting $\mathbf{K}$ and $\mathbf{V}$ into blocks and computing outputs block by block, we keep computations within the fast SRAM and never materialize large matrices, thereby breaking through the IO bottleneck (source: Tri Dao's [talk](https://horace.io/brrr_intro.html))." width="1000">}}
 
- However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens *sequentially*, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.
-
-## Recomputation
+However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens *sequentially*, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.
 
 Each input token's $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in \mathbf{V}$ projections are learnable --- by updating them through backpropagation, we train the model to make better predictions. To calculate gradients w.r.t. $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ in the backward pass, we normally store intermediate matrices such as $\mathbf{S}$ and $\mathbf{A}$ to avoid recomputation. However, by keeping {{< sidenote "only" >}}If the input sequence is masked, we also need to store the pseudo-random number generator states so we can generate correct `MASK` tokens on the fly.{{< /sidenote >}} $\mathbf{O}$ (output) and $\bm{l}$ (softmax denominators), $\mathbf{S}$ and $\mathbf{A}$ can be recomputed in SRAM. 
 
@@ -96,10 +95,9 @@ By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ t
 
 ## FlashAttention-2: Fewer Non-`matmul` FLOPs + Better Parallelism
 
-Once FlashAttention overcame the IO bottleneck, compute became a concern again --- GPUs are optimized for matrix multiplications (`matmul`) but significantly slower in non-`matmul` tasks like element-wise operations (e.g., scaling each element in $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$). Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 ([Dao, 2023](https://arxiv.org/abs/2307.08691)) was developed to (1) reduce non-`matmul` FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between {{< sidenote "warps" >}}Each GPU has many thread blocks; each thread block has many threads, organized in groups of 32, each called a "warp".{{< /sidenote >}}, achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.
+Once FlashAttention reduces the IO bottleneck, compute again becomes a concern --- matrix multiplications are  fast because they are executed on Tensor Cores, which are specialized for `matmul`. Non-`matmul` operations such as element-wise exponentiation or scaling are slow because they are executed on other parts of the hardware. Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 ([Dao, 2023](https://arxiv.org/abs/2307.08691)) was developed to (1) reduce non-`matmul` FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between {{< sidenote "warps" >}}Execution units on the GPU are called "threads". A group of 32 threads are a "warp". 4 contiguous warps form a warpgroup. A thread block typically contains one or two warpgroups. Hopper H100 GPUs have thread block clusters.{{< /sidenote >}}, achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.
 
 To reduce non-`matmul` FLOPs, FlashAttention 2.0 avoids rescaling each previous block's output. Instead, it carries an updated $\bm{l}$ and rescales only the final output $\mathbf{O}^{(last)}$ to get the right results. For numerical stability of softmax, FlashAttention 1.0 stores not only $\bm{l}^{(j)}$ (row sums of exponentials of the $j$-th block) but also $\bm{m}^{(j)}$ (row maximums of the the $j$-th block) --- row maximums are subtracted from row elements before computing softmax. FlashAttention 2.0 only stores the log sum of exponentials, $L^{(j)} = \bm{m}^{(j)} + \log\bm{l}^{(j)}$.
-
 
 {{< figure src="https://www.dropbox.com/scl/fi/z1203la1pkz7ckha0crn9/Screenshot-2025-03-16-at-5.07.07-PM.png?rlkey=66a3mw07p9225f3hae6nevo6j&st=t5jcnbux&raw=1" caption="The sequence dimension is divided into row (forward) and column (backward) blocks, with one thread block dedicated to each block (source: [Dao, 2023](https://arxiv.org/abs/2307.08691))." width="600">}}
 
@@ -107,13 +105,21 @@ FlashAttention 1.0 parallelize along the batch and the head dimensions, but not 
 
 {{< figure src="https://www.dropbox.com/scl/fi/lpp95ckjok0mlbh9i7wtt/Screenshot-2025-03-16-at-5.41.17-PM.png?rlkey=aq4pqccri0zs1cf5si1iv7mx4&st=qwfg21h5&raw=1" caption="Splitting by $\mathbf{Q}$ reduces reads/writes to shared memory (source: [Dao, 2023](https://arxiv.org/abs/2307.08691))." width="600">}}
 
-
 FlashAttention 1.0 was motivated by the fact that data transfer is slow between SRAM and HBM. Even inside the compute, communication speed differs within vs. between warps, with the former being much faster. FlashAttention 1.0 splits $\mathbf{K}$ and $\mathbf{V}$ into 4 warps --- each warp computes a slice of $\mathbf{S}$ and writes it to the shared memory. To reduce shared memory reads/writes and achieve a speedup, FlashAttention 2.0 splits $\mathbf{Q}$ into 4 warps, allowing each query's output to be computed independently without communication between warps.
 
-## FlashAttention-3: XX and XX
+## FlashAttention-3: Asynchrony + Low-Precision
 
+As mentioned in the beginning, FlashAttention is fascinating and effective because it emerges from careful *software-hardware co-design*. Both FlashAttention 1.0 and FlashAttention 2.0 are optimized for the [Ampere A100 GPU](https://en.wikipedia.org/wiki/Ampere_(microarchitecture)). The newer [Hopper H100 GPU](https://en.wikipedia.org/wiki/Hopper_(microarchitecture)) has its own characteristics, notably asynchronous Tensor Cores and low-precision number formats (FP8), for which FlashAttention 3.0 is optimized. Tri Dao's lab wrote a wonderful [blogpost](https://tridao.me/blog/2024/flash3/) on FlashAttention 3.0. 
+
+To take advantage of the asynchrony of Hopper Tensor Cores, we can manually enforce "pingpong scheduling": whenever one warpgroup is performing the slow softmax, we can schedule a fast general matrix multiplication (GEMM) on another warpgroup. The goal is to "hide" the cost of softmax by GEMMs. Pingpong scheduling can be done not just between warpgroups but also warps within the same warpgroup.
+
+{{< figure src="https://www.dropbox.com/scl/fi/csm5056r9jg7vdjaxz12o/Screenshot-2025-03-16-at-10.44.12-PM.png?rlkey=jnwo9ewhmkpybxav4mpkfhcpu&st=i1v498vd&raw=1" caption="Whenever one warpgroup is performing softmax, schedule GEMM on the other warpgroup to make use of this time (source: [Shah et al., 2024](https://arxiv.org/abs/2407.08608))." width="1000">}}
+
+Quantizing to FP8 can cause errors because large models' activation often has outliers. A clever trick, "incoherent processing", multiplies $\mathbf{Q}$ and $\mathbf{K}$ each by a random orthogonal matrix $\mathbf{M}$ before quantization. This doesn't affect attention outputs, since $(\mathbf{Q}\mathbf{M})(\mathbf{K}\mathbf{M})^{\top} = \mathbf{Q}\mathbf{K}^{\top}$ and $\mathbf{M}\mathbf{M}^{\top} = \bm{I}$. However, the random $\mathbf{M}$ "spreads out" potential outliers in $\mathbf{Q}\mathbf{M}$ and $\mathbf{K}\mathbf{M}$, thereby reducing quantization errors. 
 
 # Wanna Reduce Compute Anyways? Approximate Attention
+
+The funny thing about optimization is, once you break through a bottleneck, another process inevitably becomes the new bottleneck. In an imaginary world where memory reads/writes are no longer a concern for long-context attention, we need to make attention computation itself faster to get a wallclock speedup.
 
 ## Low-Rank Approximation 
 
@@ -121,7 +127,7 @@ FlashAttention 1.0 was motivated by the fact that data transfer is slow between 
 
 ## Try 'Em All: DeepSeekMoE
 
-# Implications for User Sequence Modeling
+<!-- # Implications for User Sequence Modeling -->
 
 # References
 
@@ -141,7 +147,7 @@ FlashAttention 1.0 was motivated by the fact that data transfer is slow between 
 9. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020)
 10. DeepSeek combines blockwise compression/selection + sliding window attention 👉 [*Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention*](https://arxiv.org/abs/2502.11089) (2025) by Yuan et al., *arXiv*.
 
-# GPU Terminology
+<!-- ## GPU Terminology
 - **HBM**: XX
 - **SRAM**: XX
 - **Compute intensity**: XX
@@ -152,7 +158,7 @@ FlashAttention 1.0 was motivated by the fact that data transfer is slow between 
 - **Wrap**: NVIDIA; AMD has a different name
 - **CUDA**: a platform
 - **Triton**: a programming language
-
+ -->
 <!-- ## Mamba: Attention is Not What You Need
 11. Mamba 1.0 👉 [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) (2023) by Gu and Dao, *COLM*.
 12. Mamba 2.0 👉 [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060) (2024) by Dao and Gu, *ICML*. -->
