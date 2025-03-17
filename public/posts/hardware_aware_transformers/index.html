@@ -29,7 +29,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of modern large language models (LLMs). By attending to all tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1891">
+  <meta itemprop="wordCount" content="2288">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -87,9 +87,9 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   },
   "mainEntityOfPage": "http://localhost:1313/posts/hardware_aware_transformers/",
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
-  "timeRequired": "PT9M",
+  "timeRequired": "PT11M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 1891
+  "wordCount": 2288
 }
 </script>
 
@@ -132,7 +132,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 
     
     
-      Reading time: 9 minutes
+      Reading time: 11 minutes
     
 
     
@@ -157,6 +157,8 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
       <ul>
         <li><a href="#tiling">Tiling</a></li>
         <li><a href="#recomputation">Recomputation</a></li>
+        <li><a href="#flashattention-2-fewer-non-matmul-flops--better-parallelism">FlashAttention-2: Fewer Non-<code>matmul</code> FLOPs + Better Parallelism</a></li>
+        <li><a href="#flashattention-3-xx-and-xx">FlashAttention-3: XX and XX</a></li>
       </ul>
     </li>
     <li><a href="#wanna-reduce-compute-anyways-approximate-attention">Wanna Reduce Compute Anyways? Approximate Attention</a>
@@ -545,6 +547,91 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </figure>
 
 <p>By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ to $O(N)$, increasing the overall training throughput.</p>
+<h3 id="flashattention-2-fewer-non-matmul-flops--better-parallelism" class="scroll-mt-8 group">
+  FlashAttention-2: Fewer Non-<code>matmul</code> FLOPs + Better Parallelism
+  
+    <a href="#flashattention-2-fewer-non-matmul-flops--better-parallelism"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Once FlashAttention overcame the IO bottleneck, compute became a concern again &mdash; GPUs are optimized for matrix multiplications (<code>matmul</code>) but significantly slower in non-<code>matmul</code> tasks like element-wise operations (e.g., scaling each element in $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$). Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 (<a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>) was developed to (1) reduce non-<code>matmul</code> FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-13"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-13"
+    for="sidenote-checkbox-13"
+    class="sidenote-mark"
+    >warps</label
+  >
+  <small id="sidenote-13" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Each GPU has many thread blocks; each thread block has many threads, organized in groups of 32, each called a "warp".<span class="sr-only">)</span>
+  </small>
+</span>
+, achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.</p>
+<p>To reduce non-<code>matmul</code> FLOPs, FlashAttention 2.0 avoids rescaling each previous block&rsquo;s output. Instead, it carries an updated $\bm{l}$ and rescales only the final output $\mathbf{O}^{(last)}$ to get the right results. For numerical stability of softmax, FlashAttention 1.0 stores not only $\bm{l}^{(j)}$ (row sums of exponentials of the $j$-th block) but also $\bm{m}^{(j)}$ (row maximums of the the $j$-th block) &mdash; row maximums are subtracted from row elements before computing softmax. FlashAttention 2.0 only stores the log sum of exponentials, $L^{(j)} = \bm{m}^{(j)} + \log\bm{l}^{(j)}$.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/z1203la1pkz7ckha0crn9/Screenshot-2025-03-16-at-5.07.07-PM.png?rlkey=66a3mw07p9225f3hae6nevo6j&amp;st=t5jcnbux&amp;raw=1"
+    alt="The sequence dimension is divided into row (forward) and column (backward) blocks, with one thread block dedicated to each block (source: Dao, 2023)." width="600"><figcaption>
+      <p>The sequence dimension is divided into row (forward) and column (backward) blocks, with one thread block dedicated to each block (source: <a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>).</p>
+    </figcaption>
+</figure>
+
+<p>FlashAttention 1.0 parallelize along the batch and the head dimensions, but not the sequence dimension &mdash; each thread block is responsible for an entire head of an entire sequence. FlashAttention 2.0 further divides the sequence dimension into row/column blocks and assigns one thread block to each row/column block, allowing different &ldquo;chunks&rdquo; of a long sequence to be processed in parallel.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/lpp95ckjok0mlbh9i7wtt/Screenshot-2025-03-16-at-5.41.17-PM.png?rlkey=aq4pqccri0zs1cf5si1iv7mx4&amp;st=qwfg21h5&amp;raw=1"
+    alt="Splitting by $\mathbf{Q}$ reduces reads/writes to shared memory (source: Dao, 2023)." width="600"><figcaption>
+      <p>Splitting by $\mathbf{Q}$ reduces reads/writes to shared memory (source: <a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>).</p>
+    </figcaption>
+</figure>
+
+<p>FlashAttention 1.0 was motivated by the fact that data transfer is slow between SRAM and HBM. Even inside the compute, communication speed differs within vs. between warps, with the former being much faster. FlashAttention 1.0 splits $\mathbf{K}$ and $\mathbf{V}$ into 4 warps &mdash; each warp computes a slice of $\mathbf{S}$ and writes it to the shared memory. To reduce shared memory reads/writes and achieve a speedup, FlashAttention 2.0 splits $\mathbf{Q}$ into 4 warps, allowing each query&rsquo;s output to be computed independently without communication between warps.</p>
+<h3 id="flashattention-3-xx-and-xx" class="scroll-mt-8 group">
+  FlashAttention-3: XX and XX
+  
+    <a href="#flashattention-3-xx-and-xx"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
 <h2 id="wanna-reduce-compute-anyways-approximate-attention" class="scroll-mt-8 group">
   Wanna Reduce Compute Anyways? Approximate Attention
   

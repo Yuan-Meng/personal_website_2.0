@@ -94,6 +94,24 @@ Each input token's $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in
 
 By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ to $O(N)$, increasing the overall training throughput. 
 
+## FlashAttention-2: Fewer Non-`matmul` FLOPs + Better Parallelism
+
+Once FlashAttention overcame the IO bottleneck, compute became a concern again --- GPUs are optimized for matrix multiplications (`matmul`) but significantly slower in non-`matmul` tasks like element-wise operations (e.g., scaling each element in $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$). Since the wide industry adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 ([Dao, 2023](https://arxiv.org/abs/2307.08691)) was developed to (1) reduce non-`matmul` FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between {{< sidenote "warps" >}}Each GPU has many thread blocks; each thread block has many threads, organized in groups of 32, each called a "warp".{{< /sidenote >}}, achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.
+
+To reduce non-`matmul` FLOPs, FlashAttention 2.0 avoids rescaling each previous block's output. Instead, it carries an updated $\bm{l}$ and rescales only the final output $\mathbf{O}^{(last)}$ to get the right results. For numerical stability of softmax, FlashAttention 1.0 stores not only $\bm{l}^{(j)}$ (row sums of exponentials of the $j$-th block) but also $\bm{m}^{(j)}$ (row maximums of the the $j$-th block) --- row maximums are subtracted from row elements before computing softmax. FlashAttention 2.0 only stores the log sum of exponentials, $L^{(j)} = \bm{m}^{(j)} + \log\bm{l}^{(j)}$.
+
+
+{{< figure src="https://www.dropbox.com/scl/fi/z1203la1pkz7ckha0crn9/Screenshot-2025-03-16-at-5.07.07-PM.png?rlkey=66a3mw07p9225f3hae6nevo6j&st=t5jcnbux&raw=1" caption="The sequence dimension is divided into row (forward) and column (backward) blocks, with one thread block dedicated to each block (source: [Dao, 2023](https://arxiv.org/abs/2307.08691))." width="600">}}
+
+FlashAttention 1.0 parallelize along the batch and the head dimensions, but not the sequence dimension --- each thread block is responsible for an entire head of an entire sequence. FlashAttention 2.0 further divides the sequence dimension into row/column blocks and assigns one thread block to each row/column block, allowing different "chunks" of a long sequence to be processed in parallel. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/lpp95ckjok0mlbh9i7wtt/Screenshot-2025-03-16-at-5.41.17-PM.png?rlkey=aq4pqccri0zs1cf5si1iv7mx4&st=qwfg21h5&raw=1" caption="Splitting by $\mathbf{Q}$ reduces reads/writes to shared memory (source: [Dao, 2023](https://arxiv.org/abs/2307.08691))." width="600">}}
+
+
+FlashAttention 1.0 was motivated by the fact that data transfer is slow between SRAM and HBM. Even inside the compute, communication speed differs within vs. between warps, with the former being much faster. FlashAttention 1.0 splits $\mathbf{K}$ and $\mathbf{V}$ into 4 warps --- each warp computes a slice of $\mathbf{S}$ and writes it to the shared memory. To reduce shared memory reads/writes and achieve a speedup, FlashAttention 2.0 splits $\mathbf{Q}$ into 4 warps, allowing each query's output to be computed independently without communication between warps.
+
+## FlashAttention-3: XX and XX
+
 
 # Wanna Reduce Compute Anyways? Approximate Attention
 
