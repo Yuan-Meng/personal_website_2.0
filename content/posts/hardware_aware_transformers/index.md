@@ -1,6 +1,6 @@
 ---
 title: "Hardware-Aware Attention for Long Sequence Modeling"
-date: 2025-03-16
+date: 2025-03-18
 math: true
 categories: ["gpu", "transformers", "ml systems"]
 toc: true
@@ -138,18 +138,33 @@ $$(\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top} + \mathbf{S})\mathbf{V} = \tilde{
 
 The heart of sparse approximation is to quickly find compatible $(q_i, k_j)$ pairs. Popular methods are often based on locality-sensitive hashing (e.g., [Reformer](https://arxiv.org/abs/2001.04451)) or clustering (e.g., [Routing Transformer](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00353/97776/Efficient-Content-Based-Sparse-Attention-with)). 
 
-
 Locality-sensitive hashing (LSH) is a type of hashing techniques that more likely to hash similar inputs into the same buckets than those that are dissimilar. Reformer ([Kitaev et al., 2020](https://arxiv.org/abs/2001.04451)), for instance, uses an angular locality sensitive hash, where vectors (or points) are randomly rotated by the same degree and projected onto signed axes $k$ times. The $k$ signs form the hash signature of each original vector. Vectors closer in the higher dimensional embedding space are more likely to share hash signatures after projection. For each query, we can select keys that share the same or sufficiently similar hash signatures. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/gduuc0pltmtqusc5juh89/Screenshot-2025-03-18-at-9.19.16-PM.png?rlkey=3u3slph1r8347cp5hyj0xp48w&st=pbs46qx6&raw=1" caption="Reformer uses locality-sensitive hashing (LSH) to select query-key pairs in the same buckets for attention computation (source: [Kitaev et al., 2020](https://arxiv.org/abs/2001.04451))." width="1000">}}
 
 Routing Transformers ([Roy et al., 2021](https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00353/1923932/tacl_a_00353.pdf)) take a different approach to selecting top $k$ keys: tokens are assigned to clusters by $k$-means clustering ($k$ can be tuned), and each query token attends only to other tokens whose keys belong to the same cluster as its query.
 
+<!-- block sparse -->
+
 ## Low-Rank Approximation 
+Sparse approximation works well, well, on sparse matrices. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/dztunjex6sl10keq0o24x/Screenshot-2025-03-18-at-9.50.08-PM.png?rlkey=oe5h7d63a5p61a3n1lq13z11v&st=606j1a6r&raw=1" caption="Performer (source: [Choromanski et al., 2021](https://openreview.net/forum?id=Ua6zuk0WRH))." width="1000">}}
+
+{{< figure src="https://www.dropbox.com/scl/fi/xsf8pqwf9mnrx5ezgig9s/Screenshot-2025-03-18-at-9.53.04-PM.png?rlkey=n7up98waz7jc5nlxwoys0f11g&st=9fg2t8db&raw=1" caption="Loki (source: [Singhania et al., 2024](https://arxiv.org/abs/2406.02542))." width="1000">}}
+
 
 ## Try 'Em All: DeepSeekMoE
 
-<!-- # Implications for User Sequence Modeling -->
+{{< figure src="https://www.dropbox.com/scl/fi/8nk5j63vr7mk88vzkknjq/Screenshot-2025-03-18-at-9.48.19-PM.png?rlkey=cjf036slvq7wavd5ftiz371cv&st=prcgof8l&raw=1" caption="DeepSeekMOE combines 3 types of sparse attention (source: [Yuan et al., 2025](https://arxiv.org/abs/2502.11089))." width="1000">}}
+
+
+# Applications in User Sequence Modeling
+
+{{< figure src="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&st=ahzjp0wy&raw=1" caption="LREA (source: [Song et al., 2025](https://arxiv.org/html/2503.02542v1))." width="1000">}}
+
+
+{{< backlink "seq_user_modeling" "post" >}}
 
 # References
 
@@ -165,10 +180,9 @@ Routing Transformers ([Roy et al., 2021](https://direct.mit.edu/tacl/article-pdf
 6. FlashAttention 3.0 👉 [*FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision*](https://arxiv.org/abs/2407.08608) (2024) by Shah et al., *arXiv*.
 
 ## Fast & Accurate Attention Approximations
-7. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020)
+7. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020), [*LREA*](https://arxiv.org/html/2503.02542v1) (2025)
 8. Low-rank approximation 👉 [*Linformer*](https://arxiv.org/abs/2006.04768) (2020), [*Linear Transformer*](https://arxiv.org/abs/2006.16236) (ICML 2020), [*Performer*](https://openreview.net/forum?id=Ua6zuk0WRH) (ICLR 2021), [*Loki*](https://arxiv.org/abs/2406.02542) (NeurIPS 2024)
 9. Low-rank + sparse 👉 [*Scatterbrain: Unifying Sparse and Low-rank Attention Approximation*](https://arxiv.org/abs/2110.15343) (2021) by Chen et al., NeurIPS.
-
 10. DeepSeek combines blockwise compression/selection + sliding window attention 👉 [*Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention*](https://arxiv.org/abs/2502.11089) (2025) by Yuan et al., *arXiv*.
 
 <!-- ## GPU Terminology
