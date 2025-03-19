@@ -1,6 +1,6 @@
 ---
 title: "Hardware-Aware Attention for Long Sequence Modeling"
-date: 2025-03-18
+date: 2025-03-19
 math: true
 categories: ["gpu", "transformers", "ml systems"]
 toc: true
@@ -177,7 +177,7 @@ For instance, Alibaba's [ETA](https://arxiv.org/pdf/2108.04468) is a well-cited 
 
 {{< figure src="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&st=ahzjp0wy&raw=1" caption="LREA compresses/decompresses user sequences at the sequence dimension using multi-head latent attention by DeepSeek (source: [Song et al., 2025](https://arxiv.org/html/2503.02542v1))." width="1000">}}
 
-Over time, I realized there's no true distinction between an NLP MLE and a search/recommendation/ads MLE—great ML engineers are always learning new ideas and applying them wherever they fit.
+Over time, I realized there's no true distinction between an NLP MLE and a search/recommendation/ads MLE --- great ML engineers are constantly learning new ideas and applying them wherever they fit.
 
 # References
 
