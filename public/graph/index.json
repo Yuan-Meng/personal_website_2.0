@@ -86,7 +86,8 @@
     "/posts/hardware_aware_transformers/": {
       "in": [],
       "out": [
-        "/posts/attention_as_dict/"
+        "/posts/attention_as_dict/",
+        "/posts/seq_user_modeling/"
       ]
     },
     "/posts/human_vision/": {
@@ -136,7 +137,9 @@
       "out": []
     },
     "/posts/seq_user_modeling/": {
-      "in": [],
+      "in": [
+        "/posts/hardware_aware_transformers/"
+      ],
       "out": [
         "/posts/attention_as_dict/",
         "/posts/human_vision/",

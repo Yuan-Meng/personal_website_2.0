@@ -147,24 +147,37 @@ Routing Transformers ([Roy et al., 2021](https://direct.mit.edu/tacl/article-pdf
 <!-- block sparse -->
 
 ## Low-Rank Approximation 
-Sparse approximation works well, well, on sparse matrices. 
+Sparse approximation is best for, well, sparse matrices. Low-rank approximation doesn't assume sparsity. Performer ([Choromanski et al., 2021](https://openreview.net/forum?id=Ua6zuk0WRH)) doesn't even assume low-rankness --- it uses the kernel trick to factorize the full-rank attention matrix into 2 smaller matrix multiplications, reducing complexity from $O(N^2d)$ to $O(Nmd)$:
 
-{{< figure src="https://www.dropbox.com/scl/fi/dztunjex6sl10keq0o24x/Screenshot-2025-03-18-at-9.50.08-PM.png?rlkey=oe5h7d63a5p61a3n1lq13z11v&st=606j1a6r&raw=1" caption="Performer (source: [Choromanski et al., 2021](https://openreview.net/forum?id=Ua6zuk0WRH))." width="1000">}}
+$$\text{softmax}(\mathbf{Q} \mathbf{K}^{\top})\mathbf{V} \approx \phi(\mathbf{Q})(\phi(\mathbf{K})^{\top}\mathbf{V}).$$
 
-{{< figure src="https://www.dropbox.com/scl/fi/xsf8pqwf9mnrx5ezgig9s/Screenshot-2025-03-18-at-9.53.04-PM.png?rlkey=n7up98waz7jc5nlxwoys0f11g&st=9fg2t8db&raw=1" caption="Loki (source: [Singhania et al., 2024](https://arxiv.org/abs/2406.02542))." width="1000">}}
+{{< figure src="https://www.dropbox.com/scl/fi/dztunjex6sl10keq0o24x/Screenshot-2025-03-18-at-9.50.08-PM.png?rlkey=oe5h7d63a5p61a3n1lq13z11v&st=606j1a6r&raw=1" caption="Performer avoids materializing the full-rank attention matrix by factorizing it into 2 smaller matrix multiplications, reducing time complexity to linear (source: [Choromanski et al., 2021](https://openreview.net/forum?id=Ua6zuk0WRH))." width="1000">}}
+
+
+$\phi(\cdot)$ is a random feature map that projects each original $d$-vector into an $m$-vector. Rows in the feature map are orthogonal to each other to make each projection more evenly spread, which helps convergence.
+
+<!-- {{< figure src="https://www.dropbox.com/scl/fi/xsf8pqwf9mnrx5ezgig9s/Screenshot-2025-03-18-at-9.53.04-PM.png?rlkey=n7up98waz7jc5nlxwoys0f11g&st=9fg2t8db&raw=1" caption="Loki (source: [Singhania et al., 2024](https://arxiv.org/abs/2406.02542))." width="1000">}} -->
 
 
 ## Try 'Em All: DeepSeekMoE
 
-{{< figure src="https://www.dropbox.com/scl/fi/8nk5j63vr7mk88vzkknjq/Screenshot-2025-03-18-at-9.48.19-PM.png?rlkey=cjf036slvq7wavd5ftiz371cv&st=prcgof8l&raw=1" caption="DeepSeekMOE combines 3 types of sparse attention (source: [Yuan et al., 2025](https://arxiv.org/abs/2502.11089))." width="1000">}}
+Different attention approximation methods each have their strengths. What's cool about DeepSeek is that it adopts a mixture-of-experts (MoE) design to take advantage of several types of sparse attention.
 
+{{< figure src="https://www.dropbox.com/scl/fi/8nk5j63vr7mk88vzkknjq/Screenshot-2025-03-18-at-9.48.19-PM.png?rlkey=cjf036slvq7wavd5ftiz371cv&st=prcgof8l&raw=1" caption="DeepSeekMoE combines 3 types of sparse attention (source: [Yuan et al., 2025](https://arxiv.org/abs/2502.11089))." width="1000">}}
+
+DeepSeekMoE ([Yuan et al., 2025](https://arxiv.org/abs/2502.11089)) partitions keys into blocks, selects a representative key per block, and performs top-$k$ selection at the block level. Block sparse attention and block selection are natural for natural language, where nearby tokens tend to have similar relevance to the query. In addition, DeepSeek MoE uses sliding window attention to capture local patterns, without letting them dominate learning. Moreover, these sparsity approximation techniques can be trained end-to-end with language modeling, unlike hash- or clustering-based sparsity methods, which are not inherently learnable.
 
 # Applications in User Sequence Modeling
 
-{{< figure src="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&st=ahzjp0wy&raw=1" caption="LREA (source: [Song et al., 2025](https://arxiv.org/html/2503.02542v1))." width="1000">}}
+It's strange how I keep having this conversation with friends and (former) colleagues about whether we want to stick with search/recommendation/ads ("搜广推") ranking or jump on the LLM bandwagon. I was (am?) one of those stubborn ranking kids with little interest in NLP/LLMs, thinking that only ranking models are "alive" --- adapting to user engagement and essentially shaping what they see.
 
+Last year, I wrote a {{< backlink "seq_user_modeling" "blogpost" >}} on user sequence modeling since it's the hot topic in search/recommendation/ads, driving major model gains this time around. It's funny that as I read more efficient transformer papers, I realized that many "new" ideas in user sequence modeling are rooted in classic or SOTA concepts from the NLP/LLM community.
 
-{{< backlink "seq_user_modeling" "post" >}}
+For instance, Alibaba's [ETA](https://arxiv.org/pdf/2108.04468) is a well-cited paper on ultra-long sequence modeling, but it's essentially an extension of Reformer --- ETA took it a step further by hashing embeddings into binary vectors so that $O(1)$ Hamming distance can be used to select the top $k$ keys (candidate items) for a query (the target item). Alibaba's latest [LREA](https://arxiv.org/html/2503.02542v1) borrows from DeepSeek's [multi-head latent attention](https://arxiv.org/abs/2502.07864) borrows from DeepSeek's multi-head latent attention, but instead of compressing the feature dimension, it compresses the sequence dimension.
+
+{{< figure src="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&st=ahzjp0wy&raw=1" caption="LREA compresses/decompresses user sequences at the sequence dimension using multi-head latent attention by DeepSeek (source: [Song et al., 2025](https://arxiv.org/html/2503.02542v1))." width="1000">}}
+
+Over time, I realized there's no true distinction between an NLP MLE and a search/recommendation/ads MLE—great ML engineers are always learning new ideas and applying them wherever they fit.
 
 # References
 
@@ -180,8 +193,8 @@ Sparse approximation works well, well, on sparse matrices.
 6. FlashAttention 3.0 👉 [*FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision*](https://arxiv.org/abs/2407.08608) (2024) by Shah et al., *arXiv*.
 
 ## Fast & Accurate Attention Approximations
-7. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020), [*LREA*](https://arxiv.org/html/2503.02542v1) (2025)
-8. Low-rank approximation 👉 [*Linformer*](https://arxiv.org/abs/2006.04768) (2020), [*Linear Transformer*](https://arxiv.org/abs/2006.16236) (ICML 2020), [*Performer*](https://openreview.net/forum?id=Ua6zuk0WRH) (ICLR 2021), [*Loki*](https://arxiv.org/abs/2406.02542) (NeurIPS 2024)
+7. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020), [*Loki*](https://arxiv.org/abs/2406.02542) (NeurIPS 2024), [*LREA*](https://arxiv.org/html/2503.02542v1) (2025)
+8. Low-rank approximation 👉 [*Linformer*](https://arxiv.org/abs/2006.04768) (2020), [*Linear Transformer*](https://arxiv.org/abs/2006.16236) (ICML 2020), [*Performer*](https://openreview.net/forum?id=Ua6zuk0WRH) (ICLR 2021)
 9. Low-rank + sparse 👉 [*Scatterbrain: Unifying Sparse and Low-rank Attention Approximation*](https://arxiv.org/abs/2110.15343) (2021) by Chen et al., NeurIPS.
 10. DeepSeek combines blockwise compression/selection + sliding window attention 👉 [*Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention*](https://arxiv.org/abs/2502.11089) (2025) by Yuan et al., *arXiv*.
 

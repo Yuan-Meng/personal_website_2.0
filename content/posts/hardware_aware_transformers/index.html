@@ -1,0 +1,1217 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="math" content="true">
+<meta name="date" content="2025-03-18">
+<meta name="categories" content="[&quot;gpu&quot;, &quot;transformers&quot;, &quot;ml systems&quot;]">
+<meta name="toc" content="true"><style>body {
+  max-width: 980px;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 45px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,d09GRgABAAAAABE0AA8AAAAAHWwAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABWAAAADsAAABUIIslek9TLzIAAAGUAAAAQwAAAFY3d1HZY21hcAAAAdgAAACqAAACOvWLi0FjdnQgAAAChAAAABMAAAAgBtX/BGZwZ20AAAKYAAAFkAAAC3CKkZBZZ2FzcAAACCgAAAAIAAAACAAAABBnbHlmAAAIMAAABdQAAAjkYT9TNWhlYWQAAA4EAAAAMwAAADYQ6WvNaGhlYQAADjgAAAAfAAAAJAc6A1pobXR4AAAOWAAAACAAAAA0Kmz/7mxvY2EAAA54AAAAHAAAABwQPBJubWF4cAAADpQAAAAgAAAAIAEHC/NuYW1lAAAOtAAAAYQAAALxhQT4h3Bvc3QAABA4AAAAfgAAAMS3SYh9cHJlcAAAELgAAAB6AAAAhuVBK7x4nGNgZGBg4GIwYLBjYHJx8wlh4MtJLMljkGJgYYAAkDwymzEnMz2RgQPGA8qxgGkOIGaDiAIAJjsFSAB4nGNgZHZmnMDAysDAVMW0h4GBoQdCMz5gMGRkAooysDIzYAUBaa4pDA4Pwz+yMwf9z2KIYg5imAYUZgTJAQDcoQvQAHic7ZHNDYJAFIRnBXf94cDRIiyCKkCpwFCPJ092RcKNDoYKcN4+EmMPvpdvk539zQyAPYBCXEUJhBcCrJ5SQ9YLnLJe4qF5rdb+uWPDngNHTkta101pNyWa8lMhn6xx2dqUnW4q9YOIhAOOeueMSgsR/6ry+P7O5s6xVNg4chBsHUuFnWNJ8uZYwrw7chrsHXkODo7cB0dHOYCTY8kv0VE2WJKD6gOlWjsxAAB4nGNgQAMSEMgc9D8LhAESbAPdAHicrVZpd9NGFB15SZyELCULLWphxMRpsEYmbMGACUGyYyBdnK2VoIsUO+m+8Ynf4F/zZNpz6Dd+Wu8bLySQtOdwmpOjd+fN1czbZRJaktgL65GUmy/F1NYmjew8CemGTctRfCg7eyFlisnfBVEQrZbatx2HREQiULWusEQQ+x5ZmmR86FFGy7akV03KLT3pLlvjQb1V334aOsqxO6GkZjN0aD2yJVUYVaJIpj1S0qZlqPorSSu8v8LMV81QwohOImm8GcbQSN4bZ7TKaDW24yiKbLLcKFIkmuFBFHmU1RLn5IoJDMoHzZDyyqcR5cP8iKzYo5xWsEu20/y+L3mndzk/sV9vUbbkQB/Ijuzg7HQlX4RbW2HctJPtKFQRdtd3QmzZ7FT/Zo/ymkYDtysyvdCMYKl8hRArP6HM/iFZLZxP+ZJHo1qykRNB62VO7Es+gdbjiClxzRhZ0N3RCRHU/ZIzDPaYPh788d4plgsTAngcy3pHJZwIEylhczRJ2jByYCVliyqp9a6YOOV1WsRbwn7t2tGXzmjjUHdiPFsPHVs5UcnxaFKnmUyd2knNoykNopR0JnjMrwMoP6JJXm1jNYmVR9M4ZsaERCICLdxLU0EsO7GkKQTNoxm9uRumuXYtWqTJA/Xco/f05la4udNT2g70s0Z/VqdiOtgL0+lp5C/xadrlIkXp+ukZfkziQdYCMpEtNsOUgwdv/Q7Sy9eWHIXXBtju7fMrqH3WRPCkAfsb0B5P1SkJTIWYVYhWQGKta1mWydWsFqnI1HdDmla+rNMEinIcF8e+jHH9XzMzlpgSvt+J07MjLj1z7UsI0xx8m3U9mtepxXIBcWZ5TqdZlu/rNMfyA53mWZ7X6QhLW6ejLD/UaYHlRzodY3lBC5p038GQizDkAg6QMISlA0NYXoIhLBUMYbkIQ1gWYQjLJRjC8mMYwnIZhrC8rGXV1FNJ49qZWAZsQmBijh65zEXlaiq5VEK7aFRqQ54SbpVUFM+qf2WgXjzyhjmwFkiXyJpfMc6Vj0bl+NYVLW8aO1fAsepvH472OfFS1ouFPwX/1dZUJb1izcOTq/Abhp5sJ6o2qXh0TZfPVT26/l9UVFgL9BtIhVgoyrJscGcihI86nYZqoJVDzGzMPLTrdcuan8P9NzFCFlD9+DcUGgvcg05ZSVnt4KzV19uy3DuDcjgTLEkxN/P6VvgiI7PSfpFZyp6PfB5wBYxKZdhqA60VvNknMQ+Z3iTPBHFbUTZI2tjOBIkNHPOAefOdBCZh6qoN5E7hhg34BWFuwXknXKJ6oyyH7kXs8yik/Fun4kT2qGiMwLPZG2Gv70LKb3EMJDT5pX4MVBWhqRg1FdA0Um6oBl/G2bptQsYO9CMqdsOyrOLDxxb3lZJtGYR8pIjVo6Of1l6iTqrcfmYUl++dvgXBIDUxf3vfdHGQyrtayTJHbQNTtxqVU9eaQ+NVh+rmUfW94+wTOWuabronHnpf06rbwcVcLLD2bQ7SUiYX1PVhhQ2iy8WlUOplNEnvuAcYFhjQ71CKjf+r+th8nitVhdFxJN9O1LfR52AM/A/Yf0f1A9D3Y+hyDS7P95oTn2704WyZrqIX66foNzBrrblZugbc0HQD4iFHrY64yg18pwZxeqS5HOkh4GPdFeIBwCaAxeAT3bWM5lMAo/mMOT7A58xh0GQOgy3mMNhmzhrADnMY7DKHwR5zGHzBnHWAL5nDIGQOg4g5DJ4wJwB4yhwGXzGHwdfMYfANc+4DfMscBjFzGCTMYbCv6dYwzC1e0F2gtkFVoANTT1jcw+JQU2XI/o4Xhv29Qcz+wSCm/qjp9pD6Ey8M9WeDmPqLQUz9VdOdIfU3Xhjq7wYx9Q+DmPpMvxjLZQa/jHyXCgeUXWw+5++J9w/bxUC5AAEAAf//AA94nIVVX2hbZRQ/5/t7893s5ja9f7ouzdZ0TTqz3bRJmogbWya6bG6Cq0VbSV2ddIJjFtfIQHEig80Hda8yUN/0YQz8AyriiyD+xQd92R4HCnaCb3samnpumrpsCsLlfPf7zvedc37nL3CAtc/5W/wQZGA3tOBSY/g+TMjHmwzEoM1Q8+ZjRZY4oJhmBw5/YB6Za0yC5AkhlwA1A1yCBIBOwCII0Cj0U8BAMdUCzq05sKwkP7SlUY6fcJk4Fb/RyE79/6P5hjM/F4aZiXBoeMgzcqQ4Xi1hPqfDLG5FT+lchCVU3lYMyvuwhl1mqndQL0RsuloLywHtthLXI06OblTrhfWVnpSJ5+mwu/JdbtuN3IAnkW0LLMcRwaC7ktrlzridM6kVdyf9uO1UNBByI7JhwtG2sEwab07ORBeilWhqavJCqV0qzZTOl/7ZXQ5TbTcdcFelyGhhRDAQpdqp1FEX3w3cFTc1k9pJQkmm4ySCbSikxRP2QOfN+0tHS5MrpQuTU1Mk5nw0E5Xa0WvrOwDyGax9yB9ma6DAg82wHc43SAGTI4GjBWebOePAERFE8/AHaQpZASSTy8A4WwZiLQMQ82mFKATO0ILicRAoDm9p5P99E5b/fXG+kQYY3TYUuqmERWYoT0u/GNYL2q/4WB3LaVS+VynXsVYIcWw6DkCh3nX1D+VzlYN4LClF5yexSQos8exqZ3KVP+wtrC54u4Nznq6cq+xpMpUUnZ8FUYzE86ud0g28NOIv3Gj5/rmA3ABs7S/ywzFuQ4qyd6QxfNtiQIaEgp3w/entQg4Vcbqa16M5FfpeUB8t1+qeg7mI7cUyOe79wOk86gSxkVec4KPTX69++5x68Yubn5/F+w52z7u08sJX7fZXv8ekT/d2mILJxq6sn+SC6qEJknzLJCxyZEKwWVqYmAPBxBE/9DLeZiWHu7lcr/VytrCRuHojncNuTt9h46tmacmYisnSamdN2bZptcsmSysdVsy1PrOvOzF3xN64Rb937t/og9KHxYdcjIUqFAmIAHGHNzlns+RTPgeUYAQm9DwpNxfxbhhBHPaw3/gfTcXO2L+eJVIx5nsyGkvm9X4/f+bGkH45G0PaSjcMXTjcZyTvi3UdHoCDjQd3IDUVsgwYmUoJK/gp4JJxeRI0MKHZIkgynyIBqBTOUs6rOVCojvjZ4mCQz49ZMlMcp8QoYk6NoBfsxnJtsBohpa8iGJS+ZH7gU7NxME6cmF+t7cO9vB8d3jTWSct0ycW9ranXmolNDwmVkNnxe+8JtoztwS5rKJ0xWS95tQ/1zMYzg69MzUZnNtl1ofNbsml/OJm6f9wjRjpnu2o4MzHzn77IQkRd+1DjwMQ2pqSjGMMhyjrgTbBAKksuUm0iU7hI0aN2wOKOq7WYBSH0HGihj/jkiPxAfmwsEbfYrjMG+j3ij932Db/LV7I/xruNrhnroxjR9HRMb2nTvO0ZXOoHPk8H2ZhDPx93qcE/53sH5np/dkIP7zzhTVKdR/BAY/9ElkkR+A6lJGsqpJ4oQcTxpvBT3Kn58VkaJjgHyPEIws57xkaHh9KuVpDEpJZeMbZ5w/zBHi5NMQ4r5VphsFqID7TyB9eR4pX216c3AHxpdAwoqU9qg0ZJ6yVLKmMSz1iG2z27ifx18NkY0LPx1W/wCc2l5LrznrIsiKsqbmB78A9wIGx4tI8rjihVHJyY9pgMirenVq0yWg7Iw7eogG7ZgYM3qR9959A/fZkg6MnD/exlkmc+jWV4SB15XUR+eqC6l6ZmgPtN9z5JMfik05OV8ljylunJ4J+wA/FUaQSSKotsYsCWqaPBidBLcxkWx7XKFRIb45TGaEhjlF9uUVPqXOtcIwsXbBvfoZXIyRYFdkfnqjExH98xpnPczqzjX/uNdO1Y17Wpi5+6Ts8BXtjVFasp9KZ1mOiNbH65c5w6HgmyF2jFCZywM8mWjRc7T5Pmt0lRy7Y71+jYbpGyvwG4sH0XeJxjYGRgYADiwBB/53h+m68M3MwvgCIM1z5N/g6j///9v5H5BbMnkMvBwAQSBQCIcA9gAHicY2BkYGAO+p8FJF/8//v/F/MLBqAICuAFALYQB5kAeJxjfsHAwLwAiCNB+P9fbJjJmoGBMRUo/wKCAfO2EnQAAAAAANoBXgGcAgICVALaA1IDvAPkBAYEPARyAAEAAAANAF0ABAAAAAAAAgAUACQAcwAAAG4LcAAAAAB4nHWRzWrCQBSFT+pPqUIXLXTTzayKUohGKIibCoLuhbrrYtTRxCYZmYyKyz5Fd32HvlDfoO/QkziIFJtw9bvnnpl7ZwLgBt/wcHieGAf2UGd24Atcou+4RH3kuEweO66QXx1XyaHjGh6ROa7jFp/cwStfMVvhy7GHO+/e8QWuvcBxifqz4zL5xXGF/Oa4Sn53XMPE+3Bcx4P3M9DrvYmWoRWNQVN02kFXTPdCU4pSGQu5saE2meiLhU6timPtz3SSs9ypTCdqrJabWJoT5QQnymSRTkXgt0/UkUqVkVbN807ZdtmxdiEWRidi6HqItdErNbN+aO2612qd9sYAGmvsYRBhyUu0EGhQbfK/gzYCdElTOgSdB1eEFBIxFYkNV4RFJWPeZyyYpVQVHTHZx4y/yVGX2LGWFZri51TccUOn5B7nPefVCSPvGhVVwUl9znveO2KkhV8Wk82PZ8qwZf8OVcu1+fSmWCMw/HMOwXvKaysqM+p+cVuWag8tvv+c+xdd+4+teJxtjUEOwiAURJla24KliQfhUA2g/Sl+CKXx+loNrpzVezOLEY34Ron/0WhwQoszOvQYIKFwwQiNSbSBeO2SZ0tBP4j3zVjKNng32ZmtD1VVXCuOiw/pJ8S3WOU6l+K5UOTaDC4+2TjKMtN9KQf1ezLx/Sg/00FCvABHhjDjAAB4nGPw3sFwIihiIyNjX+QGxp0cDBwMyQUbGVidNjEwMmiBGJu5mBg5ICw+BjCLzWkX0wGgNCeQze60i8EBwmZmcNmowtgRGLHBoSNiI3OKy0Y1EG8XRwMDI4tDR3JIBEhJJBBs5mFi5NHawfi/dQNL70YmBhcADHYj9AAA) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable,
+.markdown-body .highlighttable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr,
+.markdown-body .highlighttable {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite,
+.markdown-body .highlighttable pre,
+.markdown-body .highlighttable div.highlight {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td,
+.markdown-body .highlighttable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headerlink {
+  font: normal 400 16px fontawesome-mini;
+  vertical-align: middle;
+  margin-left: -16px;
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  opacity: 0;
+  color: #333;
+}
+
+.markdown-body .headerlink:focus {
+  outline: none;
+}
+
+.markdown-body h1 .headerlink {
+  margin-top: 0.8rem;
+}
+
+.markdown-body h2 .headerlink,
+.markdown-body h3 .headerlink {
+  margin-top: 0.6rem;
+}
+
+.markdown-body h4 .headerlink {
+  margin-top: 0.2rem;
+}
+
+.markdown-body h5 .headerlink,
+.markdown-body h6 .headerlink {
+  margin-top: 0;
+}
+
+.markdown-body .headerlink:hover,
+.markdown-body h1:hover .headerlink,
+.markdown-body h2:hover .headerlink,
+.markdown-body h3:hover .headerlink,
+.markdown-body h4:hover .headerlink,
+.markdown-body h5:hover .headerlink,
+.markdown-body h6:hover .headerlink {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 3px;
+}
+
+.markdown-body code:not(.highlight):not(.codehilite), .markdown-body samp {
+  background-color: rgba(0,0,0,0.04);
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+}
+
+.markdown-body .codehilite,
+.markdown-body .highlight,
+.markdown-body pre {
+  border-radius: 3px;
+}
+
+.markdown-body :not(.highlight) > pre {
+  background-color: #f7f7f7;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* MultiMarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px fontawesome-mini;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\e157';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+.markdown-body diagram-div, .markdown-body div.uml-sequence-diagram, .markdown-body, div.uml-flowchart {
+  overflow: auto;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><style>/*GitHub*/
+.highlight {background-color:#f7f7f7;color:#333333;}
+.highlight .hll {background-color:#ffffcc;}
+.highlight .c{color:#999988;font-style:italic}
+.highlight .err{color:#a61717;background-color:#e3d2d2}
+.highlight .k{font-weight:bold}
+.highlight .o{font-weight:bold}
+.highlight .cm{color:#999988;font-style:italic}
+.highlight .cp{color:#999999;font-weight:bold}
+.highlight .c1{color:#999988;font-style:italic}
+.highlight .cs{color:#999999;font-weight:bold;font-style:italic}
+.highlight .gd{color:#000000;background-color:#ffdddd}
+.highlight .ge{font-style:italic}
+.highlight .gr{color:#aa0000}
+.highlight .gh{color:#999999}
+.highlight .gi{color:#000000;background-color:#ddffdd}
+.highlight .go{color:#888888}
+.highlight .gp{color:#555555}
+.highlight .gs{font-weight:bold}
+.highlight .gu{color:#800080;font-weight:bold}
+.highlight .gt{color:#aa0000}
+.highlight .kc{font-weight:bold}
+.highlight .kd{font-weight:bold}
+.highlight .kn{font-weight:bold}
+.highlight .kp{font-weight:bold}
+.highlight .kr{font-weight:bold}
+.highlight .kt{color:#445588;font-weight:bold}
+.highlight .m{color:#009999}
+.highlight .s{color:#dd1144}
+.highlight .n{color:#333333}
+.highlight .na{color:teal}
+.highlight .nb{color:#0086b3}
+.highlight .nc{color:#445588;font-weight:bold}
+.highlight .no{color:teal}
+.highlight .ni{color:purple}
+.highlight .ne{color:#990000;font-weight:bold}
+.highlight .nf{color:#990000;font-weight:bold}
+.highlight .nn{color:#555555}
+.highlight .nt{color:navy}
+.highlight .nv{color:teal}
+.highlight .ow{font-weight:bold}
+.highlight .w{color:#bbbbbb}
+.highlight .mf{color:#009999}
+.highlight .mh{color:#009999}
+.highlight .mi{color:#009999}
+.highlight .mo{color:#009999}
+.highlight .sb{color:#dd1144}
+.highlight .sc{color:#dd1144}
+.highlight .sd{color:#dd1144}
+.highlight .s2{color:#dd1144}
+.highlight .se{color:#dd1144}
+.highlight .sh{color:#dd1144}
+.highlight .si{color:#dd1144}
+.highlight .sx{color:#dd1144}
+.highlight .sr{color:#009926}
+.highlight .s1{color:#dd1144}
+.highlight .ss{color:#990073}
+.highlight .bp{color:#999999}
+.highlight .vc{color:teal}
+.highlight .vg{color:teal}
+.highlight .vi{color:teal}
+.highlight .il{color:#009999}
+.highlight .gc{color:#999;background-color:#EAF2F5}
+</style><title>"Hardware-Aware Attention for Long Sequence Modeling"</title></head><body><article class="markdown-body"><h1 id="attention-is-all-you-need-if-you-can-afford-the-on2-complexity">Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity<a class="headerlink" href="#attention-is-all-you-need-if-you-can-afford-the-on2-complexity" title="Permanent link"></a></h1>
+<p>Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs. </p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1">https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1</a>&rdquo; caption=&rdquo;In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.&rdquo; width=&rdquo;600&rdquo;&gt;}}</p>
+<!--more-->
+
+<p>Matrix multiplications and scaling take {{&lt; sidenote &ldquo;$O(N^2d)$&rdquo; &gt;}}Here&rsquo;s the trick for estimating matrix multiplication complexity: the outer dimensions tell us how many inner products are performed, which is $N \times N$ in self-attention. The inner dimension tells us the complexity of each inner product, which is $2d - 1$ = $d$ (element-wise products) + $(d-1)$ (additions) in this case. Row-wise softmax takes $O(N^2)$ time, which is dominated by the $O(N^2d)$ matrix multiplication time.{{&lt; /sidenote &gt;}} time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory (<a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a>) near the GPU compute has no room to store the resulting $N \times N$ matrices &mdash; ferrying them to the slow high-bandwidth memory (<a href="https://en.wikipedia.org/wiki/High_Bandwidth_Memory">HBM</a>) takes $O(N^2)$ time. As such, vanilla attention doesn&rsquo;t scale well with $N$ 💀. </p>
+<p>Many flavors of &ldquo;efficient attention&rdquo; (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention">blog</a> for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a>, <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a>, <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a>) or low-rank (e.g., <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a>, <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a>, <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a>, <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a>) approximations. Strangely, they don&rsquo;t always reduce the wall time. </p>
+<p>Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">to optimize any system, first identify its bottleneck; otherwise, you&rsquo;re wasting your time</span>. Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">insight</a> inspired <a href="https://arxiv.org/abs/2205.14135">FlashAttention</a> by Tri Dao&rsquo;s team: with a large enough $N$, attention is actually <em>not</em> bottlenecked by compute but by data movements between SRAM and HBM. So fitting intermediate results on SRAM if possible can give us a true speedup. </p>
+<p>I&rsquo;ve been increasingly fascinated by this type of software-hardware co-design for attention (or deep learning in general) and will review some classic works in this post. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;, GPUs.</p>
+<h1 id="know-your-gpus">Know Your GPUs<a class="headerlink" href="#know-your-gpus" title="Permanent link"></a></h1>
+<blockquote>
+<p>GPUs are throughput processors that rely on concurrency and asynchrony to hide memory and execution latencies. &mdash; <a href="https://arxiv.org/abs/2407.08608">Shah et al., (2023)</a></p>
+</blockquote>
+<h2 id="game-cards-born-for-deep-learning">Game Cards Born for Deep Learning<a class="headerlink" href="#game-cards-born-for-deep-learning" title="Permanent link"></a></h2>
+<p>Inside your Nintendo Switch are graphics processing units (GPUs) that render life-like scenes in real time. The <a href="https://en.wikipedia.org/wiki/Game_engine">game engine</a> determines how characters act and what objects look like based on rules and physics. Then, GPUs break down the scene to draw into small units (e.g., triangles and vertices), rendering pixels, lighting, textures, and other graph elements in each unit simultaneously. Without such parallelism, the game world unfolds slowly, making your game too stuck to play.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&amp;st=g3s1ufu5&amp;raw=1">https://www.dropbox.com/scl/fi/oirp77bh00gkux8gtic5v/Screenshot-2025-03-15-at-2.58.36-PM.png?rlkey=qstiht7lzgzbvpm4wgqzhkt18&amp;st=g3s1ufu5&amp;raw=1</a>&rdquo; caption=&rdquo;Game graphics are rendered seamlessly by graphics processing units (GPUs) thanks to their massive parallel processing power.&rdquo; width=&rdquo;500&rdquo;&gt;}}</p>
+<p>Turns out, matrix multiplications &mdash; the heart of deep learning &mdash; can similarly be broken down into small units and processed in parallel. For instance, $\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can decomposed into $n \times m$ inner products between two $k$-vectors (the $i$-th row vector in $\mathbf{A}$ and the $j$-th column vector in $\mathbf{B}$) to be executed at once. Each inner product can be further decomposed into $k$ parallel element-wise multiplications, followed by $(k-1)$ additions to sum up $k$ products.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&amp;st=269p6gyk&amp;raw=1">https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&amp;st=269p6gyk&amp;raw=1</a>&rdquo; caption=&rdquo;Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition.&rdquo; width=&rdquo;600&rdquo;&gt;}}</p>
+<p>In <a href="https://blogs.nvidia.com/blog/why-gpus-are-great-for-ai/">2009</a>, Geoff Hinton was the first to preach the power of GPUs in the machine learning community. <a href="https://www.newyorker.com/magazine/2023/12/04/how-jensen-huangs-nvidia-is-powering-the-ai-revolution">Three years later</a>, Hinton and his students trained AlexNet, a CNN variant that sparked the deep learning revolution, on two GeForce GPUs bought from Amazon.</p>
+<h2 id="gpu-memory-hierarchy">GPU Memory Hierarchy<a class="headerlink" href="#gpu-memory-hierarchy" title="Permanent link"></a></h2>
+<p>NVIDIA GPUs have different types of compute units: Tensor Cores are extremely fast for general matrix multiplications (GEMMs) and CUDA Cores are designed for more flexible, general-purpose computing. </p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/5g3edyxzwq1q83gj6cj46/Screenshot-2025-03-15-at-4.26.31-PM.png?rlkey=8h6wet9gim1ofjksu8ibbitk8&amp;st=5k6f3fq2&amp;raw=1">https://www.dropbox.com/scl/fi/5g3edyxzwq1q83gj6cj46/Screenshot-2025-03-15-at-4.26.31-PM.png?rlkey=8h6wet9gim1ofjksu8ibbitk8&amp;st=5k6f3fq2&amp;raw=1</a>&rdquo; caption=&rdquo;The GPU memory hierarchy (source: Tri Dao&rsquo;s <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a>).&rdquo; width=&rdquo;800&rdquo;&gt;}}</p>
+<p>Near the compute units is static random-access memory (SRAM), which is fast but limited in capacity &mdash; it&rsquo;s like the cache in many computer systems. The off-chip high-bandwidth memory (HBM) has greater capacity but lower data transfer speeds. Horace He has a wonderful <a href="https://horace.io/brrr_intro.html">analogy</a> that HBM is like a warehouse where raw materials and finished products are stored, while SRAM is like the storage right outside the factory where new products are being produced.</p>
+<p>As the GPU carries out an operation (called a &ldquo;kernel&rdquo;), it read inputs from HBM into SRAM and writes outputs from SRAM back to HBM. There are 3 types of costs associated with any GPU systems:</p>
+<ul>
+<li><strong>Bandwidth costs</strong>: The time spent ferrying data between HBM and SRAM. Also known as &ldquo;memory bandwidth&rdquo; or IO cost.</li>
+<li><strong>Compute costs</strong>: The time actually spent on computing (GEMMs or otherwise), often measured by FLOPs (floating points per second). This is what people think/hope they pay NVIDIA for.</li>
+<li><strong>Overhead costs</strong>: All else &mdash; e.g., deciding to which factory to send what materials for what products, or spinning up an idle factory.</li>
+</ul>
+<p>Understanding the bottleneck of your system is key to efficiency improvements. For instance, if you can&rsquo;t ferry materials fast enough into the factories, then buying more expensive factory machines won&rsquo;t help increase your output. The million-dollar question is: how do you know if you&rsquo;re bound by memory, compute, or overhead?</p>
+<h2 id="are-you-bound-by-memory-compute-or-overhead">Are You Bound by Memory, Compute, or Overhead?<a class="headerlink" href="#are-you-bound-by-memory-compute-or-overhead" title="Permanent link"></a></h2>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/63qnev0qkwnmynp99kj31/Screenshot-2025-03-15-at-8.09.27-PM.png?rlkey=92ofkzpw8qxrhb6xwapsedkds&amp;st=fqr7ekik&amp;raw=1">https://www.dropbox.com/scl/fi/63qnev0qkwnmynp99kj31/Screenshot-2025-03-15-at-8.09.27-PM.png?rlkey=92ofkzpw8qxrhb6xwapsedkds&amp;st=fqr7ekik&amp;raw=1</a>&rdquo; caption=&rdquo;Diagnose the bottleneck of your system by gradually intensifying compute and measuring wall time (source: Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">blog</a>).&rdquo; width=&rdquo;800&rdquo;&gt;}}</p>
+<p>Horace He proposed an elegant method for distinguishing memory-bound vs. compute-bound workloads &mdash; all else being equal, if you increase the {{&lt; sidenote &ldquo;compute intensity&rdquo; &gt;}}It&rsquo;s the ratio of the number of calculations to the amount of data moved, typically measured in FLOPs per byte.{{&lt; /sidenote &gt;}} (e.g., repeat a toy operation $n$ times for testing, or increasing the inner dimension of matrices in actual use cases) but the runtime doesn&rsquo;t increase, you&rsquo;re likely memory-bound: some of your compute sits idle, ready to process any incoming data ASAP. However, if runtime starts to increase with compute intensity, you&rsquo;re compute-bound since all your compute is likely occupied.</p>
+<p>To identify overhead costs, you can use the PyTorch profiler to check for large gaps between CPU kernels (e.g., sending &ldquo;instructions&rdquo;) and GPU kernels (e.g., ferrying data between HBM and SRAM, computing).</p>
+<h1 id="flashattention-minimize-memory-readwrites">FlashAttention: Minimize Memory Read/Writes<a class="headerlink" href="#flashattention-minimize-memory-readwrites" title="Permanent link"></a></h1>
+<p>If there&rsquo;s no room in the factory to store intermediate outputs and moving them to a distant warehouse takes a long time, we can assemble one small part at a time and combine them into the final product. So long as each small part stays in the factory, we save time on transportation. This is the key intuition behind FlashAttention. </p>
+<p>First, let&rsquo;s review how vanilla attention is computed (see my {{&lt; backlink &ldquo;attention_as_dict&rdquo; &ldquo;post&rdquo; &gt;}} for an intuitive explanation). To begin, we look up token embeddings and add them with positional encodings. Then we project the $N \times d$ input matrix into 3 matrices, $\mathbf{Q}$ (queries), $\mathbf{K}$ (keys), and $\mathbf{V}$ (values).</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/e8frszo46hrpklzlhh363/Screenshot-2025-03-16-at-12.32.41-PM.png?rlkey=6r8hdpupn6m5va0u8wbtknnay&amp;st=lvcue89u&amp;raw=1">https://www.dropbox.com/scl/fi/e8frszo46hrpklzlhh363/Screenshot-2025-03-16-at-12.32.41-PM.png?rlkey=6r8hdpupn6m5va0u8wbtknnay&amp;st=lvcue89u&amp;raw=1</a>&rdquo; caption=&rdquo;Computing attention requires us to materialize large $N \times N$ matrices in HBM, which is the bottleneck for long sequence modeling (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).&rdquo; width=&rdquo;800&rdquo;&gt;}}</p>
+<p>We carry out a series of matrix operations in order to eventually obtain the &ldquo;contextual embedding&rdquo; of each input token:
+1. Compute raw attention scores, <strong>$\mathbf{S} = \mathbf{Q}\mathbf{K}^{\top} \in \mathbb{R}^{N \times N}$</strong>;
+2. Apply row-wise softmax on $\mathbf{S}$ so that each row sums to 1. In practice, we can keep 2 separate components:
+   - Exponentiate each element in $\mathbf{S}$, $\mathbf{A} = \exp(\mathbf{S}) \in \mathbb{R}^{N \times N}$;
+     - For better numerical stability, we could also subtract the row maximum $\bm{m}$ from each row element before exponentiating it, $\mathbf{A} = \exp(\mathbf{S} - \bm{m}) \in \mathbb{R}^{N \times N}$
+   - Track the sum of each row $i$, $\bm{l} = \sum_i \exp(\mathbf{S})_i$ or $\bm{l} = \sum_i \exp(\mathbf{S} - \bm{m})_i$, which will be the softmax denominators;
+3. Compute the output matrix, $\mathbf{O}=\frac{\mathbf{A}}{\bm{l}}\mathbf{V} \in \mathbb{R}^{N \times d}$, which represents the &ldquo;contextual embedding&rdquo; of each input token.</p>
+<p>Fitting $\mathbf{S}$ and $\mathbf{A}$ on SRAM is not possible for long sequences, so they are moved to HBM with an $O(N^2)$ IO complexity. <em>If we can split the inputs, may the intermediate results will fit?</em> People thought about it but hesitated. While inputs are naturally split along the $\mathbf{Q}$ dimension, it seems wrong to further split them along $\mathbf{K}$ and $\mathbf{V}$ since computing the softmax requires summing over each row in the <em>full</em> $\mathbf{A}$ matrix. </p>
+<h2 id="flashattention-1-tiling-recomputation">FlashAttention-1: Tiling + Recomputation<a class="headerlink" href="#flashattention-1-tiling-recomputation" title="Permanent link"></a></h2>
+<p>With simple rescaling, we can obtain correct softmax results even when splitting inputs along $\mathbf{K}$ and $\mathbf{V}$. &ldquo;Softmax + rescaling&rdquo; is the key innovation behind <em>tiling</em> in FlashAttention (<a href="https://arxiv.org/abs/2205.14135">Dao et al., 2022</a>).</p>
+<p>Suppose we split $\mathbf{K}$ and $\mathbf{V}$ into two blocks. We can compute $\mathbf{S}^{(1)}$ and $\mathbf{S}^{(2)}$ without issue since matrix multiplications in one block don&rsquo;t interfere with those in another. Similarly, we can obtain $\mathbf{A}^{(1)}$ and $\mathbf{A}^{(2)}$ with issue since element-wise exponentiation is independent.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&amp;st=hgq348vi&amp;raw=1">https://www.dropbox.com/scl/fi/eprfs3xgnvr8s6n8p8elm/Screenshot-2025-03-16-at-1.15.52-PM.png?rlkey=6oqxe4wjlta3uxecejei4bqla&amp;st=hgq348vi&amp;raw=1</a>&rdquo; caption=&rdquo;By splitting $\mathbf{K}$ and $\mathbf{V}$ into blocks and computing outputs block by block, we keep computations within the fast SRAM and never materialize large matrices, thereby breaking through the IO bottleneck (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>However, if we scale $\mathbf{A}^{(1)}$ by $\bm{l}^{(1)} = \sum_i \exp(\mathbf{S}^{(1)})_i$ to obtain the output matrix $\mathbf{O}^{(1)}$, we get wrong results. This is because $\bm{l}^{(1)}$ sums each row within block 1, but we need to sum the entire row in the original $\mathbf{A}$. The good news is that once we process block 2, the final block here, we regain knowledge of the full row sums, $\bm{l}^{(2)} = \bm{l}^{(1)} + \sum_i \exp(\mathbf{S}^{(2)})_i$. This allows us to rescale $\mathbf{O}^{(1)}$ by $\frac{\bm{l}^{(1)}}{\bm{l}^{(2)}}$ to get the right answers. Note that the computation of each block happens <em>sequentially</em>, but since each fits within SRAM, it still provides a significant speedup compared to transferring large matrices to HBM.</p>
+<p>Each input token&rsquo;s $\bm{q} \in \mathbf{Q}$, $\bm{k} \in \mathbf{K}$, $\bm{v} \in \mathbf{V}$ projections are learnable &mdash; by updating them through backpropagation, we train the model to make better predictions. To calculate gradients w.r.t. $\mathbf{Q}$, $\mathbf{K}$, and $\mathbf{V}$ in the backward pass, we normally store intermediate matrices such as $\mathbf{S}$ and $\mathbf{A}$ to avoid recomputation. However, by keeping {{&lt; sidenote &ldquo;only&rdquo; &gt;}}If the input sequence is masked, we also need to store the pseudo-random number generator states so we can generate correct <code>MASK</code> tokens on the fly.{{&lt; /sidenote &gt;}} $\mathbf{O}$ (output) and $\bm{l}$ (softmax denominators), $\mathbf{S}$ and $\mathbf{A}$ can be recomputed in SRAM. </p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/ap9fxmtuw3xt2w27c2uvn/Screenshot-2025-03-16-at-2.34.46-PM.png?rlkey=t1f82pgzksr0hrhga5jfumnz0&amp;st=wkfpees1&amp;raw=1">https://www.dropbox.com/scl/fi/ap9fxmtuw3xt2w27c2uvn/Screenshot-2025-03-16-at-2.34.46-PM.png?rlkey=t1f82pgzksr0hrhga5jfumnz0&amp;st=wkfpees1&amp;raw=1</a>&rdquo; caption=&rdquo;By recomputing $\mathbf{S}$ and $\mathbf{A}$ in SRAM, we trade off extra work for memory saving (source: Tri Dao&rsquo;s <a href="https://horace.io/brrr_intro.html">talk</a>).&rdquo; width=&rdquo;500&rdquo;&gt;}}</p>
+<p>By doing a bit more computation, we can decrease the memory cost from $O(N^2)$ to $O(N)$, increasing the overall training throughput. </p>
+<h2 id="flashattention-2-fewer-non-matmul-flops-better-parallelism">FlashAttention-2: Fewer Non-<code>matmul</code> FLOPs + Better Parallelism<a class="headerlink" href="#flashattention-2-fewer-non-matmul-flops-better-parallelism" title="Permanent link"></a></h2>
+<p>As FlashAttention reduces the IO bottleneck, compute becomes a bigger concern &mdash; matrix multiplications are  fast because they are executed on Tensor Cores, which are specialized for <code>matmul</code>. Non-<code>matmul</code> operations such as element-wise exponentiation or scaling are slow because they are executed on non-specialized CUDA Cores. Since the industry-wide adoption of FlashAttention, researchers at companies like OpenAI, NVIDIA, and Meta have been exploring better ways to parallelize attention block computations. FlashAttention 2.0 (<a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>) was developed to (1) reduce non-<code>matmul</code> FLOPs, (2) further parallelize over the sequence length dimension, and (3) better partition work between {{&lt; sidenote &ldquo;warps&rdquo; &gt;}}Execution units on the GPU are called &ldquo;threads&rdquo;. A group of 32 threads are a &ldquo;warp&rdquo;. 4 contiguous warps form a warpgroup. A thread block typically contains one or two warpgroups. Hopper H100 GPUs have thread block clusters.{{&lt; /sidenote &gt;}}, achieving a 2–4x speedup and a 10–20x memory reduction compared with FlashAttention 1.0.</p>
+<p>To reduce non-<code>matmul</code> FLOPs, FlashAttention 2.0 avoids rescaling each previous block&rsquo;s output. Instead, it carries an updated $\bm{l}$ and rescales only the final output $\mathbf{O}^{(last)}$ for the right results. As mentioned, for more stable softmax, FlashAttention 1.0 not just stores $\bm{l}^{(j)}$ (row sums of exponentials of the $j$-th block) but also $\bm{m}^{(j)}$ (row maximums of the the $j$-th block) &mdash; row maximums are subtracted from row elements before the softmax. FlashAttention 2.0 only stores the log sum of exponentials, $L^{(j)} = \bm{m}^{(j)} + \log\bm{l}^{(j)}$.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/z1203la1pkz7ckha0crn9/Screenshot-2025-03-16-at-5.07.07-PM.png?rlkey=66a3mw07p9225f3hae6nevo6j&amp;st=t5jcnbux&amp;raw=1">https://www.dropbox.com/scl/fi/z1203la1pkz7ckha0crn9/Screenshot-2025-03-16-at-5.07.07-PM.png?rlkey=66a3mw07p9225f3hae6nevo6j&amp;st=t5jcnbux&amp;raw=1</a>&rdquo; caption=&rdquo;The sequence dimension is divided into row (forward) and column (backward) blocks, with one thread block dedicated to each block (source: <a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>).&rdquo; width=&rdquo;600&rdquo;&gt;}}</p>
+<p>FlashAttention 1.0 parallelize along the batch and the head dimensions, but not the sequence dimension &mdash; each thread block is responsible for an entire head of an entire sequence. FlashAttention 2.0 further divides the sequence dimension into row/column blocks and assigns one thread block to each row/column block, allowing different &ldquo;chunks&rdquo; of a long sequence to be processed in parallel. </p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/lpp95ckjok0mlbh9i7wtt/Screenshot-2025-03-16-at-5.41.17-PM.png?rlkey=aq4pqccri0zs1cf5si1iv7mx4&amp;st=qwfg21h5&amp;raw=1">https://www.dropbox.com/scl/fi/lpp95ckjok0mlbh9i7wtt/Screenshot-2025-03-16-at-5.41.17-PM.png?rlkey=aq4pqccri0zs1cf5si1iv7mx4&amp;st=qwfg21h5&amp;raw=1</a>&rdquo; caption=&rdquo;Splitting by $\mathbf{Q}$ reduces reads/writes to shared memory (source: <a href="https://arxiv.org/abs/2307.08691">Dao, 2023</a>).&rdquo; width=&rdquo;600&rdquo;&gt;}}</p>
+<p>FlashAttention 1.0 was motivated by the fact that data transfer is slow between SRAM and HBM. Even inside the compute, communication speed differs within vs. between warps, with the former being much faster. FlashAttention 1.0 splits $\mathbf{K}$ and $\mathbf{V}$ into 4 warps &mdash; each warp computes a slice of $\mathbf{S}$ and writes it to the shared memory. To reduce shared memory reads/writes and achieve a speedup, FlashAttention 2.0 splits $\mathbf{Q}$ into 4 warps, allowing each query&rsquo;s output to be computed independently without communication between warps.</p>
+<h2 id="flashattention-3-asynchrony-low-precision">FlashAttention-3: Asynchrony + Low-Precision<a class="headerlink" href="#flashattention-3-asynchrony-low-precision" title="Permanent link"></a></h2>
+<p>As mentioned in the beginning, FlashAttention is fascinating and effective because it emerges from careful <em>software-hardware co-design</em>. Both FlashAttention 1.0 and FlashAttention 2.0 are optimized for the <a href="https://en.wikipedia.org/wiki/Ampere_(microarchitecture)">Ampere A100 GPU</a>. The newer <a href="https://en.wikipedia.org/wiki/Hopper_(microarchitecture)">Hopper H100 GPU</a> has its own characteristics, notably asynchronous Tensor Cores and low-precision number formats (FP8), for which FlashAttention 3.0 is optimized. Tri Dao&rsquo;s lab wrote a wonderful <a href="https://tridao.me/blog/2024/flash3/">blogpost</a> on FlashAttention 3.0. </p>
+<p>To take advantage of the asynchrony of Hopper Tensor Cores, we can manually enforce &ldquo;pingpong scheduling&rdquo;: whenever one warpgroup is performing the slow softmax, we can schedule a fast GEMM on another warpgroup. The goal is to &ldquo;hide&rdquo; the cost of softmax with GEMMs. Pingpong scheduling can also be done within a warpgroup.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/csm5056r9jg7vdjaxz12o/Screenshot-2025-03-16-at-10.44.12-PM.png?rlkey=jnwo9ewhmkpybxav4mpkfhcpu&amp;st=i1v498vd&amp;raw=1">https://www.dropbox.com/scl/fi/csm5056r9jg7vdjaxz12o/Screenshot-2025-03-16-at-10.44.12-PM.png?rlkey=jnwo9ewhmkpybxav4mpkfhcpu&amp;st=i1v498vd&amp;raw=1</a>&rdquo; caption=&rdquo;Whenever one warpgroup is performing softmax, schedule GEMM on the other warpgroup to make use of this time (source: <a href="https://arxiv.org/abs/2407.08608">Shah et al., 2024</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>Quantizing to FP8 can cause errors because large models&rsquo; activation often has outliers. A clever trick, &ldquo;incoherent processing&rdquo;, multiplies $\mathbf{Q}$ and $\mathbf{K}$ each by a random orthogonal matrix $\mathbf{M}$ before quantization. This doesn&rsquo;t affect attention outputs, since $(\mathbf{Q}\mathbf{M})(\mathbf{K}\mathbf{M})^{\top} = \mathbf{Q}\mathbf{K}^{\top}$ and $\mathbf{M}\mathbf{M}^{\top} = \bm{I}$. However, the random $\mathbf{M}$ &ldquo;spreads out&rdquo; potential outliers in $\mathbf{Q}\mathbf{M}$ and $\mathbf{K}\mathbf{M}$, thereby reducing quantization errors. </p>
+<h1 id="reduce-compute-anyways-attention-approximation">Reduce Compute Anyways: Attention Approximation<a class="headerlink" href="#reduce-compute-anyways-attention-approximation" title="Permanent link"></a></h1>
+<p>The thing about optimization is, once a process becomes very efficient, another process inevitably becomes the new bottleneck. When matrix dimensions are large, computing attention scores is expensive. We can make it less expensive based on two observations:</p>
+<ul>
+<li><strong>Sparsity</strong>: If only a few keys are relevant to the query, we can just use the compatible $(q_i, k_j)$ pairs (&ldquo;support&rdquo;, or $\mathbf{S}$) to compute attention. This is the idea behind <em>sparse approximation</em>.</li>
+<li><strong>Low-rank</strong>: We may be able to find low-rank matrices $\tilde{\mathbf{Q}} \in \mathbb{R}^{N \times m}$ and $\tilde{\mathbf{K}} \in \mathbb{R}^{N \times m}$, where $m &lt; d$, such that $\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top}$ approximates $\mathbf{Q}\mathbf{K}^{\top}$. The procedure of finding them is <em>low-rank</em> approximation.</li>
+</ul>
+<p>Models like Scatterbrain (<a href="https://arxiv.org/abs/2110.15343">Chen et al, 2021</a>) combines the two flexibly:</p>
+<p>$$(\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top} + \mathbf{S})\mathbf{V} = \tilde{\mathbf{Q}}(\tilde{\mathbf{K}}^{\top}\mathbf{V}) + \mathbf{S}\mathbf{V}.$$</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/qgfmdw1ewydt1g1j4iy4m/Screenshot-2025-03-18-at-9.07.30-PM.png?rlkey=niv90i41jjonlcgtv0yse67oa&amp;st=5w7h7d8s&amp;raw=1">https://www.dropbox.com/scl/fi/qgfmdw1ewydt1g1j4iy4m/Screenshot-2025-03-18-at-9.07.30-PM.png?rlkey=niv90i41jjonlcgtv0yse67oa&amp;st=5w7h7d8s&amp;raw=1</a>&rdquo; caption=&rdquo;Scatterbrain, done by Tri Dao and colleagues before the FlashAttention days, combines low-rank and sparsity approximations (source: <a href="https://arxiv.org/abs/2110.15343">Chen et al., 2021</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<h2 id="sparse-approximation">Sparse Approximation<a class="headerlink" href="#sparse-approximation" title="Permanent link"></a></h2>
+<p>The heart of sparse approximation is to quickly find compatible $(q_i, k_j)$ pairs. Popular methods are often based on locality-sensitive hashing (e.g., <a href="https://arxiv.org/abs/2001.04451">Reformer</a>) or clustering (e.g., <a href="https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00353/97776/Efficient-Content-Based-Sparse-Attention-with">Routing Transformer</a>). </p>
+<p>Locality-sensitive hashing (LSH) is a type of hashing techniques that more likely to hash similar inputs into the same buckets than those that are dissimilar. Reformer (<a href="https://arxiv.org/abs/2001.04451">Kitaev et al., 2020</a>), for instance, uses an angular locality sensitive hash, where vectors (or points) are randomly rotated by the same degree and projected onto signed axes $k$ times. The $k$ signs form the hash signature of each original vector. Vectors closer in the higher dimensional embedding space are more likely to share hash signatures after projection. For each query, we can select keys that share the same or sufficiently similar hash signatures. </p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/gduuc0pltmtqusc5juh89/Screenshot-2025-03-18-at-9.19.16-PM.png?rlkey=3u3slph1r8347cp5hyj0xp48w&amp;st=pbs46qx6&amp;raw=1">https://www.dropbox.com/scl/fi/gduuc0pltmtqusc5juh89/Screenshot-2025-03-18-at-9.19.16-PM.png?rlkey=3u3slph1r8347cp5hyj0xp48w&amp;st=pbs46qx6&amp;raw=1</a>&rdquo; caption=&rdquo;Reformer uses locality-sensitive hashing (LSH) to select query-key pairs in the same buckets for attention computation (source: <a href="https://arxiv.org/abs/2001.04451">Kitaev et al., 2020</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>Routing Transformers (<a href="https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00353/1923932/tacl_a_00353.pdf">Roy et al., 2021</a>) take a different approach to selecting top $k$ keys: tokens are assigned to clusters by $k$-means clustering ($k$ can be tuned), and each query token attends only to other tokens whose keys belong to the same cluster as its query.</p>
+<!-- block sparse -->
+
+<h2 id="low-rank-approximation">Low-Rank Approximation<a class="headerlink" href="#low-rank-approximation" title="Permanent link"></a></h2>
+<p>Sparse approximation is best for, well, sparse matrices. Low-rank approximation doesn&rsquo;t assume sparsity. Performer (<a href="https://openreview.net/forum?id=Ua6zuk0WRH">Choromanski et al., 2021</a>) doesn&rsquo;t even assume low-rankness &mdash; it uses the kernel trick to factorize the full-rank attention matrix into 2 smaller matrix multiplications, reducing complexity from $O(N^2d)$ to $O(Nmd)$:</p>
+<p>$$\text{softmax}(\mathbf{Q} \mathbf{K}^{\top})\mathbf{V} \approx \phi(\mathbf{Q})(\phi(\mathbf{K})^{\top}\mathbf{V}).$$</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/dztunjex6sl10keq0o24x/Screenshot-2025-03-18-at-9.50.08-PM.png?rlkey=oe5h7d63a5p61a3n1lq13z11v&amp;st=606j1a6r&amp;raw=1">https://www.dropbox.com/scl/fi/dztunjex6sl10keq0o24x/Screenshot-2025-03-18-at-9.50.08-PM.png?rlkey=oe5h7d63a5p61a3n1lq13z11v&amp;st=606j1a6r&amp;raw=1</a>&rdquo; caption=&rdquo;Performer avoids materializing the full-rank attention matrix by factorizing it into 2 smaller matrix multiplications, reducing time complexity to linear (source: <a href="https://openreview.net/forum?id=Ua6zuk0WRH">Choromanski et al., 2021</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>$\phi(\cdot)$ is a random feature map that projects each original $d$-vector into an $m$-vector. Rows in the feature map are orthogonal to each other to make each projection more evenly spread, which helps convergence.</p>
+<!-- {{< figure src="https://www.dropbox.com/scl/fi/xsf8pqwf9mnrx5ezgig9s/Screenshot-2025-03-18-at-9.53.04-PM.png?rlkey=n7up98waz7jc5nlxwoys0f11g&st=9fg2t8db&raw=1" caption="Loki (source: [Singhania et al., 2024](https://arxiv.org/abs/2406.02542))." width="1000">}} -->
+
+<h2 id="try-em-all-deepseekmoe">Try &lsquo;Em All: DeepSeekMoE<a class="headerlink" href="#try-em-all-deepseekmoe" title="Permanent link"></a></h2>
+<p>Different attention approximation methods each have their strengths. What&rsquo;s cool about DeepSeek is that it adopts a mixture-of-experts (MoE) design to take advantage of several types of sparse attention.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/8nk5j63vr7mk88vzkknjq/Screenshot-2025-03-18-at-9.48.19-PM.png?rlkey=cjf036slvq7wavd5ftiz371cv&amp;st=prcgof8l&amp;raw=1">https://www.dropbox.com/scl/fi/8nk5j63vr7mk88vzkknjq/Screenshot-2025-03-18-at-9.48.19-PM.png?rlkey=cjf036slvq7wavd5ftiz371cv&amp;st=prcgof8l&amp;raw=1</a>&rdquo; caption=&rdquo;DeepSeekMoE combines 3 types of sparse attention (source: <a href="https://arxiv.org/abs/2502.11089">Yuan et al., 2025</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>DeepSeekMoE (<a href="https://arxiv.org/abs/2502.11089">Yuan et al., 2025</a>) partitions keys into blocks, selects a representative key per block, and performs top-$k$ selection at the block level. Block sparse attention and block selection are natural for natural language, where nearby tokens tend to have similar relevance to the query. In addition, DeepSeek MoE uses sliding window attention to capture local patterns, without letting them dominate learning. Moreover, these sparsity approximation techniques can be trained end-to-end with language modeling, unlike hash- or clustering-based sparsity methods, which are not inherently learnable.</p>
+<h1 id="applications-in-user-sequence-modeling">Applications in User Sequence Modeling<a class="headerlink" href="#applications-in-user-sequence-modeling" title="Permanent link"></a></h1>
+<p>It&rsquo;s strange how I keep having this conversation with friends and (former) colleagues about whether we want to stick with search/recommendation/ads (&ldquo;搜广推&rdquo;) ranking or jump on the LLM bandwagon. I was (am?) one of those stubborn ranking kids with little interest in NLP/LLMs, thinking that only ranking models are &ldquo;alive&rdquo; &mdash; adapting to user engagement and essentially shaping what they see.</p>
+<p>Last year, I wrote a {{&lt; backlink &ldquo;seq_user_modeling&rdquo; &ldquo;blogpost&rdquo; &gt;}} on user sequence modeling since it&rsquo;s the hot topic in search/recommendation/ads, driving major model gains this time around. It&rsquo;s funny that as I read more efficient transformer papers, I realized that many &ldquo;new&rdquo; ideas in user sequence modeling are rooted in classic or SOTA concepts from the NLP/LLM community.</p>
+<p>{{&lt; figure src=&rdquo;<a href="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&amp;st=ahzjp0wy&amp;raw=1">https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&amp;st=ahzjp0wy&amp;raw=1</a>&rdquo; caption=&rdquo;LREA compresses/decompresses user sequences at the sequence dimension using multi-head latent attention by DeepSeek (source: <a href="https://arxiv.org/html/2503.02542v1">Song et al., 2025</a>).&rdquo; width=&rdquo;1000&rdquo;&gt;}}</p>
+<p>For instance, Alibaba&rsquo;s <a href="https://arxiv.org/pdf/2108.04468">ETA</a> is a well-cited paper on ultra-long sequence modeling, but it&rsquo;s essentially an extension of Reformer &mdash; ETA took it a step further by hashing embeddings into binary vectors so that $O(1)$ Hamming distance can be used to select the top $k$ keys (candidate items) for a query (the target item). Alibaba&rsquo;s latest <a href="https://arxiv.org/html/2503.02542v1">LREA</a> borrows from DeepSeek&rsquo;s <a href="https://arxiv.org/abs/2502.07864">multi-head latent attention</a> borrows from DeepSeek&rsquo;s multi-head latent attention, but instead of compressing the feature dimension, it compresses the sequence dimension from $L$ to $r$ using the compression matrix $\mathbf{W}_{\text{comp}} \in \mathbb{R}^{L \times r}$.</p>
+<p>$$\mathbf{E}<em _text_comp="\text{comp">s^{\text{LREA}} = (\mathbf{E}_s^{\top}\mathbf{W}</em>}W_{\text{decomp}})^{\top}.$$</p>
+<p>The older I get, the more I realize that there&rsquo;s no real distinction between an NLP MLE and a search/recommendation/ads MLE—great ML engineers are always learning new ideas and applying them wherever they fit.</p>
+<h1 id="references">References<a class="headerlink" href="#references" title="Permanent link"></a></h1>
+<h2 id="understand-deep-learning-systems">Understand Deep Learning Systems<a class="headerlink" href="#understand-deep-learning-systems" title="Permanent link"></a></h2>
+<ol>
+<li>Deep learning efficiency = compute + memory + overhead 👉 <a href="https://horace.io/brrr_intro.html"><em>Making Deep Learning Go Brrrr From First Principles</em></a> by Horace He.</li>
+<li>Software-hardware co-design 👉 <em>Hardware-aware Algorithms for Sequence Modeling</em> by Tri Dao, <a href="https://www.youtube.com/live/foG0ebzuw34?si=6FSChDzXjBUqAQX8&amp;t=242">talk</a> + <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a> at Stanford MLSys.</li>
+<li><a href="https://openai.com/index/triton/">Triton</a>, the most popular GPU programming language 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
+</ol>
+<h2 id="flashattention-io-aware-exact-attention">FlashAttention: IO-Aware, Exact Attention<a class="headerlink" href="#flashattention-io-aware-exact-attention" title="Permanent link"></a></h2>
+<ol start="4">
+<li>FlashAttention 1.0 👉 <a href="https://arxiv.org/abs/2205.14135"><em>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</em></a> (2022) by Dao et al., <em>NeurIPS</em>.</li>
+<li>FlashAttention 2.0 👉 <a href="https://arxiv.org/abs/2307.08691"><em>FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning</em></a> (2023) by Dao, <em>ICLR</em>.</li>
+<li>FlashAttention 3.0 👉 <a href="https://arxiv.org/abs/2407.08608"><em>FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision</em></a> (2024) by Shah et al., <em>arXiv</em>.</li>
+</ol>
+<h2 id="fast-accurate-attention-approximations">Fast &amp; Accurate Attention Approximations<a class="headerlink" href="#fast-accurate-attention-approximations" title="Permanent link"></a></h2>
+<ol start="7">
+<li>Sparse approximation 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020), <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a> (NeurIPS 2024), <a href="https://arxiv.org/html/2503.02542v1"><em>LREA</em></a> (2025)</li>
+<li>Low-rank approximation 👉 <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a> (2020), <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a> (ICML 2020), <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a> (ICLR 2021)</li>
+<li>Low-rank + sparse 👉 <a href="https://arxiv.org/abs/2110.15343"><em>Scatterbrain: Unifying Sparse and Low-rank Attention Approximation</em></a> (2021) by Chen et al., NeurIPS.</li>
+<li>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
+</ol>
+<!-- ## GPU Terminology
+- **HBM**: XX
+- **SRAM**: XX
+- **Compute intensity**: XX
+- **FLOPs**: XX
+- **Kernel**: an operation
+- **Kernel fusion**: xx
+- **Tensor core**: xx
+- **Wrap**: NVIDIA; AMD has a different name
+- **CUDA**: a platform
+- **Triton**: a programming language
+ -->
+
+<!-- ## Mamba: Attention is Not What You Need
+11. Mamba 1.0 👉 [*Mamba: Linear-Time Sequence Modeling with Selective State Spaces*](https://arxiv.org/abs/2312.00752) (2023) by Gu and Dao, *COLM*.
+12. Mamba 2.0 👉 [*Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality*](https://arxiv.org/abs/2405.21060) (2024) by Dao and Gu, *ICML*. --></article></body></html>
