@@ -23,7 +23,7 @@
 
   <meta itemprop="name" content="Posts">
   <meta itemprop="description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
-  <meta itemprop="datePublished" content="2025-03-18T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-03-19T00:00:00+00:00">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Posts">
@@ -130,8 +130,8 @@
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
                 >Hardware-Aware Attention for Long Sequence Modeling</a
               >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-18T00:00:00&#43;00:00"
-              >March 18, 2025</time
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-19T00:00:00&#43;00:00"
+              >March 19, 2025</time
             >
           </header>
 
@@ -162,8 +162,8 @@
 </h2>
 <p>Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
-    alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
-      <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
+    alt="Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity." width="600"><figcaption>
+      <p>Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.</p>
     </figcaption>
 </figure></div>
         </article>

@@ -13,29 +13,29 @@
     Hardware-Aware Attention for Long Sequence Modeling | Yuan Meng
 </title>
   <meta name="description" content=" Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
-In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." />
+Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU’s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity." />
 <meta property="og:url" content="http://localhost:1313/posts/hardware_aware_transformers/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Hardware-Aware Attention for Long Sequence Modeling">
   <meta property="og:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
-In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
+Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU’s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-18T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-03-19T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Hardware-Aware Attention for Long Sequence Modeling">
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
-In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
-  <meta itemprop="datePublished" content="2025-03-18T00:00:00+00:00">
+Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU’s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.">
+  <meta itemprop="datePublished" content="2025-03-19T00:00:00+00:00">
   <meta itemprop="wordCount" content="3426">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Hardware-Aware Attention for Long Sequence Modeling">
   <meta name="twitter:description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
-In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
+Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU’s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.">
 
 <link rel="canonical" href="http://localhost:1313/posts/hardware_aware_transformers/" />
 
@@ -77,8 +77,8 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-03-18",
-  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.\nIn vanilla attention, writing $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.",
+  "datePublished": "2025-03-19",
+  "description": " Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.\nWriting materialized $\\mathbf{S}$, $\\mathbf{A}$, and $\\mathbf{O}$ to the GPU’s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.",
   "headline": "Hardware-Aware Attention for Long Sequence Modeling",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
@@ -126,7 +126,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <article class="main">
     <header>
       <h1 class="!mb-1">Hardware-Aware Attention for Long Sequence Modeling</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-03-18T00:00:00&#43;00:00">March 18, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-03-19T00:00:00&#43;00:00">March 19, 2025</time>
         </div>
     </header>
 
@@ -228,8 +228,8 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </h2>
 <p>Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
-    alt="In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity." width="600"><figcaption>
-      <p>In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.</p>
+    alt="Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity." width="600"><figcaption>
+      <p>Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.</p>
     </figcaption>
 </figure>
 
@@ -253,7 +253,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   </small>
 </span>
  time, where $N$ is the sequence length and $d$ is the embedding dimension. To make matters worse, the fast static random-access memory (<a href="https://en.wikipedia.org/wiki/Static_random-access_memory">SRAM</a>) near the GPU compute has no room to store the resulting $N \times N$ matrices &mdash; ferrying them to the slow high-bandwidth memory (<a href="https://en.wikipedia.org/wiki/High_Bandwidth_Memory">HBM</a>) takes $O(N^2)$ time. As such, vanilla attention doesn&rsquo;t scale well with $N$ 💀.</p>
-<p>Many flavors of &ldquo;efficient attention&rdquo; (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention">blog</a> for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a>, <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a>, <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a>) or low-rank (e.g., <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a>, <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a>, <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a>, <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a>) approximations. Strangely, they don&rsquo;t always reduce the wall time.</p>
+<p>Many flavors of &ldquo;efficient attention&rdquo; (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/#efficient-attention">blog</a> for a nice summary) aim to reduce the $O(N^2d)$ compute cost, typically via sparse (e.g., <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a>, <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a>, <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a>) or low-rank (e.g., <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a>, <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a>, <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a>) approximations. Strangely, they don&rsquo;t always reduce the wall-clock time.</p>
 <p>Before diving into any details, the lesson is this: <span style="background-color: #abe0bb">to optimize any system, first identify its bottleneck; otherwise, you&rsquo;re wasting your time</span>. Horace He&rsquo;s <a href="https://horace.io/brrr_intro.html">insight</a> inspired <a href="https://arxiv.org/abs/2205.14135">FlashAttention</a> by Tri Dao&rsquo;s team: with a large enough $N$, attention is actually <em>not</em> bottlenecked by compute but by data movements between SRAM and HBM. So fitting intermediate results on SRAM if possible can give us a true speedup.</p>
 <p>I&rsquo;ve been increasingly fascinated by this type of software-hardware co-design for attention (or deep learning in general) and will review some classic works in this post. First, let&rsquo;s take a look at the &ldquo;metal&rdquo;, GPUs.</p>
 <h2 id="know-your-gpus" class="scroll-mt-8 group">
@@ -282,7 +282,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   
 </h2>
 <blockquote>
-<p>GPUs are throughput processors that rely on concurrency and asynchrony to hide memory and execution latencies. &mdash; <a href="https://arxiv.org/abs/2407.08608">Shah et al., (2023)</a></p>
+<p>GPUs are throughput processors that rely on concurrency and asynchrony to hide memory and execution latencies. &mdash; <a href="https://arxiv.org/abs/2407.08608">Shah et al., (2024)</a></p>
 </blockquote>
 <h3 id="game-cards-born-for-deep-learning" class="scroll-mt-8 group">
   Game Cards Born for Deep Learning
@@ -316,7 +316,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </figcaption>
 </figure>
 
-<p>Turns out, matrix multiplications &mdash; the heart of deep learning &mdash; can similarly be broken down into small units and processed in parallel. For instance, $\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can decomposed into $n \times m$ inner products between two $k$-vectors (the $i$-th row vector in $\mathbf{A}$ and the $j$-th column vector in $\mathbf{B}$) to be executed at once. Each inner product can be further decomposed into $k$ parallel element-wise multiplications, followed by $(k-1)$ additions to sum up $k$ products.</p>
+<p>Turns out, matrix multiplications &mdash; the heart of deep learning &mdash; can similarly be broken down into small units and processed in parallel. For instance, $\mathbf{A} \in \mathbb{R}^{n \times k} \times \mathbf{B} \in \mathbb{R}^{k \times m}$ can be decomposed into $n \times m$ inner products between two $k$-vectors (the $i$-th row vector in $\mathbf{A}$ and the $j$-th column vector in $\mathbf{B}$) to be executed at once. Each inner product can be further decomposed into $k$ parallel element-wise multiplications, followed by $(k-1)$ additions to sum up $k$ products.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/vvqvrqfw0eyotbzl2j1y7/Screenshot-2025-03-15-at-3.49.46-PM.png?rlkey=b6vgw73tnjb8rs937j7istoaz&amp;st=269p6gyk&amp;raw=1"
     alt="Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition." width="600"><figcaption>
       <p>Multiplication between two matrices can be executed as parallel inner products. Each inner product can be executed as parallel element-wise multiplications, followed by an addition.</p>
@@ -796,15 +796,15 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 <p>It&rsquo;s strange how I keep having this conversation with friends and (former) colleagues about whether we want to stick with search/recommendation/ads (&ldquo;搜广推&rdquo;) ranking or jump on the LLM bandwagon. I was (am?) one of those stubborn ranking kids with little interest in NLP/LLMs, thinking that only ranking models are &ldquo;alive&rdquo; &mdash; adapting to user engagement and essentially shaping what they see.</p>
 <p>Last year, I wrote a <a href="/posts/seq_user_modeling/" class="backlink">blogpost</a>
   
-   on user sequence modeling since it&rsquo;s the hot topic in search/recommendation/ads, driving major model gains this time around. It&rsquo;s funny that as I read more efficient transformer papers, I realized that many &ldquo;new&rdquo; ideas in user sequence modeling are rooted in classic or SOTA concepts from the NLP/LLM community.</p>
-<p>For instance, Alibaba&rsquo;s <a href="https://arxiv.org/pdf/2108.04468">ETA</a> is a well-cited paper on ultra-long sequence modeling, but it&rsquo;s essentially an extension of Reformer &mdash; ETA took it a step further by hashing embeddings into binary vectors so that $O(1)$ Hamming distance can be used to select the top $k$ keys (candidate items) for a query (the target item). Alibaba&rsquo;s latest <a href="https://arxiv.org/html/2503.02542v1">LREA</a> borrows from DeepSeek&rsquo;s <a href="https://arxiv.org/abs/2502.07864">multi-head latent attention</a> borrows from DeepSeek&rsquo;s multi-head latent attention, but instead of compressing the feature dimension, it compresses the sequence dimension.</p>
+   on user sequence modeling since it&rsquo;s the hot topic in search/recommendation/ads, driving major model gains this time around. It&rsquo;s funny that as I read more IO-Aware and Efficient Transformer papers, I realized that many &ldquo;new&rdquo; ideas in user sequence modeling are rooted in classic or SOTA concepts from the NLP/LLM community.</p>
+<p>For instance, Alibaba&rsquo;s <a href="https://arxiv.org/pdf/2108.04468">ETA</a> is a well-cited paper on ultra-long sequence modeling, but it&rsquo;s essentially an extension of Reformer &mdash; ETA took it a step further by hashing embeddings into binary vectors so that $O(1)$ Hamming distance can be used to select the top $k$ keys (candidate items) for a query (the target item). Alibaba&rsquo;s latest <a href="https://arxiv.org/html/2503.02542v1">LREA</a> borrows from DeepSeek&rsquo;s <a href="https://arxiv.org/abs/2502.07864">multi-head latent attention</a>, but instead of compressing the feature dimension, it compresses the sequence dimension.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/z2yvkczynk7emflh14cp0/Screenshot-2025-03-18-at-10.00.20-PM.png?rlkey=9581qgz3g578ijojkmzqzq8z8&amp;st=ahzjp0wy&amp;raw=1"
     alt="LREA compresses/decompresses user sequences at the sequence dimension using multi-head latent attention by DeepSeek (source: Song et al., 2025)." width="1000"><figcaption>
       <p>LREA compresses/decompresses user sequences at the sequence dimension using multi-head latent attention by DeepSeek (source: <a href="https://arxiv.org/html/2503.02542v1">Song et al., 2025</a>).</p>
     </figcaption>
 </figure>
 
-<p>Over time, I realized there&rsquo;s no true distinction between an NLP MLE and a search/recommendation/ads MLE—great ML engineers are always learning new ideas and applying them wherever they fit.</p>
+<p>Over time, I realized there&rsquo;s no true distinction between an NLP MLE and a search/recommendation/ads MLE &mdash; great ML engineers are constantly learning new ideas and applying them wherever they fit.</p>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
