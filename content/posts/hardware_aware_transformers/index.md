@@ -24,7 +24,7 @@ I've been increasingly fascinated by this type of software-hardware co-design fo
 
 # Know Your GPUs
 
-> GPUs are throughput processors that rely on concurrency and asynchrony to hide memory and execution latencies. --- [Shah et al., (2023)](https://arxiv.org/abs/2407.08608)
+> GPUs are throughput processors that rely on concurrency and asynchrony to hide memory and execution latencies. --- [Shah et al., (2024)](https://arxiv.org/abs/2407.08608)
 
 ## Game Cards Born for Deep Learning
 
