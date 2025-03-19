@@ -29,7 +29,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   <meta itemprop="description" content="Attention Is All You Need — if You Can Afford the $O(N^2)$ Complexity Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs’ difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to “attend to all” comes hefty costs.
 In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to memory has an $O(N^2)$ IO complexity.">
   <meta itemprop="datePublished" content="2025-03-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2647">
+  <meta itemprop="wordCount" content="2940">
   <meta itemprop="keywords" content="Gpu,Transformers,Ml systems">
 
   <meta name="twitter:card" content="summary">
@@ -87,9 +87,9 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
   },
   "mainEntityOfPage": "http://localhost:1313/posts/hardware_aware_transformers/",
   "name": "Hardware-Aware Attention for Long Sequence Modeling",
-  "timeRequired": "PT13M",
+  "timeRequired": "PT14M",
   "url": "http://localhost:1313/posts/hardware_aware_transformers/",
-  "wordCount": 2647
+  "wordCount": 2940
 }
 </script>
 
@@ -132,7 +132,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 
     
     
-      Reading time: 13 minutes
+      Reading time: 14 minutes
     
 
     
@@ -160,10 +160,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
         <li><a href="#flashattention-3-asynchrony--low-precision">FlashAttention-3: Asynchrony + Low-Precision</a></li>
       </ul>
     </li>
-    <li><a href="#wanna-reduce-compute-anyways-approximate-attention">Wanna Reduce Compute Anyways? Approximate Attention</a>
+    <li><a href="#reduce-compute-anyways-attention-approximation">Reduce Compute Anyways: Attention Approximation</a>
       <ul>
-        <li><a href="#low-rank-approximation">Low-Rank Approximation</a></li>
         <li><a href="#sparse-approximation">Sparse Approximation</a></li>
+        <li><a href="#low-rank-approximation">Low-Rank Approximation</a></li>
         <li><a href="#try-em-all-deepseekmoe">Try &lsquo;Em All: DeepSeekMoE</a></li>
       </ul>
     </li>
@@ -621,10 +621,10 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 </figure>
 
 <p>Quantizing to FP8 can cause errors because large models&rsquo; activation often has outliers. A clever trick, &ldquo;incoherent processing&rdquo;, multiplies $\mathbf{Q}$ and $\mathbf{K}$ each by a random orthogonal matrix $\mathbf{M}$ before quantization. This doesn&rsquo;t affect attention outputs, since $(\mathbf{Q}\mathbf{M})(\mathbf{K}\mathbf{M})^{\top} = \mathbf{Q}\mathbf{K}^{\top}$ and $\mathbf{M}\mathbf{M}^{\top} = \bm{I}$. However, the random $\mathbf{M}$ &ldquo;spreads out&rdquo; potential outliers in $\mathbf{Q}\mathbf{M}$ and $\mathbf{K}\mathbf{M}$, thereby reducing quantization errors.</p>
-<h2 id="wanna-reduce-compute-anyways-approximate-attention" class="scroll-mt-8 group">
-  Wanna Reduce Compute Anyways? Approximate Attention
+<h2 id="reduce-compute-anyways-attention-approximation" class="scroll-mt-8 group">
+  Reduce Compute Anyways: Attention Approximation
   
-    <a href="#wanna-reduce-compute-anyways-approximate-attention"
+    <a href="#reduce-compute-anyways-attention-approximation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -646,11 +646,23 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h2>
-<p>The funny thing about optimization is, once you break through a bottleneck, another process inevitably becomes the new bottleneck. In an imaginary world where memory reads/writes are no longer a concern for long-context attention, we need to make attention computation itself faster to get a wallclock speedup.</p>
-<h3 id="low-rank-approximation" class="scroll-mt-8 group">
-  Low-Rank Approximation
+<p>The thing about optimization is, once a process becomes very efficient, another process inevitably becomes the new bottleneck. When matrix dimensions are large, computing attention scores is expensive. We can make it less expensive based on two observations:</p>
+<ul>
+<li><strong>Sparsity</strong>: If only a few keys are relevant to the query, we can just use the compatible $(q_i, k_j)$ pairs (&ldquo;support&rdquo;, or $\mathbf{S}$) to compute attention. This is the idea behind <em>sparse approximation</em>.</li>
+<li><strong>Low-rank</strong>: We may be able to find low-rank matrices $\tilde{\mathbf{Q}} \in \mathbb{R}^{N \times m}$ and $\tilde{\mathbf{K}} \in \mathbb{R}^{N \times m}$, where $m &lt; d$, such that $\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top}$ approximates $\mathbf{Q}\mathbf{K}^{\top}$. The procedure of finding them is <em>low-rank</em> approximation.</li>
+</ul>
+<p>Models like Scatterbrain (<a href="https://arxiv.org/abs/2110.15343">Chen et al, 2021</a>) combines the two flexibly:</p>
+<p>$$(\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top} + \mathbf{S})\mathbf{V} = \tilde{\mathbf{Q}}(\tilde{\mathbf{K}}^{\top}\mathbf{V}) + \mathbf{S}\mathbf{V}.$$</p>
+<figure><img src="https://www.dropbox.com/scl/fi/qgfmdw1ewydt1g1j4iy4m/Screenshot-2025-03-18-at-9.07.30-PM.png?rlkey=niv90i41jjonlcgtv0yse67oa&amp;st=5w7h7d8s&amp;raw=1"
+    alt="Scatterbrain, done by Tri Dao and colleagues before the FlashAttention days, combines low-rank and sparsity approximations (source: Chen et al., 2021)." width="1000"><figcaption>
+      <p>Scatterbrain, done by Tri Dao and colleagues before the FlashAttention days, combines low-rank and sparsity approximations (source: <a href="https://arxiv.org/abs/2110.15343">Chen et al., 2021</a>).</p>
+    </figcaption>
+</figure>
+
+<h3 id="sparse-approximation" class="scroll-mt-8 group">
+  Sparse Approximation
   
-    <a href="#low-rank-approximation"
+    <a href="#sparse-approximation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -672,10 +684,19 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<h3 id="sparse-approximation" class="scroll-mt-8 group">
-  Sparse Approximation
+<p>The heart of sparse approximation is to quickly find compatible $(q_i, k_j)$ pairs. Popular methods are often based on locality-sensitive hashing (e.g., <a href="https://arxiv.org/abs/2001.04451">Reformer</a>) or clustering (e.g., <a href="https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00353/97776/Efficient-Content-Based-Sparse-Attention-with">Routing Transformer</a>).</p>
+<p>Locality-sensitive hashing (LSH) is a type of hashing techniques that more likely to hash similar inputs into the same buckets than those that are dissimilar. Reformer (<a href="https://arxiv.org/abs/2001.04451">Kitaev et al., 2020</a>), for instance, uses an angular locality sensitive hash, where vectors (or points) are randomly rotated by the same degree and projected onto signed axes $k$ times. The $k$ signs form the hash signature of each original vector. Vectors closer in the higher dimensional embedding space are more likely to share hash signatures after projection. For each query, we can select keys that share the same or sufficiently similar hash signatures.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/gduuc0pltmtqusc5juh89/Screenshot-2025-03-18-at-9.19.16-PM.png?rlkey=3u3slph1r8347cp5hyj0xp48w&amp;st=pbs46qx6&amp;raw=1"
+    alt="Reformer uses locality-sensitive hashing (LSH) to select query-key pairs in the same buckets for attention computation (source: Kitaev et al., 2020)." width="1000"><figcaption>
+      <p>Reformer uses locality-sensitive hashing (LSH) to select query-key pairs in the same buckets for attention computation (source: <a href="https://arxiv.org/abs/2001.04451">Kitaev et al., 2020</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Routing Transformers (<a href="https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00353/1923932/tacl_a_00353.pdf">Roy et al., 2021</a>) take a different approach to selecting top $k$ keys: tokens are assigned to clusters by $k$-means clustering ($k$ can be tuned), and each query token attends only to other tokens whose keys belong to the same cluster as its query.</p>
+<h3 id="low-rank-approximation" class="scroll-mt-8 group">
+  Low-Rank Approximation
   
-    <a href="#sparse-approximation"
+    <a href="#low-rank-approximation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -776,8 +797,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
 <ol>
 <li>Deep learning efficiency = compute + memory + overhead 👉 <a href="https://horace.io/brrr_intro.html"><em>Making Deep Learning Go Brrrr From First Principles</em></a> by Horace He.</li>
 <li>Software-hardware co-design 👉 <em>Hardware-aware Algorithms for Sequence Modeling</em> by Tri Dao, <a href="https://www.youtube.com/live/foG0ebzuw34?si=6FSChDzXjBUqAQX8&amp;t=242">talk</a> + <a href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf">slides</a> at Stanford MLSys.</li>
-<li><a href="https://openai.com/index/triton/">Triton</a>, the most popular language for GPU programming 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
-<li>Why GPUs are born for parallel processing 👉 <a href="https://medium.com/accredian/harnessing-parallelism-how-gpus-revolutionize-computing-597f3479d955#:~:text=A%20GPU%20consists%20of%20a,which%20allows%20for%20parallel%20processing."><em>Harnessing Parallelism: How GPUs Revolutionize Computing</em></a> by Harshita Sharma.</li>
+<li><a href="https://openai.com/index/triton/">Triton</a>, the most popular GPU programming language 👉 <a href="https://triton-lang.org/main/getting-started/tutorials/index.html"><em>Tutorials</em></a> by OpenAI + Triton rewrite (<a href="https://github.com/unslothai/unsloth">repo</a>) of popular LLMs by Unsloth AI.</li>
 </ol>
 <h3 id="flashattention-io-aware-exact-attention" class="scroll-mt-8 group">
   FlashAttention: IO-Aware, Exact Attention
@@ -804,7 +824,7 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<ol start="5">
+<ol start="4">
 <li>FlashAttention 1.0 👉 <a href="https://arxiv.org/abs/2205.14135"><em>FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness</em></a> (2022) by Dao et al., <em>NeurIPS</em>.</li>
 <li>FlashAttention 2.0 👉 <a href="https://arxiv.org/abs/2307.08691"><em>FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning</em></a> (2023) by Dao, <em>ICLR</em>.</li>
 <li>FlashAttention 3.0 👉 <a href="https://arxiv.org/abs/2407.08608"><em>FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision</em></a> (2024) by Shah et al., <em>arXiv</em>.</li>
@@ -834,10 +854,19 @@ In vanilla attention, writing $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to me
     </a>
   
 </h3>
-<ol start="8">
-<li>Low-rank approximation 👉 <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a> (2020), <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a> (ICML 2020), <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a> (ICLR 2021), <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a> (NeurIPS 2024)</li>
-<li>Sparse approximation 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</li>
-<li>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</li>
+<ol start="7">
+<li>
+<p>Sparse approximation 👉 <a href="https://arxiv.org/abs/1904.10509"><em>Sparse Transformers</em></a> (2019), <a href="https://arxiv.org/abs/2001.04451"><em>Reformer</em></a> (ICLR 2020), <a href="https://arxiv.org/abs/2003.05997"><em>Routing Transformer</em></a> (ACL 2020)</p>
+</li>
+<li>
+<p>Low-rank approximation 👉 <a href="https://arxiv.org/abs/2006.04768"><em>Linformer</em></a> (2020), <a href="https://arxiv.org/abs/2006.16236"><em>Linear Transformer</em></a> (ICML 2020), <a href="https://openreview.net/forum?id=Ua6zuk0WRH"><em>Performer</em></a> (ICLR 2021), <a href="https://arxiv.org/abs/2406.02542"><em>Loki</em></a> (NeurIPS 2024)</p>
+</li>
+<li>
+<p>Low-rank + sparse 👉 <a href="https://arxiv.org/abs/2110.15343"><em>Scatterbrain: Unifying Sparse and Low-rank Attention Approximation</em></a> (2021) by Chen et al., NeurIPS.</p>
+</li>
+<li>
+<p>DeepSeek combines blockwise compression/selection + sliding window attention 👉 <a href="https://arxiv.org/abs/2502.11089"><em>Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention</em></a> (2025) by Yuan et al., <em>arXiv</em>.</p>
+</li>
 </ol>
 <!-- ## GPU Terminology
 - **HBM**: XX

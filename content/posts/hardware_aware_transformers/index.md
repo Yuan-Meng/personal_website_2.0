@@ -121,13 +121,31 @@ To take advantage of the asynchrony of Hopper Tensor Cores, we can manually enfo
 
 Quantizing to FP8 can cause errors because large models' activation often has outliers. A clever trick, "incoherent processing", multiplies $\mathbf{Q}$ and $\mathbf{K}$ each by a random orthogonal matrix $\mathbf{M}$ before quantization. This doesn't affect attention outputs, since $(\mathbf{Q}\mathbf{M})(\mathbf{K}\mathbf{M})^{\top} = \mathbf{Q}\mathbf{K}^{\top}$ and $\mathbf{M}\mathbf{M}^{\top} = \bm{I}$. However, the random $\mathbf{M}$ "spreads out" potential outliers in $\mathbf{Q}\mathbf{M}$ and $\mathbf{K}\mathbf{M}$, thereby reducing quantization errors. 
 
-# Wanna Reduce Compute Anyways? Approximate Attention
+# Reduce Compute Anyways: Attention Approximation
 
-The funny thing about optimization is, once you break through a bottleneck, another process inevitably becomes the new bottleneck. In an imaginary world where memory reads/writes are no longer a concern for long-context attention, we need to make attention computation itself faster to get a wallclock speedup.
+The thing about optimization is, once a process becomes very efficient, another process inevitably becomes the new bottleneck. When matrix dimensions are large, computing attention scores is expensive. We can make it less expensive based on two observations:
 
-## Low-Rank Approximation 
+- **Sparsity**: If only a few keys are relevant to the query, we can just use the compatible $(q_i, k_j)$ pairs ("support", or $\mathbf{S}$) to compute attention. This is the idea behind *sparse approximation*.
+- **Low-rank**: We may be able to find low-rank matrices $\tilde{\mathbf{Q}} \in \mathbb{R}^{N \times m}$ and $\tilde{\mathbf{K}} \in \mathbb{R}^{N \times m}$, where $m < d$, such that $\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top}$ approximates $\mathbf{Q}\mathbf{K}^{\top}$. The procedure of finding them is *low-rank* approximation.
+
+Models like Scatterbrain ([Chen et al, 2021](https://arxiv.org/abs/2110.15343)) combines the two flexibly:
+
+$$(\tilde{\mathbf{Q}}\tilde{\mathbf{K}}^{\top} + \mathbf{S})\mathbf{V} = \tilde{\mathbf{Q}}(\tilde{\mathbf{K}}^{\top}\mathbf{V}) + \mathbf{S}\mathbf{V}.$$
+
+{{< figure src="https://www.dropbox.com/scl/fi/qgfmdw1ewydt1g1j4iy4m/Screenshot-2025-03-18-at-9.07.30-PM.png?rlkey=niv90i41jjonlcgtv0yse67oa&st=5w7h7d8s&raw=1" caption="Scatterbrain, done by Tri Dao and colleagues before the FlashAttention days, combines low-rank and sparsity approximations (source: [Chen et al., 2021](https://arxiv.org/abs/2110.15343))." width="1000">}}
 
 ## Sparse Approximation
+
+The heart of sparse approximation is to quickly find compatible $(q_i, k_j)$ pairs. Popular methods are often based on locality-sensitive hashing (e.g., [Reformer](https://arxiv.org/abs/2001.04451)) or clustering (e.g., [Routing Transformer](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00353/97776/Efficient-Content-Based-Sparse-Attention-with)). 
+
+
+Locality-sensitive hashing (LSH) is a type of hashing techniques that more likely to hash similar inputs into the same buckets than those that are dissimilar. Reformer ([Kitaev et al., 2020](https://arxiv.org/abs/2001.04451)), for instance, uses an angular locality sensitive hash, where vectors (or points) are randomly rotated by the same degree and projected onto signed axes $k$ times. The $k$ signs form the hash signature of each original vector. Vectors closer in the higher dimensional embedding space are more likely to share hash signatures after projection. For each query, we can select keys that share the same or sufficiently similar hash signatures. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/gduuc0pltmtqusc5juh89/Screenshot-2025-03-18-at-9.19.16-PM.png?rlkey=3u3slph1r8347cp5hyj0xp48w&st=pbs46qx6&raw=1" caption="Reformer uses locality-sensitive hashing (LSH) to select query-key pairs in the same buckets for attention computation (source: [Kitaev et al., 2020](https://arxiv.org/abs/2001.04451))." width="1000">}}
+
+Routing Transformers ([Roy et al., 2021](https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl_a_00353/1923932/tacl_a_00353.pdf)) take a different approach to selecting top $k$ keys: tokens are assigned to clusters by $k$-means clustering ($k$ can be tuned), and each query token attends only to other tokens whose keys belong to the same cluster as its query.
+
+## Low-Rank Approximation 
 
 ## Try 'Em All: DeepSeekMoE
 
@@ -139,17 +157,18 @@ The funny thing about optimization is, once you break through a bottleneck, anot
 
 1. Deep learning efficiency = compute + memory + overhead 👉 [*Making Deep Learning Go Brrrr From First Principles*](https://horace.io/brrr_intro.html) by Horace He.
 2. Software-hardware co-design 👉 *Hardware-aware Algorithms for Sequence Modeling* by Tri Dao, [talk](https://www.youtube.com/live/foG0ebzuw34?si=6FSChDzXjBUqAQX8&t=242) + [slides](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1244/slides/cs224n-2024-lecture18-deployment-and-efficiency.pdf) at Stanford MLSys.
-3. [Triton](https://openai.com/index/triton/), the most popular language for GPU programming 👉 [*Tutorials*](https://triton-lang.org/main/getting-started/tutorials/index.html) by OpenAI + Triton rewrite ([repo](https://github.com/unslothai/unsloth)) of popular LLMs by Unsloth AI.
-4. Why GPUs are born for parallel processing 👉 [*Harnessing Parallelism: How GPUs Revolutionize Computing*](https://medium.com/accredian/harnessing-parallelism-how-gpus-revolutionize-computing-597f3479d955#:~:text=A%20GPU%20consists%20of%20a,which%20allows%20for%20parallel%20processing.) by Harshita Sharma.
+3. [Triton](https://openai.com/index/triton/), the most popular GPU programming language 👉 [*Tutorials*](https://triton-lang.org/main/getting-started/tutorials/index.html) by OpenAI + Triton rewrite ([repo](https://github.com/unslothai/unsloth)) of popular LLMs by Unsloth AI.
 
 ## FlashAttention: IO-Aware, Exact Attention
-5. FlashAttention 1.0 👉 [*FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*](https://arxiv.org/abs/2205.14135) (2022) by Dao et al., *NeurIPS*.
-6. FlashAttention 2.0 👉 [*FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*](https://arxiv.org/abs/2307.08691) (2023) by Dao, *ICLR*.
-7. FlashAttention 3.0 👉 [*FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision*](https://arxiv.org/abs/2407.08608) (2024) by Shah et al., *arXiv*.
+4. FlashAttention 1.0 👉 [*FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness*](https://arxiv.org/abs/2205.14135) (2022) by Dao et al., *NeurIPS*.
+5. FlashAttention 2.0 👉 [*FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning*](https://arxiv.org/abs/2307.08691) (2023) by Dao, *ICLR*.
+6. FlashAttention 3.0 👉 [*FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-Precision*](https://arxiv.org/abs/2407.08608) (2024) by Shah et al., *arXiv*.
 
 ## Fast & Accurate Attention Approximations
+7. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020)
 8. Low-rank approximation 👉 [*Linformer*](https://arxiv.org/abs/2006.04768) (2020), [*Linear Transformer*](https://arxiv.org/abs/2006.16236) (ICML 2020), [*Performer*](https://openreview.net/forum?id=Ua6zuk0WRH) (ICLR 2021), [*Loki*](https://arxiv.org/abs/2406.02542) (NeurIPS 2024)
-9. Sparse approximation 👉 [*Sparse Transformers*](https://arxiv.org/abs/1904.10509) (2019), [*Reformer*](https://arxiv.org/abs/2001.04451) (ICLR 2020), [*Routing Transformer*](https://arxiv.org/abs/2003.05997) (ACL 2020)
+9. Low-rank + sparse 👉 [*Scatterbrain: Unifying Sparse and Low-rank Attention Approximation*](https://arxiv.org/abs/2110.15343) (2021) by Chen et al., NeurIPS.
+
 10. DeepSeek combines blockwise compression/selection + sliding window attention 👉 [*Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention*](https://arxiv.org/abs/2502.11089) (2025) by Yuan et al., *arXiv*.
 
 <!-- ## GPU Terminology
