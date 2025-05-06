@@ -1,6 +1,6 @@
 ---
 title: "No Pains, No Gains"
-date: "2025-05-05"
+date: "2025-05-06"
 categories: ["personal reflections"]
 ---
 
