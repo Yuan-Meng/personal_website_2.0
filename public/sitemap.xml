@@ -4,6 +4,14 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/notes/birthday_2025/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/personal-reflections/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/gpu/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/hardware_aware_transformers/</loc>
@@ -12,13 +20,7 @@
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/transformers/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/beauty_of_dnn/</loc>
   </url><url>
@@ -96,7 +98,7 @@
   </url><url>
     <loc>http://localhost:1313/posts/perceptron/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/birthday/</loc>
+    <loc>http://localhost:1313/notes/birthday_2024/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/algorithms/</loc>
   </url><url>

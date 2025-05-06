@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/personal-reflections/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>No Pains, No Gains</title>
+      <link>http://localhost:1313/notes/birthday_2025/</link>
+      <pubDate>Mon, 05 May 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/birthday_2025/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;ve always been good at chasing, not so good at keeping. Lately, I shared with my therapist a strange fatigue and frustration I experience at Pinterest: now that I&amp;rsquo;m surrounded by great ML peers&amp;mdash;the goal I had last year&amp;mdash;I suddenly feel tired, intimidated, and at times unmotivated. Despite DoorDash&amp;rsquo;s &amp;ldquo;cutthroat&amp;rdquo; reputation, I had a relatively easier time there, getting by with basic ML knowledge.&lt;/p&gt;&#xA;&lt;p&gt;&lt;em&gt;&amp;ldquo;If life was easy then, why did you choose to make it harder now?&amp;rdquo;&lt;/em&gt; I couldn&amp;rsquo;t really answer it. It&amp;rsquo;s tempting to say because learning &amp;ldquo;advanced&amp;rdquo; skills allows one to work for companies that require such skills, but how about not working for such companies? It&amp;rsquo;s not like compensation increases proportionally with model complexity.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>What Makes Deep Learning Ranking Beautiful</title>
       <link>http://localhost:1313/notes/beauty_of_dnn/</link>
       <pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
@@ -48,9 +55,9 @@
     </item>
     <item>
       <title>Brithday Wish</title>
-      <link>http://localhost:1313/notes/birthday/</link>
+      <link>http://localhost:1313/notes/birthday_2024/</link>
       <pubDate>Sat, 06 May 2023 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/notes/birthday/</guid>
+      <guid>http://localhost:1313/notes/birthday_2024/</guid>
       <description>&lt;p&gt;Survival was &lt;em&gt;the&lt;/em&gt; theme of this past year. When I expressed layoff worries in February 2022 (after Googling consequences of interest rate hikes as an econ noob&amp;hellip;), friends joked that I was a &amp;ldquo;Golden State Worrier&amp;rdquo;. After the chips were down last November, the shock was not one bit absorbed by anticipation. Seeing coworkers I just spoke and worked side by side with disappearing was unreal and painful. Since then I can&amp;rsquo;t quite recall the last time I felt truly exited or relaxed &amp;mdash; I seem to overdo what I can to feel a tiny bit safer.&lt;/p&gt;</description>
     </item>
     <item>

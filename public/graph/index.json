@@ -12,7 +12,11 @@
       "in": [],
       "out": []
     },
-    "/notes/birthday/": {
+    "/notes/birthday_2024/": {
+      "in": [],
+      "out": []
+    },
+    "/notes/birthday_2025/": {
       "in": [],
       "out": []
     },
@@ -166,10 +170,15 @@
       "section": "notes",
       "title": "What Makes Deep Learning Ranking Beautiful"
     },
-    "/notes/birthday/": {
-      "permalink": "/notes/birthday/",
+    "/notes/birthday_2024/": {
+      "permalink": "/notes/birthday_2024/",
       "section": "notes",
       "title": "Brithday Wish"
+    },
+    "/notes/birthday_2025/": {
+      "permalink": "/notes/birthday_2025/",
+      "section": "notes",
+      "title": "No Pains, No Gains"
     },
     "/notes/cocosci/": {
       "permalink": "/notes/cocosci/",
