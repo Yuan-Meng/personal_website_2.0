@@ -8,7 +8,7 @@ I've always been good at chasing, not so good at keeping. Lately, I shared with 
 
 *"If life was easy then, why did you choose to make it harder now?"* I couldn't really answer it. It's tempting to say because learning "advanced" skills allows one to work for companies that require such skills, but how about not working for such companies? It's not like compensation increases proportionally with model complexity.
 
-This confusion felt familiar. When I first came to Berkeley, having worked my entire undergrad for that moment, I quickly started to focus on what I lacked rather than what I was so excited to learn. *"It's almost like I like pushing myself to places conducive to learning, only to find that I don't like learning."* I was only joking to my therapist.
+This confusion felt familiar. When I first came to Berkeley, having worked my entire undergrad for that moment, I quickly started to focus on what I lacked rather than what I was so excited to learn. *"It's almost like I like pushing myself to places conducive to learning, only to find that I don't like learning."* I was only half joking to my therapist.
 
 The feeling of lack is constant in the Bay Area---be it career or a hobby, someone is always miles ahead. How fast you climb the career ladder, how much you and your spouse make, etc., are all a competition. Somewhere in this rat race, you forget why you're here.
 
@@ -20,5 +20,5 @@ Roger Federer shared how losing his Australian mentor pushed him to play harder,
 
 > If life was easy then, why did you choose to make it harder now?
 
-So let me answer this again: I don't want life to be hard or a breeze. I just don't want my life to slip through my fingers all because it's so easy auto-piloting from what I know. I don't mind a little bit of pain if it' something interesting, new, and entertaining that I go after. So here's my birthday wish this year: <span style="color: #c95917">intentionality</span> and <span style="color: #007b22">thoughtfulness</span>.
+So let me answer this again: I don't want life to be hard or a breeze. I just don't want my life to slip through my fingers all because it's so easy auto-piloting from what I know. I don't mind a little bit of pain if it' something interesting, new, and entertaining that I go after. So here's my birthday wish this year: <span style="color: #c95917">intentionality</span> and <span style="color: #007b22">thoughtfulness</span> towards what I desire and how I think and act to get there.
 
