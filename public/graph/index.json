@@ -87,6 +87,10 @@
       ],
       "out": []
     },
+    "/posts/fast_fourier_transform/": {
+      "in": [],
+      "out": []
+    },
     "/posts/hardware_aware_transformers/": {
       "in": [],
       "out": [
@@ -254,6 +258,11 @@
       "permalink": "/posts/ebr/",
       "section": "posts",
       "title": "An Introduction to Embedding-Based Retrieval"
+    },
+    "/posts/fast_fourier_transform/": {
+      "permalink": "/posts/fast_fourier_transform/",
+      "section": "posts",
+      "title": "What the Fourier"
     },
     "/posts/hardware_aware_transformers/": {
       "permalink": "/posts/hardware_aware_transformers/",

@@ -4,21 +4,27 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/sequence/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/statistics/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/fast_fourier_transform/</loc>
+  </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/gpu/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/hardware_aware_transformers/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/ml-systems/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/transformers/</loc>
   </url><url>
