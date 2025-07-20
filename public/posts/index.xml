@@ -12,10 +12,10 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>What the Fourier</title>
-      <link>http://localhost:1313/posts/fast_fourier_transform/</link>
-      <pubDate>Sat, 17 May 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/posts/fast_fourier_transform/</guid>
+      <title>What&#39;s With Generative Recommendation</title>
+      <link>http://localhost:1313/posts/generative_recommendation/</link>
+      <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/posts/generative_recommendation/</guid>
       <description>&lt;p&gt;Coming soon&amp;hellip;&lt;/p&gt;&#xA;&lt;!-- 3Blue1Brown&#xA;- Fourier series: https://www.youtube.com/watch?v=nXIHYB0Gp70, https://www.youtube.com/watch?v=r6sGWTCMz2k, https://www.youtube.com/watch?v=-qgreAUpPwM&#xA;- Fourier transform: https://www.youtube.com/watch?v=spUNpyF58BY&amp;t=4s, https://www.youtube.com/watch?v=MBnnXbOM5S4&#xA;ML papers --&gt;</description>
     </item>
     <item>
