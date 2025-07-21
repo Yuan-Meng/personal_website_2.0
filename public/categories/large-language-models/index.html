@@ -105,9 +105,15 @@
             >
           </header>
 
-          <div class="text-sm"><p>For nearly a decade, recommender systems have remained largely the same: System-wise, a cascading design sifts through all candidates (e.g., $10^8$)</p>
-<p>Retrieval. Some lightweight ranking. Then embedding + MLP style re-ranking. Each innovation enhances a layer in this system: input, interaction, experts, etc.. The pinnacle is DHEN, combining various powerful interaction methods. Sequence modeling injects timely information.</p>
-<p>New trends have come and go. But you feel the tide has finally turned when many top companies start to embrace a new paradigm and put it into production. Meta, Google, Netflix, Kuaishou, Xiaohongshu, Meituan, etc..</p></div>
+          <div class="text-sm"><p>For nearly a decade, recommender systems have remained largely the same. Most companies adopt YouTube&rsquo;s cascade pipeline (<a href="https://research.google.com/pubs/archive/45530.pdf">Covington, 2016</a>), which sifts through a massive corpus to retrieve $10^3$ to $10^4$ candidates (L0), narrows them down to $10^2$ to $10^3$ with a lightweight ranker (L1), before selecting the top few using a heavy ranker (L2) and making adjustments based on policy and business logic (L3). L2 architectures haven&rsquo;t drifted far from Google&rsquo;s Wide &amp; Deep network (<a href="https://arxiv.org/abs/1606.07792">Cheng et al., 2016</a>), with incremental improvements on feature interaction (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN-v2</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>) and multi-task learning (e.g., <a href="https://arxiv.org/abs/2311.09580">MMoE</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a>). These efforts culminated in Meta&rsquo;s <a href="https://arxiv.org/abs/2203.11014">DHEN</a> that combines multiple interaction modules and experts to push the limits of the so-called &ldquo;Deep Learning Recommender System&rdquo; (DLRM) paradigm.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&amp;st=fzobjxgt&amp;raw=1"
+    alt="Recommender Systems." width="1800"><figcaption>
+      <p>Recommender Systems.</p>
+    </figcaption>
+</figure>
+
+<p>Interesting works came out when large language models (LLMs) first gained traction, such as using LLMs to re-rank documents (e.g., <a href="https://arxiv.org/pdf/2306.17563">Qin et al., 2023</a>) &mdash; but they felt more like toys than contenders to DLRM-based recommender systems, which serve millions of users with low latency and costs. This year, the tide seems to have finally turned. Companies with wickedly good recommender systems such as Meta, Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Baidu, Tencent, Meituan, etc. are embracing a new &ldquo;Generative Recommendation&rdquo; (GM) paradigm, reframing recommendation as a generative task, akin to token prediction in language. This shift has delivered the biggest model performance and business metric gains these companies have seen in years.</p>
+<p>So, what makes GM so magical, improving both model performance and efficiency? What serving changes are needed to productionize GM-based recommenders? In this blogpost, I review the past year&rsquo;s GM work and distill key lessons for companies looking to follow.</p></div>
         </article>
       </li>
   </ol>
