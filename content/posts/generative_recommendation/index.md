@@ -1,5 +1,5 @@
 ---
-title: "Is Generative Recommendation the Future of Recommender Systems?"
+title: "Is Generative Recommendation the Future of RecSys?"
 date: 2025-07-20
 math: true
 categories: ["generative recommendation", "large language models"]
