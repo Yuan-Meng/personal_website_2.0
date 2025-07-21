@@ -6,17 +6,16 @@ categories: ["generative recommendation", "large language models"]
 toc: true
 ---
 
-For nearly a decade, recommender systems have remained largely the same. Most companies adopt YouTube's cascade pipeline ([Covington, 2016](https://research.google.com/pubs/archive/45530.pdf)), which sifts through a massive corpus to retrieve $10^3$ to $10^4$ candidates (L0), narrows them down to $10^2$ to $10^3$ with a lightweight ranker (L1), before selecting the top few using a heavy ranker (L2) and making adjustments based on policy and business logic (L3). L2 architectures haven't drifted far from Google's Wide & Deep network ([Cheng et al., 2016](https://arxiv.org/abs/1606.07792)), with incremental improvements on feature interaction (e.g., [DCN-v2](https://arxiv.org/abs/2008.13535), [MaskNet](https://arxiv.org/abs/2102.07619)) and multi-task learning (e.g., [MMoE](https://arxiv.org/abs/2311.09580), [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236)). These efforts culminated in Meta's [DHEN](https://arxiv.org/abs/2203.11014) that combines multiple interaction modules and experts to push the limits of the so-called "Deep Learning Recommender System" (DLRM) paradigm.
+For nearly a decade, recommender systems have remained largely the same. System-wise, most companies adopt the cascade pipeline in the iconic [YouTube paper](https://research.google.com/pubs/archive/45530.pdf), retrieving tens of thousands of candidates from a massive corpus, trimming them down to thousands of roughly relevant items with a lightweight ranker (L1), before selecting the top dozen using a heavy ranker (L2) and making adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn't drifted far from the [Deep & Wide network](https://arxiv.org/abs/1606.07792). Years of incremental improvements on feature interaction (e.g., [DCN-v2](https://arxiv.org/abs/2008.13535), [MaskNet](https://arxiv.org/abs/2102.07619)) and multi-task learning (e.g., [MMoE](https://arxiv.org/abs/2311.09580), [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236)) culminated in Meta's [DHEN](https://arxiv.org/abs/2203.11014) that combines multiple interaction modules and experts to push the limits of this "Deep Learning Recommender System" (DLRM) paradigm. 
 
+{{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style 'Embedding & Interaction & Expert' model architectures." width="1800">}}
 
-{{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Recommender Systems." width="1800">}}
-
-Interesting works came out when large language models (LLMs) first gained traction, such as using LLMs to re-rank documents (e.g., [Qin et al., 2023](https://arxiv.org/pdf/2306.17563)) --- but they felt more like toys than contenders to DLRM-based recommender systems serving millions of users with low latency and costs. This year, the tide seems to have turned. Companies with top recommender systems such as Meta, Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Baidu, Tencent, Meituan, etc. are embracing a new "Generative Recommendation" (GM) paradigm, reframing recommendation as a generative task, akin to token prediction in language. This shift has delivered the biggest model performance and business metric gains these companies have seen in years. 
-
-So, what makes GM so magical, improving both model performance and efficiency? What serving changes are needed to productionize GM-based recommenders? In this blogpost, I review the past year's GM work and distill key lessons for companies looking to follow.
-
+In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered the biggest model performance and business metric gains that the company has seen in years --- top companies such as Meta, Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, and Meituan are starting to embrace a new "Generative Recommendation" (GM) paradigm, reframing the discriminating pAction prediction task to a generative task, akin to token prediction in language modeling. 
 
 <!--more-->
+
+What makes Generative Recommendation so magical? Why is it able to unlock the scaling law in recommender systems in ways that DLRM wasn't able to? Is GM a genuine paradigm shift or a short-lived fad? In this blogpost, let's take a look at GM models coming out from the aforementioned companies and see what the fuss is all about 🕵️. 
+
 
 # References
 ## Precursors to Generative Recommendation
