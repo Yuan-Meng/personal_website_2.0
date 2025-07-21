@@ -262,7 +262,7 @@
     "/posts/generative_recommendation/": {
       "permalink": "/posts/generative_recommendation/",
       "section": "posts",
-      "title": "Is Generative Recommendation the Future of Recommender Systems?"
+      "title": "Is Generative Recommendation the Future of RecSys?"
     },
     "/posts/hardware_aware_transformers/": {
       "permalink": "/posts/hardware_aware_transformers/",

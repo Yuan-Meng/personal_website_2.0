@@ -12,11 +12,11 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/large-language-models/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Is Generative Recommendation the Future of Recommender Systems?</title>
+      <title>Is Generative Recommendation the Future of RecSys?</title>
       <link>http://localhost:1313/posts/generative_recommendation/</link>
       <pubDate>Sun, 20 Jul 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/posts/generative_recommendation/</guid>
-      <description>&lt;p&gt;Coming soon&amp;hellip;&lt;/p&gt;</description>
+      <description>&lt;p&gt;For nearly a decade, recommender systems have remained largely the same: System-wise, a cascading design sifts through all candidates (e.g., $10^8$)&lt;/p&gt;&#xA;&lt;p&gt;Retrieval. Some lightweight ranking. Then embedding + MLP style re-ranking. Each innovation enhances a layer in this system: input, interaction, experts, etc.. The pinnacle is DHEN, combining various powerful interaction methods. Sequence modeling injects timely information.&lt;/p&gt;&#xA;&lt;p&gt;New trends have come and go. But you feel the tide has finally turned when many top companies start to embrace a new paradigm and put it into production. Meta, Google, Netflix, Kuaishou, Xiaohongshu, Meituan, etc..&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
