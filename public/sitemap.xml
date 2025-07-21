@@ -4,15 +4,15 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/generative-recommendation/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/generative_recommendation/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/large-language-models/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/sequence/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/statistics/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/fast_fourier_transform/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
   </url><url>
