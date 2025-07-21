@@ -10,7 +10,7 @@ For nearly a decade, recommender systems have remained largely the same. System-
 
 {{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style 'Embedding & Interaction & Expert' model architectures." width="1800">}}
 
-In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered the biggest model performance and business metric gains that the company has seen in years --- top companies such as Meta, Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, and Meituan are starting to embrace a new "Generative Recommendation" (GM) paradigm, reframing the discriminating pAction prediction task to a generative task, akin to token prediction in language modeling. 
+In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered the biggest model performance and business metric gains that the company has seen in years --- other top companies such as Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, and Meituan are starting to embrace a new "Generative Recommendation" (GM) paradigm, reframing the discriminative pAction prediction task to a generative task, akin to token prediction in language modeling. 
 
 <!--more-->
 
