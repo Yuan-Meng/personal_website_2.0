@@ -1,21 +1,38 @@
 ---
 title: "Is Generative Recommendation the Future of RecSys?"
-date: 2025-07-22
+date: 2025-07-26
 math: true
 categories: ["generative recommendation", "large language models"]
 toc: true
 ---
 
-For nearly a decade, recommender systems have remained largely {{< sidenote "the same" >}}It used to be the case that if you're familiar with the cascade pipeline and generic L1 (e.g., two-tower, embedding-based retrieval) and L2 (e.g., "Embedding & MLP", sequence modeling) architectures, you're golden in almost every ML system design interview. Maybe a year from now, GenRec talents and experience will be what top companies seek. {{< /sidenote >}} . System-wise, most companies adopt the cascade pipeline in the iconic [YouTube paper](https://research.google.com/pubs/archive/45530.pdf), retrieving tens of thousands of candidates from a massive corpus, trimming them down to thousands of roughly relevant items with a lightweight ranker (L1), before selecting the top dozen using a heavy ranker (L2) and making adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn't drifted far from the [Deep & Wide network](https://arxiv.org/abs/1606.07792). Years of incremental improvements on feature interaction (e.g., [DCN-v2](https://arxiv.org/abs/2008.13535), [MaskNet](https://arxiv.org/abs/2102.07619)) and multi-task learning (e.g., [MMoE](https://arxiv.org/abs/2311.09580), [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236)) culminated in Meta's [DHEN](https://arxiv.org/abs/2203.11014) that combines multiple interaction modules and experts to push the limits of this "Deep Learning Recommender System" (DLRM) paradigm. 
+For nearly a decade, recommender systems have remained largely {{< sidenote "the same" >}}It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding & MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead. {{< /sidenote >}}. It's hard to even imagine a system without a cascade pipeline in the iconic [YouTube paper](https://research.google.com/pubs/archive/45530.pdf), which retrieves tens of thousands of candidates from a massive corpus, trims them down to thousands of roughly relevant items with a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn't drifted far from the seminal [Deep & Wide network](https://arxiv.org/abs/1606.07792), which embeds input features, passes them through some interaction modules, and uses the resulted embeddings to predict binary action probabilities. Years of upgrades to feature interaction (e.g., [DCN-v2](https://arxiv.org/abs/2008.13535), [MaskNet](https://arxiv.org/abs/2102.07619)) and multi-task learning (e.g., [MMoE](https://arxiv.org/abs/2311.09580), [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236)) culminated in Meta's [DHEN](https://arxiv.org/abs/2203.11014), which combines multiple interaction modules and experts to push the limits of this "Deep Learning Recommender System" (DLRM) paradigm. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style 'Embedding & Interaction & Expert' model architectures." width="1800">}}
 
-In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest model performance , business metric, and serving efficiency gains that the company has seen in years --- other top companies such as Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, Meituan, and JD.com are starting to embrace a new "Generative Recommendation" (GM) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
+In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest model performance, business metric, and serving efficiency gains that the company has seen in years --- other top companies such as Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, Meituan, and JD.com are starting to embrace a new "Generative Recommendation" (GM) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
 
 <!--more-->
 
 What makes Generative Recommendation so magical? Why is it able to unlock the scaling laws in recommender systems in ways that DLRM wasn't able to? Is GM a genuine paradigm shift or a short-lived fad? In this blogpost, let's take a look at GM models coming out from the aforementioned companies and see what the fuss is all about 🕵️. 
 
+# Language, Intelligence, and Compositionality
+
+> The meaning of a compound expression is a function of the meanings of its parts and of the way they are syntactically combined.
+
+Netflix has a PopSci-ish [paper](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) arguing that deep learning recommender systems differ from other deep learning applications such as image classification, in that item IDs are "atomic" and readily available in the data --- there are no low-to-high level feature representations to extract, such as pixels to objects in images. As such, deep learning recommenders only require a shallow network to learn user and item embeddings from user-item interactions, which can be seen as some form of "dot product" operations, and don't really benefit from having deeper architectures to learn low-level features. 
+
+
+This observation struck me as incredibly deep, both mathematically and philosophically --- it "only" took me two years to "suddenly" see it:
+- If all a model has to learn is how to perform dot product operations, then why do we need deep learning?
+- Compositionality is central to language and perhaps intelligence overall, which is absent in atomic item IDs. 
+
+
+<!-- https://oecs.mit.edu/pub/e222wyjy/release/1
+https://iep.utm.edu/compositionality-in-language/
+https://en.wikipedia.org/wiki/Principle_of_compositionality
+https://www.reddit.com/r/philosophy/comments/14qstb6/there_is_only_one_plausible_explanation_for_the/
+ -->
 <!-- # Semantic ID: The Language of Recommender Systems
 Intelligence and vocab: Netflix paper -> items are atomic and discrete; OneRec -> intelligence cannot emerge with a large and unrelated vocab; language is hierarchical and compositional (e.g., taxonomy, grammar) -->
 
@@ -23,14 +40,14 @@ Intelligence and vocab: Netflix paper -> items are atomic and discrete; OneRec -
 # References
 ## Precursors to Generative Recommendation
 1. RQ-VAE, the technique behind Semantic ID learning 👉 [*Autoregressive Image Generation using Residual Quantization*](https://arxiv.org/abs/2203.01941) (2022) by Lee et al., *CVPR*.
-2. Recommender Systems speak "Semantic IDs" 👉 [*Better Generalization with Semantic IDs: A Case Study in Ranking for Recommendations*](https://dl.acm.org/doi/abs/10.1145/3640457.3688190) (2024) by Singh et al., *RecSys*.
+2. Recommender systems speak "Semantic IDs" 👉 [*Better Generalization with Semantic IDs: A Case Study in Ranking for Recommendations*](https://dl.acm.org/doi/abs/10.1145/3640457.3688190) (2024) by Singh et al., *RecSys*.
 3. COBRA addresses information loss from RQ-VAE quantization 👉 [*Sparse Meets Dense: Unified Generative Recommendations with Cascaded Sparse-Dense Representations*](https://arxiv.org/abs/2503.02453) (2025) by Yang et al., *arXiv*.
 
 ## Generative Recommendation for Retrieval
 4. Google DeepMind's TIGER 👉 [*Recommender Systems with Generative Retrieval*](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html) (2023) by Rajput et al., *NeurIPS*.
 5. Alibaba's URM 👉 [*Large Language Model as Universal Retriever in Industrial-Scale Recommender System*](https://arxiv.org/abs/2502.03041) (2025) by Jiang et al., *arXiv*.
 6. Baidu's GBS 👉 [*Generative Retrieval for Book Search*](https://arxiv.org/abs/2501.11034) (2025) by Tang et al., *KDD*.
-7. Scaling law analysis 👉 [*Exploring Training and Inference Scaling Laws in Generative Retrieval*](https://dl.acm.org/doi/abs/10.1145/3726302.3729973) (2025) by Cai et al., *SIGIR*.
+7. Scaling laws in retrieval 👉 [*Exploring Training and Inference Scaling Laws in Generative Retrieval*](https://dl.acm.org/doi/abs/10.1145/3726302.3729973) (2025) by Cai et al., *SIGIR*.
 
 ## Generative Recommendation for Ranking
 8. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
