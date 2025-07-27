@@ -27,7 +27,7 @@ In the mood for a Sudoku challenge? 🍀 Solve Reset">
   <meta itemprop="name" content="Probably Approximately Correct">
   <meta itemprop="description" content="An ML engineer’s musings on machine learning and life…
 In the mood for a Sudoku challenge? 🍀 Solve Reset">
-  <meta itemprop="datePublished" content="2025-07-26T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-07-27T00:00:00+00:00">
   <meta itemprop="wordCount" content="19">
 
   <meta name="twitter:card" content="summary">
@@ -325,8 +325,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
                 >Is Generative Recommendation the Future of RecSys?</a
               >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-07-26T00:00:00&#43;00:00"
-              >July 26, 2025</time
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-07-27T00:00:00&#43;00:00"
+              >July 27, 2025</time
             >
           </header>
 
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
     >the same</label
   >
   <small id="sidenote-01" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding & MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead. <span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding & MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.<span class="sr-only">)</span>
   </small>
 </span>
 . It&rsquo;s hard to even imagine a system without a cascade pipeline in the iconic <a href="https://research.google.com/pubs/archive/45530.pdf">YouTube paper</a>, which retrieves tens of thousands of candidates from a massive corpus, trims them down to thousands of roughly relevant items with a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn&rsquo;t drifted far from the seminal <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide network</a>, which embeds input features, passes them through some interaction modules, and uses the resulted embeddings to predict binary action probabilities. Years of upgrades to feature interaction (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN-v2</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>) and multi-task learning (e.g., <a href="https://arxiv.org/abs/2311.09580">MMoE</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a>) culminated in Meta&rsquo;s <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which combines multiple interaction modules and experts to push the limits of this &ldquo;Deep Learning Recommender System&rdquo; (DLRM) paradigm.</p>

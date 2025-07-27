@@ -1,6 +1,6 @@
 ---
 title: "Is Generative Recommendation the Future of RecSys?"
-date: 2025-07-26
+date: 2025-07-27
 math: true
 categories: ["generative recommendation", "large language models"]
 toc: true
@@ -25,12 +25,12 @@ Netflix has a PopSci-ish paper ([Steck et al., 2021](https://ojs.aaai.org/aimaga
 
 This observation is incredibly deep, perhaps more so from the first to the second point (I'm biased as a former Cognitive Scientist):
 - **No scaling laws**: Why do we need the full power of deep learning if learning dot products is all we need? And if a shallow network suffices, scaling laws --- where model performance improves with more parameters, data, and compute --- wouldn't exist.
-- **No compositionality, no intelligence**: We'll never learn language or think thoughts if each word is an arbitrary sound unrelated to others --- imagine saying "blim" for "snake" and "plok" for "rattlesnake". By contrast, without knowing German, we can quickly guess that "klapperschlange" (rattlesnake) perhaps relates to "schlange" (snake). The way language combines smaller units of meanings into complex concepts allows humans to express infinite thoughts with a finite vocabulary acquired in a finite amount of time. Traditional item IDs, however, are arbitrary and atomic --- "intelligence" likely will never emerge when the system reasons with a huge vocabulary consisted of unrelated tokens and concepts, where every item has to be engaged with and there is no generalization between related items.
+- **No compositionality, no intelligence**: We'll never learn language or think thoughts if each word is an arbitrary sound unrelated to others --- imagine saying "blim" for "snake" and "plok" for "rattlesnake". By contrast, without knowing German, we might guess that "klapperschlange" (rattlesnake) perhaps relates to "schlange" (snake). The way language combines smaller units of meanings into complex phrases and concepts allows humans to express infinite thoughts with a finite vocabulary acquired in a finite amount of time. Traditional item IDs, however, are arbitrary and atomic --- "intelligence" likely won't emerge in a system that reasons with a huge vocabulary consisted of unrelated tokens.
  
 
-<!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. -->
+<!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. 
 
-<!-- # Semantic IDs -->
+# Semantic IDs -->
 
 
 # References
