@@ -23,7 +23,7 @@
 
   <meta itemprop="name" content="Generative recommendation">
   <meta itemprop="description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
-  <meta itemprop="datePublished" content="2025-07-27T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-07-29T00:00:00+00:00">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Generative recommendation">
@@ -98,14 +98,39 @@
               <a
                 href="/posts/generative_recommendation/"
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-                >Is Generative Recommendation the Future of RecSys?</a
+                >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
               >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-07-27T00:00:00&#43;00:00"
-              >July 27, 2025</time
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-07-29T00:00:00&#43;00:00"
+              >July 29, 2025</time
             >
           </header>
 
-          <div class="text-sm"><p>For nearly a decade, recommender systems have remained largely <span class="sidenote">
+          <div class="text-sm"><h2 id="the-tide-has-turned-from-dlrm-to-gm" class="scroll-mt-8 group">
+  The Tide Has Turned? From DLRM to GM
+  
+    <a href="#the-tide-has-turned-from-dlrm-to-gm"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>For nearly a decade, recommender systems have remained largely <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
@@ -121,17 +146,36 @@
     >the same</label
   >
   <small id="sidenote-01" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding & MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding-MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.<span class="sr-only">)</span>
   </small>
 </span>
-. It&rsquo;s hard to even imagine a system without a cascade pipeline in the iconic <a href="https://research.google.com/pubs/archive/45530.pdf">YouTube paper</a>, which retrieves tens of thousands of candidates from a massive corpus, trims them down to thousands of roughly relevant items with a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn&rsquo;t drifted far from the seminal <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide network</a>, which embeds input features, passes them through some interaction modules, and uses the resulted embeddings to predict binary action probabilities. Years of upgrades to feature interaction (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN-v2</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>) and multi-task learning (e.g., <a href="https://arxiv.org/abs/2311.09580">MMoE</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a>) culminated in Meta&rsquo;s <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which combines multiple interaction modules and experts to push the limits of this &ldquo;Deep Learning Recommender System&rdquo; (DLRM) paradigm.</p>
+. It&rsquo;s hard to even imagine a system without a cascade pipeline in the iconic <a href="https://research.google.com/pubs/archive/45530.pdf">YouTube paper</a>, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn&rsquo;t drifted far from the seminal <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide network</a>, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN-v2</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>) and multi-task learning (e.g., <a href="https://arxiv.org/abs/2311.09580">MMoE</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a>) culminated in Meta&rsquo;s <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which combines multiple interaction modules and experts to push the limits of this &ldquo;Deep Learning Recommender System&rdquo; (DLRM) paradigm.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&amp;st=fzobjxgt&amp;raw=1"
     alt="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style &lsquo;Embedding &amp; Interaction &amp; Expert&rsquo; model architectures." width="1800"><figcaption>
       <p>Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style &lsquo;Embedding &amp; Interaction &amp; Expert&rsquo; model architectures.</p>
     </figcaption>
 </figure>
 
-<p>In 2025, the tide seems to have finally turned after Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152">HSTU</a> delivered perhaps the biggest model performance, business metric, and serving efficiency gains that the company has seen in years &mdash; other top companies such as Google, Netflix, Kuaishou, Xiaohongshu, Alibaba, Tencent, Baidu, Meituan, and JD.com are starting to embrace a new &ldquo;Generative Recommendation&rdquo; (GM) paradigm for retrieval and ranking, reframing the discriminative <code>pAction</code> prediction task as a generative task, akin to token predictions in language modeling.</p></div>
+<p>In 2025, the tide seems to have finally turned after Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152">HSTU</a> delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years &mdash; other top companies such as <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-03"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-03"
+    for="sidenote-checkbox-03"
+    class="sidenote-mark"
+    >Google</label
+  >
+  <small id="sidenote-03" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.<span class="sr-only">)</span>
+  </small>
+</span>
+, Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new &ldquo;Generative Recommendation&rdquo; (GM) paradigm for retrieval and ranking, reframing the discriminative <code>pAction</code> prediction task as a generative task, akin to token predictions in language modeling.</p></div>
         </article>
       </li>
   </ol>

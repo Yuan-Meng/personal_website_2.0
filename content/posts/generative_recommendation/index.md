@@ -42,7 +42,7 @@ This observation is profound, highlighting inherent flaws in DLRM:
 
 ## A Deeper Look on Language: Hockett's Design Features
 
-In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](https://abacus.bates.edu/acad/depts/biobook/Hockett.htm) to distinguish human language from animal communication. The highlighted ones below (with my paraphrasing) are what I found most interesting and relevant to recommender systems:
+In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](https://abacus.bates.edu/acad/depts/biobook/Hockett.htm) to distinguish human language from animal communication. The <span style="background-color: #FFC31B">highlighted</span> ones below (with my paraphrasing) are what I found most interesting and relevant to recommender systems:
 
 1. Vocal-auditory channel: Communication must occur through some medium that transmits a message from the communicator to the receiver. (Note: Hockett's emphasis on vocal communication is now outdated, overlooking sign languages.)
 2. Broadcast transmission and directional reception: Message is transmitted in all directions, yet the receiver can tell from where the message came. (Without knowing who's communicating with us from where, we can't communicate back.)
@@ -50,20 +50,20 @@ In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](
 4. Interchangeability: Anyone can say anything (e.g., I can claim "I am your king" even if I'm not) --- unlike only queen ants can produce certain chemicals. Communicators and receivers can switch roles.
 5. Total feedback: The communicator can receive their own message, allowing them to control what message to send.
 6. Specialization: Communication is for exchanging messages rather than practical purposes (e.g., dogs panting to cool down).
-7. **Semanticity**: Symbols carry stable meanings. (The same symbol shouldn't change meanings from one message to the next.)
-8. **Arbitrariness**: Which symbols map to which meanings is arbitrary.
-9. **Discreteness**: Smaller symbols can be combined into complex symbols in rule-governed ways (noun + "s" $\rightarrow$ plural).
-10. **Duality of patterning**: Atomic symbols have no meaning of their own, yet they can be combined into meaningful message.
+7. <span style="background-color: #FFC31B">Semanticity</span>: Symbols carry stable meanings. (The same symbol shouldn't change meanings from one message to the next.)
+8. <span style="background-color: #FFC31B">Arbitrariness</span>: Which symbols map to which meanings is arbitrary.
+9. <span style="background-color: #FFC31B">Discreteness</span>: Smaller symbols can be combined into complex symbols in rule-governed ways (noun + "s" $\rightarrow$ plural).
+10. <span style="background-color: #FFC31B">Duality of patterning</span>: Atomic symbols have no meaning of their own, yet they can be combined into meaningful message.
 11. Displacement: Language can discuss subjects not immediately present (e.g., dinner plans for tomorrow).
 12. Prevarication: We can say things that are false or hypothetical.
-13. **Productivity**: We can say things that no one in history has said before, yet those new utterances can be readily understood.
+13. <span style="background-color: #FFC31B">Productivity</span>: We can say things that no one in history has said before, yet those new utterances can be readily understood.
 14. Traditional transmission: Language is socially learned, not innate.
-15. **Learnability**: Language can be learned (with ease in childhood).
+15. <span style="background-color: #FFC31B">Learnability</span>: Language can be learned (with ease in childhood).
 16. Reflexiveness: Language can describe itself (e.g., "grammar," "sentence," "word," "token," "noun").
 
 For recommender systems to have "intelligence," item IDs need not have inherent meaning ("arbitrariness"), but should be decomposable into smaller units in a hierarchical, rule-governed manner ("discreteness," "duality of patterning"), with stable mappings to meanings ("semanticity"). As a result, the system should learn the item language ("learnability") and generalize to new items ("productivity").
 
-<div style="color: #018943;">
+<div style="color: #FFC31B;">
 Nine years ago when I first learned about Hockett's design features in a linguistics seminar as a first-year Cognitive Science PhD student, I had {{< sidenote "zero interest" >}}Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?{{< /sidenote >}} in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had no interest in language models, dead set on become a recommender system expert --- despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potential intelligent?) in the latter.
 </div>
 
