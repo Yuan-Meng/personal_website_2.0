@@ -6,7 +6,7 @@ categories: ["generative recommendation", "large language models"]
 toc: true
 ---
 
-# The Tide Has Turned? From DLRM to GM
+# Has the Tide Turned? From DLRM to GM
 
 For nearly a decade, recommender systems have remained largely {{< sidenote "the same" >}}It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding-MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.{{< /sidenote >}}. It's hard to even imagine a system without a cascade pipeline in the iconic [YouTube paper](https://research.google.com/pubs/archive/45530.pdf), which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn't drifted far from the seminal [Deep & Wide network](https://arxiv.org/abs/1606.07792), which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., [DCN-v2](https://arxiv.org/abs/2008.13535), [MaskNet](https://arxiv.org/abs/2102.07619)) and multi-task learning (e.g., [MMoE](https://arxiv.org/abs/2311.09580), [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236)) culminated in Meta's [DHEN](https://arxiv.org/abs/2203.11014), which combines multiple interaction modules and experts to push the limits of this "Deep Learning Recommender System" (DLRM) paradigm. 
 
@@ -40,7 +40,7 @@ This observation is profound, highlighting inherent flaws in DLRM:
 
 
 
-## A Deeper Look on Language: Hockett's Design Features
+## What Makes Language Special: Hockett's Design Features
 
 In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](https://abacus.bates.edu/acad/depts/biobook/Hockett.htm) to distinguish human language from animal communication. The <span style="background-color: #FFC31B">highlighted</span> ones below (with my paraphrasing) are what I found most interesting and relevant to recommender systems:
 
@@ -61,11 +61,14 @@ In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](
 15. <span style="background-color: #FFC31B">Learnability</span>: Language can be learned (with ease in childhood).
 16. Reflexiveness: Language can describe itself (e.g., "grammar," "sentence," "word," "token," "noun").
 
-For recommender systems to have "intelligence," item IDs need not have inherent meaning ("arbitrariness"), but should be decomposable into smaller units in a hierarchical, rule-governed manner ("discreteness," "duality of patterning"), with stable mappings to meanings ("semanticity"). As a result, the system should learn the item language ("learnability") and generalize to new items ("productivity").
+For recommender systems to have "intelligence," item IDs need not have inherent meanings from the get-go ("arbitrariness"), but should be decomposable into smaller units in a hierarchical, rule-governed manner ("discreteness," "duality of patterning"), with stable mappings from tokens to meanings ("semanticity"). Hopefully as a result, the system will be able to learn the "item language" ("learnability") and generalize knowledge to new items ("productivity"). Spoiler alert: This is the exact idea behind Semantic IDs ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)).
 
-<div style="color: #FFC31B;">
-Nine years ago when I first learned about Hockett's design features in a linguistics seminar as a first-year Cognitive Science PhD student, I had {{< sidenote "zero interest" >}}Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?{{< /sidenote >}} in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had no interest in language models, dead set on become a recommender system expert --- despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potential intelligent?) in the latter.
-</div>
+<details>
+  <summary style="color: #FFC31B; cursor: pointer;">Reflections on Linguistics and Recommender Systems</summary>
+  <div style="color: #002676; padding-left: 10px;">
+    Nine years ago when I first learned about Hockett's design features in a linguistics seminar as a first-year Cognitive Science PhD student, I had {{< sidenote "zero interest" >}}Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?{{< /sidenote >}} in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had no interest in language models, dead set on becoming a recommender system expert — despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potentially intelligent?) in the latter.
+  </div>
+</details>
 
 
 <!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. 
