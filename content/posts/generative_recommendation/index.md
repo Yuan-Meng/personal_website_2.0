@@ -75,15 +75,15 @@ For recommender systems to have "intelligence," item IDs need not have inherent 
 
 # Semantic IDs -->
 
-# Break the Non-Scalability Curse in RecSys
+# Break the Scalability Curse in RecSys
 ## Conjure Up Compositionality via Semantic IDs
 Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 ## Crank Up Task Complexity via Generative Training
 
 
-# Flavors of Generative Recommenders
-## Generative Training, Generative Inference: HSTU, OneRec
-## Generative Pretraining, Discriminative Inference: GPSD
+# Approaches to Generative Recommendation
+## Generative Pretraining 👉 Generative Inference
+## Generative Pretraining 👉 Discriminative Inference
 
 # Lessons (for Non-Meta and Non-Kuaishou Companies)
 
@@ -105,10 +105,10 @@ Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 ## Ditch DLRM for End-to-End Generative Architectures
 9. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
 10. Kuaishou's OneRec 👉 [*OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment*](https://arxiv.org/abs/2502.18965) (2025) by Deng et al., *arXiv*.
+11. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
 
 ## Weave Generative Architectures into DLRM
-11. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
-12. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
+12. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
 13. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
 14. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
 15. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.

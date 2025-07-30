@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-07-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2061">
+  <meta itemprop="wordCount" content="2060">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT10M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 2061
+  "wordCount": 2060
 }
 </script>
 
@@ -155,16 +155,16 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <li><a href="#what-makes-language-special-hocketts-design-features">What Makes Language Special: Hockett&rsquo;s Design Features</a></li>
       </ul>
     </li>
-    <li><a href="#break-the-non-scalability-curse-in-recsys">Break the Non-Scalability Curse in RecSys</a>
+    <li><a href="#break-the-scalability-curse-in-recsys">Break the Scalability Curse in RecSys</a>
       <ul>
         <li><a href="#conjure-up-compositionality-via-semantic-ids">Conjure Up Compositionality via Semantic IDs</a></li>
         <li><a href="#crank-up-task-complexity-via-generative-training">Crank Up Task Complexity via Generative Training</a></li>
       </ul>
     </li>
-    <li><a href="#flavors-of-generative-recommenders">Flavors of Generative Recommenders</a>
+    <li><a href="#approaches-to-generative-recommendation">Approaches to Generative Recommendation</a>
       <ul>
-        <li><a href="#generative-training-generative-inference-hstu-onerec">Generative Training, Generative Inference: HSTU, OneRec</a></li>
-        <li><a href="#generative-pretraining-discriminative-inference-gpsd">Generative Pretraining, Discriminative Inference: GPSD</a></li>
+        <li><a href="#generative-pretraining--generative-inference">Generative Pretraining 👉 Generative Inference</a></li>
+        <li><a href="#generative-pretraining--discriminative-inference">Generative Pretraining 👉 Discriminative Inference</a></li>
       </ul>
     </li>
     <li><a href="#lessons-for-non-meta-and-non-kuaishou-companies">Lessons (for Non-Meta and Non-Kuaishou Companies)</a></li>
@@ -452,10 +452,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. 
 
 # Semantic IDs -->
-<h2 id="break-the-non-scalability-curse-in-recsys" class="scroll-mt-8 group">
-  Break the Non-Scalability Curse in RecSys
+<h2 id="break-the-scalability-curse-in-recsys" class="scroll-mt-8 group">
+  Break the Scalability Curse in RecSys
   
-    <a href="#break-the-non-scalability-curse-in-recsys"
+    <a href="#break-the-scalability-curse-in-recsys"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -528,10 +528,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<h2 id="flavors-of-generative-recommenders" class="scroll-mt-8 group">
-  Flavors of Generative Recommenders
+<h2 id="approaches-to-generative-recommendation" class="scroll-mt-8 group">
+  Approaches to Generative Recommendation
   
-    <a href="#flavors-of-generative-recommenders"
+    <a href="#approaches-to-generative-recommendation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -553,10 +553,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
-<h3 id="generative-training-generative-inference-hstu-onerec" class="scroll-mt-8 group">
-  Generative Training, Generative Inference: HSTU, OneRec
+<h3 id="generative-pretraining--generative-inference" class="scroll-mt-8 group">
+  Generative Pretraining 👉 Generative Inference
   
-    <a href="#generative-training-generative-inference-hstu-onerec"
+    <a href="#generative-pretraining--generative-inference"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -578,10 +578,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<h3 id="generative-pretraining-discriminative-inference-gpsd" class="scroll-mt-8 group">
-  Generative Pretraining, Discriminative Inference: GPSD
+<h3 id="generative-pretraining--discriminative-inference" class="scroll-mt-8 group">
+  Generative Pretraining 👉 Discriminative Inference
   
-    <a href="#generative-pretraining-discriminative-inference-gpsd"
+    <a href="#generative-pretraining--discriminative-inference"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -743,6 +743,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <ol start="9">
 <li>Meta&rsquo;s HSTU 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
 <li>Kuaishou&rsquo;s OneRec 👉 <a href="https://arxiv.org/abs/2502.18965"><em>OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment</em></a> (2025) by Deng et al., <em>arXiv</em>.</li>
+<li>Meituan&rsquo;s MTGR 👉 <a href="https://arxiv.org/abs/2505.18654"><em>MTGR: Industrial-Scale Generative Recommendation Framework in Meituan</em></a> (2025) by Han et al., <em>arXiv</em>.</li>
 </ol>
 <h3 id="weave-generative-architectures-into-dlrm" class="scroll-mt-8 group">
   Weave Generative Architectures into DLRM
@@ -769,9 +770,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<ol start="11">
+<ol start="12">
 <li>Xiaohongshu&rsquo;s RankGPT 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
-<li>Meituan&rsquo;s MTGR 👉 <a href="https://arxiv.org/abs/2505.18654"><em>MTGR: Industrial-Scale Generative Recommendation Framework in Meituan</em></a> (2025) by Han et al., <em>arXiv</em>.</li>
 <li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
 <li>Alibaba&rsquo;s GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
 <li>Alibaba&rsquo;s LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
