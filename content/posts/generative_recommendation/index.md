@@ -88,38 +88,29 @@ Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 # Lessons (for Non-Meta and Non-Kuaishou Companies)
 
 
-# References (TODO: clean up by theme)
-## Foundations of Generative Recommendation
-1. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
-2. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) first applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](ttps://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
-3. Baidu's COBRA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) tackles information loss from RQ-VAE quantization
-4. Scaling laws in recommender systems
-   - Meta: [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) by the same team at Meta.
-   - Tencent: [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
-   - Alibaba discovered the one-epoch phenomenon in CTR prediction models: Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Models
-   - limitations: Breaking the curse of quality saturation with user-centric ranking
+# References
 
-## Generative Recommendation for Retrieval
+## Scaling Laws in Recommender Systems
+1. "One-epoch phenomenon" 👉 [*Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models*](https://arxiv.org/abs/2209.06053) (2022) by Zhang et al., *CIKM*.
+2. Quality saturation under the "item-centric ranking" framework 👉 [*Breaking the Curse of Quality Saturation with User-Centric Ranking*](https://arxiv.org/abs/2305.15333) (2023) by Zhao et al., *KDD*.
+3. Netflix foresaw the lack of task complexity and item ID compositionality in DLRM 👉 [*Deep Learning for Recommender Systems: A Netflix Case Study*](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) (2021) by Steck et al., *AI Magazine*.
+4. Power-law scaling hits diminishing returns in DLRM 👉 [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) (2022) by Ardalani et al., *arXiv*.
+5. Generative training on pure IDs shows power-law scaling laws 👉 [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
 
-5. Alibaba's URM 👉 [*Large Language Model as Universal Retriever in Industrial-Scale Recommender System*](https://arxiv.org/abs/2502.03041) (2025) by Jiang et al., *arXiv*.
-6. Baidu's GBS 👉 [*Generative Retrieval for Book Search*](https://arxiv.org/abs/2501.11034) (2025) by Tang et al., *KDD*.
-7. Scaling laws in retrieval 👉 [*Exploring Training and Inference Scaling Laws in Generative Retrieval*](https://dl.acm.org/doi/abs/10.1145/3726302.3729973) (2025) by Cai et al., *SIGIR*. -->
+## From Atomic Item IDs to Semantic IDs
+6. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
+7. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](ttps://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
+8. Baidu's COBRA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) tackles information loss from RQ-VAE quantization
 
-## Generative Recommendation for Ranking
+## Ditch DLRM for End-to-End Generative Architectures
+9. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
+10. Kuaishou's OneRec 👉 [*OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment*](https://arxiv.org/abs/2502.18965) (2025) by Deng et al., *arXiv*.
 
-### Generative Pretraining 👉 Generative Prediction
-8. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
-11. Kuaishou's OneRec 👉 [*OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment*](https://arxiv.org/abs/2502.18965) (2025) by Deng et al., *arXiv*.
-
-### Generative Pretraining 👉 Discriminative Prediction
-14. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
-16. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
-
-9. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
-10. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
-
-12. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
-13. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-step Paradigm based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
-
-15. Tencent's LC-Rec 👉 [*Adapting Large Language Models by Integrating Collaborative Semantics for Recommendation*](https://arxiv.org/abs/2311.09049) (2024) by Zheng et al., *ICDE*.
+## Weave Generative Architectures into DLRM
+11. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
+12. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
+13. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
+14. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
+15. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
+16. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
 17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
