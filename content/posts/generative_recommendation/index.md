@@ -12,11 +12,11 @@ For nearly a decade, recommender systems have remained largely {{< sidenote "the
 
 {{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style 'Embedding & Interaction & Expert' model architectures." width="1800">}}
 
-In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years --- other top companies such as {{< sidenote "Google" >}}Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.{{< /sidenote >}}, Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new "Generative Recommendation" (GR) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
+In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years --- other top companies such as {{< sidenote "Google" >}}Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.{{< /sidenote >}}, Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new "Generative Recommendation" (GR) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
 
 <!--more-->
 
-What makes Generative Recommendation so magical? Why is it able to unlock the scaling laws in recommender systems in ways that DLRM wasn't able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let's take a look at GM models coming out from the aforementioned companies and see what the fuss is all about 🕵️. 
+What makes GR magical? Why can it unlock scaling laws in recommender systems in ways that DLRM wasn't able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let's check out GR models from above companies and see what the fuss is all about 👀. Since I work on ranking, I mainly focus on ranking applications in this post, but GR is first and widely applied in retrieval.
 
 # Compositionality, Language, and Intelligence
 
@@ -37,7 +37,6 @@ This observation is profound, highlighting inherent flaws in DLRM:
 - **Lack of task complexity**: Why do we need the full power of deep learning to learn a task as simple as performing dot products? If shallow networks are enough, how could scaling laws emerge?
 > [...] a syntactically complex phrase is a function of the meanings of its constituent parts and the way they are combined. --- [*Compositionality*](https://oecs.mit.edu/pub/e222wyjy/release/1), Ryan M. Nefdt and Christopher Potts
 - **No compositionality, no intelligence**: Imagine if each word as an arbitrary sound unrelated to others --- e.g., saying "blim" for "snake" and "plok" for "rattlesnake" --- learning any {{< sidenote "language" >}}Or music, or planning… For example, while sound frequencies are continuous and infinite, Western music relies on just 12 distinct frequencies and their multiples. Notes form chords, chords form progressions, and so forth. Without hierarchical relationships, composing music would be nearly impossible.{{< /sidenote >}} would be impossible in our lifetime, as we'd spend an eternity just acquiring the vocabulary. Recommender systems face precisely this challenge: a popular social media platform, for instance, may have billions of items, with new ones constantly being added, making the vocabulary enormous, ever-changing, and non-stationary. Moreover, item IDs are arbitrary and atomic, with no relationship between one another that learners can exploit to speed up learning. By contrast, without knowing German, we might guess that "klapperschlange" (rattlesnake) relates to "schlange" (snake). The compositionality of language, i.e., smaller units are combined into complex phrases and concepts, allows humans to express infinite ideas using a finite vocabulary acquired in finite time --- a luxury that recommender systems don't have.
-
 
 
 ## What Makes Language Special: Hockett's Design Features
@@ -61,7 +60,7 @@ In the 1960s, American linguist Charles Hockett proposed 16 ["design features"](
 15. <span style="background-color: #FFC31B">Learnability</span>: Language can be learned (with ease in childhood).
 16. Reflexiveness: Language can describe itself (e.g., "grammar," "sentence," "word," "token," "noun").
 
-For recommender systems to have "intelligence," item IDs need not have inherent meanings from the get-go ("arbitrariness"), but should be decomposable into smaller units in a hierarchical, rule-governed manner ("discreteness," "duality of patterning"), with stable mappings from tokens to meanings ("semanticity"). Hopefully as a result, the system will be able to learn the "item language" ("learnability") and generalize knowledge to new items ("productivity"). Spoiler alert: This is the exact idea behind Semantic IDs ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)).
+For recommender systems to have "intelligence," item IDs need not have inherent meanings from the get-go ("arbitrariness"), but should be decomposable into smaller units in a hierarchical, rule-governed manner ("discreteness," "duality of patterning"), with stable mappings from tokens to meanings ("semanticity"). Hopefully as a result, the system will be able to learn the "item language" ("learnability") and generalize knowledge to new items ("productivity"). Spoiler alert: This is the exact idea behind Semantic IDs (e.g., [Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html), [Singh et al., 2024](https://dl.acm.org/doi/abs/10.1145/3640457.3688190), [Yang et al., 2025](https://arxiv.org/abs/2503.02453)), which we'll discuss in the next section.
 
 <details>
   <summary style="color: #FFC31B; cursor: pointer;">Reflections on Linguistics and Recommender Systems</summary>
@@ -69,7 +68,6 @@ For recommender systems to have "intelligence," item IDs need not have inherent 
     Nine years ago when I first learned about Hockett's design features in a linguistics seminar as a first-year Cognitive Science PhD student, I had {{< sidenote "zero interest" >}}Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?{{< /sidenote >}} in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had zero interest in language models, dead set on becoming a recommender system expert — despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potentially intelligent?) in the latter.
   </div>
 </details>
-
 
 <!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. 
 
@@ -80,13 +78,11 @@ For recommender systems to have "intelligence," item IDs need not have inherent 
 Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 ## Crank Up Task Complexity via Generative Training
 
-
 # Approaches to Generative Recommendation
-## Generative Pretraining 👉 Generative Inference
-## Generative Pretraining 👉 Discriminative Inference
+## Fully Generative Architectures
+## Hybrid Generative-Discriminative Architectures
 
-# Lessons (for Non-Meta and Non-Kuaishou Companies)
-
+# Lessons on Embracing the Generative Recommendation Tide
 
 # References
 
@@ -99,7 +95,7 @@ Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 
 ## From Atomic Item IDs to Semantic IDs
 6. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
-7. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](ttps://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
+7. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](https://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
 8. Baidu's COBRA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) tackles information loss from RQ-VAE quantization
 
 ## Ditch DLRM for End-to-End Generative Architectures
@@ -114,8 +110,3 @@ Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 15. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
 16. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
 17. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
-
-
-
-
-

@@ -14,13 +14,13 @@
 </title>
   <meta name="description" content=" Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
-In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling." />
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling." />
 <meta property="og:url" content="http://localhost:1313/posts/generative_recommendation/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
   <meta property="og:description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
-In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -30,16 +30,16 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   <meta itemprop="name" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
   <meta itemprop="description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
-In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-07-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2060">
+  <meta itemprop="wordCount" content="2087">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
   <meta name="twitter:description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
-In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
 
 <link rel="canonical" href="http://localhost:1313/posts/generative_recommendation/" />
 
@@ -81,7 +81,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2025-07-29",
-  "description": " Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., \"Embedding-MLP\" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep \u0026 Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.\nSince 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding \u0026 Interaction \u0026 Expert’ model architectures.\nIn 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.",
+  "description": " Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., \"Embedding-MLP\" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep \u0026 Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.\nSince 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding \u0026 Interaction \u0026 Expert’ model architectures.\nIn 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.",
   "headline": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT10M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 2060
+  "wordCount": 2087
 }
 </script>
 
@@ -163,11 +163,11 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
     </li>
     <li><a href="#approaches-to-generative-recommendation">Approaches to Generative Recommendation</a>
       <ul>
-        <li><a href="#generative-pretraining--generative-inference">Generative Pretraining 👉 Generative Inference</a></li>
-        <li><a href="#generative-pretraining--discriminative-inference">Generative Pretraining 👉 Discriminative Inference</a></li>
+        <li><a href="#fully-generative-architectures">Fully Generative Architectures</a></li>
+        <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a></li>
       </ul>
     </li>
-    <li><a href="#lessons-for-non-meta-and-non-kuaishou-companies">Lessons (for Non-Meta and Non-Kuaishou Companies)</a></li>
+    <li><a href="#lessons-on-embracing-the-generative-recommendation-tide">Lessons on Embracing the Generative Recommendation Tide</a></li>
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#scaling-laws-in-recommender-systems">Scaling Laws in Recommender Systems</a></li>
@@ -269,11 +269,11 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
     >Google</label
   >
   <small id="sidenote-03" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Google DeepMind published TIGER a year before HSTU, but it was used for retrieval. Meta may have been the major influence behind using Generative Recommendation for both retrieval and ranking.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.<span class="sr-only">)</span>
   </small>
 </span>
 , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new &ldquo;Generative Recommendation&rdquo; (GR) paradigm for retrieval and ranking, reframing the discriminative <code>pAction</code> prediction task as a generative task, akin to token predictions in language modeling.</p>
-<p>What makes Generative Recommendation so magical? Why is it able to unlock the scaling laws in recommender systems in ways that DLRM wasn&rsquo;t able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let&rsquo;s take a look at GM models coming out from the aforementioned companies and see what the fuss is all about 🕵️.</p>
+<p>What makes GR magical? Why can it unlock scaling laws in recommender systems in ways that DLRM wasn&rsquo;t able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let&rsquo;s check out GR models from above companies and see what the fuss is all about 👀. Since I work on ranking, I mainly focus on ranking applications in this post, but GR is first and widely applied in retrieval.</p>
 <h2 id="compositionality-language-and-intelligence" class="scroll-mt-8 group">
   Compositionality, Language, and Intelligence
   
@@ -423,7 +423,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <li><span style="background-color: #FFC31B">Learnability</span>: Language can be learned (with ease in childhood).</li>
 <li>Reflexiveness: Language can describe itself (e.g., &ldquo;grammar,&rdquo; &ldquo;sentence,&rdquo; &ldquo;word,&rdquo; &ldquo;token,&rdquo; &ldquo;noun&rdquo;).</li>
 </ol>
-<p>For recommender systems to have &ldquo;intelligence,&rdquo; item IDs need not have inherent meanings from the get-go (&ldquo;arbitrariness&rdquo;), but should be decomposable into smaller units in a hierarchical, rule-governed manner (&ldquo;discreteness,&rdquo; &ldquo;duality of patterning&rdquo;), with stable mappings from tokens to meanings (&ldquo;semanticity&rdquo;). Hopefully as a result, the system will be able to learn the &ldquo;item language&rdquo; (&ldquo;learnability&rdquo;) and generalize knowledge to new items (&ldquo;productivity&rdquo;). Spoiler alert: This is the exact idea behind Semantic IDs (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>).</p>
+<p>For recommender systems to have &ldquo;intelligence,&rdquo; item IDs need not have inherent meanings from the get-go (&ldquo;arbitrariness&rdquo;), but should be decomposable into smaller units in a hierarchical, rule-governed manner (&ldquo;discreteness,&rdquo; &ldquo;duality of patterning&rdquo;), with stable mappings from tokens to meanings (&ldquo;semanticity&rdquo;). Hopefully as a result, the system will be able to learn the &ldquo;item language&rdquo; (&ldquo;learnability&rdquo;) and generalize knowledge to new items (&ldquo;productivity&rdquo;). Spoiler alert: This is the exact idea behind Semantic IDs (e.g., <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>, <a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>), which we&rsquo;ll discuss in the next section.</p>
 <details>
   <summary style="color: #FFC31B; cursor: pointer;">Reflections on Linguistics and Recommender Systems</summary>
   <div style="color: #002676; padding-left: 10px;">
@@ -553,10 +553,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
-<h3 id="generative-pretraining--generative-inference" class="scroll-mt-8 group">
-  Generative Pretraining 👉 Generative Inference
+<h3 id="fully-generative-architectures" class="scroll-mt-8 group">
+  Fully Generative Architectures
   
-    <a href="#generative-pretraining--generative-inference"
+    <a href="#fully-generative-architectures"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -578,10 +578,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<h3 id="generative-pretraining--discriminative-inference" class="scroll-mt-8 group">
-  Generative Pretraining 👉 Discriminative Inference
+<h3 id="hybrid-generative-discriminative-architectures" class="scroll-mt-8 group">
+  Hybrid Generative-Discriminative Architectures
   
-    <a href="#generative-pretraining--discriminative-inference"
+    <a href="#hybrid-generative-discriminative-architectures"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -603,10 +603,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<h2 id="lessons-for-non-meta-and-non-kuaishou-companies" class="scroll-mt-8 group">
-  Lessons (for Non-Meta and Non-Kuaishou Companies)
+<h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
+  Lessons on Embracing the Generative Recommendation Tide
   
-    <a href="#lessons-for-non-meta-and-non-kuaishou-companies"
+    <a href="#lessons-on-embracing-the-generative-recommendation-tide"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -712,7 +712,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </h3>
 <ol start="6">
 <li>RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and images (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) with low costs and high fidelity</li>
-<li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper (<a href="ttps://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking as well</li>
+<li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking as well</li>
 <li>Baidu&rsquo;s COBRA (<a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>) tackles information loss from RQ-VAE quantization</li>
 </ol>
 <h3 id="ditch-dlrm-for-end-to-end-generative-architectures" class="scroll-mt-8 group">
