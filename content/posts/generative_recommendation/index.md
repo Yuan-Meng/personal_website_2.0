@@ -1,6 +1,6 @@
 ---
 title: "Is Generative Recommendation the ChatGPT Moment of RecSys?"
-date: 2025-07-31
+date: 2025-08-01
 math: true
 categories: ["generative recommendation", "large language models"]
 toc: true
@@ -79,24 +79,29 @@ Residual-Quantized VAE (RQ-VAE) is the best known algorithm for Semantic ID gene
 
 1. Initialization
    - Encoder $\mathcal{E}$ maps input $x$ to latent representation $\mathbf{z} := \mathcal{E}(\mathbf{x})$ 
-   - At each level $d$, initialize a new codebook $\mathcal{C}\_d := \\{ \mathbf{e}_k \\}\_{k=1}^{K}$ of size $K$; each code $k$ starts with a random embedding $\mathbf{e}_k$
+   - At each level $d$, initialize a new codebook $\mathcal{C}\_d := \\{ \mathbf{e}_k \\}\_{k=1}^{K}$ of size $K$; each code $k$ starts with embedding $\mathbf{e}_k$
+     - Note: to prevent "codebook collapse" where most inputs are disproportionately mapped to a few codebooks, k-mean clustering can be used for codebook initialization
+   
 2. Level 0: Assign inputs to codes
    - The initial "residual" is $\mathbf{r}\_0 := \mathbf{z}$, the input latent vector
    - Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}\_0$, $c\_0 = \arg\min_i \lVert \mathbf{r}\_0 - \mathbf{e}\_k \rVert$
    - The difference between $\mathbf{r}\_0$ and the closet code embedding at level 0, $\mathbf{e}\_{c_0}$, becomes the next residual $\mathbf{r}\_1 := \mathbf{r}\_0 - \mathbf{e}\_{c_0}$ 
 3. Recursion: Assign residuals to codes
-   - At current level $d$, the residual is $\mathbf{r}_d$
+   - At level $d$, the residual is $\mathbf{r}_d$ after assignment at $(d-1)$
    - Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}\_d$, $c\_d = \arg\min_i \lVert \mathbf{r}\_d - \mathbf{e}\_k \rVert$
    - The difference between $\mathbf{r}\_d$ and the closet code embedding at level $d$, $\mathbf{e}\_{c_d}$, becomes the next residual $\mathbf{r}\_{d+1} := \mathbf{r}\_d - \mathbf{e}\_{c_d}$ 
 
-The process above can repeat infinitely. The deeper the codebooks we choose, the finer the representations are but the heavier the computation. Once $\mathbf{z}$ is coded into the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum\_{d=0}^{m=1}\mathbf{e}\_{c_i}$ is passed to a decoder to reconstruct the input $\mathbf{x}$. RQ-VAE loss is thus $\mathcal{L}(\mathbf{x}) := \mathcal{L}\_{\mathrm{recon}} + \mathcal{L}\_{\mathrm{rqvae}}$, where $\mathcal{L}\_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ and $\mathcal{L}\_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}\_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}\_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient). At the end of training, each code should have acquired meaningful embeddings and each input should be assigned to the best Semantic ID. 
+The process above can repeat infinitely. The deeper the codebooks, the finer the representations but the more the computation. After the latent vector $\mathbf{z}$ is allocated the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum\_{d=0}^{m=1}\mathbf{e}\_{c_i}$ is passed to a decoder to reconstruct the input $\mathbf{x}$ into $\mathbf{\hat{x}}$. RQ-VAE loss is defined as $\mathcal{L}(\mathbf{x}) := \mathcal{L}\_{\mathrm{recon}} + \mathcal{L}\_{\mathrm{rqvae}}$, where $\mathcal{L}\_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ measures how close the reconstructed output is to the original input and $\mathcal{L}\_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}\_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}\_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient) measures how good the code assignments are. Upon training, the RQ-VAE model uses the trained encoder to map the given item embedding into a quantized latent vector and generates a Semantic ID by assigning $m$-level codes to the quantized latent vector.
 
-In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don't tokenize at the character level --- even though the vocabulary will be small, the sequence length would be too long. Today, subword-level [tokenizers](https://huggingface.co/docs/transformers/en/tokenizer_summary) are most popular, which learn to group frequently co-occurring characters together, such as [Byte Pair Encoding (BPE)](https://en.wikipedia.org/wiki/Byte-pair_encoding), WordPiece, and SentencePiece. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram or bigram tokenization in downstream retrieval tasks.
+In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don't tokenize at the character level --- even though the vocabulary will be manageable, the sequence length would be too long and it's hard for a character to have stable "meanings". Today, subword-level [tokenizers](https://huggingface.co/docs/transformers/en/tokenizer_summary) are most popular in NLP, which learn to bind frequently co-occurring characters into tokens. Famous examples include [Byte Pair Encoding (BPE)](https://en.wikipedia.org/wiki/Byte-pair_encoding), [WordPiece](https://research.google/blog/a-fast-wordpiece-tokenization-system/), and [SentencePiece](https://discuss.huggingface.co/t/training-sentencepiece-from-scratch/3477). In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram and bigram tokenization in downstream retrieval tasks.
 
-For Generative Retrieval, the task is to learn predict the next item$\_{n+1}$ given a sequence of items (item$\_{1}$, $\ldots$, item$\_{n}$).
+In Generative Retrieval, a sequence of items $(\mathrm{item}\_1, \ldots, \mathrm{item}\_n)$ are converted into a sequence of codes using Semantic IDs $(c\_{1,0}, \ldots, c\_{1, m-1}, c\_{2,0}, \ldots, c\_{2, m-1},\ldots,c\_{n,0}, \ldots, c\_{n, m-1})$. To retrieve $\mathrm{item}_{n+1}$, we can use an encoder-decoder model to decode the next $m$ codes $(c\_{n+1,0}, \ldots, c\_{n+1, m-1})$, which is the Semantic ID of $\mathrm{item}\_{n+1}$ that hopefully maps to actual items in the corpus.
+
+{{< figure src="https://www.dropbox.com/scl/fi/9detgaylbt0v4ed9kc1mp/Screenshot-2025-08-01-at-3.21.33-PM.png?rlkey=jxtcge2xxgy6kf3ztmjxe38y1&st=rnwuyfuc&raw=1" caption="taxonomy." width="1800">}}
+
+While there is no deliberate design, it's amazing how well Semantic IDs map to hand-crafted item taxonomies in the recommendation corpus. Of course, there are "bad" cases where different items share the same Semantic ID (hash collision) or a Semantic ID doesn't map to any actual items (invalid IDs). To prevent the former, an extra token can be appended to a Semantic ID to make it unique --- e.g., if two items share the same Semantic ID (12, 24, 52), we can assign (12, 24, 52, 0) to one and (12, 24, 52, 1) to the other. In cold-start scenarios, hash collisions can actually help retrieve new items that share Semantic IDs with existing items. Invalid codes are pretty rare, making up only 0.1\%-1.6% of all Semantic IDs generated in the TIGER paper.
 
 Talk about COBORA.
-
 
 
 ## Crank Up Task Complexity via Generative Training

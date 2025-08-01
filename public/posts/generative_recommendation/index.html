@@ -24,15 +24,15 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-07-31T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-08-01T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
   <meta itemprop="description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
-  <meta itemprop="datePublished" content="2025-07-31T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2578">
+  <meta itemprop="datePublished" content="2025-08-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2827">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -80,7 +80,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-07-31",
+  "datePublished": "2025-08-01",
   "description": " Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., \"Embedding-MLP\" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep \u0026 Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.\nSince 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding \u0026 Interaction \u0026 Expert’ model architectures.\nIn 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.",
   "headline": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "isPartOf": {
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT13M",
+  "timeRequired": "PT14M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 2578
+  "wordCount": 2827
 }
 </script>
 
@@ -129,13 +129,13 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <article class="main">
     <header>
       <h1 class="!mb-1">Is Generative Recommendation the ChatGPT Moment of RecSys?</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-07-31T00:00:00&#43;00:00">July 31, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-08-01T00:00:00&#43;00:00">August 1, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 13 minutes
+      Reading time: 14 minutes
     
 
     
@@ -514,30 +514,44 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </figure>
 
 <ol>
-<li>Initialization
+<li>
+<p>Initialization</p>
 <ul>
 <li>Encoder $\mathcal{E}$ maps input $x$ to latent representation $\mathbf{z} := \mathcal{E}(\mathbf{x})$</li>
-<li>At each level $d$, initialize a new codebook $\mathcal{C}_d := \{ \mathbf{e}_k \}_{k=1}^{K}$ of size $K$; each code $k$ starts with a random embedding $\mathbf{e}_k$</li>
+<li>At each level $d$, initialize a new codebook $\mathcal{C}_d := \{ \mathbf{e}_k \}_{k=1}^{K}$ of size $K$; each code $k$ starts with embedding $\mathbf{e}_k$
+<ul>
+<li>Note: to prevent &ldquo;codebook collapse&rdquo; where most inputs are disproportionately mapped to a few codebooks, k-mean clustering can be used for codebook initialization</li>
 </ul>
 </li>
-<li>Level 0: Assign inputs to codes
+</ul>
+</li>
+<li>
+<p>Level 0: Assign inputs to codes</p>
 <ul>
 <li>The initial &ldquo;residual&rdquo; is $\mathbf{r}_0 := \mathbf{z}$, the input latent vector</li>
 <li>Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}_0$, $c_0 = \arg\min_i \lVert \mathbf{r}_0 - \mathbf{e}_k \rVert$</li>
 <li>The difference between $\mathbf{r}_0$ and the closet code embedding at level 0, $\mathbf{e}_{c_0}$, becomes the next residual $\mathbf{r}_1 := \mathbf{r}_0 - \mathbf{e}_{c_0}$</li>
 </ul>
 </li>
-<li>Recursion: Assign residuals to codes
+<li>
+<p>Recursion: Assign residuals to codes</p>
 <ul>
-<li>At current level $d$, the residual is $\mathbf{r}_d$</li>
+<li>At level $d$, the residual is $\mathbf{r}_d$ after assignment at $(d-1)$</li>
 <li>Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}_d$, $c_d = \arg\min_i \lVert \mathbf{r}_d - \mathbf{e}_k \rVert$</li>
 <li>The difference between $\mathbf{r}_d$ and the closet code embedding at level $d$, $\mathbf{e}_{c_d}$, becomes the next residual $\mathbf{r}_{d+1} := \mathbf{r}_d - \mathbf{e}_{c_d}$</li>
 </ul>
 </li>
 </ol>
-<p>The process above can repeat infinitely. The deeper the codebooks we choose, the finer the representations are but the heavier the computation. Once $\mathbf{z}$ is coded into the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum_{d=0}^{m=1}\mathbf{e}_{c_i}$ is passed to a decoder to reconstruct the input $\mathbf{x}$. RQ-VAE loss is thus $\mathcal{L}(\mathbf{x}) := \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{rqvae}}$, where $\mathcal{L}_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ and $\mathcal{L}_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient). At the end of training, each code should have acquired meaningful embeddings and each input should be assigned to the best Semantic ID.</p>
-<p>In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don&rsquo;t tokenize at the character level &mdash; even though the vocabulary will be small, the sequence length would be too long. Today, subword-level <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">tokenizers</a> are most popular, which learn to group frequently co-occurring characters together, such as <a href="https://en.wikipedia.org/wiki/Byte-pair_encoding">Byte Pair Encoding (BPE)</a>, WordPiece, and SentencePiece. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram or bigram tokenization in downstream retrieval tasks.</p>
-<p>For Generative Retrieval, the task is to learn predict the next item$_{n+1}$ given a sequence of items (item$_{1}$, $\ldots$, item$_{n}$).</p>
+<p>The process above can repeat infinitely. The deeper the codebooks, the finer the representations but the more the computation. After the latent vector $\mathbf{z}$ is allocated the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum_{d=0}^{m=1}\mathbf{e}_{c_i}$ is passed to a decoder to reconstruct the input $\mathbf{x}$ into $\mathbf{\hat{x}}$. RQ-VAE loss is defined as $\mathcal{L}(\mathbf{x}) := \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{rqvae}}$, where $\mathcal{L}_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ measures how close the reconstructed output is to the original input and $\mathcal{L}_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient) measures how good the code assignments are. Upon training, the RQ-VAE model uses the trained encoder to map the given item embedding into a quantized latent vector and generates a Semantic ID by assigning $m$-level codes to the quantized latent vector.</p>
+<p>In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don&rsquo;t tokenize at the character level &mdash; even though the vocabulary will be manageable, the sequence length would be too long and it&rsquo;s hard for a character to have stable &ldquo;meanings&rdquo;. Today, subword-level <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">tokenizers</a> are most popular in NLP, which learn to bind frequently co-occurring characters into tokens. Famous examples include <a href="https://en.wikipedia.org/wiki/Byte-pair_encoding">Byte Pair Encoding (BPE)</a>, <a href="https://research.google/blog/a-fast-wordpiece-tokenization-system/">WordPiece</a>, and <a href="https://discuss.huggingface.co/t/training-sentencepiece-from-scratch/3477">SentencePiece</a>. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram and bigram tokenization in downstream retrieval tasks.</p>
+<p>In Generative Retrieval, a sequence of items $(\mathrm{item}_1, \ldots, \mathrm{item}_n)$ are converted into a sequence of codes using Semantic IDs $(c_{1,0}, \ldots, c_{1, m-1}, c_{2,0}, \ldots, c_{2, m-1},\ldots,c_{n,0}, \ldots, c_{n, m-1})$. To retrieve $\mathrm{item}_{n+1}$, we can use an encoder-decoder model to decode the next $m$ codes $(c_{n+1,0}, \ldots, c_{n+1, m-1})$, which is the Semantic ID of $\mathrm{item}_{n+1}$ that hopefully maps to actual items in the corpus.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/9detgaylbt0v4ed9kc1mp/Screenshot-2025-08-01-at-3.21.33-PM.png?rlkey=jxtcge2xxgy6kf3ztmjxe38y1&amp;st=rnwuyfuc&amp;raw=1"
+    alt="taxonomy." width="1800"><figcaption>
+      <p>taxonomy.</p>
+    </figcaption>
+</figure>
+
+<p>While there is no deliberate design, it&rsquo;s amazing how well Semantic IDs map to hand-crafted item taxonomies in the recommendation corpus. Of course, there are &ldquo;bad&rdquo; cases where different items share the same Semantic ID (hash collision) or a Semantic ID doesn&rsquo;t map to any actual items (invalid IDs). To prevent the former, an extra token can be appended to a Semantic ID to make it unique &mdash; e.g., if two items share the same Semantic ID (12, 24, 52), we can assign (12, 24, 52, 0) to one and (12, 24, 52, 1) to the other. In cold-start scenarios, hash collisions can actually help retrieve new items that share Semantic IDs with existing items. Invalid codes are pretty rare, making up only 0.1%-1.6% of all Semantic IDs generated in the TIGER paper.</p>
 <p>Talk about COBORA.</p>
 <h3 id="crank-up-task-complexity-via-generative-training" class="scroll-mt-8 group">
   Crank Up Task Complexity via Generative Training
