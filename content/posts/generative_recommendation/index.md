@@ -1,6 +1,6 @@
 ---
 title: "Is Generative Recommendation the ChatGPT Moment of RecSys?"
-date: 2025-07-29
+date: 2025-07-31
 math: true
 categories: ["generative recommendation", "large language models"]
 toc: true
@@ -18,6 +18,8 @@ In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv
 
 What makes GR magical? Why can it unlock scaling laws in recommender systems in ways that DLRM wasn't able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let's check out GR models from above companies and see what the fuss is all about 👀. Since I work on ranking, I mainly focus on ranking applications in this post, but GR is first and widely applied in retrieval.
 
+{{< figure src="https://www.dropbox.com/scl/fi/x0y8rm8ph7dz7u1s2bli1/Screenshot-2025-07-29-at-10.18.10-PM.png?rlkey=yww2exuhetiu3jipkqyl5hvtn&st=ojhg4d1j&raw=1" caption="The landscape of Generative Recommenders (GR) in the past year." width="1800">}}
+
 # Compositionality, Language, and Intelligence
 
 ## The One-Epoch Curse of DLRM Recommenders
@@ -32,12 +34,10 @@ A user is thus a "book" written by a history of engaged items, and web-scale rec
 
 So how do we explain this stark contrast between language and recommendation models? Back in 2021, Netflix published a "popular science" paper that foresaw the challenges of DLRM-style recommenders. In this paper, [Steck et al. (2021)](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) argued that deep learning recommender systems differ  from other deep learning applications such as image classification in that item IDs are "atomic" and directly available in the data --- there are no low-to-high level feature representations to extract (e.g., pixels to objects in images). As such, deep learning recommenders only require a shallow network to learn user and item embeddings from user-item interactions, effectively learning "dot product" operations. They don't benefit from deeper architectures meant to capture low-level features. 
 
-
 This observation is profound, highlighting inherent flaws in DLRM:
 - **Lack of task complexity**: Why do we need the full power of deep learning to learn a task as simple as performing dot products? If shallow networks are enough, how could scaling laws emerge?
 > [...] a syntactically complex phrase is a function of the meanings of its constituent parts and the way they are combined. --- [*Compositionality*](https://oecs.mit.edu/pub/e222wyjy/release/1), Ryan M. Nefdt and Christopher Potts
 - **No compositionality, no intelligence**: Imagine if each word as an arbitrary sound unrelated to others --- e.g., saying "blim" for "snake" and "plok" for "rattlesnake" --- learning any {{< sidenote "language" >}}Or music, or planning… For example, while sound frequencies are continuous and infinite, Western music relies on just 12 distinct frequencies and their multiples. Notes form chords, chords form progressions, and so forth. Without hierarchical relationships, composing music would be nearly impossible.{{< /sidenote >}} would be impossible in our lifetime, as we'd spend an eternity just acquiring the vocabulary. Recommender systems face precisely this challenge: a popular social media platform, for instance, may have billions of items, with new ones constantly being added, making the vocabulary enormous, ever-changing, and non-stationary. Moreover, item IDs are arbitrary and atomic, with no relationship between one another that learners can exploit to speed up learning. By contrast, without knowing German, we might guess that "klapperschlange" (rattlesnake) relates to "schlange" (snake). The compositionality of language, i.e., smaller units are combined into complex phrases and concepts, allows humans to express infinite ideas using a finite vocabulary acquired in finite time --- a luxury that recommender systems don't have.
-
 
 ## What Makes Language Special: Hockett's Design Features
 
@@ -69,13 +69,36 @@ For recommender systems to have "intelligence," item IDs need not have inherent 
   </div>
 </details>
 
-<!-- But how do we decompose an arbitrary item ID into meaningful smaller units? Right now, Semantic IDs is a go-to method and RQ-VAE is the most popular to learn Semantic IDs. 
-
-# Semantic IDs -->
-
 # Break the Scalability Curse in RecSys
 ## Conjure Up Compositionality via Semantic IDs
-Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
+Words in language and notes in music discretize sound waves, concepts, etc., which would've been atomic, continuous, and infinite. That's what Semantic IDs do for items in recommender systems. 
+
+Residual-Quantized VAE (RQ-VAE) is the best known algorithm for Semantic ID generation. It was invented in the auditory ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and visual domains ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) and popularized by DeepMind's TIGER paper ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applying it to Generative Retrieval. RQ-VAE maps a pretrained semantic embedding $x$ to an $m$-level Semantic ID $(c_0, \ldots, c_{m-1})$ in a recursive manner: 
+
+{{< figure src="https://www.dropbox.com/scl/fi/w9d3w2ra4uhueoftv41ex/Screenshot-2025-07-29-at-11.03.04-PM.png?rlkey=89zuzha8bxwh9lpl1n86l6cnv&st=5ox5ujza&raw=1" caption="RQ-VAE." width="1800">}}
+
+1. Initialization
+   - Encoder $\mathcal{E}$ maps input $x$ to latent representation $\mathbf{z} := \mathcal{E}(\mathbf{x})$ 
+   - At each level $d$, initialize a new codebook $\mathcal{C}\_d := \\{ \mathbf{e}_k \\}\_{k=1}^{K}$ of size $K$; each code $k$ starts with a random embedding $\mathbf{e}_k$
+2. Level 0: Assign inputs to codes
+   - The initial "residual" is $\mathbf{r}\_0 := \mathbf{z}$, the input latent vector
+   - Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}\_0$, $c\_0 = \arg\min_i \lVert \mathbf{r}\_0 - \mathbf{e}\_k \rVert$
+   - The difference between $\mathbf{r}\_0$ and the closet code embedding at level 0, $\mathbf{e}\_{c_0}$, becomes the next residual $\mathbf{r}\_1 := \mathbf{r}\_0 - \mathbf{e}\_{c_0}$ 
+3. Recursion: Assign residuals to codes
+   - At current level $d$, the residual is $\mathbf{r}_d$
+   - Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}\_d$, $c\_d = \arg\min_i \lVert \mathbf{r}\_d - \mathbf{e}\_k \rVert$
+   - The difference between $\mathbf{r}\_d$ and the closet code embedding at level $d$, $\mathbf{e}\_{c_d}$, becomes the next residual $\mathbf{r}\_{d+1} := \mathbf{r}\_d - \mathbf{e}\_{c_d}$ 
+
+The process above can repeat infinitely. The deeper the codebooks we choose, the finer the representations are but the heavier the computation. Once $\mathbf{z}$ is coded into the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum\_{d=0}^{m=1}\mathbf{e}\_{c_i}$ is passed to a decoder to reconstruct the input $\mathbf{x}$. RQ-VAE loss is thus $\mathcal{L}(\mathbf{x}) := \mathcal{L}\_{\mathrm{recon}} + \mathcal{L}\_{\mathrm{rqvae}}$, where $\mathcal{L}\_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ and $\mathcal{L}\_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}\_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}\_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient). At the end of training, each code should have acquired meaningful embeddings and each input should be assigned to the best Semantic ID. 
+
+In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don't tokenize at the character level --- even though the vocabulary will be small, the sequence length would be too long. Today, subword-level [tokenizers](https://huggingface.co/docs/transformers/en/tokenizer_summary) are most popular, which learn to group frequently co-occurring characters together, such as [Byte Pair Encoding (BPE)](https://en.wikipedia.org/wiki/Byte-pair_encoding), WordPiece, and SentencePiece. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram or bigram tokenization in downstream retrieval tasks.
+
+For Generative Retrieval, the task is to learn predict the next item$\_{n+1}$ given a sequence of items (item$\_{1}$, $\ldots$, item$\_{n}$).
+
+Talk about COBORA.
+
+
+
 ## Crank Up Task Complexity via Generative Training
 
 # Approaches to Generative Recommendation
@@ -86,27 +109,29 @@ Introduce RQ-VAE. Discuss how it's used in TIGER. Talk about COBORA.
 
 # References
 
-## Scaling Laws in Recommender Systems
-1. "One-epoch phenomenon" 👉 [*Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models*](https://arxiv.org/abs/2209.06053) (2022) by Zhang et al., *CIKM*.
-2. Quality saturation under the "item-centric ranking" framework 👉 [*Breaking the Curse of Quality Saturation with User-Centric Ranking*](https://arxiv.org/abs/2305.15333) (2023) by Zhao et al., *KDD*.
-3. Netflix foresaw the lack of task complexity and item ID compositionality in DLRM 👉 [*Deep Learning for Recommender Systems: A Netflix Case Study*](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) (2021) by Steck et al., *AI Magazine*.
-4. Power-law scaling hits diminishing returns in DLRM 👉 [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) (2022) by Ardalani et al., *arXiv*.
-5. Generative training on pure IDs shows power-law scaling laws 👉 [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
+## Overview & Scaling Laws in Recommender Systems
+1. A comprehensive lit review on Generative Recommendation 👉 [*GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models*](https://arxiv.org/abs/2507.06507) (2025) by Yang et al., *arXiv*.
+
+2. "One-epoch phenomenon" 👉 [*Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models*](https://arxiv.org/abs/2209.06053) (2022) by Zhang et al., *CIKM*.
+3. Quality saturation under the "item-centric ranking" framework 👉 [*Breaking the Curse of Quality Saturation with User-Centric Ranking*](https://arxiv.org/abs/2305.15333) (2023) by Zhao et al., *KDD*.
+4. Netflix foresaw the lack of task complexity and item ID compositionality in DLRM 👉 [*Deep Learning for Recommender Systems: A Netflix Case Study*](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) (2021) by Steck et al., *AI Magazine*.
+5. Power-law scaling hits diminishing returns in DLRM 👉 [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) (2022) by Ardalani et al., *arXiv*.
+6. Generative training even on pure IDs shows power-law scaling laws 👉 [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
 
 ## From Atomic Item IDs to Semantic IDs
-6. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
-7. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](https://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
-8. Baidu's COBRA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) tackles information loss from RQ-VAE quantization
+7. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
+8. Google DeepMind's TIGER ([Rajput et al., 2023](https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html)) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper ([Singh et al., 2024](https://dl.acm.org/doi/abs/10.1145/3640457.3688190)) applied Semantic IDs to ranking as well
+9. Baidu's COBRA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) tackles information loss from RQ-VAE quantization
 
 ## Ditch DLRM for End-to-End Generative Architectures
-9. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
-10. Kuaishou's OneRec 👉 [*OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment*](https://arxiv.org/abs/2502.18965) (2025) by Deng et al., *arXiv*.
-11. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
+10. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
+11. Kuaishou's OneRec 👉 [*OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment*](https://arxiv.org/abs/2502.18965) (2025) by Deng et al., *arXiv*.
+12. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
 
 ## Weave Generative Architectures into DLRM
-12. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
-13. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
-14. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
-15. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
-16. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
-17. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
+13. Xiaohongshu's GenRank 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
+14. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
+15. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
+16. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
+17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
+18. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
