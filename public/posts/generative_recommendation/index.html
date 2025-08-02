@@ -24,15 +24,15 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-08-01T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-08-02T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
   <meta itemprop="description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
-  <meta itemprop="datePublished" content="2025-08-01T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3135">
+  <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3866">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -80,7 +80,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-08-01",
+  "datePublished": "2025-08-02",
   "description": " Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., \"Embedding-MLP\" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep \u0026 Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.\nSince 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding \u0026 Interaction \u0026 Expert’ model architectures.\nIn 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.",
   "headline": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "isPartOf": {
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT15M",
+  "timeRequired": "PT19M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 3135
+  "wordCount": 3866
 }
 </script>
 
@@ -129,13 +129,13 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <article class="main">
     <header>
       <h1 class="!mb-1">Is Generative Recommendation the ChatGPT Moment of RecSys?</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-08-01T00:00:00&#43;00:00">August 1, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-08-02T00:00:00&#43;00:00">August 2, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 15 minutes
+      Reading time: 19 minutes
     
 
     
@@ -355,6 +355,12 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>The key idea, with an analogy to NLP, is to think of items as tokens and users as documents, i.e., each user is modeled by a list of items that they engaged with, in chronological order according to the time of engagements.</p>
 </blockquote>
 <p>A user is thus a &ldquo;book&rdquo; written by a history of engaged items, and web-scale recommender systems provide endless training data. In language models, performance predictably improves with model size or training data (e.g., linear or power-law relationships), a phenomenon called &ldquo;scaling laws&rdquo; (<a href="https://arxiv.org/abs/2203.15556">Hoffmann et al., 2022</a>). In DLRM recommender systems, however, scaling laws have never emerged. In recommenders employing Transformer modules, increasing the number of Transformer layers doesn&rsquo;t improve performance &mdash; more often than not, one layer is all you need (e.g., Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>). Regardless of the architecture, training DLRM recommenders for more than one epoch typically results in rapid performance deterioration (the &ldquo;one-epoch phenomenon&rdquo;; Zhang et al., <a href="https://dl.acm.org/doi/abs/10.1145/3511808.3557479">CIKM 22</a>).</p>
+<!-- <figure><img src="https://www.dropbox.com/scl/fi/kwizvxifw76foyarxynqn/Screenshot-2025-08-02-at-9.51.24-AM.png?rlkey=f63gie8g7ttx9zl9p87i3eh5e&amp;st=kgc9inhv&amp;raw=1"
+    alt="Hypothesis behind one epoch phenomenon." width="1800"><figcaption>
+      <p>Hypothesis behind one epoch phenomenon.</p>
+    </figcaption>
+</figure>
+ -->
 <p>So how do we explain this stark contrast between language and recommendation models? Back in 2021, Netflix published a &ldquo;popular science&rdquo; paper that foresaw the challenges of DLRM-style recommenders. In this paper, <a href="https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140">Steck et al. (2021)</a> argued that deep learning recommender systems differ  from other deep learning applications such as image classification in that item IDs are &ldquo;atomic&rdquo; and directly available in the data &mdash; there are no low-to-high level feature representations to extract (e.g., pixels to objects in images). As such, deep learning recommenders only require a shallow network to learn user and item embeddings from user-item interactions, effectively learning &ldquo;dot product&rdquo; operations. They don&rsquo;t benefit from deeper architectures meant to capture low-level features.</p>
 <p>This observation is profound, highlighting inherent flaws in DLRM:</p>
 <ul>
@@ -368,18 +374,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-06"
+    id="sidenote-checkbox-07"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-06"
-    for="sidenote-checkbox-06"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
     class="sidenote-mark"
     >language</label
   >
-  <small id="sidenote-06" class="sidenote-content">
+  <small id="sidenote-07" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>Or music, or planning… For example, while sound frequencies are continuous and infinite, Western music relies on just 12 distinct frequencies and their multiples. Notes form chords, chords form progressions, and so forth. Without hierarchical relationships, composing music would be nearly impossible.<span class="sr-only">)</span>
   </small>
 </span>
@@ -437,18 +443,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-07"
+    id="sidenote-checkbox-08"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-07"
-    for="sidenote-checkbox-07"
+    aria-details="sidenote-08"
+    for="sidenote-checkbox-08"
     class="sidenote-mark"
     >zero interest</label
   >
-  <small id="sidenote-07" class="sidenote-content">
+  <small id="sidenote-08" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?<span class="sr-only">)</span>
   </small>
 </span>
@@ -565,7 +571,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </figcaption>
 </figure>
 
-<p>During training, a single-level (or multi-level) Semantic ID is first decoded and converted into an embedding, which is then appended to the input embedding sequence to decode the dense representation, $P(ID_{t+1}, \mathbf{v}_{t+1}|S_{1:t}) = P(ID_{t+1}|S_{1:t})P(\mathbf{v}_{t+1}|ID_{t+1},S_{1:t})$. The loss function is given by $\mathcal{L} = \mathcal{L}_\mathrm{sparse} + \mathcal{L}_\mathrm{dense}$, where:</p>
+<p>During training, a single-level (can be multi-level) Semantic ID is first decoded and converted into an embedding, which is then appended to the input embedding sequence to decode the dense representation, $P(ID_{t+1}, \mathbf{v}_{t+1}|S_{1:t}) = P(ID_{t+1}|S_{1:t})P(\mathbf{v}_{t+1}|ID_{t+1},S_{1:t})$. The loss function is given by $\mathcal{L} = \mathcal{L}_\mathrm{sparse} + \mathcal{L}_\mathrm{dense}$, where:</p>
 <ul>
 <li>$\mathcal{L}_\mathrm{sparse} = -\sum_{t=1}^{T-1}\log(\frac{\exp(z_{t+1}^{ID_{t+1}})}{\sum_{j=1}^C\exp(z_{t+1}^j)})$, which is the standard cross-entropy loss</li>
 <li>$\mathcal{L}_\mathrm{dense} = -\sum_{t=1}^{T-1}\log(\frac{\exp(\cos(\hat{\mathbf{v}_{t+1}}\cdot \mathbf{v}_{t+1}))}{\sum_{\mathrm{item}_j}\in\mathrm{Batch}\exp(\cos(\hat{\mathbf{v}_{t+1}}\cdot \mathbf{v}_{\mathrm{item}_j}))})$, which pushes the cosine similarity between positive pair embeddings to be greater than that between negative pair embeddings</li>
@@ -573,7 +579,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>During inference, only the dense representation is used for retrieval via embedding-based retrieval (see <a href="/posts/ebr/" class="backlink">my post</a>
   
   ). COBORA outperforms methods that only have the sparse or the dense components.</p>
-<p>It&rsquo;s crazy how fast moving the Generative Recommendation field is &mdash; minutes after I wrote the above paragraph and checked LinkedIn, Snap open-sourced their framework called Generative Recommendation with Semantic ID (GRID). I plan to read their <a href="https://github.com/snap-research/GRID">code</a> and <a href="https://arxiv.org/pdf/2507.22224">paper</a> in details &mdash; at first glance, it looks like TIGER with additional user tokens.</p>
+<p>It&rsquo;s crazy how fast moving the Generative Recommendation field is &mdash; minutes after I wrote the paragraph above and scrolled LinkedIn, Snap open-sourced their framework called Generative Recommendation with Semantic ID (GRID). I plan to read their <a href="https://github.com/snap-research/GRID">code</a> and <a href="https://arxiv.org/pdf/2507.22224">paper</a> in details &mdash; at first glance, it looks like TIGER with additional user tokens.</p>
 <h3 id="crank-up-task-complexity-via-generative-training" class="scroll-mt-8 group">
   Crank Up Task Complexity via Generative Training
   
@@ -599,6 +605,31 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
+<p>For language models, scale often does wonders for model performance. The seminal <em>Attention Is All You Need</em> paper used 6 Transformer blocks, GPT-2 scaled it up to 12, and GPT-3 to 96. While GPT-4&rsquo;s number of Transformer blocks is undisclosed, <a href="https://semianalysis.com/2023/07/10/gpt-4-architecture-infrastructure/">rumor</a> has it that it uses 120 layers and has 100x more parameters than its predecessor GPT-3 (18 trillion vs. 175 billion). The data and compute used to train larger models have also increased manyfold.</p>
+<p>In Recommender Systems, Transformer blocks are often used in user sequence modeling to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  <code>pAction</code>  predictions. As mentioned earlier, many companies (Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>) found the best performance when using just one Transformer layer.</p>
+<p>Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">Zhang et al., 2025</a>) trained a <em>stand-alone</em> sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&amp;st=i4iwezql&amp;raw=1"
+    alt="Scaling sequence model." width="1800"><figcaption>
+      <p>Scaling sequence model.</p>
+    </figcaption>
+</figure>
+
+<p>They saw power-law curves where model performance increases with both data size and model size. Larger models are more &ldquo;data efficient,&rdquo; in that validation loss drops more quickly with data size in larger models. WeChat models differ from aforementioned sequence models that don&rsquo;t scale in that they perform an end-to-end generative task (i.e., decoding the next ID), whereas the latter perform a discriminative task (i.e., predicting whether a user will act on an item) in the end.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/6fwyco3xq3l8pjf5nax2h/Screenshot-2025-08-02-at-10.16.24-AM.png?rlkey=v9g0wv1swml28ft9stkcs5640&amp;st=wfmb5rf2&amp;raw=1"
+    alt="Power law." width="1800"><figcaption>
+      <p>Power law.</p>
+    </figcaption>
+</figure>
+
+<p>What makes generative vs. discriminative tasks different? In terms of task formulation, both <code>pAction</code> prediction and next-token prediction solve classification problems &mdash; the former is a binary classifier (i.e., predicting whether a user will act on an item or not given some context) and the latter is extreme multi-class classifier (e.g., selecting the most likely or top-k like tokens). What makes <code>pAction</code> prediction discriminative is that it models the conditional probability $P(\mathrm{action} | \mathrm{user},,\mathrm{item},,\mathrm{context})$. By contrast, next-token prediction requires modeling the joint distribution $P(x_1,x_2,\ldots,x_n,x_{n+1})=P(x_{n+1})P(x_1,x_2,\ldots,x_{n}|x_{n+1})$. Learning the joint distribution is simultaneously a harder task but it also enjoys more supervision &mdash; all preceding tokens can supervise the current token generation, whereas for <code>pAction</code> predictions, each example only provides a single binary label. As such, generative models need more data to train and they also get what they wish for.</p>
+<p>In his Zhihu <a href="https://zhuanlan.zhihu.com/p/1918350919508140128">blogpost</a>, the first author of Kuaishou&rsquo;s <a href="https://arxiv.org/abs/2506.13695">OneRec technical report</a> offers deeper thoughts on the discriminative vs. generative distinction &mdash; below are English translations of the original text:</p>
+<blockquote>
+<p>In my view, a large language model&rsquo;s ability to think and reason largely stems from the fact that increasing the decoding steps corresponds to increasing the depth of search. If we think of the decoding process as a kind of 100K-token tree search at each step, then generating more tokens means going deeper in the search tree. And each generated token becomes part of the future input, helping the model activate more relevant information from its parameters (via the causal transformer) to make judgments about the final answer.</p>
+</blockquote>
+<blockquote>
+<p>In recommendation models, however, expanding the candidate set is fundamentally a breadth-based search, not a depth-based one. Each item is evaluated independently, so evaluating more items doesn&rsquo;t help the model make a better judgment about any single one. There&rsquo;s a performance ceiling.</p>
+</blockquote>
+<p>In the past year, companies like Kuaishou and Meta made a bold move, ditching the traditional DLRM paradigm for end-to-end generative Generative Recommendation. More companies such as Alibaba, Netflix, and Xiaohongshu integrated GR components into their DLRM systems. In the next section, let&rsquo;s look at several famous case studies.</p>
 <h2 id="approaches-to-generative-recommendation" class="scroll-mt-8 group">
   Approaches to Generative Recommendation
   
@@ -649,6 +680,9 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
+<p>HSTU is the first famous generative ranker. It replaces everything.</p>
+<p>OneRec also seeks to replace everything.</p>
+<p>MTGR adds cross features back.</p>
 <h3 id="hybrid-generative-discriminative-architectures" class="scroll-mt-8 group">
   Hybrid Generative-Discriminative Architectures
   
@@ -674,6 +708,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
+<p>Overhauling cascade pipelines is hard for most companies because their teams are structured around L1, L2, etc.. Other companies have a more gentle way to reap the benefits from GM without too much disruption.</p>
+<p>Alibaba&rsquo;s GPSD is a hybrid.</p>
 <h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
   Lessons on Embracing the Generative Recommendation Tide
   
@@ -699,6 +735,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
+<p>Probably look into Alibaba&rsquo;s GPSD. Netflix is also gentle.</p>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -798,6 +835,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <li>RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and images (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) with low costs and high fidelity</li>
 <li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking as well</li>
 <li>Baidu&rsquo;s COBRA (<a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>) tackles information loss from RQ-VAE quantization</li>
+<li>Snap&rsquo;s GRID 👉 <a href="https://www.arxiv.org/abs/2507.22224"><em>Generative Recommendation with Semantic IDs: A Practitioner&rsquo;s Handbook</em></a> (2025) by Ju et al., <em>arXiv</em>.</li>
 </ol>
 <h3 id="ditch-dlrm-for-end-to-end-generative-architectures" class="scroll-mt-8 group">
   Ditch DLRM for End-to-End Generative Architectures
@@ -824,7 +862,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<ol start="10">
+<ol start="11">
 <li>Meta&rsquo;s HSTU 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
 <li>Kuaishou&rsquo;s OneRec 👉 <a href="https://arxiv.org/abs/2502.18965"><em>OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment</em></a> (2025) by Deng et al., <em>arXiv</em>.</li>
 <li>Meituan&rsquo;s MTGR 👉 <a href="https://arxiv.org/abs/2505.18654"><em>MTGR: Industrial-Scale Generative Recommendation Framework in Meituan</em></a> (2025) by Han et al., <em>arXiv</em>.</li>
@@ -854,14 +892,16 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<ol start="13">
+<ol start="14">
 <li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
 <li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
 <li>Alibaba&rsquo;s GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
 <li>Alibaba&rsquo;s LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
 <li>ByteDance&rsquo;s RankMixer 👉 <a href="https://arxiv.org/abs/2507.15551"><em>RankMixer: Scaling Up Ranking Models in Industrial Recommenders</em></a> (2025) by Zhu et al., <em>arXiv</em>.</li>
 <li>JD.com 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
+<li>Pinterest&rsquo;s PinFM 👉 <a href="https://arxiv.org/abs/2507.12704"><em>PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform</em></a> (2025) by Chen et al., <em>RecSys</em>.</li>
 </ol>
+<!-- https://huggingface.co/papers/2507.22879 -->
     </div>
   </article>
 
