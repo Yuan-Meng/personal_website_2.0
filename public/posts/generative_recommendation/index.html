@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-01T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3060">
+  <meta itemprop="wordCount" content="3135">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT15M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 3060
+  "wordCount": 3135
 }
 </script>
 
@@ -508,8 +508,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>Words in language and notes in music discretize sound waves, concepts, etc., which would&rsquo;ve been atomic, continuous, and infinite. That&rsquo;s what Semantic IDs do for items in recommender systems.</p>
 <p>Residual-Quantized VAE (RQ-VAE) is the best known algorithm for Semantic ID generation. It was invented in the auditory (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and visual domains (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) and popularized by DeepMind&rsquo;s TIGER paper (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applying it to Generative Retrieval. RQ-VAE maps a pretrained semantic embedding $x$ to an $m$-level Semantic ID $(c_0, \ldots, c_{m-1})$ in a recursive manner:</p>
 <figure><img src="https://www.dropbox.com/scl/fi/w9d3w2ra4uhueoftv41ex/Screenshot-2025-07-29-at-11.03.04-PM.png?rlkey=89zuzha8bxwh9lpl1n86l6cnv&amp;st=5ox5ujza&amp;raw=1"
-    alt="RQ-VAE." width="1800"><figcaption>
-      <p>RQ-VAE.</p>
+    alt="RQ-VAE generates Semantic IDs by encoding input embeddings into quantized vectors and mapping the latter to $m$-level codes." width="1800"><figcaption>
+      <p>RQ-VAE generates Semantic IDs by encoding input embeddings into quantized vectors and mapping the latter to $m$-level codes.</p>
     </figcaption>
 </figure>
 
@@ -546,22 +546,22 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don&rsquo;t tokenize at the character level &mdash; even though the vocabulary will be manageable, the sequence length would be too long and it&rsquo;s hard for a character to have stable &ldquo;meanings&rdquo;. Today, subword-level <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">tokenizers</a> are most popular in NLP, which learn to bind frequently co-occurring characters into tokens. Famous examples include <a href="https://en.wikipedia.org/wiki/Byte-pair_encoding">Byte Pair Encoding (BPE)</a>, <a href="https://research.google/blog/a-fast-wordpiece-tokenization-system/">WordPiece</a>, and <a href="https://discuss.huggingface.co/t/training-sentencepiece-from-scratch/3477">SentencePiece</a>. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram and bigram tokenization in downstream retrieval tasks.</p>
 <p>In Generative Retrieval, a sequence of items $(\mathrm{item}_1, \ldots, \mathrm{item}_n)$ are converted into a sequence of codes using Semantic IDs $(c_{1,0}, \ldots, c_{1, m-1}, c_{2,0}, \ldots, c_{2, m-1},\ldots,c_{n,0}, \ldots, c_{n, m-1})$. To retrieve $\mathrm{item}_{n+1}$, we can use an encoder-decoder model to decode the next $m$ codes $(c_{n+1,0}, \ldots, c_{n+1, m-1})$, which is the Semantic ID of $\mathrm{item}_{n+1}$ that hopefully maps to actual items in the corpus.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/9detgaylbt0v4ed9kc1mp/Screenshot-2025-08-01-at-3.21.33-PM.png?rlkey=jxtcge2xxgy6kf3ztmjxe38y1&amp;st=rnwuyfuc&amp;raw=1"
-    alt="taxonomy." width="1800"><figcaption>
-      <p>taxonomy.</p>
+    alt="Semantic IDs are not designed to map to human-readable categories, but map quite nicely to item taxonomies hand crafted by taxonomists." width="1800"><figcaption>
+      <p>Semantic IDs are not designed to map to human-readable categories, but map quite nicely to item taxonomies hand crafted by taxonomists.</p>
     </figcaption>
 </figure>
 
 <p>While there is no deliberate design, it&rsquo;s amazing how well Semantic IDs map to hand-crafted item taxonomies in the recommendation corpus. Of course, there are &ldquo;bad&rdquo; cases where different items share the same Semantic ID (hash collision) or a Semantic ID doesn&rsquo;t map to any actual items (invalid IDs). To prevent the former, an extra token can be appended to a Semantic ID to make it unique &mdash; e.g., if two items share the same Semantic ID (12, 24, 52), we can assign (12, 24, 52, 0) to one and (12, 24, 52, 1) to the other. In cold-start scenarios, hash collisions can actually help retrieve new items that share Semantic IDs with existing items. Invalid codes are pretty rare, making up only 0.1%-1.6% of all Semantic IDs generated in the TIGER paper.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/a12lvlznxux8s7gwf4box/Screenshot-2025-08-01-at-3.53.58-PM.png?rlkey=ue8fm74yeyhcniu4o5gaq84x3&amp;st=5ovirb0g&amp;raw=1"
-    alt="COBORA vs TIGER." width="1800"><figcaption>
-      <p>COBORA vs TIGER.</p>
+    alt="A high-level comparison between TIGER vs. COBORA. The latter combines sparse Semantic IDs and fine-grained item representations for Generative Retrieval." width="1800"><figcaption>
+      <p>A high-level comparison between TIGER vs. COBORA. The latter combines sparse Semantic IDs and fine-grained item representations for Generative Retrieval.</p>
     </figcaption>
 </figure>
 
 <p>Information loss inevitable when we discretize continuous representations &mdash; imagine the finer-grained intervals lost between semitones in Western music. Baidu&rsquo;s COBORA (<a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>) combines sparse (one-level Semantic IDs) and dense (real-valued embeddings) representations to depict each item in Generative Retrieval. In this hybrid framework, the sparse ID paints a coarse picture of the &ldquo;item essence&rdquo; (e.g., categories, brands, etc.) whereas the dense representation offers refinements on item details.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/zyoay6335ztooy17fo39r/Screenshot-2025-08-01-at-4.46.06-PM.png?rlkey=h9oigl01bjuqej2kdw7e7t9nz&amp;st=gxdrgcbr&amp;raw=1"
-    alt="COBORA details." width="1800"><figcaption>
-      <p>COBORA details.</p>
+    alt="In COBORA, the sparse ID is generated by RQ-VAE and the dense vector is contextual item embeddings after going through a BERT-style encoder." width="1800"><figcaption>
+      <p>In COBORA, the sparse ID is generated by RQ-VAE and the dense vector is contextual item embeddings after going through a BERT-style encoder.</p>
     </figcaption>
 </figure>
 

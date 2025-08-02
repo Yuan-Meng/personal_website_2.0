@@ -83,13 +83,16 @@
     },
     "/posts/ebr/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
     },
     "/posts/generative_recommendation/": {
       "in": [],
-      "out": []
+      "out": [
+        "/posts/ebr/"
+      ]
     },
     "/posts/hardware_aware_transformers/": {
       "in": [],
