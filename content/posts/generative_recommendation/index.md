@@ -101,8 +101,20 @@ In Generative Retrieval, a sequence of items $(\mathrm{item}\_1, \ldots, \mathrm
 
 While there is no deliberate design, it's amazing how well Semantic IDs map to hand-crafted item taxonomies in the recommendation corpus. Of course, there are "bad" cases where different items share the same Semantic ID (hash collision) or a Semantic ID doesn't map to any actual items (invalid IDs). To prevent the former, an extra token can be appended to a Semantic ID to make it unique --- e.g., if two items share the same Semantic ID (12, 24, 52), we can assign (12, 24, 52, 0) to one and (12, 24, 52, 1) to the other. In cold-start scenarios, hash collisions can actually help retrieve new items that share Semantic IDs with existing items. Invalid codes are pretty rare, making up only 0.1\%-1.6% of all Semantic IDs generated in the TIGER paper.
 
-Talk about COBORA.
+{{< figure src="https://www.dropbox.com/scl/fi/a12lvlznxux8s7gwf4box/Screenshot-2025-08-01-at-3.53.58-PM.png?rlkey=ue8fm74yeyhcniu4o5gaq84x3&st=5ovirb0g&raw=1" caption="COBORA vs TIGER." width="1800">}}
 
+Information loss inevitable when we discretize continuous representations --- imagine the finer-grained intervals lost between semitones in Western music. Baidu's COBORA ([Yang et al., 2025](https://arxiv.org/abs/2503.02453)) combines sparse (one-level Semantic IDs) and dense (real-valued embeddings) representations to depict each item in Generative Retrieval. In this hybrid framework, the sparse ID paints a coarse picture of the "item essence" (e.g., categories, brands, etc.) whereas the dense representation offers refinements on item details.
+
+{{< figure src="https://www.dropbox.com/scl/fi/zyoay6335ztooy17fo39r/Screenshot-2025-08-01-at-4.46.06-PM.png?rlkey=h9oigl01bjuqej2kdw7e7t9nz&st=gxdrgcbr&raw=1" caption="COBORA details." width="1800">}}
+
+During training, a single-level (or multi-level) Semantic ID is first decoded and converted into an embedding, which is then appended to the input embedding sequence to decode the dense representation, $P(ID\_{t+1}, \mathbf{v}\_{t+1}|S_{1:t}) = P(ID\_{t+1}|S_{1:t})P(\mathbf{v}\_{t+1}|ID\_{t+1},S_{1:t})$. The loss function is given by $\mathcal{L} = \mathcal{L}\_\mathrm{sparse} + \mathcal{L}\_\mathrm{dense}$, where:
+
+- $\mathcal{L}\_\mathrm{sparse} = -\sum\_{t=1}^{T-1}\log(\frac{\exp(z\_{t+1}^{ID\_{t+1}})}{\sum\_{j=1}^C\exp(z\_{t+1}^j)})$, which is the standard cross-entropy loss
+- $\mathcal{L}\_\mathrm{dense} = -\sum\_{t=1}^{T-1}\log(\frac{\exp(\cos(\hat{\mathbf{v}\_{t+1}}\cdot \mathbf{v}\_{t+1}))}{\sum\_{\mathrm{item}_j}\in\mathrm{Batch}\exp(\cos(\hat{\mathbf{v}\_{t+1}}\cdot \mathbf{v}\_{\mathrm{item}_j}))})$, which pushes the cosine similarity between positive pair embeddings to be greater than that between negative pair embeddings
+
+During inference, only the dense representation is used for retrieval via embedding-based retrieval (see {{< backlink "ebr" "my post">}}). COBORA outperforms methods that only have the sparse or the dense components.
+
+It's crazy how fast moving the Generative Recommendation field is --- minutes after I wrote the above paragraph and checked LinkedIn, Snap open-sourced their framework called Generative Recommendation with Semantic ID (GRID). I plan to read their [code](https://github.com/snap-research/GRID) and [paper](https://arxiv.org/pdf/2507.22224) in details --- at first glance, it looks like TIGER with additional user tokens.
 
 ## Crank Up Task Complexity via Generative Training
 
