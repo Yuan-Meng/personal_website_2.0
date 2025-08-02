@@ -146,6 +146,8 @@ In the past year, companies like Kuaishou and Meta made a bold move, ditching th
 
 ## Fully Generative Architectures
 
+### Meta's HSTU
+
 {{< figure src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&st=nqp621ua&raw=1" caption="Meta has 'completely' overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800">}}
 
 Meta's [*Actions Speak Louder than Words*](https://arxiv.org/abs/2402.17152) may be the Recommender System paper with the most Greek letters you'll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>. 
@@ -167,10 +169,14 @@ The main module in Meta's model is a causal autoregressive Transformer called th
 
 While the overall architecture isn't too crazy, many optimizations are done to bring this model to life, including selecting a subsequence of *stochastic length* (SL) from each user's history (TL;DR: the older an action, the less likely it will be selected), row-wise AdamW optimizers, and the new M-FALCON algorithm for micro-batching during serving.
 
+### Kuaishou's OneRec
+
 OneRec also seeks to replace everything. https://zhuanlan.zhihu.com/p/1918792219990689391
 
 {{< figure src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&st=whfld5n7&raw=1" caption="OneRec." width="1800">}}
 
+
+### Meituan's MTGR
 
 MTGR adds cross features back.
 
@@ -181,17 +187,23 @@ MTGR adds cross features back.
 
 Overhauling cascade pipelines is hard for most companies because their teams are structured around L1, L2, etc.. Other companies have a more gentle way to reap the benefits from GM without too much disruption.
 
+### Alibaba's GPSD and LUM
 Alibaba's GPSD is a hybrid.
+
+https://huggingface.co/papers/2507.22879
+
+### Xiaohongshu's GenRank
+
+### ByteDance's RankMixer
+
+### Netflix's Foundation Model
+
+### Other Industry Examples
+JD.com, Pinterest
 
 # Lessons on Embracing the Generative Recommendation Tide
 
-Probably look into Alibaba's GPSD. Netflix is also gentle. 
-
 # References
-
-{{< backlink "mtml" "my post">}}
-{{< backlink "negative_sampling" "my post">}}
-{{< backlink "human_vision" "my post">}}
 
 ## Overview & Scaling Laws in Recommender Systems
 1. A comprehensive lit review on Generative Recommendation 👉 [*GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models*](https://arxiv.org/abs/2507.06507) (2025) by Yang et al., *arXiv*.
@@ -215,12 +227,10 @@ Probably look into Alibaba's GPSD. Netflix is also gentle.
 13. Meituan's MTGR 👉 [*MTGR: Industrial-Scale Generative Recommendation Framework in Meituan*](https://arxiv.org/abs/2505.18654) (2025) by Han et al., *arXiv*.
 
 ## Weave Generative Architectures into DLRM
-14. Xiaohongshu's GenRank 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
-15. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
-16. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
-17. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
-18. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
+14. Alibaba's GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
+15. Alibaba's LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
+16. Xiaohongshu's GenRank 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
+17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
+18. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
 19. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
 20. Pinterest's PinFM 👉 [*PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform*](https://arxiv.org/abs/2507.12704) (2025) by Chen et al., *RecSys*.
-
-<!-- https://huggingface.co/papers/2507.22879 -->

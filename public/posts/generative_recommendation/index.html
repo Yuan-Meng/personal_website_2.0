@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4336">
+  <meta itemprop="wordCount" content="4344">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT21M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 4336
+  "wordCount": 4344
 }
 </script>
 
@@ -163,8 +163,22 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
     </li>
     <li><a href="#approaches-to-generative-recommendation">Approaches to Generative Recommendation</a>
       <ul>
-        <li><a href="#fully-generative-architectures">Fully Generative Architectures</a></li>
-        <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a></li>
+        <li><a href="#fully-generative-architectures">Fully Generative Architectures</a>
+          <ul>
+            <li><a href="#metas-hstu">Meta&rsquo;s HSTU</a></li>
+            <li><a href="#kuaishous-onerec">Kuaishou&rsquo;s OneRec</a></li>
+            <li><a href="#meituans-mtgr">Meituan&rsquo;s MTGR</a></li>
+          </ul>
+        </li>
+        <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a>
+          <ul>
+            <li><a href="#alibabas-gpsd-and-lum">Alibaba&rsquo;s GPSD and LUM</a></li>
+            <li><a href="#xiaohongshus-genrank">Xiaohongshu&rsquo;s GenRank</a></li>
+            <li><a href="#bytedances-rankmixer">ByteDance&rsquo;s RankMixer</a></li>
+            <li><a href="#netflixs-foundation-model">Netflix&rsquo;s Foundation Model</a></li>
+            <li><a href="#other-industry-examples">Other Industry Examples</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#lessons-on-embracing-the-generative-recommendation-tide">Lessons on Embracing the Generative Recommendation Tide</a></li>
@@ -682,6 +696,31 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
+<h4 id="metas-hstu" class="scroll-mt-8 group">
+  Meta&rsquo;s HSTU
+  
+    <a href="#metas-hstu"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <figure><img src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&amp;st=nqp621ua&amp;raw=1"
     alt="Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800"><figcaption>
       <p>Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks.</p>
@@ -723,6 +762,31 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </li>
 </ul>
 <p>While the overall architecture isn&rsquo;t too crazy, many optimizations are done to bring this model to life, including selecting a subsequence of <em>stochastic length</em> (SL) from each user&rsquo;s history (TL;DR: the older an action, the less likely it will be selected), row-wise AdamW optimizers, and the new M-FALCON algorithm for micro-batching during serving.</p>
+<h4 id="kuaishous-onerec" class="scroll-mt-8 group">
+  Kuaishou&rsquo;s OneRec
+  
+    <a href="#kuaishous-onerec"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>OneRec also seeks to replace everything. <a href="https://zhuanlan.zhihu.com/p/1918792219990689391">https://zhuanlan.zhihu.com/p/1918792219990689391</a></p>
 <figure><img src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&amp;st=whfld5n7&amp;raw=1"
     alt="OneRec." width="1800"><figcaption>
@@ -730,6 +794,31 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </figcaption>
 </figure>
 
+<h4 id="meituans-mtgr" class="scroll-mt-8 group">
+  Meituan&rsquo;s MTGR
+  
+    <a href="#meituans-mtgr"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>MTGR adds cross features back.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&amp;st=7sepacbq&amp;raw=1"
     alt="MTGR." width="1800"><figcaption>
@@ -763,7 +852,134 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h3>
 <p>Overhauling cascade pipelines is hard for most companies because their teams are structured around L1, L2, etc.. Other companies have a more gentle way to reap the benefits from GM without too much disruption.</p>
+<h4 id="alibabas-gpsd-and-lum" class="scroll-mt-8 group">
+  Alibaba&rsquo;s GPSD and LUM
+  
+    <a href="#alibabas-gpsd-and-lum"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>Alibaba&rsquo;s GPSD is a hybrid.</p>
+<p><a href="https://huggingface.co/papers/2507.22879">https://huggingface.co/papers/2507.22879</a></p>
+<h4 id="xiaohongshus-genrank" class="scroll-mt-8 group">
+  Xiaohongshu&rsquo;s GenRank
+  
+    <a href="#xiaohongshus-genrank"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<h4 id="bytedances-rankmixer" class="scroll-mt-8 group">
+  ByteDance&rsquo;s RankMixer
+  
+    <a href="#bytedances-rankmixer"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<h4 id="netflixs-foundation-model" class="scroll-mt-8 group">
+  Netflix&rsquo;s Foundation Model
+  
+    <a href="#netflixs-foundation-model"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<h4 id="other-industry-examples" class="scroll-mt-8 group">
+  Other Industry Examples
+  
+    <a href="#other-industry-examples"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>JD.com, Pinterest</p>
 <h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
   Lessons on Embracing the Generative Recommendation Tide
   
@@ -789,7 +1005,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
-<p>Probably look into Alibaba&rsquo;s GPSD. Netflix is also gentle.</p>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -815,15 +1030,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
-<p><a href="/posts/mtml/" class="backlink">my post</a>
-  
-  
-<a href="/posts/negative_sampling/" class="backlink">my post</a>
-  
-  
-<a href="/posts/human_vision/" class="backlink">my post</a>
-  
-  </p>
 <h3 id="overview--scaling-laws-in-recommender-systems" class="scroll-mt-8 group">
   Overview &amp; Scaling Laws in Recommender Systems
   
@@ -956,15 +1162,14 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h3>
 <ol start="14">
-<li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
-<li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
 <li>Alibaba&rsquo;s GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
 <li>Alibaba&rsquo;s LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
+<li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
 <li>ByteDance&rsquo;s RankMixer 👉 <a href="https://arxiv.org/abs/2507.15551"><em>RankMixer: Scaling Up Ranking Models in Industrial Recommenders</em></a> (2025) by Zhu et al., <em>arXiv</em>.</li>
+<li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
 <li>JD.com 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
 <li>Pinterest&rsquo;s PinFM 👉 <a href="https://arxiv.org/abs/2507.12704"><em>PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform</em></a> (2025) by Chen et al., <em>RecSys</em>.</li>
 </ol>
-<!-- https://huggingface.co/papers/2507.22879 -->
     </div>
   </article>
 
@@ -1174,102 +1379,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
                   class="taxonomy"
                   title="Posts and notes on Natural language processing"
                   >Natural language processing</a
-                >
-              </li>
-          </ul>
-      </article>
-    </li>
-    <li>
-      <article class="flex flex-row items-center">
-        <header class="grow">
-          <h3>
-            <a
-              href="/posts/mtml/"
-              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="The Annotated Multi-Task Ranker: An MMoE Code Example"
-              >The Annotated Multi-Task Ranker: An MMoE Code Example</a
-            >
-          </h3>
-        </header>
-          <ul class="flex flex-row items-center justify-end space-x-2">
-              <li>
-                <a
-                  href="/categories/information-retrieval/"
-                  class="taxonomy"
-                  title="Posts and notes on Information retrieval"
-                  >Information retrieval</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/categories/multi-task-learning/"
-                  class="taxonomy"
-                  title="Posts and notes on Multi-task learning"
-                  >Multi-task learning</a
-                >
-              </li>
-          </ul>
-      </article>
-    </li>
-    <li>
-      <article class="flex flex-row items-center">
-        <header class="grow">
-          <h3>
-            <a
-              href="/posts/negative_sampling/"
-              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="Negative Sampling for Learning Two-Tower Networks"
-              >Negative Sampling for Learning Two-Tower Networks</a
-            >
-          </h3>
-        </header>
-          <ul class="flex flex-row items-center justify-end space-x-2">
-              <li>
-                <a
-                  href="/categories/negative-sampling/"
-                  class="taxonomy"
-                  title="Posts and notes on Negative sampling"
-                  >Negative sampling</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/categories/recommender-system/"
-                  class="taxonomy"
-                  title="Posts and notes on Recommender system"
-                  >Recommender system</a
-                >
-              </li>
-          </ul>
-      </article>
-    </li>
-    <li>
-      <article class="flex flex-row items-center">
-        <header class="grow">
-          <h3>
-            <a
-              href="/posts/human_vision/"
-              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="Is Human Vision More like CNN or Vision Transformer?"
-              >Is Human Vision More like CNN or Vision Transformer?</a
-            >
-          </h3>
-        </header>
-          <ul class="flex flex-row items-center justify-end space-x-2">
-              <li>
-                <a
-                  href="/categories/ai/"
-                  class="taxonomy"
-                  title="Posts and notes on AI"
-                  >AI</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/categories/cognitive-science/"
-                  class="taxonomy"
-                  title="Posts and notes on Cognitive science"
-                  >Cognitive science</a
                 >
               </li>
           </ul>
