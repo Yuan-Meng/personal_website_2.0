@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3866">
+  <meta itemprop="wordCount" content="3916">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT19M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 3866
+  "wordCount": 3916
 }
 </script>
 
@@ -155,7 +155,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <li><a href="#what-makes-language-special-hocketts-design-features">What Makes Language Special: Hockett&rsquo;s Design Features</a></li>
       </ul>
     </li>
-    <li><a href="#break-the-scalability-curse-in-recsys">Break the Scalability Curse in RecSys</a>
+    <li><a href="#break-the-scaling-law-curse-in-recsys">Break the Scaling Law Curse in RecSys</a>
       <ul>
         <li><a href="#conjure-up-compositionality-via-semantic-ids">Conjure Up Compositionality via Semantic IDs</a></li>
         <li><a href="#crank-up-task-complexity-via-generative-training">Crank Up Task Complexity via Generative Training</a></li>
@@ -461,10 +461,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
  in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had zero interest in language models, dead set on becoming a recommender system expert — despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potentially intelligent?) in the latter.
   </div>
 </details>
-<h2 id="break-the-scalability-curse-in-recsys" class="scroll-mt-8 group">
-  Break the Scalability Curse in RecSys
+<h2 id="break-the-scaling-law-curse-in-recsys" class="scroll-mt-8 group">
+  Break the Scaling Law Curse in RecSys
   
-    <a href="#break-the-scalability-curse-in-recsys"
+    <a href="#break-the-scaling-law-curse-in-recsys"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -609,15 +609,15 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>In Recommender Systems, Transformer blocks are often used in user sequence modeling to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  <code>pAction</code>  predictions. As mentioned earlier, many companies (Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>) found the best performance when using just one Transformer layer.</p>
 <p>Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">Zhang et al., 2025</a>) trained a <em>stand-alone</em> sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&amp;st=i4iwezql&amp;raw=1"
-    alt="Scaling sequence model." width="1800"><figcaption>
-      <p>Scaling sequence model.</p>
+    alt="In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers." width="1800"><figcaption>
+      <p>In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers.</p>
     </figcaption>
 </figure>
 
 <p>They saw power-law curves where model performance increases with both data size and model size. Larger models are more &ldquo;data efficient,&rdquo; in that validation loss drops more quickly with data size in larger models. WeChat models differ from aforementioned sequence models that don&rsquo;t scale in that they perform an end-to-end generative task (i.e., decoding the next ID), whereas the latter perform a discriminative task (i.e., predicting whether a user will act on an item) in the end.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/6fwyco3xq3l8pjf5nax2h/Screenshot-2025-08-02-at-10.16.24-AM.png?rlkey=v9g0wv1swml28ft9stkcs5640&amp;st=wfmb5rf2&amp;raw=1"
-    alt="Power law." width="1800"><figcaption>
-      <p>Power law.</p>
+    alt="Scaling laws were observed where model performance increases both with model size and data size. Larger models improves faster with data size." width="1800"><figcaption>
+      <p>Scaling laws were observed where model performance increases both with model size and data size. Larger models improves faster with data size.</p>
     </figcaption>
 </figure>
 
@@ -761,6 +761,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
+<p><a href="/posts/seq_user_modeling/" class="backlink">my post</a>
+  
+  
+<a href="/posts/mtml/" class="backlink">my post</a>
+  
+  
+<a href="/posts/negative_sampling/" class="backlink">my post</a>
+  
+  
+<a href="/posts/human_vision/" class="backlink">my post</a>
+  
+  </p>
 <h3 id="overview--scaling-laws-in-recommender-systems" class="scroll-mt-8 group">
   Overview &amp; Scaling Laws in Recommender Systems
   
@@ -1047,6 +1059,134 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
                   class="taxonomy"
                   title="Posts and notes on Vector-based search"
                   >Vector-based search</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/seq_user_modeling/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Down the Rabbit Hole: Sequential User Modeling"
+              >Down the Rabbit Hole: Sequential User Modeling</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/recommender-systems/"
+                  class="taxonomy"
+                  title="Posts and notes on Recommender systems"
+                  >Recommender systems</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/mtml/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="The Annotated Multi-Task Ranker: An MMoE Code Example"
+              >The Annotated Multi-Task Ranker: An MMoE Code Example</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/multi-task-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Multi-task learning"
+                  >Multi-task learning</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/negative_sampling/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Negative Sampling for Learning Two-Tower Networks"
+              >Negative Sampling for Learning Two-Tower Networks</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/negative-sampling/"
+                  class="taxonomy"
+                  title="Posts and notes on Negative sampling"
+                  >Negative sampling</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/recommender-system/"
+                  class="taxonomy"
+                  title="Posts and notes on Recommender system"
+                  >Recommender system</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/human_vision/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Human Vision More like CNN or Vision Transformer?"
+              >Is Human Vision More like CNN or Vision Transformer?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/ai/"
+                  class="taxonomy"
+                  title="Posts and notes on AI"
+                  >AI</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/cognitive-science/"
+                  class="taxonomy"
+                  title="Posts and notes on Cognitive science"
+                  >Cognitive science</a
                 >
               </li>
           </ul>

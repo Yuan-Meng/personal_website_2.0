@@ -71,7 +71,7 @@ For recommender systems to have "intelligence," item IDs need not have inherent 
   </div>
 </details>
 
-# Break the Scalability Curse in RecSys
+# Break the Scaling Law Curse in RecSys
 ## Conjure Up Compositionality via Semantic IDs
 Words in language and notes in music discretize sound waves, concepts, etc., which would've been atomic, continuous, and infinite. That's what Semantic IDs do for items in recommender systems. 
 
@@ -126,11 +126,11 @@ In Recommender Systems, Transformer blocks are often used in user sequence model
 
 Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team ([Zhang et al., 2025](https://dl.acm.org/doi/abs/10.1145/3640457.3688129)) trained a *stand-alone* sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks. 
 
-{{< figure src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&st=i4iwezql&raw=1" caption="Scaling sequence model." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&st=i4iwezql&raw=1" caption="In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers." width="1800">}}
 
 They saw power-law curves where model performance increases with both data size and model size. Larger models are more "data efficient," in that validation loss drops more quickly with data size in larger models. WeChat models differ from aforementioned sequence models that don't scale in that they perform an end-to-end generative task (i.e., decoding the next ID), whereas the latter perform a discriminative task (i.e., predicting whether a user will act on an item) in the end.
 
-{{< figure src="https://www.dropbox.com/scl/fi/6fwyco3xq3l8pjf5nax2h/Screenshot-2025-08-02-at-10.16.24-AM.png?rlkey=v9g0wv1swml28ft9stkcs5640&st=wfmb5rf2&raw=1" caption="Power law." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/6fwyco3xq3l8pjf5nax2h/Screenshot-2025-08-02-at-10.16.24-AM.png?rlkey=v9g0wv1swml28ft9stkcs5640&st=wfmb5rf2&raw=1" caption="Scaling laws were observed where model performance increases both with model size and data size. Larger models improves faster with data size." width="1800">}}
 
 What makes generative vs. discriminative tasks different? In terms of task formulation, both `pAction` prediction and next-token prediction solve classification problems --- the former is a binary classifier (i.e., predicting whether a user will act on an item or not given some context) and the latter is extreme multi-class classifier (e.g., selecting the most likely or top-k like tokens). What makes `pAction` prediction discriminative is that it models the conditional probability $P(\mathrm{action} | \mathrm{user},\,\mathrm{item},\,\mathrm{context})$. By contrast, next-token prediction requires modeling the joint distribution $P(x_1,x_2,\ldots,x_n,x_{n+1})=P(x_{n+1})P(x_1,x_2,\ldots,x_{n}|x_{n+1})$. Learning the joint distribution is simultaneously a harder task but it also enjoys more supervision --- all preceding tokens can supervise the current token generation, whereas for `pAction` predictions, each example only provides a single binary label. As such, generative models need more data to train and they also get what they wish for. 
 
@@ -163,6 +163,12 @@ Alibaba's GPSD is a hybrid.
 Probably look into Alibaba's GPSD. Netflix is also gentle. 
 
 # References
+
+{{< backlink "seq_user_modeling" "my post">}}
+{{< backlink "mtml" "my post">}}
+{{< backlink "negative_sampling" "my post">}}
+{{< backlink "human_vision" "my post">}}
+
 
 ## Overview & Scaling Laws in Recommender Systems
 1. A comprehensive lit review on Generative Recommendation 👉 [*GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models*](https://arxiv.org/abs/2507.06507) (2025) by Yang et al., *arXiv*.
