@@ -91,7 +91,11 @@
     "/posts/generative_recommendation/": {
       "in": [],
       "out": [
-        "/posts/ebr/"
+        "/posts/ebr/",
+        "/posts/seq_user_modeling/",
+        "/posts/mtml/",
+        "/posts/negative_sampling/",
+        "/posts/human_vision/"
       ]
     },
     "/posts/hardware_aware_transformers/": {
@@ -103,6 +107,7 @@
     },
     "/posts/human_vision/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
@@ -129,12 +134,14 @@
     },
     "/posts/mtml/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
     },
     "/posts/negative_sampling/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
@@ -149,6 +156,7 @@
     },
     "/posts/seq_user_modeling/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/hardware_aware_transformers/"
       ],
       "out": [

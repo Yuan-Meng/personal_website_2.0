@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3916">
+  <meta itemprop="wordCount" content="4336">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT19M",
+  "timeRequired": "PT21M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 3916
+  "wordCount": 4336
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 19 minutes
+      Reading time: 21 minutes
     
 
     
@@ -606,7 +606,9 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h3>
 <p>For language models, scale often does wonders for model performance. The seminal <em>Attention Is All You Need</em> paper used 6 Transformer blocks, GPT-2 scaled it up to 12, and GPT-3 to 96. While GPT-4&rsquo;s number of Transformer blocks is undisclosed, <a href="https://semianalysis.com/2023/07/10/gpt-4-architecture-infrastructure/">rumor</a> has it that it uses 120 layers and has 100x more parameters than its predecessor GPT-3 (18 trillion vs. 175 billion). The data and compute used to train larger models have also increased manyfold.</p>
-<p>In Recommender Systems, Transformer blocks are often used in user sequence modeling to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  <code>pAction</code>  predictions. As mentioned earlier, many companies (Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>) found the best performance when using just one Transformer layer.</p>
+<p>In Recommender Systems, Transformer blocks are often used in user sequence modeling (see <a href="/posts/seq_user_modeling/" class="backlink">my post</a>
+  
+   for an overview of this domain) to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  <code>pAction</code>  predictions. As mentioned earlier, many companies (Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>) found the best performance when using just one Transformer layer.</p>
 <p>Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">Zhang et al., 2025</a>) trained a <em>stand-alone</em> sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&amp;st=i4iwezql&amp;raw=1"
     alt="In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers." width="1800"><figcaption>
@@ -680,9 +682,61 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<p>HSTU is the first famous generative ranker. It replaces everything.</p>
-<p>OneRec also seeks to replace everything.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&amp;st=nqp621ua&amp;raw=1"
+    alt="Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800"><figcaption>
+      <p>Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks.</p>
+    </figcaption>
+</figure>
+
+<p>Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> may be the Recommender System paper with the most Greek letters you&rsquo;ll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/nyyma8ul631e45kw7t87s/Screenshot-2025-08-02-at-2.23.22-PM.png?rlkey=01es2kkiy5y87qylat9q8feu7&amp;st=o5e58nl2&amp;raw=1"
+    alt="Ranking vs. retrieval task framing in the Generative Recommendation." width="600"><figcaption>
+      <p>Ranking vs. retrieval task framing in the Generative Recommendation.</p>
+    </figcaption>
+</figure>
+
+<p>In their notations, $\Phi_i$ denotes a content and $a_i$ denotes an action on the content. The total number of contents a user has engaged with is $n_c$. A user sequence is given as $(\Phi_0, a_0, \Phi_1, a_1,\ldots,\Phi_{n_c-1}, a_{n_c-1})$. The retrieval task is to predict the most likely next content $\Phi_{i+1}$ given user history $u_i$, $\arg\max_{\Phi\in\mathcal{X}_c} p(\Phi_{i+1}|u_i)$. Only positive actions serve as supervision for next-content predictions, meaning that $u_i = (\Phi_1&rsquo;,\Phi_2&rsquo;,\ldots,\Phi_{n_c-1}&rsquo;)$, where $\Phi_i&rsquo;=\Phi_i$ if $a_i$ is positive and empty $\emptyset$ otherwise. In ranking, the next item is given, so the task is to predict the next-action probability, $P(a_{i+1}|\Phi_0,a_0, \Phi_1,a_1,\ldots,\Phi_{i+1})$.</p>
+<p>The main module in Meta&rsquo;s model is a causal autoregressive Transformer called the &ldquo;Hierarchical Sequential Transduction Unit&rdquo; (HSTU). Like regular Transformers (see <a href="/posts/attention_as_dict/" class="backlink">my post</a>
+  
+   for a refresher), HSTU consists of 3 sub-layers, but each comes with modifications:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/5at8fwvcl16cztms1ipdv/Screenshot-2025-08-02-at-1.51.58-PM.png?rlkey=zjtvd90ox2mbv5eiav8w69526&amp;st=gt68a43z&amp;raw=1"
+    alt="HSTU is a modified causal autoregressive Transformer." width="1800"><figcaption>
+      <p>HSTU is a modified causal autoregressive Transformer.</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>Pointwise projection: 4 linear projections are created from the input. On top of $Q, K, V$, HSTU also has gating weights $U$ &mdash;
+<ul>
+<li>$U(X), V(X), Q(X), K(X) = \mathrm{Split}(\phi_1(f_1(X)))$</li>
+</ul>
+</li>
+<li>Spatial aggregation: Similar to regular Transformers, HSTU uses attention scores to pool $V(X)$ to create a &ldquo;contextual embedding&rdquo; for each token. Instead of positional encodings, HSTU uses the relative attention bias (<a href="https://arxiv.org/html/2402.17152v3#bib.bib43">Raffel et al., 2020</a>) that incorporates positional ($p$) and temporal ($t$) information
+<ul>
+<li>$A(X)V(X) = \phi_2(Q(X)K(X)^T + \mathrm{rab}^{p,t})V(X)$</li>
+</ul>
+</li>
+<li>Pointwise aggregation: This is perhaps the most special thing about HSTU. Regular self-attention uses row-wise softmax to normalize attention scores across the entire sequence. By contrast, HSTU normalizes each attention score independently, replacing softmax with a nonlinear activation function like SiLU. As a result, attention scores in each row may not sum up to 1. Finally, gating weights $U(X)$ control which dimensions in each token embedding matter more and modulate them accordingly
+<ul>
+<li>$Y(X) = f_2(\mathrm{Norm}(A(X)V(X)\odot U(X)))$</li>
+</ul>
+</li>
+</ul>
+<p>While the overall architecture isn&rsquo;t too crazy, many optimizations are done to bring this model to life, including selecting a subsequence of <em>stochastic length</em> (SL) from each user&rsquo;s history (TL;DR: the older an action, the less likely it will be selected), row-wise AdamW optimizers, and the new M-FALCON algorithm for micro-batching during serving.</p>
+<p>OneRec also seeks to replace everything. <a href="https://zhuanlan.zhihu.com/p/1918792219990689391">https://zhuanlan.zhihu.com/p/1918792219990689391</a></p>
+<figure><img src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&amp;st=whfld5n7&amp;raw=1"
+    alt="OneRec." width="1800"><figcaption>
+      <p>OneRec.</p>
+    </figcaption>
+</figure>
+
 <p>MTGR adds cross features back.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&amp;st=7sepacbq&amp;raw=1"
+    alt="MTGR." width="1800"><figcaption>
+      <p>MTGR.</p>
+    </figcaption>
+</figure>
+
 <h3 id="hybrid-generative-discriminative-architectures" class="scroll-mt-8 group">
   Hybrid Generative-Discriminative Architectures
   
@@ -761,10 +815,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
-<p><a href="/posts/seq_user_modeling/" class="backlink">my post</a>
-  
-  
-<a href="/posts/mtml/" class="backlink">my post</a>
+<p><a href="/posts/mtml/" class="backlink">my post</a>
   
   
 <a href="/posts/negative_sampling/" class="backlink">my post</a>
@@ -1091,6 +1142,38 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
                   class="taxonomy"
                   title="Posts and notes on Information retrieval"
                   >Information retrieval</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/attention_as_dict/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Attention as Soft Dictionary Lookup"
+              >Attention as Soft Dictionary Lookup</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/natural-language-processing/"
+                  class="taxonomy"
+                  title="Posts and notes on Natural language processing"
+                  >Natural language processing</a
                 >
               </li>
           </ul>

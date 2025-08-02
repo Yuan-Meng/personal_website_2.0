@@ -122,7 +122,7 @@ It's crazy how fast moving the Generative Recommendation field is --- minutes af
 
 For language models, scale often does wonders for model performance. The seminal *Attention Is All You Need* paper used 6 Transformer blocks, GPT-2 scaled it up to 12, and GPT-3 to 96. While GPT-4's number of Transformer blocks is undisclosed, [rumor](https://semianalysis.com/2023/07/10/gpt-4-architecture-infrastructure/) has it that it uses 120 layers and has 100x more parameters than its predecessor GPT-3 (18 trillion vs. 175 billion). The data and compute used to train larger models have also increased manyfold.
 
-In Recommender Systems, Transformer blocks are often used in user sequence modeling to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  `pAction`  predictions. As mentioned earlier, many companies (Chen et al., [KDD 19](https://dl.acm.org/doi/abs/10.1145/3326937.3341261), Gu et al., CIKM [20](https://dl.acm.org/doi/abs/10.1145/3340531.3412697), [21](https://dl.acm.org/doi/abs/10.1145/3459637.3481953)) found the best performance when using just one Transformer layer.
+In Recommender Systems, Transformer blocks are often used in user sequence modeling (see {{< backlink "seq_user_modeling" "my post">}} for an overview of this domain) to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  `pAction`  predictions. As mentioned earlier, many companies (Chen et al., [KDD 19](https://dl.acm.org/doi/abs/10.1145/3326937.3341261), Gu et al., CIKM [20](https://dl.acm.org/doi/abs/10.1145/3340531.3412697), [21](https://dl.acm.org/doi/abs/10.1145/3459637.3481953)) found the best performance when using just one Transformer layer.
 
 Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team ([Zhang et al., 2025](https://dl.acm.org/doi/abs/10.1145/3640457.3688129)) trained a *stand-alone* sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks. 
 
@@ -146,11 +146,36 @@ In the past year, companies like Kuaishou and Meta made a bold move, ditching th
 
 ## Fully Generative Architectures
 
-HSTU is the first famous generative ranker. It replaces everything.
+{{< figure src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&st=nqp621ua&raw=1" caption="Meta has 'completely' overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800">}}
 
-OneRec also seeks to replace everything.
+Meta's [*Actions Speak Louder than Words*](https://arxiv.org/abs/2402.17152) may be the Recommender System paper with the most Greek letters you'll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/nyyma8ul631e45kw7t87s/Screenshot-2025-08-02-at-2.23.22-PM.png?rlkey=01es2kkiy5y87qylat9q8feu7&st=o5e58nl2&raw=1" caption="Ranking vs. retrieval task framing in the Generative Recommendation." width="600">}}
+
+In their notations, $\Phi\_i$ denotes a content and $a\_i$ denotes an action on the content. The total number of contents a user has engaged with is $n_c$. A user sequence is given as $(\Phi\_0, a\_0, \Phi\_1, a\_1,\ldots,\Phi\_{n_c-1}, a_{n\_c-1})$. The retrieval task is to predict the most likely next content $\Phi\_{i+1}$ given user history $u\_i$, $\arg\max\_{\Phi\in\mathcal{X}_c} p(\Phi\_{i+1}|u\_i)$. Only positive actions serve as supervision for next-content predictions, meaning that $u_i = (\Phi\_1',\Phi\_2',\ldots,\Phi\_{n_c-1}')$, where $\Phi_i'=\Phi_i$ if $a_i$ is positive and empty $\emptyset$ otherwise. In ranking, the next item is given, so the task is to predict the next-action probability, $P(a\_{i+1}|\Phi\_0,a\_0, \Phi\_1,a\_1,\ldots,\Phi\_{i+1})$.
+
+The main module in Meta's model is a causal autoregressive Transformer called the "Hierarchical Sequential Transduction Unit" (HSTU). Like regular Transformers (see {{< backlink "attention_as_dict" "my post">}} for a refresher), HSTU consists of 3 sub-layers, but each comes with modifications:
+
+{{< figure src="https://www.dropbox.com/scl/fi/5at8fwvcl16cztms1ipdv/Screenshot-2025-08-02-at-1.51.58-PM.png?rlkey=zjtvd90ox2mbv5eiav8w69526&st=gt68a43z&raw=1" caption="HSTU is a modified causal autoregressive Transformer." width="1800">}}
+
+- Pointwise projection: 4 linear projections are created from the input. On top of $Q, K, V$, HSTU also has gating weights $U$ ---
+  - $U(X), V(X), Q(X), K(X) = \mathrm{Split}(\phi_1(f_1(X)))$
+- Spatial aggregation: Similar to regular Transformers, HSTU uses attention scores to pool $V(X)$ to create a "contextual embedding" for each token. Instead of positional encodings, HSTU uses the relative attention bias ([Raffel et al., 2020](https://arxiv.org/html/2402.17152v3#bib.bib43)) that incorporates positional ($p$) and temporal ($t$) information
+  - $A(X)V(X) = \phi_2(Q(X)K(X)^T + \mathrm{rab}^{p,t})V(X)$
+- Pointwise aggregation: This is perhaps the most special thing about HSTU. Regular self-attention uses row-wise softmax to normalize attention scores across the entire sequence. By contrast, HSTU normalizes each attention score independently, replacing softmax with a nonlinear activation function like SiLU. As a result, attention scores in each row may not sum up to 1. Finally, gating weights $U(X)$ control which dimensions in each token embedding matter more and modulate them accordingly
+  - $Y(X) = f\_2(\mathrm{Norm}(A(X)V(X)\odot U(X)))$
+
+While the overall architecture isn't too crazy, many optimizations are done to bring this model to life, including selecting a subsequence of *stochastic length* (SL) from each user's history (TL;DR: the older an action, the less likely it will be selected), row-wise AdamW optimizers, and the new M-FALCON algorithm for micro-batching during serving.
+
+OneRec also seeks to replace everything. https://zhuanlan.zhihu.com/p/1918792219990689391
+
+{{< figure src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&st=whfld5n7&raw=1" caption="OneRec." width="1800">}}
+
 
 MTGR adds cross features back.
+
+{{< figure src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&st=7sepacbq&raw=1" caption="MTGR." width="1800">}}
+
 
 ## Hybrid Generative-Discriminative Architectures
 
@@ -164,11 +189,9 @@ Probably look into Alibaba's GPSD. Netflix is also gentle.
 
 # References
 
-{{< backlink "seq_user_modeling" "my post">}}
 {{< backlink "mtml" "my post">}}
 {{< backlink "negative_sampling" "my post">}}
 {{< backlink "human_vision" "my post">}}
-
 
 ## Overview & Scaling Laws in Recommender Systems
 1. A comprehensive lit review on Generative Recommendation 👉 [*GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models*](https://arxiv.org/abs/2507.06507) (2025) by Yang et al., *arXiv*.
