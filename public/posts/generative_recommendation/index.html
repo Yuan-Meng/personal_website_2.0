@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6376">
+  <meta itemprop="wordCount" content="6386">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT30M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 6376
+  "wordCount": 6386
 }
 </script>
 
@@ -180,9 +180,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
           <ul>
             <li><a href="#alibabas-gpsd">Alibaba&rsquo;s GPSD</a></li>
             <li><a href="#xiaohongshus-rankgpt">Xiaohongshu&rsquo;s RankGPT</a></li>
-            <li><a href="#bytedances-rankmixer">ByteDance&rsquo;s RankMixer</a></li>
             <li><a href="#netflixs-foundation-model">Netflix&rsquo;s Foundation Model</a></li>
-            <li><a href="#other-industry-examples">Other Industry Examples</a></li>
           </ul>
         </li>
       </ul>
@@ -1072,31 +1070,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </figcaption>
 </figure>
 
-<h4 id="bytedances-rankmixer" class="scroll-mt-8 group">
-  ByteDance&rsquo;s RankMixer
-  
-    <a href="#bytedances-rankmixer"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h4>
 <h4 id="netflixs-foundation-model" class="scroll-mt-8 group">
   Netflix&rsquo;s Foundation Model
   
@@ -1122,32 +1095,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h4>
-<h4 id="other-industry-examples" class="scroll-mt-8 group">
-  Other Industry Examples
-  
-    <a href="#other-industry-examples"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h4>
-<p>JD.com, Pinterest</p>
 <h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
   Lessons on Embracing the Generative Recommendation Tide
   
@@ -1339,10 +1286,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </ul>
 </li>
 <li>Xiaohongshu&rsquo;s RankGPT 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
-<li>ByteDance&rsquo;s RankMixer 👉 <a href="https://arxiv.org/abs/2507.15551"><em>RankMixer: Scaling Up Ranking Models in Industrial Recommenders</em></a> (2025) by Zhu et al., <em>arXiv</em>.</li>
+</ol>
+<!-- 17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*. -->
+<ol start="17">
 <li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
-<li>JD.com 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
 <li>Pinterest&rsquo;s PinFM 👉 <a href="https://arxiv.org/abs/2507.12704"><em>PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform</em></a> (2025) by Chen et al., <em>RecSys</em>.</li>
+<li>JD.com 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
+<li>Tencent&rsquo;s LC-Rec is an &ldquo;older&rdquo; model that aims to align the semantic space of LLMs with the collaborative space of RecSys 👉 <a href="https://arxiv.org/abs/2311.09049"><em>Adapting Large Language Models by Integrating Collaborative Semantics for Recommendation</em></a> (2024), <em>ICDE</em>.</li>
 </ol>
     </div>
   </article>
