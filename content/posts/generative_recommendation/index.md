@@ -218,16 +218,41 @@ Comparing with GR, MTGR sacrifices some efficiency for better personalization --
 
 ## Hybrid Generative-Discriminative Architectures
 
-Rather than overhauling DLRM and corresponding cascade pipelines and team structures (e.g., most companies have retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds. 
+Rather than overhauling DLRM and existing cascade pipelines and team structures (e.g., most companies have separate retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds. 
 
 ### Alibaba's GPSD and LUM
-Alibaba's GPSD is a hybrid.
 
-https://huggingface.co/papers/2507.22879
+As alluded to earlier, DLRM is haunted by a strange "one-epoch phenomenon", where model performance on the test set suddenly drops at the beginning of the second epoch ([Zhang et al., 2022](https://arxiv.org/abs/2209.06053)). As a result, you can't train a DLRM model for longer to improve it.
 
-https://www.dropbox.com/scl/fi/rcv6949ng9hl64sh3kc1e/Screenshot-2025-08-02-at-4.54.36-PM.png?rlkey=vybby5nd752yzx6ita08jh8st&st=i89s6qvm&dl=0
+{{< figure src="https://www.dropbox.com/scl/fi/yq7hf8i736jjjfbxtip0n/Screenshot-2025-08-03-at-11.46.02-AM.png?rlkey=6h1h4r7gvtonslost65kujw8e&st=g2dzfqco&raw=1" caption="One-epoch phenomenon." width="500">}}
+
+A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for training samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.
+
+To directly address this issue, Alibaba's GPSD ([Wang et al., 2025](https://arxiv.org/abs/2506.03699)) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model.
+
+{{< figure src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&st=sfvui9ba&raw=1" caption="GPSD." width="1800">}}
+
+The authors compared 4 ways to integrate pretrained embeddings into discriminative CTR models (baseline: train everything from scratch):
+- *Full Transfer*: Transfer sparse + dense parameters from the generative model to the discriminative model; allow sparse + dense parameter updates during CTR model training.
+- *Sparse Transfer*: Transfer sparse parameters and train dense parameters from scratch; allow sparse parameter updates.
+- *Full Transfer & Sparse Freeze*: Transfer sparse + dense parameters; freeze sparse parameters but allow dense parameters updates.
+- *Sparse Transfer & Sparse Freeze*: Transfer sparse parameters; freeze sparse parameters and train dense parameters from scratch.
+
+
+{{< figure src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&st=nv5pll27&raw=1" caption="Results." width="1800">}}
+
+
+As one can see, the one-epoch curse is broken --- all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged --- the larger the model (L4H256A4 > L4H128A4 > L4H64A4 > L4H32A4), the better the overall performance. In the two smaller models (32 and 64), "Sparse Transfer & Sparse Freeze" worked the best whereas in the two larger models (128 and 256), "Full Transfer & Sparse Freeze" was the best.
+
+
+Another Alibaba model is LUM.
+
+Alibaba has loads of models.
+
 
 ### Xiaohongshu's GenRank
+
+Xiaohongshu is best recommendation; life-changing
 
 ### ByteDance's RankMixer
 
@@ -255,7 +280,6 @@ JD.com, Pinterest
 9. Baidu's COBRA tackled information loss in RQ-VAE by also generating dense representations 👉 [*Sparse Meets Dense: Unified Generative Recommendations with Cascaded Sparse-Dense Representations*](https://arxiv.org/abs/2503.02453) (2025) by Yang et al., 2025, *arXiv*.
 10. Kuaishou's QARM used RQ-Kmeans to maximize codebook utilization 👉 [*QARM: Quantitative Alignment Multi-Modal Recommendation at Kuaishou*](https://arxiv.org/abs/2411.11739) (2024) by Luo et al., *arXiv*.
 11. Snap's GRID 👉 [*Generative Recommendation with Semantic IDs: A Practitioner's Handbook*](https://www.arxiv.org/abs/2507.22224) (2025) by Ju et al., *arXiv*.
-
 
 
 ## Ditch DLRM for End-to-End Generative Architectures
