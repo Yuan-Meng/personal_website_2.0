@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4344">
+  <meta itemprop="wordCount" content="4859">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT21M",
+  "timeRequired": "PT23M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 4344
+  "wordCount": 4859
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 21 minutes
+      Reading time: 23 minutes
     
 
     
@@ -166,7 +166,13 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <li><a href="#fully-generative-architectures">Fully Generative Architectures</a>
           <ul>
             <li><a href="#metas-hstu">Meta&rsquo;s HSTU</a></li>
-            <li><a href="#kuaishous-onerec">Kuaishou&rsquo;s OneRec</a></li>
+            <li><a href="#kuaishous-onerec">Kuaishou&rsquo;s OneRec</a>
+              <ul>
+                <li><a href="#semantic-id-generation"><em>Semantic ID Generation</em></a></li>
+                <li><a href="#encoder-decoder-training"><em>Encoder-Decoder Training</em></a></li>
+                <li><a href="#preference-alignment-via-dpo"><em>Preference Alignment via DPO</em></a></li>
+              </ul>
+            </li>
             <li><a href="#meituans-mtgr">Meituan&rsquo;s MTGR</a></li>
           </ul>
         </li>
@@ -721,13 +727,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h4>
+<p>Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> may be the Recommender System paper with the most Greek letters you&rsquo;ll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&amp;st=nqp621ua&amp;raw=1"
     alt="Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800"><figcaption>
       <p>Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks.</p>
     </figcaption>
 </figure>
 
-<p>Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> may be the Recommender System paper with the most Greek letters you&rsquo;ll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/nyyma8ul631e45kw7t87s/Screenshot-2025-08-02-at-2.23.22-PM.png?rlkey=01es2kkiy5y87qylat9q8feu7&amp;st=o5e58nl2&amp;raw=1"
     alt="Ranking vs. retrieval task framing in the Generative Recommendation." width="600"><figcaption>
       <p>Ranking vs. retrieval task framing in the Generative Recommendation.</p>
@@ -787,13 +793,108 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h4>
-<p>OneRec also seeks to replace everything. <a href="https://zhuanlan.zhihu.com/p/1918792219990689391">https://zhuanlan.zhihu.com/p/1918792219990689391</a></p>
+<p>Kuaishou&rsquo;s OneRec brings all-around improvements to HSTU, most notably Kuaishou&rsquo;s own RQ-Kmeans algorithm (<a href="https://arxiv.org/abs/2411.11739">Luo et al., 2024</a>) that incorporates collaborative signals into Semantic IDs and aims to maximize codebook utilization, session-wise list generation that generates a list of interdependent videos rather than unrelated individual videos, and a post-training preference alignment stage that uses <a href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization (DPO)</a> to optimize for conflicting business objectives. The paper (<a href="https://arxiv.org/abs/2502.18965">Deng et al., 2025</a>) itself is pretty short. A more detailed technical report (<a href="https://arxiv.org/abs/2506.13695">Zhou et al., 2025</a>) came out a few months later and made rounds in the recommendation industry.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&amp;st=whfld5n7&amp;raw=1"
     alt="OneRec." width="1800"><figcaption>
       <p>OneRec.</p>
     </figcaption>
 </figure>
 
+<h5 id="semantic-id-generation" class="scroll-mt-8 group">
+  <em>Semantic ID Generation</em>
+  
+    <a href="#semantic-id-generation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>Each video&rsquo;s content embedding is first obtained by passing multimodal inputs (e.g., texts: captions, tags, speech-to-text, image-to-text; images: the cover image, 5 uniformly sample frames) into a visual-language encoder, which, in this case, is miniCPM-V-8B. For efficiency, the authors used QFormer from BLIP-2 (<a href="https://arxiv.org/abs/2301.12597">Li et al., 2023</a>) to compress 1280 video tokens into 4 query tokens. To inject collaborative signals into content embeddings, the authors sampled item pairs engaged by similar users (&ldquo;collaboratively similar&rdquo;) and used contrastive learning to align representations of such videos.</p>
+<p>RQ-VAE initializes codebooks randomly, often resulting in many residuals being mapped to the same codebook (the &ldquo;hourglass phenomenon&rdquo;, <a href="https://arxiv.org/abs/2407.21488">Kuai et al., 2024</a>). To ensure full codebook utilization, RQ-Kmeans constructs codebooks on the fly by clustering residuals using K-means. Coarse-to-fine Semantic IDs generated by RQ-Kmeans, $\{s_m^1, s_m^2,\ldots,s_m^{L_t}\}$, are the &ldquo;vocabulary&rdquo; in OneRec.</p>
+<h5 id="encoder-decoder-training" class="scroll-mt-8 group">
+  <em>Encoder-Decoder Training</em>
+  
+    <a href="#encoder-decoder-training"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>The main module in OneRec is a T5-style (<a href="https://research.google/blog/exploring-transfer-learning-with-t5-the-text-to-text-transfer-transformer/">Roberts et al., 2020</a>) encoder-decoder architecture. Rather than encoding a single user sequence like HSTU does, OneRec encodes 4 user sequences:</p>
+<ul>
+<li>
+<p>User static pathway: Static user features, such as ID, gender, age, etc. &mdash; $[\mathbf{e}_{\mathrm{uid}};\mathbf{e}_{\mathrm{gender}};\mathbf{e}_{\mathrm{age}};\ldots]$, where $\mathbf{e}_{\mathrm{uid}};\mathbf{e}_{\mathrm{gender}};\mathbf{e}_{\mathrm{age}} \in \mathbb{R}^{64}$</p>
+</li>
+<li>
+<p>Short-term pathway: Most recent (e.g., 20) engagements, each characterized by $[\mathbf{e}_{\mathrm{vid}}^s;\mathbf{e}_{\mathrm{aid}}^s;\mathbf{e}_{\mathrm{tag}}^s;\mathbf{e}_{\mathrm{ts}}^s;\mathbf{e}_{\mathrm{playtime}}^s,\mathbf{e}_{\mathrm{dur}}^s;\mathbf{e}_{\mathrm{label}}^s]$; embedding dimensions vary between different entities</p>
+</li>
+<li>
+<p>Positive-feedback pathway: Most engaged (e.g., 256) items, each characterized by $[\mathbf{e}_{\mathrm{vid}}^p;\mathbf{e}_{\mathrm{aid}}^p;\mathbf{e}_{\mathrm{tag}}^p;\mathbf{e}_{\mathrm{ts}}^p;\mathbf{e}_{\mathrm{playtime}}^p,\mathbf{e}_{\mathrm{dur}}^p;\mathbf{e}_{\mathrm{label}}^p]$</p>
+</li>
+<li>
+<p>Lifelong pathway: Up to 100,000 past engaged videos. Kuaishou&rsquo;s own TWIN V2 (<a href="https://arxiv.org/html/2407.16357v1">Si et al., 2024</a>) is used to compress this sequence into $K$ clusters created with hierarchical K-means clustering. Each compressed token representation a cluster is characterized by $[\mathbf{e}_{\mathrm{vid}}^l;\mathbf{e}_{\mathrm{aid}}^l;\mathbf{e}_{\mathrm{tag}}^l;\mathbf{e}_{\mathrm{ts}}^l;\mathbf{e}_{\mathrm{playtime}}^l,\mathbf{e}_{\mathrm{dur}}^l;\mathbf{e}_{\mathrm{label}}^l]$</p>
+</li>
+</ul>
+<p>Outputs from the 4 pathways are projected into $\mathbf{h}_u \in \mathbb{R}^{1\times d_{\mathrm{model}}}$, $\mathbf{h}_s \in \mathbb{R}^{L_{s}\times d_{\mathrm{model}}}$, $\mathbf{h}_p \in \mathbb{R}^{L_{p}\times d_{\mathrm{model}}}$, and $\mathbf{h}_l \in \mathbb{R}^{N_{q}\times d_{\mathrm{model}}}$ (QFormer further compresses the already compressed sequence of length $L_l$ into $N_q$ query tokens), respectively. The 4 outputs are concatenated along the sequence length dimension, with a positional encoding $\mathbf{e}_{\mathrm{pos}} \in \mathbb{R}^{(1+L_s + L_p + N_q)}$ added, before being fed into the encoder.</p>
+<p>The decoder generates Semantic IDs for a series of videos, each starting with a special beginning-of-sentence token &mdash; example Semantic ID of the $m$-th video, $\mathcal{S}_m = \{s_{[\mathrm{BOS}]},s_m^1,s_m^2,\ldots,s_m^{L_t}\}$. A standard cross-entropy loss is used for next-token prediction. A nuanced is that OneRec applies cross attention between the encoder output and the latest state of the decoder, so that the decoder attends to both previously decoded tokens (causal self-attention) and the user&rsquo;s entire history (cross-attention). A sparse MoE layer is used in the feed-forward network to for training efficiency and cost reduction.</p>
+<h5 id="preference-alignment-via-dpo" class="scroll-mt-8 group">
+  <em>Preference Alignment via DPO</em>
+  
+    <a href="#preference-alignment-via-dpo"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>Technical innovations aside &mdash; no guts, not glory.</p>
 <h4 id="meituans-mtgr" class="scroll-mt-8 group">
   Meituan&rsquo;s MTGR
   
@@ -879,6 +980,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </h4>
 <p>Alibaba&rsquo;s GPSD is a hybrid.</p>
 <p><a href="https://huggingface.co/papers/2507.22879">https://huggingface.co/papers/2507.22879</a></p>
+<p><a href="https://www.dropbox.com/scl/fi/rcv6949ng9hl64sh3kc1e/Screenshot-2025-08-02-at-4.54.36-PM.png?rlkey=vybby5nd752yzx6ita08jh8st&amp;st=i89s6qvm&amp;dl=0">https://www.dropbox.com/scl/fi/rcv6949ng9hl64sh3kc1e/Screenshot-2025-08-02-at-4.54.36-PM.png?rlkey=vybby5nd752yzx6ita08jh8st&amp;st=i89s6qvm&amp;dl=0</a></p>
 <h4 id="xiaohongshus-genrank" class="scroll-mt-8 group">
   Xiaohongshu&rsquo;s GenRank
   
