@@ -202,7 +202,6 @@ In OneRec, the score combining different objectives is called the P-Score (Prefe
 
 Reading the OneRec technical report reminds me of how I felt when reading the DeepSeek reports in February: so much thought given to every detail, loads of engineering ingenuity, and truly "no guts, no glory". The lead of OneRec, Guorui Zhou, wrote in his [post](https://zhuanlan.zhihu.com/p/1918350919508140128) that his motivation came from both practical concerns (e.g., reducing compute and overhead costs by eliminating L0 $\rightarrow$ L1 $\rightarrow$ L2 data transfer to increase the profit margin of ads) and a profound intellectual quest (e.g., how "intelligence" can emerge and why it has long evaded recommender systems). I hope that, in my own career, I'll have the honor of being part of a revolution sparked by early conviction.
 
-
 ### Meituan's MTGR
 
 In the middle of writing this blogpost, I had dinner with a former colleague and described the idea from the TIGER paper to her. Her first reaction was, "Eh, how do we personalize recommendations?"
@@ -214,7 +213,6 @@ That was probably the catch with Generative Recommendation --- in DLRM, user-ite
 Typically in DRLM, if a user interacted with $N$ items for a combined total of $M$ times in a time window, it results in $M$ rows of training data. Typically in GR, $M$ interactions are organized into one  sequence. In MTGR, each user-item pair has one sequence, resulting in $N$ rows of data: $\mathbb{D} = [\mathbf{U}, \mathbf{\overrightarrow{S}}, \mathbf{\overrightarrow{R}}, [\mathbf{C}, \mathbf{I}]\_1\ldots, [\mathbf{C}, \mathbf{I}]\_K]$. Under this user-item level data arrangement, cross features (e.g., user-item CTR) are treated as features of the candidate (the interacted item). In each sequence, the model can predict for multiple occurrences of the same candidate at once, reducing training costs. To avoid information leakage, dynamic masking is added so that user features $(\mathbf{U},  \mathbf{\overrightarrow{S}})$ are visible to all tokens, real-time interactions $\mathbf{\overrightarrow{R}}$ are only visible to later tokens, whereas candidate tokens $(\mathbf{C},\mathbf{I})$ are only visible to themselves.
 
 Comparing with GR, MTGR sacrifices some efficiency for better personalization --- by making $N$ times more predictions than a typical GR, it can now include user-item cross features in predictions.
-
 
 ## Hybrid Generative-Discriminative Architectures
 
@@ -238,18 +236,33 @@ The authors compared 4 ways to integrate pretrained embeddings into discriminati
 - *Full Transfer & Sparse Freeze*: Transfer sparse + dense parameters; freeze sparse parameters but allow dense parameters updates.
 - *Sparse Transfer & Sparse Freeze*: Transfer sparse parameters; freeze sparse parameters and train dense parameters from scratch.
 
-
 {{< figure src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&st=nv5pll27&raw=1" caption="Results." width="1800">}}
-
 
 As one can see, the one-epoch curse is broken --- all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged --- the larger the model (L4H256A4 > L4H128A4 > L4H64A4 > L4H32A4), the better the overall performance. In the two smaller models (32 and 64), "Sparse Transfer & Sparse Freeze" worked the best whereas in the two larger models (128 and 256), "Full Transfer & Sparse Freeze" was the best.
 
+Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM ([Yan et al., 2025](https://arxiv.org/abs/2502.08309)) and URM ([Jiang et al., 2025](https://arxiv.org/abs/2502.03041)). Just yesterday (August 2, 2025), Alibaba published the [RecGPT Technical Report](https://huggingface.co/papers/2507.22879), showing their ambition to turn recommendations into a ChatGPT-like product that truly interacts with users intelligently. 
 
-Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM ([Yan et al., 2025](https://arxiv.org/abs/2502.08309)) and URM ([Jiang et al., 2025](https://arxiv.org/abs/2502.03041)). Just yesterday (August 2, 2025), Alibaba published the [RecGPT Technical Report](https://huggingface.co/papers/2507.22879), showing their ambition to turn recommendation into a ChatGPT-like product that truly interacts with users intelligently. 
+### Xiaohongshu's RankGPT
 
-### Xiaohongshu's GenRank
+There are good, bad, and great recommender systems --- and then there's [Xiaohongshu](https://www.xiaohongshu.com/explore), the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT ([Huang et al., 2025](https://arxiv.org/abs/2505.04180)) is the mastermind behind Xiaohongshu's uncanny recommendations.
 
-Xiaohongshu is best recommendation; life-changing
+{{< figure src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&st=upm449ip&raw=1" caption="RankGPT." width="1800">}}
+
+RankGPT's architecture is modified from HSTU. HSTU assigns 2 tokens to each engagement, a content token $\Phi\_i$ and an action token $a\_i$. The upside is that HSTU unifies retrieval and ranking --- retrieval is achieved by predicting the next content and ranking is achieved by predicting the next action. The downside is that the user sequence is now doubled in length, which then quadruples the required compute. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&st=0a59pdz8&raw=1" caption="Action oriented." width="1800">}}
+
+Since RankGPT isn't designed to handle retrieval, there's no need to interleave separate content and action tokens --- it only has to predict actions on candidates. So item and action embeddings can be added together to represent engagement $i$, $e\_i = \varphi_i + \phi\_i$, where $\varphi(\cdot)$ and $\phi(\cdot)$ denote item and action embedding modules, respectively. To prevent information leakage, candidate action tokens are masked. The authors call this the "action-oriented organization". 
+
+As for injecting positional information, the authors originally explored adding 3 forms of positional encodings to token embeddings:
+- *Position embeddings*: A learnable positional embedding based on the item index in the user sequence.
+- *Request index embeddings*: A learnable positional embedding based on the request index --- all items belonging to the same request share the same embedding.
+- *Pre-request time embeddings*: A learnable positional embedding capturing the bucketed timestamp difference between each action timestamp and the request timestamp. 
+
+Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021](https://arxiv.org/abs/2108.12409)), which simply replaces positional encodings with a parameter-free penalty that increases with query-key distances. Compared to HSTU, the action-oriented organization decreased AUC by 0.03%, while ALiBi improved AUC by 0.09%. Overall, RankGPT achieved a 94.8% speed-up with a net AUC gain of 0.06%.
+
+{{< figure src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&st=sc8aj0wd&raw=1" caption="Results." width="500">}}
+
 
 ### ByteDance's RankMixer
 
@@ -289,7 +302,7 @@ JD.com, Pinterest
     - GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
     - LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
     - URM 👉 [*Large Language Model as Universal Retriever in Industrial-Scale Recommender System*](https://arxiv.org/abs/2502.03041) (2025) by Jiang et al., *arXiv*.
-16. Xiaohongshu's GenRank 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
+16. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
 17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
 18. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
 19. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.

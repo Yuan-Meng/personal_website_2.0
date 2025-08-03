@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6017">
+  <meta itemprop="wordCount" content="6376">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT29M",
+  "timeRequired": "PT30M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 6017
+  "wordCount": 6376
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 29 minutes
+      Reading time: 30 minutes
     
 
     
@@ -179,7 +179,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a>
           <ul>
             <li><a href="#alibabas-gpsd">Alibaba&rsquo;s GPSD</a></li>
-            <li><a href="#xiaohongshus-genrank">Xiaohongshu&rsquo;s GenRank</a></li>
+            <li><a href="#xiaohongshus-rankgpt">Xiaohongshu&rsquo;s RankGPT</a></li>
             <li><a href="#bytedances-rankmixer">ByteDance&rsquo;s RankMixer</a></li>
             <li><a href="#netflixs-foundation-model">Netflix&rsquo;s Foundation Model</a></li>
             <li><a href="#other-industry-examples">Other Industry Examples</a></li>
@@ -1018,11 +1018,11 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </figure>
 
 <p>As one can see, the one-epoch curse is broken &mdash; all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged &mdash; the larger the model (L4H256A4 &gt; L4H128A4 &gt; L4H64A4 &gt; L4H32A4), the better the overall performance. In the two smaller models (32 and 64), &ldquo;Sparse Transfer &amp; Sparse Freeze&rdquo; worked the best whereas in the two larger models (128 and 256), &ldquo;Full Transfer &amp; Sparse Freeze&rdquo; was the best.</p>
-<p>Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM (<a href="https://arxiv.org/abs/2502.08309">Yan et al., 2025</a>) and URM (<a href="https://arxiv.org/abs/2502.03041">Jiang et al., 2025</a>). Just yesterday (August 2, 2025), Alibaba published the <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a>, showing their ambition to turn recommendation into a ChatGPT-like product that truly interacts with users intelligently.</p>
-<h4 id="xiaohongshus-genrank" class="scroll-mt-8 group">
-  Xiaohongshu&rsquo;s GenRank
+<p>Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM (<a href="https://arxiv.org/abs/2502.08309">Yan et al., 2025</a>) and URM (<a href="https://arxiv.org/abs/2502.03041">Jiang et al., 2025</a>). Just yesterday (August 2, 2025), Alibaba published the <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a>, showing their ambition to turn recommendations into a ChatGPT-like product that truly interacts with users intelligently.</p>
+<h4 id="xiaohongshus-rankgpt" class="scroll-mt-8 group">
+  Xiaohongshu&rsquo;s RankGPT
   
-    <a href="#xiaohongshus-genrank"
+    <a href="#xiaohongshus-rankgpt"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1044,7 +1044,34 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h4>
-<p>Xiaohongshu is best recommendation; life-changing</p>
+<p>There are good, bad, and great recommender systems &mdash; and then there&rsquo;s <a href="https://www.xiaohongshu.com/explore">Xiaohongshu</a>, the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT (<a href="https://arxiv.org/abs/2505.04180">Huang et al., 2025</a>) is the mastermind behind Xiaohongshu&rsquo;s uncanny recommendations.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&amp;st=upm449ip&amp;raw=1"
+    alt="RankGPT." width="1800"><figcaption>
+      <p>RankGPT.</p>
+    </figcaption>
+</figure>
+
+<p>RankGPT&rsquo;s architecture is modified from HSTU. HSTU assigns 2 tokens to each engagement, a content token $\Phi_i$ and an action token $a_i$. The upside is that HSTU unifies retrieval and ranking &mdash; retrieval is achieved by predicting the next content and ranking is achieved by predicting the next action. The downside is that the user sequence is now doubled in length, which then quadruples the required compute.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&amp;st=0a59pdz8&amp;raw=1"
+    alt="Action oriented." width="1800"><figcaption>
+      <p>Action oriented.</p>
+    </figcaption>
+</figure>
+
+<p>Since RankGPT isn&rsquo;t designed to handle retrieval, there&rsquo;s no need to interleave separate content and action tokens &mdash; it only has to predict actions on candidates. So item and action embeddings can be added together to represent engagement $i$, $e_i = \varphi_i + \phi_i$, where $\varphi(\cdot)$ and $\phi(\cdot)$ denote item and action embedding modules, respectively. To prevent information leakage, candidate action tokens are masked. The authors call this the &ldquo;action-oriented organization&rdquo;.</p>
+<p>As for injecting positional information, the authors originally explored adding 3 forms of positional encodings to token embeddings:</p>
+<ul>
+<li><em>Position embeddings</em>: A learnable positional embedding based on the item index in the user sequence.</li>
+<li><em>Request index embeddings</em>: A learnable positional embedding based on the request index &mdash; all items belonging to the same request share the same embedding.</li>
+<li><em>Pre-request time embeddings</em>: A learnable positional embedding capturing the bucketed timestamp difference between each action timestamp and the request timestamp.</li>
+</ul>
+<p>Interestingly, all those methods combined didn&rsquo;t beat ALiBi (<a href="https://arxiv.org/abs/2108.12409">Press et al., 2021</a>), which simply replaces positional encodings with a parameter-free penalty that increases with query-key distances. Compared to HSTU, the action-oriented organization decreased AUC by 0.03%, while ALiBi improved AUC by 0.09%. Overall, RankGPT achieved a 94.8% speed-up with a net AUC gain of 0.06%.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&amp;st=sc8aj0wd&amp;raw=1"
+    alt="Results." width="500"><figcaption>
+      <p>Results.</p>
+    </figcaption>
+</figure>
+
 <h4 id="bytedances-rankmixer" class="scroll-mt-8 group">
   ByteDance&rsquo;s RankMixer
   
@@ -1311,7 +1338,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <li>URM 👉 <a href="https://arxiv.org/abs/2502.03041"><em>Large Language Model as Universal Retriever in Industrial-Scale Recommender System</em></a> (2025) by Jiang et al., <em>arXiv</em>.</li>
 </ul>
 </li>
-<li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
+<li>Xiaohongshu&rsquo;s RankGPT 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
 <li>ByteDance&rsquo;s RankMixer 👉 <a href="https://arxiv.org/abs/2507.15551"><em>RankMixer: Scaling Up Ranking Models in Industrial Recommenders</em></a> (2025) by Zhu et al., <em>arXiv</em>.</li>
 <li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
 <li>JD.com 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
