@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5531">
+  <meta itemprop="wordCount" content="5585">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT26M",
+  "timeRequired": "PT27M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 5531
+  "wordCount": 5585
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 26 minutes
+      Reading time: 27 minutes
     
 
     
@@ -937,7 +937,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </figure>
 
 <p>Typically in DRLM, if a user interacted with $N$ items for a combined total of $M$ times in a time window, it results in $M$ rows of training data. Typically in GR, $M$ interactions are organized into one  sequence. In MTGR, each user-item pair has one sequence, resulting in $N$ rows of data: $\mathbb{D} = [\mathbf{U}, \mathbf{\overrightarrow{S}}, \mathbf{\overrightarrow{R}}, [\mathbf{C}, \mathbf{I}]_1\ldots, [\mathbf{C}, \mathbf{I}]_K]$. Under this user-item level data arrangement, cross features (e.g., user-item CTR) are treated as features of the candidate (the interacted item). In each sequence, the model can predict for multiple occurrences of the same candidate at once, reducing training costs. To avoid information leakage, dynamic masking is added so that user features $(\mathbf{U},  \mathbf{\overrightarrow{S}})$ are visible to all tokens, real-time interactions $\mathbf{\overrightarrow{R}}$ are only visible to later tokens, whereas candidate tokens $(\mathbf{C},\mathbf{I})$ are only visible to themselves.</p>
-<p>In a sense, MTGR sacrifices some efficiency for better personalization &mdash; by making $N$ times more predictions than a typical GR, the new model can now include user-item cross features in predictions.</p>
+<p>Comparing with GR, MTGR sacrifices some efficiency for better personalization &mdash; by making $N$ times more predictions than a typical GR, it can now include user-item cross features in predictions.</p>
 <h3 id="hybrid-generative-discriminative-architectures" class="scroll-mt-8 group">
   Hybrid Generative-Discriminative Architectures
   
@@ -963,7 +963,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<p>Overhauling cascade pipelines is hard for most companies because their teams are structured around L1, L2, etc.. Other companies have a more gentle way to reap the benefits from GM without too much disruption.</p>
+<p>Rather than overhauling DLRM and corresponding cascade pipelines and team structures (e.g., most companies have retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds.</p>
 <h4 id="alibabas-gpsd-and-lum" class="scroll-mt-8 group">
   Alibaba&rsquo;s GPSD and LUM
   
@@ -1215,8 +1215,9 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </h3>
 <ol start="7">
 <li>RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and images (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) with low costs and high fidelity</li>
-<li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and using them for retrieval 👉 later, another Google paper (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking as well</li>
-<li>Baidu&rsquo;s COBRA (<a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>) tackles information loss from RQ-VAE quantization</li>
+<li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and used them in retrieval 👉 another Google paper (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking</li>
+<li>Baidu&rsquo;s COBRA tackled information loss in RQ-VAE by also generating dense representations 👉 <a href="https://arxiv.org/abs/2503.02453"><em>Sparse Meets Dense: Unified Generative Recommendations with Cascaded Sparse-Dense Representations</em></a> (2025) by Yang et al., 2025, <em>arXiv</em>.</li>
+<li>Kuaishou&rsquo;s QARM used RQ-Kmeans to maximize codebook utilization 👉 <a href="https://arxiv.org/abs/2411.11739"><em>QARM: Quantitative Alignment Multi-Modal Recommendation at Kuaishou</em></a> (2024) by Luo et al., <em>arXiv</em>.</li>
 <li>Snap&rsquo;s GRID 👉 <a href="https://www.arxiv.org/abs/2507.22224"><em>Generative Recommendation with Semantic IDs: A Practitioner&rsquo;s Handbook</em></a> (2025) by Ju et al., <em>arXiv</em>.</li>
 </ol>
 <h3 id="ditch-dlrm-for-end-to-end-generative-architectures" class="scroll-mt-8 group">
@@ -1244,7 +1245,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<ol start="11">
+<ol start="12">
 <li>Meta&rsquo;s HSTU 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
 <li>Kuaishou&rsquo;s OneRec 👉 <a href="https://arxiv.org/abs/2502.18965"><em>OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment</em></a> (2025) by Deng et al., <em>arXiv</em>.</li>
 <li>Meituan&rsquo;s MTGR 👉 <a href="https://arxiv.org/abs/2505.18654"><em>MTGR: Industrial-Scale Generative Recommendation Framework in Meituan</em></a> (2025) by Han et al., <em>arXiv</em>.</li>
@@ -1274,9 +1275,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h3>
-<ol start="14">
-<li>Alibaba&rsquo;s GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
-<li>Alibaba&rsquo;s LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
+<ol start="15">
+<li>Alibaba has many different GR models 👉 check out their latest <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a> &mdash; below are two well-known examples:
+<ul>
+<li>GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
+<li>LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
+</ul>
+</li>
 <li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
 <li>ByteDance&rsquo;s RankMixer 👉 <a href="https://arxiv.org/abs/2507.15551"><em>RankMixer: Scaling Up Ranking Models in Industrial Recommenders</em></a> (2025) by Zhu et al., <em>arXiv</em>.</li>
 <li>Netflix 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
