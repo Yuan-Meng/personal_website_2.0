@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5963">
+  <meta itemprop="wordCount" content="6017">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT28M",
+  "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 5963
+  "wordCount": 6017
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 28 minutes
+      Reading time: 29 minutes
     
 
     
@@ -178,7 +178,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         </li>
         <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a>
           <ul>
-            <li><a href="#alibabas-gpsd-and-lum">Alibaba&rsquo;s GPSD and LUM</a></li>
+            <li><a href="#alibabas-gpsd">Alibaba&rsquo;s GPSD</a></li>
             <li><a href="#xiaohongshus-genrank">Xiaohongshu&rsquo;s GenRank</a></li>
             <li><a href="#bytedances-rankmixer">ByteDance&rsquo;s RankMixer</a></li>
             <li><a href="#netflixs-foundation-model">Netflix&rsquo;s Foundation Model</a></li>
@@ -964,10 +964,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h3>
 <p>Rather than overhauling DLRM and existing cascade pipelines and team structures (e.g., most companies have separate retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds.</p>
-<h4 id="alibabas-gpsd-and-lum" class="scroll-mt-8 group">
-  Alibaba&rsquo;s GPSD and LUM
+<h4 id="alibabas-gpsd" class="scroll-mt-8 group">
+  Alibaba&rsquo;s GPSD
   
-    <a href="#alibabas-gpsd-and-lum"
+    <a href="#alibabas-gpsd"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1018,8 +1018,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </figure>
 
 <p>As one can see, the one-epoch curse is broken &mdash; all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged &mdash; the larger the model (L4H256A4 &gt; L4H128A4 &gt; L4H64A4 &gt; L4H32A4), the better the overall performance. In the two smaller models (32 and 64), &ldquo;Sparse Transfer &amp; Sparse Freeze&rdquo; worked the best whereas in the two larger models (128 and 256), &ldquo;Full Transfer &amp; Sparse Freeze&rdquo; was the best.</p>
-<p>Another Alibaba model is LUM.</p>
-<p>Alibaba has loads of models.</p>
+<p>Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM (<a href="https://arxiv.org/abs/2502.08309">Yan et al., 2025</a>) and URM (<a href="https://arxiv.org/abs/2502.03041">Jiang et al., 2025</a>). Just yesterday (August 2, 2025), Alibaba published the <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a>, showing their ambition to turn recommendation into a ChatGPT-like product that truly interacts with users intelligently.</p>
 <h4 id="xiaohongshus-genrank" class="scroll-mt-8 group">
   Xiaohongshu&rsquo;s GenRank
   
@@ -1309,6 +1308,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <ul>
 <li>GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
 <li>LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
+<li>URM 👉 <a href="https://arxiv.org/abs/2502.03041"><em>Large Language Model as Universal Retriever in Industrial-Scale Recommender System</em></a> (2025) by Jiang et al., <em>arXiv</em>.</li>
 </ul>
 </li>
 <li>Xiaohongshu&rsquo;s GenRank 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>

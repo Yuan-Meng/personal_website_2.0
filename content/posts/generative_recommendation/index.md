@@ -220,7 +220,7 @@ Comparing with GR, MTGR sacrifices some efficiency for better personalization --
 
 Rather than overhauling DLRM and existing cascade pipelines and team structures (e.g., most companies have separate retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds. 
 
-### Alibaba's GPSD and LUM
+### Alibaba's GPSD
 
 As alluded to earlier, DLRM is haunted by a strange "one-epoch phenomenon", where model performance on the test set suddenly drops at the beginning of the second epoch ([Zhang et al., 2022](https://arxiv.org/abs/2209.06053)). As a result, you can't train a DLRM model for longer to improve it.
 
@@ -245,10 +245,7 @@ The authors compared 4 ways to integrate pretrained embeddings into discriminati
 As one can see, the one-epoch curse is broken --- all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged --- the larger the model (L4H256A4 > L4H128A4 > L4H64A4 > L4H32A4), the better the overall performance. In the two smaller models (32 and 64), "Sparse Transfer & Sparse Freeze" worked the best whereas in the two larger models (128 and 256), "Full Transfer & Sparse Freeze" was the best.
 
 
-Another Alibaba model is LUM.
-
-Alibaba has loads of models.
-
+Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM ([Yan et al., 2025](https://arxiv.org/abs/2502.08309)) and URM ([Jiang et al., 2025](https://arxiv.org/abs/2502.03041)). Just yesterday (August 2, 2025), Alibaba published the [RecGPT Technical Report](https://huggingface.co/papers/2507.22879), showing their ambition to turn recommendation into a ChatGPT-like product that truly interacts with users intelligently. 
 
 ### Xiaohongshu's GenRank
 
@@ -291,6 +288,7 @@ JD.com, Pinterest
 15. Alibaba has many different GR models 👉 check out their latest [RecGPT Technical Report](https://huggingface.co/papers/2507.22879) --- below are two well-known examples:
     - GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
     - LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
+    - URM 👉 [*Large Language Model as Universal Retriever in Industrial-Scale Recommender System*](https://arxiv.org/abs/2502.03041) (2025) by Jiang et al., *arXiv*.
 16. Xiaohongshu's GenRank 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
 17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*.
 18. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
