@@ -195,8 +195,14 @@ The decoder generates Semantic IDs for a series of videos, each starting with a 
 
 #### *Preference Alignment via DPO*
 
+In Machine Learning Engineering, half the work is to build a fancy model and half is to persuade others why the new predictions are better. For instance, do users find treatment results more "relevant" (however defined)? Do they click on more ads? Do they have longer sessions and engage with the content more deeply (e.g., commenting, sharing)?... In DRLM, each objective can be optimized by a task tower and outputs from different towers are combined into a weighted sum.
 
-Technical innovations aside --- no guts, not glory.
+{{< figure src="https://www.dropbox.com/scl/fi/66etdouoq1m6vdfol7chh/Screenshot-2025-08-02-at-10.24.57-PM.png?rlkey=vzsxzhbubgwqhst2odrrfdfmf&st=7hoecdhu&raw=1" caption="Preference alignment." width="1800">}}
+
+In OneRec, the score combining different objectives is called the P-Score (Preference Score), which serves as one of the rewards in the preference alignment stage. Other rewards include a format reward (e.g., whether the generated Semantic IDs are valid) and an "industrial reward" (e.g., safety, monetization, diversity, cold-start). A variant of DPO, called ECPO (Early Clipped [GRPO](https://arxiv.org/abs/2402.05749)), is used to optimize these rewards. Different from GRPO, ECPO uses a clipped policy gradient objective to stabilize training in early stages. To maximize alignment, OneRec uses an Iterative Preference Alignment (IPA) strategy: at each iteration, beam search generates multiple candidates, the reward model selects the best and worst responses, and both standard next-token prediction loss and DPO loss are used to update the model.
+
+Reading the OneRec technical report reminds me of how I felt when reading the DeepSeek reports in February: so much thought given to every detail, loads of engineering ingenuity, and truly "no guts, no glory". The lead of OneRec, Guorui Zhou, wrote in his [post](https://zhuanlan.zhihu.com/p/1918350919508140128) that his motivation came from both practical concerns (e.g., reducing compute and overhead costs by eliminating L0 $\rightarrow$ L1 $\rightarrow$ L2 data transfer to increase the profit margin of ads) and a profound intellectual quest (e.g., how "intelligence" can emerge and why it has long evaded recommender systems). I hope that, in my own career, I'll have the honor of being part of a revolution sparked by early conviction.
+
 
 ### Meituan's MTGR
 

@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4859">
+  <meta itemprop="wordCount" content="5168">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT23M",
+  "timeRequired": "PT25M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 4859
+  "wordCount": 5168
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 23 minutes
+      Reading time: 25 minutes
     
 
     
@@ -894,7 +894,15 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h5>
-<p>Technical innovations aside &mdash; no guts, not glory.</p>
+<p>In Machine Learning Engineering, half the work is to build a fancy model and half is to persuade others why the new predictions are better. For instance, do users find treatment results more &ldquo;relevant&rdquo; (however defined)? Do they click on more ads? Do they have longer sessions and engage with the content more deeply (e.g., commenting, sharing)?&hellip; In DRLM, each objective can be optimized by a task tower and outputs from different towers are combined into a weighted sum.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/66etdouoq1m6vdfol7chh/Screenshot-2025-08-02-at-10.24.57-PM.png?rlkey=vzsxzhbubgwqhst2odrrfdfmf&amp;st=7hoecdhu&amp;raw=1"
+    alt="Preference alignment." width="1800"><figcaption>
+      <p>Preference alignment.</p>
+    </figcaption>
+</figure>
+
+<p>In OneRec, the score combining different objectives is called the P-Score (Preference Score), which serves as one of the rewards in the preference alignment stage. Other rewards include a format reward (e.g., whether the generated Semantic IDs are valid) and an &ldquo;industrial reward&rdquo; (e.g., safety, monetization, diversity, cold-start). A variant of DPO, called ECPO (Early Clipped <a href="https://arxiv.org/abs/2402.05749">GRPO</a>), is used to optimize these rewards. Different from GRPO, ECPO uses a clipped policy gradient objective to stabilize training in early stages. To maximize alignment, OneRec uses an Iterative Preference Alignment (IPA) strategy: at each iteration, beam search generates multiple candidates, the reward model selects the best and worst responses, and both standard next-token prediction loss and DPO loss are used to update the model.</p>
+<p>Reading the OneRec technical report reminds me of how I felt when reading the DeepSeek reports in February: so much thought given to every detail, loads of engineering ingenuity, and truly &ldquo;no guts, no glory&rdquo;. The lead of OneRec, Guorui Zhou, wrote in his <a href="https://zhuanlan.zhihu.com/p/1918350919508140128">post</a> that his motivation came from both practical concerns (e.g., reducing compute and overhead costs by eliminating L0 $\rightarrow$ L1 $\rightarrow$ L2 data transfer to increase the profit margin of ads) and a profound intellectual quest (e.g., how &ldquo;intelligence&rdquo; can emerge and why it has long evaded recommender systems). I hope that, in my own career, I&rsquo;ll have the honor of being part of a revolution sparked by early conviction.</p>
 <h4 id="meituans-mtgr" class="scroll-mt-8 group">
   Meituan&rsquo;s MTGR
   
