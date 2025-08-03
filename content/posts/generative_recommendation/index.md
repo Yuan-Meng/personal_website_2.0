@@ -226,7 +226,7 @@ As alluded to earlier, DLRM is haunted by a strange "one-epoch phenomenon", wher
 
 A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for training samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.
 
-To directly address this issue, Alibaba's GPSD ([Wang et al., 2025](https://arxiv.org/abs/2506.03699)) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model.
+To address this issue, Alibaba's GPSD ([Wang et al., 2025](https://arxiv.org/abs/2506.03699)) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model. Another Chinese e-commerce giant JD.com follows the same generative-to-discriminative transfer strategy in their GenCTR model ([Kong et al., 2025](https://arxiv.org/abs/2507.11246)).
 
 {{< figure src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&st=sfvui9ba&raw=1" caption="GPSD." width="1800">}}
 
@@ -244,7 +244,7 @@ Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM ([
 
 ### Xiaohongshu's RankGPT
 
-There are good, bad, and great recommender systems --- and then there's [Xiaohongshu](https://www.xiaohongshu.com/explore), the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT ([Huang et al., 2025](https://arxiv.org/abs/2505.04180)) is the mastermind behind Xiaohongshu's uncanny recommendations.
+There are good, bad, and great recommender systems --- and then there's [Xiaohongshu](https://www.xiaohongshu.com/explore), the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT ([Huang et al., 2025](https://arxiv.org/abs/2505.04180)) is the {{< sidenote "mastermind" >}}RankGPT doesn't seem like a huge innovation from Meta's HSTU. Perhaps as a wise person once said, data is the king in recommendations.{{< /sidenote >}} behind Xiaohongshu's uncanny recommendations.
 
 {{< figure src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&st=upm449ip&raw=1" caption="RankGPT." width="1800">}}
 
@@ -263,7 +263,8 @@ Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021
 
 {{< figure src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&st=sc8aj0wd&raw=1" caption="Results." width="500">}}
 
-### Netflix's Foundation Model
+### Foundation Models at Netflix and Pinterest
+Apart from Google's TIGER and Meta's HSTU, most models above come from Chinese companies. In the United States, Netflix's Foundation Model ([Hsiao et al., 2025](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39)) and Pinterest's PinFM ([Chen et al., 2025](https://arxiv.org/abs/2507.12704)) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online `pAction` models. 
 
 # Lessons on Embracing the Generative Recommendation Tide
 
@@ -271,12 +272,11 @@ Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021
 
 ## Overview & Scaling Laws in Recommender Systems
 1. A comprehensive lit review on Generative Recommendation 👉 [*GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models*](https://arxiv.org/abs/2507.06507) (2025) by Yang et al., *arXiv*.
-
 2. "One-epoch phenomenon" 👉 [*Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models*](https://arxiv.org/abs/2209.06053) (2022) by Zhang et al., *CIKM*.
 3. Quality saturation under the "item-centric ranking" framework 👉 [*Breaking the Curse of Quality Saturation with User-Centric Ranking*](https://arxiv.org/abs/2305.15333) (2023) by Zhao et al., *KDD*.
 4. Netflix foresaw the lack of task complexity and item ID compositionality in DLRM 👉 [*Deep Learning for Recommender Systems: A Netflix Case Study*](https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140) (2021) by Steck et al., *AI Magazine*.
-5. Power-law scaling hits diminishing returns in DLRM 👉 [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) (2022) by Ardalani et al., *arXiv*.
-6. Generative training even on pure IDs shows power-law scaling laws 👉 [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
+5. Power-law scaling typically hits diminishing returns in DLRM 👉 [*Understanding Scaling Laws for Recommendation Models*](https://arxiv.org/abs/2208.08489) (2022) by Ardalani et al., *arXiv*.
+6. Generative training even on pure IDs leads to power-law scaling laws 👉 [*Scaling Law of Large Sequential Recommendation Models*](https://dl.acm.org/doi/abs/10.1145/3640457.3688129) (2025) by Zhang et al., *RecSys*.
 
 ## From Atomic Item IDs to Semantic IDs
 7. RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios ([Zeghidour et al., 2021](https://arxiv.org/abs/2107.03312)) and images ([Lee et al., 2022](https://arxiv.org/abs/2203.01941)) with low costs and high fidelity
@@ -296,9 +296,9 @@ Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021
     - GPSD 👉 [*Scaling Transformers for Discriminative Recommendation via Generative Pretraining*](https://arxiv.org/abs/2506.03699) (2025) by Wang et al., *KDD*.
     - LUM 👉 [*Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model*](https://arxiv.org/abs/2502.08309) (2025) by Yan et al., *arXiv*.
     - URM 👉 [*Large Language Model as Universal Retriever in Industrial-Scale Recommender System*](https://arxiv.org/abs/2502.03041) (2025) by Jiang et al., *arXiv*.
-16. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
-<!-- 17. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*. -->
-17. Netflix 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
-18. Pinterest's PinFM 👉 [*PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform*](https://arxiv.org/abs/2507.12704) (2025) by Chen et al., *RecSys*.
-19. JD.com 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*.
+16. JD.com's GenCTR 👉 [*Generative Click-through Rate Prediction with Applications to Search Advertising*](https://arxiv.org/abs/2507.11246) (2025) by Kong et al., *arXiv*. 
+17. Xiaohongshu's RankGPT 👉 [*Towards Large-Scale Generative Ranking*](https://arxiv.org/abs/2505.04180) (2025) by Huang et al., *arXiv*.
+18. Netflix's Foundation Model 👉 [*Foundation Model for Personalized Recommendation*](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) (2025) by  Hsiao et al., *Netflix Technology Blog*.
+19. Pinterest's PinFM 👉 [*PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform*](https://arxiv.org/abs/2507.12704) (2025) by Chen et al., *RecSys*.
 20. Tencent's LC-Rec is an "older" model that aims to align the semantic space of LLMs with the collaborative space of RecSys 👉 [*Adapting Large Language Models by Integrating Collaborative Semantics for Recommendation*](https://arxiv.org/abs/2311.09049) (2024), *ICDE*.
+<!-- 21. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*. -->
