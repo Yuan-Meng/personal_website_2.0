@@ -1,6 +1,6 @@
 ---
 title: "Is Generative Recommendation the ChatGPT Moment of RecSys?"
-date: 2025-08-02
+date: 2025-08-03
 math: true
 categories: ["generative recommendation", "large language models"]
 toc: true
@@ -12,7 +12,7 @@ For nearly a decade, recommender systems have remained largely {{< sidenote "the
 
 {{< figure src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&st=fzobjxgt&raw=1" caption="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style 'Embedding & Interaction & Expert' model architectures." width="1800">}}
 
-In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years --- other top companies such as {{< sidenote "Google" >}}Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.{{< /sidenote >}}, Netflix, Kuaishou, ByteDance, Xiaohongshu, Tencent, Baidu, Alibaba, JD.com, and Meituan are starting to embrace a new "Generative Recommendation" (GR) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
+In 2025, the tide seems to have finally turned after Meta's [HSTU](https://arxiv.org/abs/2402.17152) delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years --- other top companies such as {{< sidenote "Google" >}}Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.{{< /sidenote >}}, Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new "Generative Recommendation" (GR) paradigm for retrieval and ranking, reframing the discriminative `pAction` prediction task as a generative task, akin to token predictions in language modeling. 
 
 <!--more-->
 
@@ -171,7 +171,7 @@ While the overall architecture isn't too crazy, many optimizations are done to b
 
 ### Kuaishou's OneRec
 
-Kuaishou's OneRec brings all-around improvements to HSTU, most notably Kuaishou's own RQ-Kmeans algorithm ([Luo et al., 2024](https://arxiv.org/abs/2411.11739)) that incorporates collaborative signals into Semantic IDs and aims to maximize codebook utilization, session-wise list generation that generates a list of interdependent videos rather than unrelated individual videos, and a post-training preference alignment stage that uses [Direct Preference Optimization (DPO)](https://arxiv.org/abs/2305.18290) to optimize for conflicting business objectives. The paper ([Deng et al., 2025](https://arxiv.org/abs/2502.18965)) itself is pretty short. A more detailed technical report ([Zhou et al., 2025](https://arxiv.org/abs/2506.13695)) came out a few months later and made rounds in the recommendation industry. 
+Kuaishou's OneRec brings all-around improvements to HSTU, most notably Kuaishou's own RQ-Kmeans algorithm ([Luo et al., 2024](https://arxiv.org/abs/2411.11739)) that incorporates collaborative signals into Semantic IDs and maximizes codebook utilization, session-wise list generation that generates a list of interdependent videos rather than unrelated individual videos, and a post-training preference alignment stage that uses [Direct Preference Optimization (DPO)](https://arxiv.org/abs/2305.18290) to optimize for conflicting business objectives. The paper ([Deng et al., 2025](https://arxiv.org/abs/2502.18965)) itself is pretty short. A more detailed technical report ([Zhou et al., 2025](https://arxiv.org/abs/2506.13695)) came out a few months later and has made rounds in the recommendation industry. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&st=whfld5n7&raw=1" caption="OneRec." width="1800">}}
 
@@ -206,9 +206,15 @@ Reading the OneRec technical report reminds me of how I felt when reading the De
 
 ### Meituan's MTGR
 
-MTGR adds cross features back.
+In the middle of writing this blogpost, I had dinner with a former colleague and described the idea from the TIGER paper to her. Her first reaction was, "Eh, how do we personalize recommendations?"
+
+That was probably the catch with Generative Recommendation --- in DLRM, user-item cross features (e.g., how often a user clicked through to an ad or purchased an item) often have the highest feature importances and are key to personalization, but it's not immediately apparent how this kind of information can be incorporated into a Generative Recommender (e.g., which Semantic IDs should be decoded probably doesn't depend on who I am). Meituan's MTGR ([Han et al., 2025](https://arxiv.org/abs/2505.18654))  brings cross features back into GR.
 
 {{< figure src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&st=7sepacbq&raw=1" caption="MTGR." width="1800">}}
+
+Typically in DRLM, if a user interacted with $N$ items for a total of $M$ times within some time window, there will be $M$ rows of training data. Typically in GR, these interactions are put into a single sequence. In MTGR, the $M$ interactions are divided into $N$ sequences, one for each user-item pair: $\mathbb{D} = [\mathbf{U}, \mathbf{\overrightarrow{S}}, \mathbf{\overrightarrow{R}}, [\mathbf{C}, \mathbf{I}]\_1\ldots, [\mathbf{C}, \mathbf{I}]\_K]$. Under the new user-item level data arrangement, cross features (e.g., user-item CTR) are treated as candidate features. For a given user in a given time window, occurrences of the same candidate item are predicted at once, reducing training costs. To avoid information leakage, dynamic masking is added so that user features $\mathbf{U},  \mathbf{\overrightarrow{S}}$ are visible to all tokens, real-time interactions are $\mathbf{\overrightarrow{R}}$ are only visible to later tokens, whereas candidate tokens $(\mathbf{C},\mathbf{I})$ are only visible to themselves.
+
+In a sense, MTGR sacrifices some efficiency for better personalization --- by making $N$ times more predictions than a typical GR, the new model can now include user-item cross features in predictions.
 
 
 ## Hybrid Generative-Discriminative Architectures
