@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6495">
+  <meta itemprop="wordCount" content="6599">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT31M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 6495
+  "wordCount": 6599
 }
 </script>
 
@@ -1115,6 +1115,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h4>
 <p>Apart from Google&rsquo;s TIGER and Meta&rsquo;s HSTU, most models above come from Chinese companies. In the United States, Netflix&rsquo;s Foundation Model (<a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">Hsiao et al., 2025</a>) and Pinterest&rsquo;s PinFM (<a href="https://arxiv.org/abs/2507.12704">Chen et al., 2025</a>) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online <code>pAction</code> models.</p>
+<p>As with most Generative Recommenders, Netflix&rsquo;s Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">blogpost</a> doesn&rsquo;t say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the &ldquo;Dense All Action&rdquo; loss in Pinterest&rsquo;s PinnerFormer, <a href="https://arxiv.org/abs/2205.04507">Pancha et al., 2022</a>). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This Foundation Model is used in many downstream models.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&amp;st=8dc7hmmx&amp;raw=1"
+    alt="Netflix compress." width="1800"><figcaption>
+      <p>Netflix compress.</p>
+    </figcaption>
+</figure>
+
 <h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
   Lessons on Embracing the Generative Recommendation Tide
   

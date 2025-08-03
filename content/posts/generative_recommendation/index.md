@@ -266,6 +266,13 @@ Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021
 ### Foundation Models at Netflix and Pinterest
 Apart from Google's TIGER and Meta's HSTU, most models above come from Chinese companies. In the United States, Netflix's Foundation Model ([Hsiao et al., 2025](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39)) and Pinterest's PinFM ([Chen et al., 2025](https://arxiv.org/abs/2507.12704)) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online `pAction` models. 
 
+
+
+As with most Generative Recommenders, Netflix's Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the [blogpost](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) doesn't say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the "Dense All Action" loss in Pinterest's PinnerFormer, [Pancha et al., 2022](https://arxiv.org/abs/2205.04507)). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This Foundation Model is used in many downstream models.
+
+{{< figure src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&st=8dc7hmmx&raw=1" caption="Netflix compress." width="1800">}}
+
+
 # Lessons on Embracing the Generative Recommendation Tide
 
 # References
@@ -284,7 +291,6 @@ Apart from Google's TIGER and Meta's HSTU, most models above come from Chinese c
 9. Baidu's COBRA tackled information loss in RQ-VAE by also generating dense representations 👉 [*Sparse Meets Dense: Unified Generative Recommendations with Cascaded Sparse-Dense Representations*](https://arxiv.org/abs/2503.02453) (2025) by Yang et al., 2025, *arXiv*.
 10. Kuaishou's QARM used RQ-Kmeans to maximize codebook utilization 👉 [*QARM: Quantitative Alignment Multi-Modal Recommendation at Kuaishou*](https://arxiv.org/abs/2411.11739) (2024) by Luo et al., *arXiv*.
 11. Snap's GRID 👉 [*Generative Recommendation with Semantic IDs: A Practitioner's Handbook*](https://www.arxiv.org/abs/2507.22224) (2025) by Ju et al., *arXiv*.
-
 
 ## Ditch DLRM for End-to-End Generative Architectures
 12. Meta's HSTU 👉 [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (2024) by Zhai et al., *ICML*.
