@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7204">
+  <meta itemprop="wordCount" content="7332">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT34M",
+  "timeRequired": "PT35M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 7204
+  "wordCount": 7332
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 34 minutes
+      Reading time: 35 minutes
     
 
     
@@ -373,12 +373,6 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>The key idea, with an analogy to NLP, is to think of items as tokens and users as documents, i.e., each user is modeled by a list of items that they engaged with, in chronological order according to the time of engagements.</p>
 </blockquote>
 <p>A user is thus a &ldquo;book&rdquo; written by a history of engaged items, and web-scale recommender systems provide endless training data. In language models, performance predictably improves with model size or training data (e.g., linear or power-law relationships), a phenomenon called &ldquo;scaling laws&rdquo; (<a href="https://arxiv.org/abs/2203.15556">Hoffmann et al., 2022</a>). In DLRM recommender systems, however, scaling laws have never emerged. In recommenders employing Transformer modules, increasing the number of Transformer layers doesn&rsquo;t improve performance &mdash; more often than not, one layer is all you need (e.g., Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>). Regardless of the architecture, training DLRM recommenders for more than one epoch typically results in rapid performance deterioration (the &ldquo;one-epoch phenomenon&rdquo;; Zhang et al., <a href="https://dl.acm.org/doi/abs/10.1145/3511808.3557479">CIKM 22</a>).</p>
-<!-- <figure><img src="https://www.dropbox.com/scl/fi/kwizvxifw76foyarxynqn/Screenshot-2025-08-02-at-9.51.24-AM.png?rlkey=f63gie8g7ttx9zl9p87i3eh5e&amp;st=kgc9inhv&amp;raw=1"
-    alt="Hypothesis behind one epoch phenomenon." width="1800"><figcaption>
-      <p>Hypothesis behind one epoch phenomenon.</p>
-    </figcaption>
-</figure>
- -->
 <p>So how do we explain this stark contrast between language and recommendation models? Back in 2021, Netflix published a &ldquo;popular science&rdquo; paper that foresaw the challenges of DLRM-style recommenders. In this paper, <a href="https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140">Steck et al. (2021)</a> argued that deep learning recommender systems differ  from other deep learning applications such as image classification in that item IDs are &ldquo;atomic&rdquo; and directly available in the data &mdash; there are no low-to-high level feature representations to extract (e.g., pixels to objects in images). As such, deep learning recommenders only require a shallow network to learn user and item embeddings from user-item interactions, effectively learning &ldquo;dot product&rdquo; operations. They don&rsquo;t benefit from deeper architectures meant to capture low-level features.</p>
 <p>This observation is profound, highlighting inherent flaws in DLRM:</p>
 <ul>
@@ -392,18 +386,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-07"
+    id="sidenote-checkbox-06"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-07"
-    for="sidenote-checkbox-07"
+    aria-details="sidenote-06"
+    for="sidenote-checkbox-06"
     class="sidenote-mark"
     >language</label
   >
-  <small id="sidenote-07" class="sidenote-content">
+  <small id="sidenote-06" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>Or music, or planning… For example, while sound frequencies are continuous and infinite, Western music relies on just 12 distinct frequencies and their multiples. Notes form chords, chords form progressions, and so forth. Without hierarchical relationships, composing music would be nearly impossible.<span class="sr-only">)</span>
   </small>
 </span>
@@ -461,18 +455,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-08"
+    id="sidenote-checkbox-07"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-08"
-    for="sidenote-checkbox-08"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
     class="sidenote-mark"
     >zero interest</label
   >
-  <small id="sidenote-08" class="sidenote-content">
+  <small id="sidenote-07" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?<span class="sr-only">)</span>
   </small>
 </span>
@@ -994,7 +988,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </figcaption>
 </figure>
 
-<p>A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for training samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.</p>
+<p>A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for trained samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.</p>
 <p>To address this issue, Alibaba&rsquo;s GPSD (<a href="https://arxiv.org/abs/2506.03699">Wang et al., 2025</a>) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model. Another Chinese e-commerce giant JD.com follows the same generative-to-discriminative transfer strategy in their GenCTR model (<a href="https://arxiv.org/abs/2507.11246">Kong et al., 2025</a>).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&amp;st=sfvui9ba&amp;raw=1"
     alt="To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model." width="1800"><figcaption>
@@ -1046,18 +1040,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-27"
+    id="sidenote-checkbox-26"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-27"
-    for="sidenote-checkbox-27"
+    aria-details="sidenote-26"
+    for="sidenote-checkbox-26"
     class="sidenote-mark"
     >mastermind</label
   >
-  <small id="sidenote-27" class="sidenote-content">
+  <small id="sidenote-26" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>RankGPT doesn't seem like a huge innovation from Meta's HSTU. Perhaps as a wise person once said, data is the king in recommendations.<span class="sr-only">)</span>
   </small>
 </span>
@@ -1115,7 +1109,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h4>
 <p>Apart from Google&rsquo;s TIGER and Meta&rsquo;s HSTU, most models above come from Chinese companies. In the United States, Netflix&rsquo;s Foundation Model (<a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">Hsiao et al., 2025</a>) and Pinterest&rsquo;s PinFM (<a href="https://arxiv.org/abs/2507.12704">Chen et al., 2025</a>) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online <code>pAction</code> models.</p>
-<p>As with most Generative Recommenders, Netflix&rsquo;s Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">blogpost</a> doesn&rsquo;t say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the &ldquo;Dense All Action&rdquo; loss in Pinterest&rsquo;s PinnerFormer, <a href="https://arxiv.org/abs/2205.04507">Pancha et al., 2022</a>). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.</p>
+<p>As with most Generative Recommenders, Netflix&rsquo;s Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">blogpost</a> doesn&rsquo;t say which one) and compresses similar movies in a row into the same token. To drive long-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the &ldquo;Dense All Action&rdquo; loss in Pinterest&rsquo;s PinnerFormer, <a href="https://arxiv.org/abs/2205.04507">Pancha et al., 2022</a>). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&amp;st=8dc7hmmx&amp;raw=1"
     alt="Netflix compresses similar movies into a single token." width="1800"><figcaption>
       <p>Netflix compresses similar movies into a single token.</p>
@@ -1162,11 +1156,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   
 </h2>
 <ol>
-<li><em>Scaling laws don&rsquo;t emerge in one way</em>: Poor learning of sparse ID features seems to be the reason why DLRM models struggle to scale, but there isn&rsquo;t just one way to unlock scaling laws. You can reframe the entire ranking problem as a generative task (e.g., next-action prediction), or you can pretrain ID embeddings in a generative model (usually an autoregressive Transformer) and transfer the parameters to a downstream discriminative model.</li>
+<li><em>Generative Recommendation probably isn&rsquo;t a fad</em>: It&rsquo;s too early to say whether Generative Recommendation is the &ldquo;ChatGPT moment&rdquo; for RecSys, but it probably isn&rsquo;t a fad &mdash; many companies have hit diminishing returns with DLRM models (an exception: <a href="https://arxiv.org/html/2507.15551v1">RankMixer</a> from ByteDance keeps pushing the boundary of feature interaction modules) and do need scaling laws to keep improving model performance. So far GM the best bet to offer that.</li>
+<li><em>Scaling laws don&rsquo;t emerge in one way</em>: Poor learning of sparse ID features is a key reason why DLRM models struggle to scale, but there isn&rsquo;t just one way to unlock scaling laws. You can reframe the entire ranking problem as a generative task (e.g., next-action prediction), or you can pretrain ID embeddings in a generative model (usually an autoregressive Transformer) and transfer the parameters to a downstream discriminative model.</li>
+<li><em>Compositionality is optional, while generative training is a must-have</em>: Some models didn&rsquo;t use Semantic IDs but still saw scaling laws, such as WeChat&rsquo;s atomic ID-based <a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">models</a>. However, no model we&rsquo;ve seen found scaling laws without generative training. Task complexity and training data intensity are essential for reaching a model&rsquo;s full potential (studying hard to learn ID features LOL).</li>
+<li><em>Personalization may be the next frontier</em>: Personalization usually means knowing &ldquo;for this particular user, how good is this item&rdquo;, which is naturally captured by user-item interaction features (e.g., aggregated CTR, action counts, etc. at the user-item level) and is readily usable in DLRM models. In Generative Recommenders, it&rsquo;s much more awkward to plug in these features. Meta&rsquo;s HSTU got rid of them; Meituan&rsquo;s MTGR had to expand the training data $N$-fold ($N$ being the number of candidate items to rank for a user in a given time window). How to more efficiently utilize personalized features will be an interesting topic to explore.</li>
 <li><em>Sequence compression is important</em>: Training a Generative Recommendation model usually requires data on each user&rsquo;s lifelong history. As we all know, for Transformers, both time and space complexity scale quadratically with sequence length (see <a href="/posts/hardware_aware_transformers/" class="backlink">my post</a>
   
    for more analysis). All the models we&rsquo;ve seen apply some form of sequence compression &mdash; e.g., Kuaishou combines TWIN V2 + QFormer, Meta uses a rather rough stochastic length sampling, Netflix merges similar tokens that appear in a row, and so on. Finding an efficient and lossless compression method will greatly improve both efficiency and data quality for GR training.</li>
-<li><em>Personalization may be the next frontier</em>: Personalization usually means knowing &ldquo;for this particular user, how good is this item&rdquo;, which is naturally captured by user-item interaction features (e.g., aggregated CTR, action counts, etc. at the user-item level) and is readily usable in DLRM models. In Generative Recommenders, it&rsquo;s much more awkward to plug in these features. Meta&rsquo;s HSTU got rid of them; Meituan&rsquo;s MTGR had to expand the training data $N$-fold ($N$ being the number of candidate items to rank in a given time window). How to more efficiently utilize personalized features will be an interesting topic to explore.</li>
 </ol>
 <h2 id="references" class="scroll-mt-8 group">
   References
