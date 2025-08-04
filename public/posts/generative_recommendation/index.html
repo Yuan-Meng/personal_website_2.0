@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6842">
+  <meta itemprop="wordCount" content="7105">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -90,9 +90,9 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   },
   "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation/",
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
-  "timeRequired": "PT33M",
+  "timeRequired": "PT34M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 6842
+  "wordCount": 7105
 }
 </script>
 
@@ -135,7 +135,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 
     
     
-      Reading time: 33 minutes
+      Reading time: 34 minutes
     
 
     
@@ -185,7 +185,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
         </li>
       </ul>
     </li>
-    <li><a href="#lessons-on-embracing-the-generative-recommendation-tide">Lessons on Embracing the Generative Recommendation Tide</a></li>
+    <li><a href="#lessons-from-case-studies">Lessons from Case Studies</a></li>
     <li><a href="#references">References</a>
       <ul>
         <li><a href="#overview--scaling-laws-in-recommender-systems">Overview &amp; Scaling Laws in Recommender Systems</a></li>
@@ -1136,10 +1136,10 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 
 <p>In downstream ranking models, the candidate item is appended to the user sequence as the input to PinFM to bring &ldquo;candidate awareness&rdquo;. Rather than freezing model parameters (like some variants of Alibaba&rsquo;s GPSD), PinFM is fine-tuned along with <code>pAction</code> predictions.</p>
 <p>To productionize PinFM, the team took aggressive cost-saving measures. For instance, to reduce large embedding table costs, they applied int4 quantization. To avoid duplicate computations during serving (# of unique users $\ll$ # of candidates), they developed the Deduplicated Cross-Attention Transformer (DCAT), computing candidate-independent user sequence representations once for each unique user and broadcasting them to the same users in the batch to perform user-candidate feature crossing. Despite deploying a 20B model, cost and latency increases were almost neutral.</p>
-<h2 id="lessons-on-embracing-the-generative-recommendation-tide" class="scroll-mt-8 group">
-  Lessons on Embracing the Generative Recommendation Tide
+<h2 id="lessons-from-case-studies" class="scroll-mt-8 group">
+  Lessons from Case Studies
   
-    <a href="#lessons-on-embracing-the-generative-recommendation-tide"
+    <a href="#lessons-from-case-studies"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1161,6 +1161,13 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h2>
+<ol>
+<li><em>Scaling laws don&rsquo;t emerge in one way</em>: Poor learning of sparse ID features seems to be the reason why DLRM models struggle to scale, but there isn&rsquo;t just one way to unlock scaling laws. You can reframe the entire ranking problem as a generative task (e.g., next-action prediction), or you can pretrain ID embeddings in a generative model (usually an autoregressive Transformer) and transfer the parameters to a downstream discriminative model.</li>
+<li><em>Sequence compression is important</em>: Training a Generative Recommendation model usually requires data on each user&rsquo;s lifelong history. As we all know, for Transformers, both time and space complexity scale quadratically with sequence length (see <a href="/posts/hardware_aware_transformers/" class="backlink">my post</a>
+  
+   for more analysis). All the models we&rsquo;ve seen apply some form of sequence compression &mdash; e.g., Kuaishou combines TWIN V2 + QFormer, Meta uses a rather rough stochastic length sampling, Netflix merges similar tokens that appear in a row, and so on. Finding an efficient and lossless compression method will greatly improve both efficiency and data quality for GR training.</li>
+<li><em>Personalization may be the next frontier</em>: Personalization usually means knowing &ldquo;for this particular user, how good is this item&rdquo;, which is naturally captured by user-item interaction features (e.g., aggregated CTR, action counts, etc. at the user-item level) and is readily usable in DLRM models. In Generative Recommenders, it&rsquo;s much more awkward to plug in these features. Meta&rsquo;s HSTU got rid of them; Meituan&rsquo;s MTGR had to expand the training data $N$-fold ($N$ being the number of candidate items to rank in a given time window). How to more efficiently utilize personalized features will be an interesting topic to explore.</li>
+</ol>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -1530,6 +1537,46 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
                   class="taxonomy"
                   title="Posts and notes on Natural language processing"
                   >Natural language processing</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/hardware_aware_transformers/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Hardware-Aware Attention for Long Sequence Modeling"
+              >Hardware-Aware Attention for Long Sequence Modeling</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/gpu/"
+                  class="taxonomy"
+                  title="Posts and notes on Gpu"
+                  >Gpu</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/transformers/"
+                  class="taxonomy"
+                  title="Posts and notes on Transformers"
+                  >Transformers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-systems/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml systems"
+                  >Ml systems</a
                 >
               </li>
           </ul>
