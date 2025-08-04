@@ -266,12 +266,20 @@ Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021
 ### Foundation Models at Netflix and Pinterest
 Apart from Google's TIGER and Meta's HSTU, most models above come from Chinese companies. In the United States, Netflix's Foundation Model ([Hsiao et al., 2025](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39)) and Pinterest's PinFM ([Chen et al., 2025](https://arxiv.org/abs/2507.12704)) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online `pAction` models. 
 
-
-
-As with most Generative Recommenders, Netflix's Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the [blogpost](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) doesn't say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the "Dense All Action" loss in Pinterest's PinnerFormer, [Pancha et al., 2022](https://arxiv.org/abs/2205.04507)). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This Foundation Model is used in many downstream models.
+As with most Generative Recommenders, Netflix's Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the [blogpost](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) doesn't say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the "Dense All Action" loss in Pinterest's PinnerFormer, [Pancha et al., 2022](https://arxiv.org/abs/2205.04507)). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.
 
 {{< figure src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&st=8dc7hmmx&raw=1" caption="Netflix compress." width="1800">}}
 
+Pinterest's PinFM ([Chen at al., 2025](https://arxiv.org/abs/2507.12704)) is similar to Netflix's model, which is an autoregressive Transformer trained on raw user sequences to predict multiple future tokens, with innovations here and there. During pretraining, the model uses 2 years of engagement history up to length 16,000 and only the low-dimension features (basically excluding pretrained item embeddings). The loss consists of 3 parts:
+- Next-token loss: $\mathcal{L}\_{ntl} = \sum\_{i+1}^{m-1}l(\mathbf{H}\_i, z\_{i+1})\mathbb{1}[a\_{i+1} \in A\_{\mathrm{pos}}]$, infoNCE loss for predicting the next positively engaged item.
+- Multi-token loss: $\mathcal{L}\_{mtl} = \sum\_{i+1}^{m-1}\sum\_{j=i+1}^{i+L'}l(\mathbf{H}\_i, z\_j)\mathbb{1}[a\_j \in A\_{\mathrm{pos}}]$, loss for predicting positively engaged item in window $L'$.
+- Future-token loss: $\mathcal{L}\_{ftl} = \sum\_{j=n+1}^{n+L'}l(\mathbf{H}\_{L\_{d}}, z\_j)\mathbb{1}[a\_j \in A\_{\mathrm{pos}}]$ --- during serving, a shorter sequence of length $L\_d$ is sent to the model; this loss penalizes prediction errors within $L\_d$.
+
+{{< figure src="https://www.dropbox.com/scl/fi/1478ofq5zfpzsohx8kzrk/Screenshot-2025-08-03-at-4.04.35-PM.png?rlkey=tdjex9ls02vwdhh4ff9dklw8o&st=2bb8lpa4&raw=1" caption="Pinterest." width="1800">}}
+
+In downstream ranking models, the candidate item is appended to the user sequence as the input to PinFM to bring "candidate awareness". Rather than freezing model parameters (like some variants of Alibaba's GPSD), PinFM is fine-tuned along with `pAction` predictions.
+
+To productionize PinFM, the team took aggressive cost-saving measures. For instance, to reduce large embedding table costs, they applied int4 quantization. To avoid duplicate computations during serving (# of unique users $\ll$ # of candidates), they developed the Deduplicated Cross-Attention Transformer (DCAT), computing candidate-independent user sequence representations once for each unique user and broadcasting them to the same users in the batch to perform user-candidate feature crossing. Despite deploying a 20B model, cost and latency increases were almost neutral.
 
 # Lessons on Embracing the Generative Recommendation Tide
 
