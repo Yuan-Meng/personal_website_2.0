@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7105">
+  <meta itemprop="wordCount" content="7204">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT34M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 7105
+  "wordCount": 7204
 }
 </script>
 
@@ -989,16 +989,16 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </h4>
 <p>As alluded to earlier, DLRM is haunted by a strange &ldquo;one-epoch phenomenon&rdquo;, where model performance on the test set suddenly drops at the beginning of the second epoch (<a href="https://arxiv.org/abs/2209.06053">Zhang et al., 2022</a>). As a result, you can&rsquo;t train a DLRM model for longer to improve it.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/yq7hf8i736jjjfbxtip0n/Screenshot-2025-08-03-at-11.46.02-AM.png?rlkey=6h1h4r7gvtonslost65kujw8e&amp;st=g2dzfqco&amp;raw=1"
-    alt="One-epoch phenomenon." width="500"><figcaption>
-      <p>One-epoch phenomenon.</p>
+    alt="A possible explanation for the one-epoch phenomenon." width="500"><figcaption>
+      <p>A possible explanation for the one-epoch phenomenon.</p>
     </figcaption>
 </figure>
 
 <p>A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for training samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.</p>
 <p>To address this issue, Alibaba&rsquo;s GPSD (<a href="https://arxiv.org/abs/2506.03699">Wang et al., 2025</a>) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model. Another Chinese e-commerce giant JD.com follows the same generative-to-discriminative transfer strategy in their GenCTR model (<a href="https://arxiv.org/abs/2507.11246">Kong et al., 2025</a>).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&amp;st=sfvui9ba&amp;raw=1"
-    alt="GPSD." width="1800"><figcaption>
-      <p>GPSD.</p>
+    alt="To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model." width="1800"><figcaption>
+      <p>To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model.</p>
     </figcaption>
 </figure>
 
@@ -1010,8 +1010,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <li><em>Sparse Transfer &amp; Sparse Freeze</em>: Transfer sparse parameters; freeze sparse parameters and train dense parameters from scratch.</li>
 </ul>
 <figure><img src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&amp;st=nv5pll27&amp;raw=1"
-    alt="Results." width="1800"><figcaption>
-      <p>Results.</p>
+    alt="GPSD breaks the one-epoch phenomenon and the scaling law curse, with model performance improving with training data and model size." width="1800"><figcaption>
+      <p>GPSD breaks the one-epoch phenomenon and the scaling law curse, with model performance improving with training data and model size.</p>
     </figcaption>
 </figure>
 
@@ -1063,15 +1063,15 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </span>
  behind Xiaohongshu&rsquo;s uncanny recommendations.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&amp;st=upm449ip&amp;raw=1"
-    alt="RankGPT." width="1800"><figcaption>
-      <p>RankGPT.</p>
+    alt="RankGPT is similar to HSTU, but organizes training data around actions and treats items as positional information." width="1800"><figcaption>
+      <p>RankGPT is similar to HSTU, but organizes training data around actions and treats items as positional information.</p>
     </figcaption>
 </figure>
 
 <p>RankGPT&rsquo;s architecture is modified from HSTU. HSTU assigns 2 tokens to each engagement, a content token $\Phi_i$ and an action token $a_i$. The upside is that HSTU unifies retrieval and ranking &mdash; retrieval is achieved by predicting the next content and ranking is achieved by predicting the next action. The downside is that the user sequence is now doubled in length, which then quadruples the required compute.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&amp;st=0a59pdz8&amp;raw=1"
-    alt="Action oriented." width="1800"><figcaption>
-      <p>Action oriented.</p>
+    alt="Turns out all 3 positional encodings are not as good as parameter-free ALiBi." width="1800"><figcaption>
+      <p>Turns out all 3 positional encodings are not as good as parameter-free ALiBi.</p>
     </figcaption>
 </figure>
 
@@ -1084,8 +1084,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 </ul>
 <p>Interestingly, all those methods combined didn&rsquo;t beat ALiBi (<a href="https://arxiv.org/abs/2108.12409">Press et al., 2021</a>), which simply replaces positional encodings with a parameter-free penalty that increases with query-key distances. Compared to HSTU, the action-oriented organization decreased AUC by 0.03%, while ALiBi improved AUC by 0.09%. Overall, RankGPT achieved a 94.8% speed-up with a net AUC gain of 0.06%.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&amp;st=sc8aj0wd&amp;raw=1"
-    alt="Results." width="500"><figcaption>
-      <p>Results.</p>
+    alt="RankGPT offers a huge speed-up compared to HSTU with moderate AUC gains." width="500"><figcaption>
+      <p>RankGPT offers a huge speed-up compared to HSTU with moderate AUC gains.</p>
     </figcaption>
 </figure>
 
@@ -1117,8 +1117,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <p>Apart from Google&rsquo;s TIGER and Meta&rsquo;s HSTU, most models above come from Chinese companies. In the United States, Netflix&rsquo;s Foundation Model (<a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">Hsiao et al., 2025</a>) and Pinterest&rsquo;s PinFM (<a href="https://arxiv.org/abs/2507.12704">Chen et al., 2025</a>) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online <code>pAction</code> models.</p>
 <p>As with most Generative Recommenders, Netflix&rsquo;s Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">blogpost</a> doesn&rsquo;t say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the &ldquo;Dense All Action&rdquo; loss in Pinterest&rsquo;s PinnerFormer, <a href="https://arxiv.org/abs/2205.04507">Pancha et al., 2022</a>). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&amp;st=8dc7hmmx&amp;raw=1"
-    alt="Netflix compress." width="1800"><figcaption>
-      <p>Netflix compress.</p>
+    alt="Netflix compresses similar movies into a single token." width="1800"><figcaption>
+      <p>Netflix compresses similar movies into a single token.</p>
     </figcaption>
 </figure>
 
@@ -1129,8 +1129,8 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
 <li>Future-token loss: $\mathcal{L}_{ftl} = \sum_{j=n+1}^{n+L&rsquo;}l(\mathbf{H}_{L_{d}}, z_j)\mathbb{1}[a_j \in A_{\mathrm{pos}}]$ &mdash; during serving, a shorter sequence of length $L_d$ is sent to the model; this loss penalizes prediction errors within $L_d$.</li>
 </ul>
 <figure><img src="https://www.dropbox.com/scl/fi/1478ofq5zfpzsohx8kzrk/Screenshot-2025-08-03-at-4.04.35-PM.png?rlkey=tdjex9ls02vwdhh4ff9dklw8o&amp;st=2bb8lpa4&amp;raw=1"
-    alt="Pinterest." width="1800"><figcaption>
-      <p>Pinterest.</p>
+    alt="PinFM is pretrained on lifelong user sequences and fine-tuned in ranking models." width="1800"><figcaption>
+      <p>PinFM is pretrained on lifelong user sequences and fine-tuned in ranking models.</p>
     </figcaption>
 </figure>
 

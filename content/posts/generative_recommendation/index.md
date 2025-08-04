@@ -222,13 +222,13 @@ Rather than overhauling DLRM and existing cascade pipelines and team structures 
 
 As alluded to earlier, DLRM is haunted by a strange "one-epoch phenomenon", where model performance on the test set suddenly drops at the beginning of the second epoch ([Zhang et al., 2022](https://arxiv.org/abs/2209.06053)). As a result, you can't train a DLRM model for longer to improve it.
 
-{{< figure src="https://www.dropbox.com/scl/fi/yq7hf8i736jjjfbxtip0n/Screenshot-2025-08-03-at-11.46.02-AM.png?rlkey=6h1h4r7gvtonslost65kujw8e&st=g2dzfqco&raw=1" caption="One-epoch phenomenon." width="500">}}
+{{< figure src="https://www.dropbox.com/scl/fi/yq7hf8i736jjjfbxtip0n/Screenshot-2025-08-03-at-11.46.02-AM.png?rlkey=6h1h4r7gvtonslost65kujw8e&st=g2dzfqco&raw=1" caption="A possible explanation for the one-epoch phenomenon." width="500">}}
 
 A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for training samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}\_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easiest to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.
 
 To address this issue, Alibaba's GPSD ([Wang et al., 2025](https://arxiv.org/abs/2506.03699)) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model. Another Chinese e-commerce giant JD.com follows the same generative-to-discriminative transfer strategy in their GenCTR model ([Kong et al., 2025](https://arxiv.org/abs/2507.11246)).
 
-{{< figure src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&st=sfvui9ba&raw=1" caption="GPSD." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&st=sfvui9ba&raw=1" caption="To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model." width="1800">}}
 
 The authors compared 4 ways to integrate pretrained embeddings into discriminative CTR models (baseline: train everything from scratch):
 - *Full Transfer*: Transfer sparse + dense parameters from the generative model to the discriminative model; allow sparse + dense parameter updates during CTR model training.
@@ -236,7 +236,7 @@ The authors compared 4 ways to integrate pretrained embeddings into discriminati
 - *Full Transfer & Sparse Freeze*: Transfer sparse + dense parameters; freeze sparse parameters but allow dense parameters updates.
 - *Sparse Transfer & Sparse Freeze*: Transfer sparse parameters; freeze sparse parameters and train dense parameters from scratch.
 
-{{< figure src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&st=nv5pll27&raw=1" caption="Results." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&st=nv5pll27&raw=1" caption="GPSD breaks the one-epoch phenomenon and the scaling law curse, with model performance improving with training data and model size." width="1800">}}
 
 As one can see, the one-epoch curse is broken --- all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged --- the larger the model (L4H256A4 > L4H128A4 > L4H64A4 > L4H32A4), the better the overall performance. In the two smaller models (32 and 64), "Sparse Transfer & Sparse Freeze" worked the best whereas in the two larger models (128 and 256), "Full Transfer & Sparse Freeze" was the best.
 
@@ -246,11 +246,11 @@ Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM ([
 
 There are good, bad, and great recommender systems --- and then there's [Xiaohongshu](https://www.xiaohongshu.com/explore), the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT ([Huang et al., 2025](https://arxiv.org/abs/2505.04180)) is the {{< sidenote "mastermind" >}}RankGPT doesn't seem like a huge innovation from Meta's HSTU. Perhaps as a wise person once said, data is the king in recommendations.{{< /sidenote >}} behind Xiaohongshu's uncanny recommendations.
 
-{{< figure src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&st=upm449ip&raw=1" caption="RankGPT." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&st=upm449ip&raw=1" caption="RankGPT is similar to HSTU, but organizes training data around actions and treats items as positional information." width="1800">}}
 
 RankGPT's architecture is modified from HSTU. HSTU assigns 2 tokens to each engagement, a content token $\Phi\_i$ and an action token $a\_i$. The upside is that HSTU unifies retrieval and ranking --- retrieval is achieved by predicting the next content and ranking is achieved by predicting the next action. The downside is that the user sequence is now doubled in length, which then quadruples the required compute. 
 
-{{< figure src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&st=0a59pdz8&raw=1" caption="Action oriented." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&st=0a59pdz8&raw=1" caption="Turns out all 3 positional encodings are not as good as parameter-free ALiBi." width="1800">}}
 
 Since RankGPT isn't designed to handle retrieval, there's no need to interleave separate content and action tokens --- it only has to predict actions on candidates. So item and action embeddings can be added together to represent engagement $i$, $e\_i = \varphi_i + \phi\_i$, where $\varphi(\cdot)$ and $\phi(\cdot)$ denote item and action embedding modules, respectively. To prevent information leakage, candidate action tokens are masked. The authors call this the "action-oriented organization". 
 
@@ -261,21 +261,21 @@ As for injecting positional information, the authors originally explored adding 
 
 Interestingly, all those methods combined didn't beat ALiBi ([Press et al., 2021](https://arxiv.org/abs/2108.12409)), which simply replaces positional encodings with a parameter-free penalty that increases with query-key distances. Compared to HSTU, the action-oriented organization decreased AUC by 0.03%, while ALiBi improved AUC by 0.09%. Overall, RankGPT achieved a 94.8% speed-up with a net AUC gain of 0.06%.
 
-{{< figure src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&st=sc8aj0wd&raw=1" caption="Results." width="500">}}
+{{< figure src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&st=sc8aj0wd&raw=1" caption="RankGPT offers a huge speed-up compared to HSTU with moderate AUC gains." width="500">}}
 
 ### Foundation Models at Netflix and Pinterest
 Apart from Google's TIGER and Meta's HSTU, most models above come from Chinese companies. In the United States, Netflix's Foundation Model ([Hsiao et al., 2025](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39)) and Pinterest's PinFM ([Chen et al., 2025](https://arxiv.org/abs/2507.12704)) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online `pAction` models. 
 
 As with most Generative Recommenders, Netflix's Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the [blogpost](https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39) doesn't say which one) and compresses similar movies in a row into the same token. To drive life-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the "Dense All Action" loss in Pinterest's PinnerFormer, [Pancha et al., 2022](https://arxiv.org/abs/2205.04507)). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.
 
-{{< figure src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&st=8dc7hmmx&raw=1" caption="Netflix compress." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&st=8dc7hmmx&raw=1" caption="Netflix compresses similar movies into a single token." width="1800">}}
 
 Pinterest's PinFM ([Chen at al., 2025](https://arxiv.org/abs/2507.12704)) is similar to Netflix's model, which is an autoregressive Transformer trained on raw user sequences to predict multiple future tokens, with innovations here and there. During pretraining, the model uses 2 years of engagement history up to length 16,000 and only the low-dimension features (basically excluding pretrained item embeddings). The loss consists of 3 parts:
 - Next-token loss: $\mathcal{L}\_{ntl} = \sum\_{i+1}^{m-1}l(\mathbf{H}\_i, z\_{i+1})\mathbb{1}[a\_{i+1} \in A\_{\mathrm{pos}}]$, infoNCE loss for predicting the next positively engaged item.
 - Multi-token loss: $\mathcal{L}\_{mtl} = \sum\_{i+1}^{m-1}\sum\_{j=i+1}^{i+L'}l(\mathbf{H}\_i, z\_j)\mathbb{1}[a\_j \in A\_{\mathrm{pos}}]$, loss for predicting positively engaged item in window $L'$.
 - Future-token loss: $\mathcal{L}\_{ftl} = \sum\_{j=n+1}^{n+L'}l(\mathbf{H}\_{L\_{d}}, z\_j)\mathbb{1}[a\_j \in A\_{\mathrm{pos}}]$ --- during serving, a shorter sequence of length $L\_d$ is sent to the model; this loss penalizes prediction errors within $L\_d$.
 
-{{< figure src="https://www.dropbox.com/scl/fi/1478ofq5zfpzsohx8kzrk/Screenshot-2025-08-03-at-4.04.35-PM.png?rlkey=tdjex9ls02vwdhh4ff9dklw8o&st=2bb8lpa4&raw=1" caption="Pinterest." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/1478ofq5zfpzsohx8kzrk/Screenshot-2025-08-03-at-4.04.35-PM.png?rlkey=tdjex9ls02vwdhh4ff9dklw8o&st=2bb8lpa4&raw=1" caption="PinFM is pretrained on lifelong user sequences and fine-tuned in ranking models." width="1800">}}
 
 In downstream ranking models, the candidate item is appended to the user sequence as the input to PinFM to bring "candidate awareness". Rather than freezing model parameters (like some variants of Alibaba's GPSD), PinFM is fine-tuned along with `pAction` predictions.
 
