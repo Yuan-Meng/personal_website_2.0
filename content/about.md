@@ -11,7 +11,7 @@ math: true
 
 Hi, I'm Yuan, a machine learning engineer at Pinterest 📌, working on ads L2 ranking. Before this, I spent my first $2 \frac{5}{12}$ years out of grad school at DoorDash 🥡, working on all things search (L1/L2 ranking, query understanding, autocomplete — you name it 🤪). There, I learned to be an engineer and made great friends. In my former life as a computational cognitive scientist, I studied common sense causal and social reasoning, earning a Ph.D. from Berkeley in 2022.
 
-My passions in life: Machine learning (ranking, generative models), cognitively inspired AI, climbing, metal guitar, hot pot, and cats 🐱.
+My passions in life: Machine learning (ranking, generative models), cognitively inspired AI, tennis, climbing, metal guitar, hot pot, and 🐱.
 
 
 <div id="socials" style="display: flex; gap: 1em;">
