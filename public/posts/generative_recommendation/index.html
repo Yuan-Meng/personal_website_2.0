@@ -32,7 +32,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
 Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
 In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
   <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7319">
+  <meta itemprop="wordCount" content="7356">
   <meta itemprop="keywords" content="Generative recommendation,Large language models">
 
   <meta name="twitter:card" content="summary">
@@ -92,7 +92,7 @@ In 2025, the tide seems to have finally turned after Meta’s HSTU delivered per
   "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
   "timeRequired": "PT35M",
   "url": "http://localhost:1313/posts/generative_recommendation/",
-  "wordCount": 7319
+  "wordCount": 7356
 }
 </script>
 
@@ -635,7 +635,7 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </figcaption>
 </figure>
 
-<p>What makes generative vs. discriminative tasks different? In terms of task formulation, both <code>pAction</code> prediction and next-token prediction solve classification problems &mdash; the former is a binary classifier (i.e., predicting whether a user will act on an item or not given some context) and the latter is an extreme multi-class classifier (e.g., selecting the most likely or top-k like tokens; checkout AI Coffee Break&rsquo;s awesome <a href="https://www.youtube.com/watch?v=o-_SZ_itxeA">video</a> on decoding strategies). What makes <code>pAction</code> prediction discriminative is that it models the conditional probability $P(\mathrm{action} | \mathrm{user},,\mathrm{item},,\mathrm{context})$. By contrast, next-token prediction requires modeling the joint distribution $P(x_1,x_2,\ldots,x_n,x_{n+1})=P(x_{n+1})P(x_1,x_2,\ldots,x_{n}|x_{n+1})$. Learning the joint distribution is simultaneously a harder task but it also enjoys more supervision &mdash; all preceding tokens can supervise the current token generation, whereas for <code>pAction</code> predictions, each example only provides a single binary label. As such, generative models need more data to train and they also get what they wish for.</p>
+<p>What makes generative vs. discriminative tasks different? In terms of task formulation, both <code>pAction</code> prediction and next-token prediction solve classification problems &mdash; the former is a binary classifier (i.e., predicting whether a user will act on an item or not given some context) and the latter is an extreme multi-class classifier (e.g., selecting the most likely tokens; check out AI Coffee Break&rsquo;s awesome <a href="https://www.youtube.com/watch?v=o-_SZ_itxeA">video</a> on decoding strategies). What makes <code>pAction</code> prediction discriminative is that it models the conditional probability $P(\mathrm{action} | \mathrm{user},,\mathrm{item},,\mathrm{context})$. By contrast, next-token prediction requires modeling the joint distribution $P(x_1,x_2,\ldots,x_n,x_{n+1})=P(x_{n+1})P(x_1,x_2,\ldots,x_{n}|x_{n+1})$. Learning the joint distribution is simultaneously a harder task but it also enjoys more supervision &mdash; all preceding tokens can supervise the current token generation, whereas for <code>pAction</code> predictions, each example only provides a single binary label. As such, generative models need more data to train and they also get what they wish for.</p>
 <p>In his Zhihu <a href="https://zhuanlan.zhihu.com/p/1918350919508140128">blogpost</a>, the first author of Kuaishou&rsquo;s <a href="https://arxiv.org/abs/2506.13695">OneRec technical report</a> offers deeper thoughts on the discriminative vs. generative distinction &mdash; below are English translations of the original text:</p>
 <blockquote>
 <p>In my view, a large language model&rsquo;s ability to think and reason largely stems from the fact that increasing the decoding steps corresponds to increasing the depth of search. If we think of the decoding process as a kind of 100K-token tree search at each step, then generating more tokens means going deeper in the search tree. And each generated token becomes part of the future input, helping the model activate more relevant information from its parameters (via the causal transformer) to make judgments about the final answer.</p>
@@ -920,7 +920,26 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
     </a>
   
 </h4>
-<p>In the middle of writing this blogpost, I had dinner with a former colleague and described the idea from the TIGER paper to her. Her first reaction was, &ldquo;Eh, how do we personalize recommendations?&rdquo;</p>
+<p>In the middle of writing this blogpost, I had dinner with a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-22"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-22"
+    for="sidenote-checkbox-22"
+    class="sidenote-mark"
+    >former colleague</label
+  >
+  <small id="sidenote-22" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Then later in another dinner right before I published this post, she helped explain the one-epoch phenomenon to me and shared an interesting observation that her DLRM-style model without many sparse features could keep improving until 10 epochs.<span class="sr-only">)</span>
+  </small>
+</span>
+ and described the idea from the TIGER paper to her. Her first reaction was, &ldquo;Eh, how do we personalize recommendations?&rdquo;</p>
 <p>That was probably the catch with Generative Recommendation &mdash; in DLRM, user-item cross features (e.g., how often a user clicked through to an ad or purchased an item) often have the highest feature importances and are key to personalization, but it&rsquo;s not immediately apparent how this kind of information can be incorporated into a Generative Recommender (e.g., which Semantic IDs should be decoded probably doesn&rsquo;t depend on who I am). Meituan&rsquo;s MTGR (<a href="https://arxiv.org/abs/2505.18654">Han et al., 2025</a>)  brings cross features back into GR.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&amp;st=7sepacbq&amp;raw=1"
     alt="MTGR organizes data at the user-item level, allowing user-item interactions to be added as candidate item features." width="1800"><figcaption>
@@ -1040,18 +1059,18 @@ intelligence. Other AI/ML domains are eager to replicate this success, especiall
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-26"
+    id="sidenote-checkbox-27"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-26"
-    for="sidenote-checkbox-26"
+    aria-details="sidenote-27"
+    for="sidenote-checkbox-27"
     class="sidenote-mark"
     >mastermind</label
   >
-  <small id="sidenote-26" class="sidenote-content">
+  <small id="sidenote-27" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>RankGPT doesn't seem like a huge innovation from Meta's HSTU. Perhaps as a wise person once said, data is the king in recommendations.<span class="sr-only">)</span>
   </small>
 </span>
