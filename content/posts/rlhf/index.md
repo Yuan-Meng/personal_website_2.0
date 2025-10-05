@@ -8,6 +8,8 @@ toc: true
 
 Coming soon in October...
 
+<!--more-->
+
 # References
 
 ## Stable Literature 1.0

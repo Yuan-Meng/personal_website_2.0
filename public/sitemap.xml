@@ -4,6 +4,8 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/rlhf/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
@@ -13,8 +15,6 @@
     <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/reinforcement-learning-from-human-feedback/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/rlhf/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/generative-recommendation/</loc>
   </url><url>
