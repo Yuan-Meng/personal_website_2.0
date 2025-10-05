@@ -21,7 +21,7 @@ Coming soon in October...
 6. Extensive review on reasoning models 👉 [*A Survey of Reinforcement Learning for Large Reasoning Models*](https://arxiv.org/abs/2509.08827) (2025) by Zhang et al., *arXiv*.
 
 ## Evolving Literature
-### RLHF for Language Models
+### RL for Language Models
 7. The hottest AI startup Thinking Machines sells post-training as a service 👉 product: [Tinker](https://thinkingmachines.ai/); blog: [LoRA Without Regret](https://thinkingmachines.ai/blog/lora/)
 8. Cursor's blogpost on their wickedly effective RL models 👉 [*Improving Cursor Tab with online RL*](https://cursor.com/en-US/blog/tab-rl)
 9. Nathan Lambert's blogpost [*Interconnects*](https://www.interconnects.ai/) 👉 frequently writes about reasoning models, agents, post-training, etc.
@@ -31,7 +31,7 @@ Coming soon in October...
 13. Meta's new self-play training strategy for Llama 👉 [*Language Self-Play For Data-Free Training*](https://arxiv.org/abs/2509.07414) (2025) by Kuba et al., *arXiv*.
 
 
-### RLFH for RecSys
+### RL for RecSys
 14. OneRec-V2 improves {{< backlink "generative_recommendation" "Generative Recommendation">}} post-training 👉 [*OneRec-V2 Technical Report*](https://arxiv.org/abs/2508.20900) (2025) by Zhou et al., *arXiv*.
 15. Shopee's OnePiece integrates RL with traditional cascade RecSys 👉 [*OnePiece: Bringing Context Engineering and Reasoning to Industrial Cascade Ranking System*](https://arxiv.org/abs/2509.18091) (2025) by Dai et al., *arXiv*.
 16. Douyin improves user understanding with reasoning 👉 [*Conf-Profile: A Confidence-Driven Reasoning Paradigm for Label-Free User Profiling*](https://arxiv.org/abs/2509.18864) (2025) by Li et al., *arXiv*.
