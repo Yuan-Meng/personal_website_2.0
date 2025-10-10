@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-10-05T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-10-10T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Elicit Hidden Powers: RLHF is the Aerodynamics for the LLM F1 Race">
   <meta itemprop="description" content="Coming soon in October…">
-  <meta itemprop="datePublished" content="2025-10-05T00:00:00+00:00">
-  <meta itemprop="wordCount" content="358">
+  <meta itemprop="datePublished" content="2025-10-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="376">
   <meta itemprop="keywords" content="Reinforcement learning from human feedback,Large language models,Recommender systems">
 
   <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-10-05",
+  "datePublished": "2025-10-10",
   "description": "Coming soon in October…",
   "headline": "Elicit Hidden Powers: RLHF is the Aerodynamics for the LLM F1 Race",
   "isPartOf": {
@@ -85,7 +85,7 @@
   "name": "Elicit Hidden Powers: RLHF is the Aerodynamics for the LLM F1 Race",
   "timeRequired": "PT2M",
   "url": "http://localhost:1313/posts/rlhf/",
-  "wordCount": 358
+  "wordCount": 376
 }
 </script>
 
@@ -122,7 +122,7 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Elicit Hidden Powers: RLHF is the Aerodynamics for the LLM F1 Race</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-10-05T00:00:00&#43;00:00">October 5, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-10-10T00:00:00&#43;00:00">October 10, 2025</time>
         </div>
     </header>
 
@@ -147,7 +147,7 @@
         <li><a href="#evolving-literature">Evolving Literature</a>
           <ul>
             <li><a href="#rl-for-language-models">RL for Language Models</a></li>
-            <li><a href="#rl-for-recsys">RL for RecSys</a></li>
+            <li><a href="#rl-for-recommender-systems">RL for Recommender Systems</a></li>
           </ul>
         </li>
       </ul>
@@ -179,6 +179,12 @@
     
     <div class="content">
       <p>Coming soon in October&hellip;</p>
+<!-- Bullet points:
+- What does RL do after pre-training
+- How to do RL -->
+<!-- # Why RL and Why Now
+## RL: From Ivory Tower to Main Stream
+## What Does RL Elicit from a Foundation Model? -->
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -236,6 +242,7 @@
 <li>Norvig and Russell&rsquo;s <a href="https://aima.cs.berkeley.edu/">Artificial Intelligence: A Modern Approach</a> 👉 Berkeley CS 188 textbook &amp; the most popular one in the world &mdash; an overview of intelligent agents with a heavy emphasis on RL</li>
 <li>Meta&rsquo;s comprehensive lit review on RL algorithms for LLMs 👉 <a href="https://arxiv.org/abs/2509.04501"><em>Understanding Reinforcement Learning for Model Training, and future directions with GRAPE</em></a> (2025) by Patel, <em>arXiv</em>.</li>
 <li>Extensive review on reasoning models 👉 <a href="https://arxiv.org/abs/2509.08827"><em>A Survey of Reinforcement Learning for Large Reasoning Models</em></a> (2025) by Zhang et al., <em>arXiv</em>.</li>
+<li>CS336: Language Modeling from Scratch (<a href="https://stanford-cs336.github.io/spring2025/">website</a>, <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOY23Y0BoGoBGgQ1zmU_MT_">YouTube</a>) 👉 the last chapter talks about alignment and reasoning RL</li>
 </ol>
 <h3 id="evolving-literature" class="scroll-mt-8 group">
   Evolving Literature
@@ -287,7 +294,7 @@
     </a>
   
 </h4>
-<ol start="7">
+<ol start="8">
 <li>The hottest AI startup Thinking Machines sells post-training as a service 👉 product: <a href="https://thinkingmachines.ai/">Tinker</a>; blog: <a href="https://thinkingmachines.ai/blog/lora/">LoRA Without Regret</a></li>
 <li>Cursor&rsquo;s blogpost on their wickedly effective RL models 👉 <a href="https://cursor.com/en-US/blog/tab-rl"><em>Improving Cursor Tab with online RL</em></a></li>
 <li>Nathan Lambert&rsquo;s blogpost <a href="https://www.interconnects.ai/"><em>Interconnects</em></a> 👉 frequently writes about reasoning models, agents, post-training, etc.</li>
@@ -296,10 +303,10 @@
 <li>NVIDIA uses RL in pretraining 👉 <a href="https://arxiv.org/abs/2510.01265"><em>RLP: Reinforcement as a Pretraining Objective</em></a> (2025) by Hatamizadeh et al., <em>arXiv</em>.</li>
 <li>Meta&rsquo;s new self-play training strategy for Llama 👉 <a href="https://arxiv.org/abs/2509.07414"><em>Language Self-Play For Data-Free Training</em></a> (2025) by Kuba et al., <em>arXiv</em>.</li>
 </ol>
-<h4 id="rl-for-recsys" class="scroll-mt-8 group">
-  RL for RecSys
+<h4 id="rl-for-recommender-systems" class="scroll-mt-8 group">
+  RL for Recommender Systems
   
-    <a href="#rl-for-recsys"
+    <a href="#rl-for-recommender-systems"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -321,7 +328,7 @@
     </a>
   
 </h4>
-<ol start="14">
+<ol start="15">
 <li>OneRec-V2 improves <a href="/posts/generative_recommendation/" class="backlink">Generative Recommendation</a>
   
    post-training 👉 <a href="https://arxiv.org/abs/2508.20900"><em>OneRec-V2 Technical Report</em></a> (2025) by Zhou et al., <em>arXiv</em>.</li>
