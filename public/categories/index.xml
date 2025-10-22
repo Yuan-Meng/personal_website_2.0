@@ -12,24 +12,10 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Llm</title>
-      <link>http://localhost:1313/categories/llm/</link>
-      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/llm/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Rag</title>
-      <link>http://localhost:1313/categories/rag/</link>
-      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/rag/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Search</title>
-      <link>http://localhost:1313/categories/search/</link>
-      <pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/search/</guid>
+      <title>Career advice</title>
+      <link>http://localhost:1313/categories/career-advice/</link>
+      <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/career-advice/</guid>
       <description></description>
     </item>
     <item>
@@ -93,13 +79,6 @@
       <link>http://localhost:1313/categories/memory/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/memory/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Career advice</title>
-      <link>http://localhost:1313/categories/career-advice/</link>
-      <pubDate>Wed, 25 Dec 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/career-advice/</guid>
       <description></description>
     </item>
     <item>
@@ -205,6 +184,13 @@
       <link>http://localhost:1313/categories/learning-to-rank/</link>
       <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/learning-to-rank/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Search</title>
+      <link>http://localhost:1313/categories/search/</link>
+      <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/search/</guid>
       <description></description>
     </item>
     <item>

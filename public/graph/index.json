@@ -52,11 +52,11 @@
       "in": [],
       "out": []
     },
-    "/notes/python_env/": {
+    "/notes/project_complexity/": {
       "in": [],
       "out": []
     },
-    "/notes/rag/": {
+    "/notes/python_env/": {
       "in": [],
       "out": []
     },
@@ -246,15 +246,15 @@
       "section": "notes",
       "title": "The Power of A Wish"
     },
+    "/notes/project_complexity/": {
+      "permalink": "/notes/project_complexity/",
+      "section": "notes",
+      "title": "Criteria for Evaluating Project Complexity"
+    },
     "/notes/python_env/": {
       "permalink": "/notes/python_env/",
       "section": "notes",
       "title": "Set Up Python Environment for CogSci 131"
-    },
-    "/notes/rag/": {
-      "permalink": "/notes/rag/",
-      "section": "notes",
-      "title": "Retrieval Augmented Generation (RAG) Course Notes"
     },
     "/notes/resolutions-2022/": {
       "permalink": "/notes/resolutions-2022/",
