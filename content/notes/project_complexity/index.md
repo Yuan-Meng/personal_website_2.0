@@ -56,6 +56,7 @@ Behavioral interviews are conversational and story-based. Rather than listing bu
 
 <details>
 <summary><b>Chapter 5: Expansion</b></summary>
+
 - How would you do things differently next time?  
 - What's the next step for your project? How does it fit into the long-term vision of your org?
 - How did you get funding or buy-in for the next version?  
