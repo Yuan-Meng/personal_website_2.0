@@ -13,7 +13,7 @@ First of all, there are three types of complexity (see [post](https://www.1point
 2. **Ambiguity**: e.g., 0 ⇒ 1 projects > well-established projects
 3. **Technical complexity**: complex systems (many components involved, legacy dependencies, new systems, hidden bugs...), scaling challenges (high QPS ⇒ low latency), tooling challenges (too few vs. too many choices), maintenance challenges (strict SLAs, tech debts...), chasing SOTA (when incremental changes bring only marginal model improvements)...
 
-Behavioral interviews are conversational and story-based. Rather than listing bullet points, so you should plant the above signals your interviewer needs to hear in a captivating story with twists and turns:
+Behavioral interviews are conversational and story-based. Rather than listing bullet points, you should plant above signals your interviewer needs to hear in a captivating story with twists and turns:
 
 <details>
 <summary><b>Chapter 1: Design</b></summary>
