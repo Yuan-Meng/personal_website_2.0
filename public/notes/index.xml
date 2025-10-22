@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Criteria for Evaluating Project Complexity</title>
+      <link>http://localhost:1313/notes/project_complexity/</link>
+      <pubDate>Tue, 21 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/project_complexity/</guid>
+      <description>&lt;p&gt;Most people don&amp;rsquo;t build rackets at work. Even if they do, most likely they don&amp;rsquo;t build one from scratch. So how do we showcase project complexity in a promo packet or a behavioral interview?&lt;/p&gt;&#xA;&lt;p&gt;Lately, I came across 3 great posts (&lt;a href=&#34;https://www.1point3acres.com/bbs/thread-1150382-1-1.html&#34;&gt;1&lt;/a&gt;, &lt;a href=&#34;https://www.1point3acres.com/bbs/thread-1107824-1-1.html&#34;&gt;2&lt;/a&gt;, &lt;a href=&#34;https://www.1point3acres.com/bbs/thread-652478-1-1.html&#34;&gt;3&lt;/a&gt;) and would love to summarize the lessons.&lt;/p&gt;&#xA;&lt;p&gt;First of all, there are three types of complexity (see &lt;a href=&#34;https://www.1point3acres.com/bbs/thread-1107824-1-1.html&#34;&gt;post&lt;/a&gt;):&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;&lt;strong&gt;Collaboration complexity&lt;/strong&gt;: x-org/x-functional collaboration &amp;gt; projects within well-defined team scope &amp;amp; done alone&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Ambiguity&lt;/strong&gt;: e.g. 0 ⇒ 1 projects &amp;gt; well-established projects&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Technical complexity&lt;/strong&gt;: complex systems (many components involved, legacy dependencies, new systems, hidden bugs&amp;hellip;), scaling challenges (high QPS ⇒ low latency), tool challenges (too few vs. too many choices), maintenance challenges (strict SLAs, tech debts&amp;hellip;), chasing SOTA (when incremental changes bring only marginal model improvements)&amp;hellip;&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Behavioral interviews are conversational and story-based. Rather than listing bullet points, so you should plant the above signals your interviewer needs to hear in a captivating story with twists and turns:&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>No Pains, No Gains</title>
       <link>http://localhost:1313/notes/birthday_2025/</link>
       <pubDate>Tue, 06 May 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>

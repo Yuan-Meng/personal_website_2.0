@@ -4,13 +4,23 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/llm/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/rag/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/rag/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/search/</loc>
+  </url><url>
     <loc>http://localhost:1313/posts/rlhf/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
@@ -21,8 +31,6 @@
     <loc>http://localhost:1313/posts/generative_recommendation/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
@@ -99,8 +107,6 @@
     <loc>http://localhost:1313/posts/ltr/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/learning-to-rank/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/search/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/autocomplete/</loc>
   </url><url>
