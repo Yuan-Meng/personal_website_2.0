@@ -4,6 +4,8 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
+    <loc>http://localhost:1313/notes/rag/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/llm/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
@@ -11,8 +13,6 @@
     <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/rag/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/rag/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/search/</loc>
   </url><url>

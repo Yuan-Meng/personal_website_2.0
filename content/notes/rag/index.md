@@ -85,7 +85,7 @@ If we need to query from a relational or a graph database, we need to translate 
 
 ### Lexical Retrieval
 
-Traditional search engines "know" a document if many query also appears in the document. The two most famous algorithms for computing query-document lexical similarity is [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and [BM25](https://en.wikipedia.org/wiki/Okapi_BM25). 
+Traditional search engines "know" a document is relevant if many query tokens appear in it. The two most famous algorithms for computing query-document lexical similarity are [TF-IDF](https://en.wikipedia.org/wiki/Tf%E2%80%93idf) and [BM25](https://en.wikipedia.org/wiki/Okapi_BM25). 
 
 Below is a toy TF-IDF retriever implementation based on this formula:
 
@@ -253,65 +253,75 @@ Results from the retriever can be evaluated end to end (e.g., whether the final 
 - **Rank-unaware metrics**: Recall@k, Precision@k
 - **Rank-aware metrics**: nDCG@k (how much top k differs from "ideal ranking"), MRR (how early the first relevant result appears), MAP@k (how much relevant results are concentrated at the top)
 
-<!-- # Generation
+# Generation
+In traditional search, top k documents are returned to the user on a search result page. In RAG, however, they are plugged into a prompt to an LLM and it's the LLM that returns the user-facing response. 
+
+
 ## Prompt Template
-messages format
+A prompt typically consists of the following components:
 
-- system prompt
-  - high-level instructions on how an LLM should behave
-  - tone & personality 
-  - In-context learning may or may not be necessary
-- conversation history
-- retrieved information
-- user prompt
-
-Tricks
-- in-context learning isn't great for reasoning models
-- can use context pruning: drop old messages
+- **System prompt**: Instructions on how an LLM should behave
+  - **Role**: It controls the desired tone and personality of the LLM as well as what procedures it should follow
+    - For RAG, we can ask the LLM to (1) only use retrieved documents to answer, (2) judge whether a document is relevant, and (3) cite sources in responses
+  - **Be careful about the token usage!** System prompts are added to every prompt --- think twice before using in-context learning (i.e., providing one or few examples); in-context learning can even be detrimental to reasoning models
+- **Conversation history**: Multi-turn conversations require the LLM need to remember previous conversations (i.e., past user messages and assistant responses); we can trim older messages no longer needed, a practice called "context pruning"
+- **Retrieved information**: The content of retrieved documents (clean up or summarize, if need be) and their sources and metadata
+- **User prompt**: The user's query with the question they want to ask
 
 ## Pick an LLM
 
-performance
-- context window 
-- training cutoff
-- time to first token
-- tokens per second
-
-LLM arena
+Which LLM to use depends on your task. The LLM Arena [leaderboard](https://lmarena.ai/leaderboard) ranks models by performance in each domain (e.g., coding, writing, multimodal). When choosing an LLM, compare these key specs:
+- **Context window**: How much text the model can process at once. Bigger is better for long documents or multi-turn conversations.
+- **Training cutoff**: The most recent date of data the model was trained on. Newer is better for up-to-date knowledge.
+- **Time to first token** (TTFT): Delay before the model starts responding. Lower is better for responsiveness.
+- **Tokens per second** (TPS): How fast the model generates text. Higher is better for throughput.
 
 ## Decoding Strategies
-- greedy: pick 1 most likely
-- top-k: pick exactly k most likely
-- top-p: pick tokens whose cum prob > p
-- repetition penalties (penalize prob of tokens already decoded)
-- logit biases: add or subtract token probs
-- temperature 
+Whichever LLM you choose, you can usually adjust its decoding strategy to control how it generates responses ---
+- **Greedy decoding**: Always pick the most likely next token. Best for deterministic tasks (e.g., math, code), but gets repetitive or dull.
+- **Top-k sampling**: Sample from top k tokens. Good for creative writing or brainstorming where you want controlled randomness.
+- **Top-p (nucleus) sampling**: Sample from the smallest set of tokens whose cumulative probability exceeds p. Smoother and more adaptive than top-k; ideal for natural dialogue or storytelling.
+
+You can also tweak token logits to change their probabilities:
+- **Repetition penalty**: Reduces the probability of tokens already generated. Prevents loops and redundancy in long outputs.
+- **Logit bias**: Manually adjust the probability of specific tokens. Useful for steering style or enforcing constraints (e.g., suppressing profanity, forcing certain keywords).
+- **Temperature**: Lower = more deterministic, higher = more diverse. Use low temperature for precision, high for creativity.
 
 ## Generation Evaluation
-hallucination: factual claims are consistent; prompt model to cite sources
-- response relevancy
-- citation 
+At a high level, the responsibility of a RAG system is to incorporate relevant information found by the retriever and discard irrelevant information in order to generate **relevant**, **faithful** responses. 
 
-human eval
+In the early days, the RAG triad was a popular evaluation framework:
 
-llm-as-a-judge
+- **Answer relevance**: Whether the response is relevant to the query
+- **Context relevance**: Whether context is relevant to the query
+- **Groundedness**: Whether the response is supported by context
 
+{{< figure src="https://truera.com/wp-content/uploads/2024/03/TruEra-The-Rag-Triad-1.png" caption="The RAG triad for evaluating relevance (source: [TruEra](https://truera.com/ai-quality-education/generative-ai-rags/what-is-the-rag-triad/))." width="600">}}
 
-faithfullness
-sensitivity to irrelavnt info
-noise
+Nowadays, RAG evaluation has become more comprehensive. For instance, in addition to the triad, LlamaIndex also [outlined](https://developers.llamaindex.ai/python/framework/module_guides/evaluating/) several other metrics:
 
+- **Correctness**: Whether the generated answer matches that of the reference answer given the query (requires labels).
+- **Semantic similarity**: Whether the predicted answer is semantically similar to the reference answer (requires labels).
+- **Faithfulness**: Evaluates if the answer is faithful to the retrieved contexts (in other words, whether if there's hallucination).
+  - *Tip*: To reduce hallucination, prompt the LLM to cite sources. To detect hallucination automatically, compare multiple generations — factual claims remain stable, while hallucinations tend to vary.
+- **Guideline adherence**: Whether the predicted answer adheres to specific guidelines.
+
+Judging correctness and semantic similarity typically requires human evaluation, since a human needs to provide a reference answer to the query and compare it with the LLM-generate response.
+
+For other metrics, LLM-as-a-judge is a scalable alternative: We can use another LLM to evaluate the relevance (answer + context), groundedness, and faithfulness of LLM-generated responses. Be aware of biases: A model usually prefers other models in its family! 
 
 # Fine-Tuning
 
 ## Embeddings for Retrieval
 
-https://www.yuan-meng.com/posts/negative_sampling/
+<!-- Metric learning 
+
+https://www.yuan-meng.com/posts/negative_sampling/ -->
 
 ## LLMs for Generation
 
 # Put RAG in Production
-## Performance
+<!-- ## Performance
 latency, throughput, memory, compute usage 
 ## Quality
 Truthfulness Handling Unexpected Queries 
@@ -328,14 +338,18 @@ per component
 - latency
 end to end 
 
-LLM human rule
-## Experimentation
+LLM human rule -->
 
-# Advanced RAGs
+<!-- ## Experimentation -->
+
+# Learn More
 ## Agentic Search
-create a workflow => use a different LLM for each task
+<!-- create a workflow => use a different LLM for each task
 workflow types
 - sequential 
 - conditional e.g., router
 - iterative: writer-eval
-- parallel: orchestrator-synthesizer -->
+- parallel: orchestrator-synthesizer
+ -->
+## LLamaIndex
+## RAG Book

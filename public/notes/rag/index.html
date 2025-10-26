@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Fundamentals of Retrieval Augmented Generation (RAG)">
   <meta itemprop="description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
   <meta itemprop="datePublished" content="2025-10-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2626">
+  <meta itemprop="wordCount" content="3354">
   <meta itemprop="keywords" content="Llm,Search,Rag">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/notes/rag/",
   "name": "Fundamentals of Retrieval Augmented Generation (RAG)",
-  "timeRequired": "PT13M",
+  "timeRequired": "PT16M",
   "url": "http://localhost:1313/notes/rag/",
-  "wordCount": 2626
+  "wordCount": 3354
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 13 minutes
+      Reading time: 16 minutes
     
 
     
@@ -170,6 +170,28 @@
         <li><a href="#result-fusion">Result Fusion</a></li>
         <li><a href="#reranking">Reranking</a></li>
         <li><a href="#retriever-evaluation">Retriever Evaluation</a></li>
+      </ul>
+    </li>
+    <li><a href="#generation">Generation</a>
+      <ul>
+        <li><a href="#prompt-template">Prompt Template</a></li>
+        <li><a href="#pick-an-llm">Pick an LLM</a></li>
+        <li><a href="#decoding-strategies">Decoding Strategies</a></li>
+        <li><a href="#generation-evaluation">Generation Evaluation</a></li>
+      </ul>
+    </li>
+    <li><a href="#fine-tuning">Fine-Tuning</a>
+      <ul>
+        <li><a href="#embeddings-for-retrieval">Embeddings for Retrieval</a></li>
+        <li><a href="#llms-for-generation">LLMs for Generation</a></li>
+      </ul>
+    </li>
+    <li><a href="#put-rag-in-production">Put RAG in Production</a></li>
+    <li><a href="#learn-more">Learn More</a>
+      <ul>
+        <li><a href="#agentic-search">Agentic Search</a></li>
+        <li><a href="#llamaindex">LLamaIndex</a></li>
+        <li><a href="#rag-book">RAG Book</a></li>
       </ul>
     </li>
   </ul>
@@ -542,7 +564,7 @@
     </a>
   
 </h4>
-<p>Traditional search engines &ldquo;know&rdquo; a document if many query also appears in the document. The two most famous algorithms for computing query-document lexical similarity is <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a>.</p>
+<p>Traditional search engines &ldquo;know&rdquo; a document is relevant if many query tokens appear in it. The two most famous algorithms for computing query-document lexical similarity are <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a>.</p>
 <p>Below is a toy TF-IDF retriever implementation based on this formula:</p>
 <p>$${\displaystyle (1+\log f_{t,d})\cdot \log {\frac {N}{n_{t}}}}.$$</p>
 <figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
@@ -888,65 +910,297 @@
 <li><strong>Rank-unaware metrics</strong>: Recall@k, Precision@k</li>
 <li><strong>Rank-aware metrics</strong>: nDCG@k (how much top k differs from &ldquo;ideal ranking&rdquo;), MRR (how early the first relevant result appears), MAP@k (how much relevant results are concentrated at the top)</li>
 </ul>
-<!-- # Generation
-## Prompt Template
-messages format
+<h2 id="generation" class="scroll-mt-8 group">
+  Generation
+  
+    <a href="#generation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-- system prompt
-  - high-level instructions on how an LLM should behave
-  - tone & personality 
-  - In-context learning may or may not be necessary
-- conversation history
-- retrieved information
-- user prompt
+    </a>
+  
+</h2>
+<p>In traditional search, top k documents are returned to the user on a search result page. In RAG, however, they are plugged into a prompt to an LLM and it&rsquo;s the LLM that returns the user-facing response.</p>
+<h3 id="prompt-template" class="scroll-mt-8 group">
+  Prompt Template
+  
+    <a href="#prompt-template"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-Tricks
-- in-context learning isn't great for reasoning models
-- can use context pruning: drop old messages
+    </a>
+  
+</h3>
+<p>A prompt typically consists of the following components:</p>
+<ul>
+<li><strong>System prompt</strong>: Instructions on how an LLM should behave
+<ul>
+<li><strong>Role</strong>: It controls the desired tone and personality of the LLM as well as what procedures it should follow
+<ul>
+<li>For RAG, we can ask the LLM to (1) only use retrieved documents to answer, (2) judge whether a document is relevant, and (3) cite sources in responses</li>
+</ul>
+</li>
+<li><strong>Be careful about the token usage!</strong> System prompts are added to every prompt &mdash; think twice before using in-context learning (i.e., providing one or few examples); in-context learning can even be detrimental to reasoning models</li>
+</ul>
+</li>
+<li><strong>Conversation history</strong>: Multi-turn conversations require the LLM need to remember previous conversations (i.e., past user messages and assistant responses); we can trim older messages no longer needed, a practice called &ldquo;context pruning&rdquo;</li>
+<li><strong>Retrieved information</strong>: The content of retrieved documents (clean up or summarize, if need be) and their sources and metadata</li>
+<li><strong>User prompt</strong>: The user&rsquo;s query with the question they want to ask</li>
+</ul>
+<h3 id="pick-an-llm" class="scroll-mt-8 group">
+  Pick an LLM
+  
+    <a href="#pick-an-llm"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-## Pick an LLM
+    </a>
+  
+</h3>
+<p>Which LLM to use depends on your task. The LLM Arena <a href="https://lmarena.ai/leaderboard">leaderboard</a> ranks models by performance in each domain (e.g., coding, writing, multimodal). When choosing an LLM, compare these key specs:</p>
+<ul>
+<li><strong>Context window</strong>: How much text the model can process at once. Bigger is better for long documents or multi-turn conversations.</li>
+<li><strong>Training cutoff</strong>: The most recent date of data the model was trained on. Newer is better for up-to-date knowledge.</li>
+<li><strong>Time to first token</strong> (TTFT): Delay before the model starts responding. Lower is better for responsiveness.</li>
+<li><strong>Tokens per second</strong> (TPS): How fast the model generates text. Higher is better for throughput.</li>
+</ul>
+<h3 id="decoding-strategies" class="scroll-mt-8 group">
+  Decoding Strategies
+  
+    <a href="#decoding-strategies"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-performance
-- context window 
-- training cutoff
-- time to first token
-- tokens per second
+    </a>
+  
+</h3>
+<p>Whichever LLM you choose, you can usually adjust its decoding strategy to control how it generates responses &mdash;</p>
+<ul>
+<li><strong>Greedy decoding</strong>: Always pick the most likely next token. Best for deterministic tasks (e.g., math, code), but gets repetitive or dull.</li>
+<li><strong>Top-k sampling</strong>: Sample from top k tokens. Good for creative writing or brainstorming where you want controlled randomness.</li>
+<li><strong>Top-p (nucleus) sampling</strong>: Sample from the smallest set of tokens whose cumulative probability exceeds p. Smoother and more adaptive than top-k; ideal for natural dialogue or storytelling.</li>
+</ul>
+<p>You can also tweak token logits to change their probabilities:</p>
+<ul>
+<li><strong>Repetition penalty</strong>: Reduces the probability of tokens already generated. Prevents loops and redundancy in long outputs.</li>
+<li><strong>Logit bias</strong>: Manually adjust the probability of specific tokens. Useful for steering style or enforcing constraints (e.g., suppressing profanity, forcing certain keywords).</li>
+<li><strong>Temperature</strong>: Lower = more deterministic, higher = more diverse. Use low temperature for precision, high for creativity.</li>
+</ul>
+<h3 id="generation-evaluation" class="scroll-mt-8 group">
+  Generation Evaluation
+  
+    <a href="#generation-evaluation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-LLM arena
+    </a>
+  
+</h3>
+<p>At a high level, the responsibility of a RAG system is to incorporate relevant information found by the retriever and discard irrelevant information in order to generate <strong>relevant</strong>, <strong>faithful</strong> responses.</p>
+<p>In the early days, the RAG triad was a popular evaluation framework:</p>
+<ul>
+<li><strong>Answer relevance</strong>: Whether the response is relevant to the query</li>
+<li><strong>Context relevance</strong>: Whether context is relevant to the query</li>
+<li><strong>Groundedness</strong>: Whether the response is supported by context</li>
+</ul>
+<figure><img src="https://truera.com/wp-content/uploads/2024/03/TruEra-The-Rag-Triad-1.png"
+    alt="The RAG triad for evaluating relevance (source: TruEra)." width="600"><figcaption>
+      <p>The RAG triad for evaluating relevance (source: <a href="https://truera.com/ai-quality-education/generative-ai-rags/what-is-the-rag-triad/">TruEra</a>).</p>
+    </figcaption>
+</figure>
 
-## Decoding Strategies
-- greedy: pick 1 most likely
-- top-k: pick exactly k most likely
-- top-p: pick tokens whose cum prob > p
-- repetition penalties (penalize prob of tokens already decoded)
-- logit biases: add or subtract token probs
-- temperature 
+<p>Nowadays, RAG evaluation has become more comprehensive. For instance, in addition to the triad, LlamaIndex also <a href="https://developers.llamaindex.ai/python/framework/module_guides/evaluating/">outlined</a> several other metrics:</p>
+<ul>
+<li><strong>Correctness</strong>: Whether the generated answer matches that of the reference answer given the query (requires labels).</li>
+<li><strong>Semantic similarity</strong>: Whether the predicted answer is semantically similar to the reference answer (requires labels).</li>
+<li><strong>Faithfulness</strong>: Evaluates if the answer is faithful to the retrieved contexts (in other words, whether if there&rsquo;s hallucination).
+<ul>
+<li><em>Tip</em>: To reduce hallucination, prompt the LLM to cite sources. To detect hallucination automatically, compare multiple generations — factual claims remain stable, while hallucinations tend to vary.</li>
+</ul>
+</li>
+<li><strong>Guideline adherence</strong>: Whether the predicted answer adheres to specific guidelines.</li>
+</ul>
+<p>Judging correctness and semantic similarity typically requires human evaluation, since a human needs to provide a reference answer to the query and compare it with the LLM-generate response.</p>
+<p>For other metrics, LLM-as-a-judge is a scalable alternative: We can use another LLM to evaluate the relevance (answer + context), groundedness, and faithfulness of LLM-generated responses. Be aware of biases: A model usually prefers other models in its family!</p>
+<h2 id="fine-tuning" class="scroll-mt-8 group">
+  Fine-Tuning
+  
+    <a href="#fine-tuning"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-## Generation Evaluation
-hallucination: factual claims are consistent; prompt model to cite sources
-- response relevancy
-- citation 
+    </a>
+  
+</h2>
+<h3 id="embeddings-for-retrieval" class="scroll-mt-8 group">
+  Embeddings for Retrieval
+  
+    <a href="#embeddings-for-retrieval"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-human eval
+    </a>
+  
+</h3>
+<!-- Metric learning 
 
-llm-as-a-judge
+https://www.yuan-meng.com/posts/negative_sampling/ -->
+<h3 id="llms-for-generation" class="scroll-mt-8 group">
+  LLMs for Generation
+  
+    <a href="#llms-for-generation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
+    </a>
+  
+</h3>
+<h2 id="put-rag-in-production" class="scroll-mt-8 group">
+  Put RAG in Production
+  
+    <a href="#put-rag-in-production"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-faithfullness
-sensitivity to irrelavnt info
-noise
-
-
-# Fine-Tuning
-
-## Embeddings for Retrieval
-
-https://www.yuan-meng.com/posts/negative_sampling/
-
-## LLMs for Generation
-
-# Put RAG in Production
-## Performance
+    </a>
+  
+</h2>
+<!-- ## Performance
 latency, throughput, memory, compute usage 
 ## Quality
 Truthfulness Handling Unexpected Queries 
@@ -963,17 +1217,116 @@ per component
 - latency
 end to end 
 
-LLM human rule
-## Experimentation
+LLM human rule -->
+<!-- ## Experimentation -->
+<h2 id="learn-more" class="scroll-mt-8 group">
+  Learn More
+  
+    <a href="#learn-more"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-# Advanced RAGs
-## Agentic Search
-create a workflow => use a different LLM for each task
+    </a>
+  
+</h2>
+<h3 id="agentic-search" class="scroll-mt-8 group">
+  Agentic Search
+  
+    <a href="#agentic-search"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<!-- create a workflow => use a different LLM for each task
 workflow types
 - sequential 
 - conditional e.g., router
 - iterative: writer-eval
-- parallel: orchestrator-synthesizer -->
+- parallel: orchestrator-synthesizer
+ -->
+<h3 id="llamaindex" class="scroll-mt-8 group">
+  LLamaIndex
+  
+    <a href="#llamaindex"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="rag-book" class="scroll-mt-8 group">
+  RAG Book
+  
+    <a href="#rag-book"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+
     </div>
   </article>
 
