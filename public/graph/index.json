@@ -60,6 +60,13 @@
       "in": [],
       "out": []
     },
+    "/notes/rag/": {
+      "in": [],
+      "out": [
+        "/posts/ltr/",
+        "/posts/ebr/"
+      ]
+    },
     "/notes/resolutions-2022/": {
       "in": [],
       "out": []
@@ -89,7 +96,8 @@
     "/posts/ebr/": {
       "in": [
         "/posts/generative_recommendation/",
-        "/posts/seq_user_modeling/"
+        "/posts/seq_user_modeling/",
+        "/notes/rag/"
       ],
       "out": []
     },
@@ -121,7 +129,8 @@
     },
     "/posts/ltr/": {
       "in": [
-        "/posts/seq_user_modeling/"
+        "/posts/seq_user_modeling/",
+        "/notes/rag/"
       ],
       "out": []
     },
@@ -255,6 +264,11 @@
       "permalink": "/notes/python_env/",
       "section": "notes",
       "title": "Set Up Python Environment for CogSci 131"
+    },
+    "/notes/rag/": {
+      "permalink": "/notes/rag/",
+      "section": "notes",
+      "title": "Retrieval Augmented Generation (RAG) Fundamentals"
     },
     "/notes/resolutions-2022/": {
       "permalink": "/notes/resolutions-2022/",

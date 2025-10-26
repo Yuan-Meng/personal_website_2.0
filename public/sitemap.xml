@@ -2,15 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/career-advice/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/project_complexity/</loc>
+    <loc>http://localhost:1313/categories/llm/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/rag/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/rag/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/search/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/career-advice/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/project_complexity/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/rlhf/</loc>
   </url><url>
@@ -101,8 +109,6 @@
     <loc>http://localhost:1313/posts/ltr/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/learning-to-rank/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/search/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/autocomplete/</loc>
   </url><url>

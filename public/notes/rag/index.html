@@ -10,32 +10,28 @@
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
-    Retrieval Augmented Generation (RAG) Course Notes | Yuan Meng
+    Fundamentals of Retrieval Augmented Generation (RAG) | Yuan Meng
 </title>
-  <meta name="description" content="Course notes for Retrieval Augmented Generation (RAG).
-Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn’t have access to in training." />
+  <meta name="description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications." />
 <meta property="og:url" content="http://localhost:1313/notes/rag/">
   <meta property="og:site_name" content="Yuan Meng">
-  <meta property="og:title" content="Retrieval Augmented Generation (RAG) Course Notes">
-  <meta property="og:description" content="Course notes for Retrieval Augmented Generation (RAG).
-Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn’t have access to in training.">
+  <meta property="og:title" content="Fundamentals of Retrieval Augmented Generation (RAG)">
+  <meta property="og:description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="notes">
-    <meta property="article:published_time" content="2025-10-20T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-10-25T00:00:00+00:00">
 
 
-  <meta itemprop="name" content="Retrieval Augmented Generation (RAG) Course Notes">
-  <meta itemprop="description" content="Course notes for Retrieval Augmented Generation (RAG).
-Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn’t have access to in training.">
-  <meta itemprop="datePublished" content="2025-10-20T00:00:00+00:00">
-  <meta itemprop="wordCount" content="187">
+  <meta itemprop="name" content="Fundamentals of Retrieval Augmented Generation (RAG)">
+  <meta itemprop="description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
+  <meta itemprop="datePublished" content="2025-10-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2626">
   <meta itemprop="keywords" content="Llm,Search,Rag">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Retrieval Augmented Generation (RAG) Course Notes">
-  <meta name="twitter:description" content="Course notes for Retrieval Augmented Generation (RAG).
-Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn’t have access to in training.">
+  <meta name="twitter:title" content="Fundamentals of Retrieval Augmented Generation (RAG)">
+  <meta name="twitter:description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
 
 <link rel="canonical" href="http://localhost:1313/notes/rag/" />
 
@@ -45,7 +41,21 @@ Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new,
       <script src="/js/main.js" defer></script>
   
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
 
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
@@ -63,19 +73,19 @@ Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new,
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-10-20",
-  "description": "Course notes for Retrieval Augmented Generation (RAG).\nModule 1 RAG Overview Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn’t have access to in training.",
-  "headline": "Retrieval Augmented Generation (RAG) Course Notes",
+  "datePublished": "2025-10-25",
+  "description": "If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.",
+  "headline": "Fundamentals of Retrieval Augmented Generation (RAG)",
   "isPartOf": {
     "@id": "http://localhost:1313/notes/",
     "@type": "Blog",
     "name": "Notes"
   },
   "mainEntityOfPage": "http://localhost:1313/notes/rag/",
-  "name": "Retrieval Augmented Generation (RAG) Course Notes",
-  "timeRequired": "PT1M",
+  "name": "Fundamentals of Retrieval Augmented Generation (RAG)",
+  "timeRequired": "PT13M",
   "url": "http://localhost:1313/notes/rag/",
-  "wordCount": 187
+  "wordCount": 2626
 }
 </script>
 
@@ -111,26 +121,89 @@ Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new,
       <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
         <article class="main">
     <header>
-      <h1 class="!mb-1">Retrieval Augmented Generation (RAG) Course Notes</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-10-20T00:00:00&#43;00:00">October 20, 2025</time>
+      <h1 class="!mb-1">Fundamentals of Retrieval Augmented Generation (RAG)</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2025-10-25T00:00:00&#43;00:00">October 25, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 1 minute
+      Reading time: 13 minutes
     
 
     
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#the-structure-of-a-rag">The Structure of a RAG</a></li>
+    <li><a href="#before-a-search-is-issued">Before a Search Is Issued</a>
+      <ul>
+        <li><a href="#indexing">Indexing</a>
+          <ul>
+            <li><a href="#chunk-raw-documents">Chunk Raw Documents</a></li>
+            <li><a href="#store-embeddings-in-vector-databases">Store Embeddings in Vector Databases</a></li>
+          </ul>
+        </li>
+        <li><a href="#query-analysis">Query Analysis</a>
+          <ul>
+            <li><a href="#query-rewriting">Query Rewriting</a></li>
+            <li><a href="#query-construction">Query Construction</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#retriever">Retriever</a>
+      <ul>
+        <li><a href="#hybrid-search">Hybrid Search</a>
+          <ul>
+            <li><a href="#lexical-retrieval">Lexical Retrieval</a></li>
+            <li><a href="#embedding-based-retrieval">Embedding-Based Retrieval</a></li>
+            <li><a href="#metadata-filtering">Metadata Filtering</a></li>
+          </ul>
+        </li>
+        <li><a href="#result-fusion">Result Fusion</a></li>
+        <li><a href="#reranking">Reranking</a></li>
+        <li><a href="#retriever-evaluation">Retriever Evaluation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
     
 
     
     <div class="content">
-      <p>Course notes for <a href="https://www.coursera.org/learn/retrieval-augmented-generation-rag/">Retrieval Augmented Generation (RAG)</a>.</p>
-<h2 id="module-1-rag-overview" class="scroll-mt-8 group">
-  Module 1 RAG Overview
+      <p>If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as &ldquo;core modeling work.&rdquo; Quite likely they never could. The remaining 10 may or may not land jobs on <span style="background-color: #D9CEFF">applied research engineering</span> teams at <code>{OpenAI, Anthropic, xAI, GDM}</code>, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. <a href="https://python.langchain.com/docs/concepts/rag/">Retrieval-Augmented Generation</a> (RAG) and, later, <a href="https://lilianweng.github.io/posts/2023-06-23-agent/">AI agents</a> are top technologies behind popular AI applications.</p>
+<p>In this post, I&rsquo;ll summarize RAG fundamentals from LangChain&rsquo;s RAG from Scratch (<a href="https://www.youtube.com/playlist?list=PLfaIDFEXuae2LXbO1_PKyVJiQ23ZztA0x">YouTube</a>, tutorials <a href="https://python.langchain.com/docs/tutorials/rag/">1</a> &amp; <a href="https://python.langchain.com/docs/tutorials/qa_chat_history/">2</a>, <a href="https://github.com/langchain-ai/rag-from-scratch">repo</a>), DeepLearning.AI&rsquo;s <a href="https://www.coursera.org/learn/retrieval-augmented-generation-rag">RAG course</a>, and some classic or recent RAG + Agentic Search papers.</p>
+<h2 id="the-structure-of-a-rag" class="scroll-mt-8 group">
+  The Structure of a RAG
   
-    <a href="#module-1-rag-overview"
+    <a href="#the-structure-of-a-rag"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -152,17 +225,22 @@ Module 1 RAG Overview Why RAG: Provide information an LLM needs, especially new,
     </a>
   
 </h2>
-<p>Why RAG: Provide information an LLM needs, especially new, proprietary, or personal information it didn&rsquo;t have access to in training.</p>
-<p>Benefits of RAG: So the response is accurate, up to date, and context-aware. No retraining needed. Avoids hallucination. Enables citations.</p>
-<p>Retriever finds facts. LLM writes responses</p>
-<p>retrieve function: text query -&gt; doc retrieved from knowledge base
-generate: prompt + retrieved doc -&gt; generation</p>
-<p>after retriever retrieves docs, it ranks doc in relation to prompt</p>
-<p>trade off: recall vs. cost</p>
-<h2 id="module-2-information-retrieval-and-search-foundations" class="scroll-mt-8 group">
-  Module 2: Information Retrieval and Search Foundations
+<p><em>Why RAG?</em> Out of the box, an LLM isn&rsquo;t well-suited to generate information it didn&rsquo;t have access to during training&mdash;such as recent events, a company&rsquo;s proprietary knowledge base, personal data, and so on. RAG retrieves missing information the LLM needs in order to generate accurate, up-to-date, and context-aware responses.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/eruy5k5nbt3qsi41647pb/Screenshot-2025-10-24-at-6.25.52-PM.png?rlkey=ur5ljzfju8lmd4ds4jdec0wnm&amp;st=0dg93uma&amp;raw=1"
+    alt="A basic RAG system (source: DeepLearning.AI RAG course)." width="1800"><figcaption>
+      <p>A basic RAG system (source: <a href="https://learn.deeplearning.ai/courses/retrieval-augmented-generation/information">DeepLearning.AI RAG</a> course).</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Retriever</strong>: The query is first routed to the retriever, which retrieves relevant documents from the knowledge base and ranks them relative to the prompt to select the top-k.</li>
+<li><strong>Generation</strong>: The retrieved documents are used to augment the prompt, which is then sent to an LLM to generate a response.</li>
+</ul>
+<p>The system could be more complex&mdash;for instance, we can use a routing LLM to decide whether to skip the retriever and generate a direct LLM response. The first paper from the much hyped Meta Superintelligence Lab is a RAG paper called <em>REFRAG: Rethinking RAG based Decoding</em> (<a href="https://arxiv.org/abs/2509.01092">Lin et al., 2025</a>), which aims to make RAG cheaper and faster. This shows how central RAG is to LLM applications.</p>
+<h2 id="before-a-search-is-issued" class="scroll-mt-8 group">
+  Before a Search Is Issued
   
-    <a href="#module-2-information-retrieval-and-search-foundations"
+    <a href="#before-a-search-is-issued"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -184,10 +262,13 @@ generate: prompt + retrieved doc -&gt; generation</p>
     </a>
   
 </h2>
-<h3 id="retrieval" class="scroll-mt-8 group">
-  retrieval
+<p>In an <a href="/posts/ltr/" class="backlink">old post</a>
   
-    <a href="#retrieval"
+  , I wrote about how traditional search engines work. Before we could issue any search, we need to index all documents so later they could be easily found. When a query comes in, we might need to transform it somehow (e.g., autocompletion, spell checking, intent classification, rewriting) to optimize search results. It turns out that in LLM-based search systems such as RAG, indexing and query analysis are still instrumental to search engine performance.</p>
+<h3 id="indexing" class="scroll-mt-8 group">
+  Indexing
+  
+    <a href="#indexing"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -209,26 +290,550 @@ generate: prompt + retrieved doc -&gt; generation</p>
     </a>
   
 </h3>
-<p>retrieval: combine metadata filtering  + keyword-based search + semantic search (hybrid search)</p>
+<p>From what kind of databases are we retrieving information? In case of natural language documents, we usually store them in two formats:</p>
 <ul>
-<li>metadata: e.g., title, author, date, access privileges, region&hellip; (like sql)</li>
+<li><strong><a href="https://www.geeksforgeeks.org/dbms/inverted-index/">Inverted index</a></strong> (for keyword-based search): Analyze documents into tokens (e.g., ElasticSearch <a href="https://www.elastic.co/docs/manage-data/data-store/text-analysis/anatomy-of-an-analyzer">analyzer</a>) 👉 for each token, store a list of documents in which it appears (like the end of textbooks)</li>
+<li><strong>Vector database</strong> (for embedding-based retrieval): Chunk documents into meaningful pieces 👉 for each chunk, use an LLM to create a dense embedding and we store its embedding</li>
 </ul>
-<p>tf-idf: weight terms by frequency and divide by idf
-bm25 deals with:</p>
+<p>For structured data, we can store them in relational (e.g., Snowflake, MySQL) or graph (e.g., Neo4j) databases and use GQL or SQL to query.</p>
+<p>For traditional search engine indexing, I highly recommend the <a href="https://www.oreilly.com/library/view/relevant-search/9781617292774/">Relevant Search</a> book. Amazing how nothing beats its comprehensiveness, when it still uses Python 2.7. Below we&rsquo;ll focus on more &ldquo;fashionable&rdquo; techniques designed for vector databases.</p>
+<h4 id="chunk-raw-documents" class="scroll-mt-8 group">
+  Chunk Raw Documents
+  
+    <a href="#chunk-raw-documents"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>If a document is a book, for instance, it&rsquo;s too coarse to represent the entire book as a single embedding.</p>
 <ul>
-<li>term frequency saturation -&gt; 20 &ldquo;pizza&rdquo; isn&rsquo;t 2x as important as 10x</li>
-<li>document length normalization</li>
+<li><strong>Lack granularity</strong>: It may be hard to retrieve specific topics, chapters, or pages from the book.</li>
+<li><strong>Context window explosion</strong>: Even if we successful deem the whole book as relevant and successfully retrieve it, it will blow up the LLM context window when we plug it into the prompt.</li>
 </ul>
-<p>read <a href="https://www.yuan-meng.com/posts/ltr/">https://www.yuan-meng.com/posts/ltr/</a>
-<a href="https://www.yuan-meng.com/posts/ebr/">https://www.yuan-meng.com/posts/ebr/</a>
-<a href="https://www.yuan-meng.com/posts/negative_sampling/">https://www.yuan-meng.com/posts/negative_sampling/</a></p>
-<p>combined: reciprocal rank fusion (RRF)</p>
+<p>We can chunk documents into smaller pieces. But how? How about we split the book into words? Good luck knowing what <code>dog</code> or <code>the</code> means without the context. Chunking is critical for a RAG system&rsquo;s performance. Below are common techniques:</p>
 <ul>
-<li>reward docs for being highly ranked on each list</li>
-<li>control weight of keyword vs. semantic search</li>
+<li><strong>Fixed-size chunking</strong>: We can split the document into chunks containing the same number of tokens (e.g., 250). It&rsquo;s best to have token overlaps between adjacent chunks so the context flows.</li>
+<li><strong>Recursive character splitting</strong>: We can split the document on one (&quot;.&quot;) or several special characters (e.g., all sorts of end-of-sentence symbols). Each chunk may end more naturally.</li>
+<li><strong>Semantic chunking</strong>: We can start a chunk with a sentence &mdash; if the next sentence has high cosine similarity with the current sentence, include it in the chunk; otherwise, start a new chunk.</li>
+<li><strong>LLM-based chunking</strong>: We can prompt an LLM to create chunks from a document. Nowaways, this method is becoming increasingly more cost-effective and widely used.</li>
+<li><strong>Context-aware chunking</strong>: This is orthogonal to above methods &mdash; regardless of how we created a chunk, we can use an LLM to add context to it &mdash; e.g., whether a chunk from a dissertation pertains to a title, an acknowledgement, a method, or something else.</li>
+</ul>
+<h4 id="store-embeddings-in-vector-databases" class="scroll-mt-8 group">
+  Store Embeddings in Vector Databases
+  
+    <a href="#store-embeddings-in-vector-databases"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We can use an embedding model (pretrained or in-house models trained using contrastive objectives) to generate embeddings for chunks we created and store them in a vector database. If storage cost is a concern, we can apply quantization to condense raw embeddings at the element level (e.g., map each float element into an int8 or even an int4 representation) or the vector level (e.g., map each dense vector into a binary vector via vector or product quantization).</p>
+<p>In some cases, quantization can speed up top-k retrieval&mdash;e.g., if queries and documents are binary vectors, we can use Hamming distance instead of inner product to select the top k, reducing the complexity of each comparison from $O(d)$ to $O(1)$, where $d$ is the vector dimension. (I first read about this trick in an <a href="https://arxiv.org/pdf/2108.04468">Alibaba paper</a>, but I remember it was based on a LinkedIn paper whose title I forgot.)</p>
+<p>See my EBR <a href="/posts/ebr/" class="backlink">blogpost</a>
+  
+   for more details on storage optimization.</p>
+<h3 id="query-analysis" class="scroll-mt-8 group">
+  Query Analysis
+  
+    <a href="#query-analysis"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Raw inputs are typically natural language queries from the user. Depending on where we query data from, we may need to <strong>construct</strong> natural language queries into SQL (for relational databases) or GQL (for graph databases) for structured databases, or <strong>rewrite</strong> the query to improve natural language documents that we could return.</p>
+<h4 id="query-rewriting" class="scroll-mt-8 group">
+  Query Rewriting
+  
+    <a href="#query-rewriting"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I remember back in 2022 as a new grad, my onboarding project at DoorDash was on query expansion &mdash; at that time, Starbucks wasn&rsquo;t on DoorDash so users searching for <code>starbucks</code> would see null results. However, if they were sleepy and needed coffee, wouldn&rsquo;t they want to see other coffee shops? Mapping a query to a type of stores to expand search results is a form of query expansion. LangChain has an awesome <a href="https://python.langchain.com/docs/concepts/retrieval/">post</a> that summarizes many forms of query rewriting:</p>
+<ul>
+<li><strong>Query clarification</strong>: Rephrase ambiguous, poorly worded, or otherwise confusing queries for clarity
+<ul>
+<li>E.g., a patient went on a tangent to describe how they hurt themself on a skiing trip starting from booking an Airbnb and getting to the resort; in the end, they asked whether they should worry about the symptoms 👉 you could just extract the symptoms and search them in a medical database</li>
+</ul>
+</li>
+<li><strong>Semantic understanding</strong>: Identify the query intent (e.g., shopping or finding information), so we could go beyond literal matching</li>
+<li><strong>Query expansion</strong>: Generate related terms or concepts to broaden the search scope, such as from <code>starbucks</code> to <code>coffee shops</code> or <code>breakfast</code> &mdash; useful when Recall is very low</li>
+<li><strong>Complex query handling</strong>: Break down multi-part queries into simpler sub-queries &mdash; examples techniques including
+<ul>
+<li><strong>Multi-query</strong>: Rewrite a compound query into several simple sub-queries 👉 retrieve documents for each sub-query</li>
+<li><strong>Decomposition</strong>: Decompose a complex problem into subproblems (e.g., the user asks the LLM to debug an issue and there are 5 things to investigate) 👉 retrieve documents to help resolve each subproblem; combine the solution to the previous problem and retrieved information for the current problem to resolve the current problem</li>
+<li><strong>Step-back</strong> (<a href="https://arxiv.org/abs/2310.06117">Zheng et al., 2024</a>): Ask the LLM to derive high-level concepts and first principles from detailed examples and use those concepts and principles to guide reasoning</li>
+<li><strong>HyDE</strong> (<a href="https://arxiv.org/abs/2212.10496">Gao et al., 2022</a>): Convert a hard-to-handle query into hypothetical documents and use hypothetical document embeddings (HyDE) to retrieve real documents</li>
+</ul>
+</li>
+</ul>
+<p>Which method to use depends on how the system underperforms (e.g., low recall? low precision? too much detail? too little detail?&hellip;). We can control the method by tweaking the system prompt.</p>
+<h4 id="query-construction" class="scroll-mt-8 group">
+  Query Construction
+  
+    <a href="#query-construction"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>If we need to query from a relational or a graph database, we need to translate a natural language query into a structured query language. There are many <a href="https://python.langchain.com/docs/tutorials/sql_qa/">text-to-SQL</a> and <a href="https://python.langchain.com/docs/tutorials/graph/">text-to-Cypher</a> (Cypher is a graph query language) models at your disposal. You can also create metadata filters from the query (e.g., title, author, year, region, language).</p>
+<h2 id="retriever" class="scroll-mt-8 group">
+  Retriever
+  
+    <a href="#retriever"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="hybrid-search" class="scroll-mt-8 group">
+  Hybrid Search
+  
+    <a href="#hybrid-search"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<figure><img src="https://www.dropbox.com/scl/fi/m9ts8k5sgebb7cacmvaec/Screenshot-2025-10-24-at-7.20.39-PM.png?rlkey=4mj913dxxuvn09jkufp8gcp4e&amp;st=thy25rnj&amp;raw=1"
+    alt="An illustration of hybrid search (source: DeepLearning.AI RAG course)." width="1800"><figcaption>
+      <p>An illustration of hybrid search (source: <a href="https://learn.deeplearning.ai/courses/retrieval-augmented-generation/information">DeepLearning.AI RAG</a> course).</p>
+    </figcaption>
+</figure>
+
+<h4 id="lexical-retrieval" class="scroll-mt-8 group">
+  Lexical Retrieval
+  
+    <a href="#lexical-retrieval"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Traditional search engines &ldquo;know&rdquo; a document if many query also appears in the document. The two most famous algorithms for computing query-document lexical similarity is <a href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> and <a href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a>.</p>
+<p>Below is a toy TF-IDF retriever implementation based on this formula:</p>
+<p>$${\displaystyle (1+\log f_{t,d})\cdot \log {\frac {N}{n_{t}}}}.$$</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python3</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python3 code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python3" data-lang="python3"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">heapq</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TFIDFRetriver</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;process doc corpus and precompute tf-idf of each doc&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">docs</span> <span class="o">=</span> <span class="n">docs</span>  <span class="c1"># remember original docs</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>  <span class="c1"># number of docs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># document frequency: in how many DISTINCT docs does term appear?</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># {term : # of unique docs}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># track if term has already been counted in this doc</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> 
+</span></span><span class="line"><span class="cl">                    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># inverse document frequency: log(N / n_t)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># n_t is df[term]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">idf</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">N</span> <span class="o">/</span> <span class="n">df_val</span><span class="p">)</span> <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">df_val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># {term : index}</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">stoi</span> <span class="o">=</span> <span class="p">{</span><span class="n">term</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">term</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idf</span><span class="o">.</span><span class="n">keys</span><span class="p">())}</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stoi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># precompute each document&#39;s tf-idf vector using (1 + log f_{t,d}) * idf</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">doc_tfidf</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># raw term frequency in this doc</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tf</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tf</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># fill tf-idf weights</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stoi</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">                <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stoi</span><span class="p">[</span><span class="n">term</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># (1 + log f_{t,d})</span>
+</span></span><span class="line"><span class="cl">                <span class="n">tf_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="n">vec</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf_weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">idf</span><span class="p">[</span><span class="n">term</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="bp">self</span><span class="o">.</span><span class="n">doc_tfidf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_query_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;vectorize query into tf-idf vector with same formula&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">vec</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_size</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># raw term frequency in query</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tf</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tf</span><span class="p">[</span><span class="n">term</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">term</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">term</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stoi</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stoi</span><span class="p">[</span><span class="n">term</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># (1 + log f_{t,d}) where d is &#34;the query bag&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">tf_weight</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">vec</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf_weight</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">idf</span><span class="p">[</span><span class="n">term</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">vec</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;compute dot product between 2 vectors&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">total</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">total</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">return_doc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;return top-k documents with highest tf-idf scores&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">query_vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_vector</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">heap</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># min-heap of (score, doc_idx)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">doc_idx</span><span class="p">,</span> <span class="n">doc_vec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">doc_tfidf</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">            <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dot</span><span class="p">(</span><span class="n">query_vec</span><span class="p">,</span> <span class="n">doc_vec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap</span><span class="p">,</span> <span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">doc_idx</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">topk</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># sort from best to worst</span>
+</span></span><span class="line"><span class="cl">        <span class="n">heap</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">score</span><span class="p">,</span> <span class="n">doc_idx</span> <span class="ow">in</span> <span class="n">heap</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">doc_idx</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">results</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># test case</span>
+</span></span><span class="line"><span class="cl"><span class="n">docs</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;the cat sat on the mat&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;the dog sat on the log&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;the cat chased the mouse&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;dogs and cats can be friends&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">query</span> <span class="o">=</span> <span class="s2">&#34;cat sat on mat&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tfidf_retriver</span> <span class="o">=</span> <span class="n">TFIDFRetriver</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">results</span> <span class="o">=</span> <span class="n">tfidf_retriver</span><span class="o">.</span><span class="n">return_doc</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">topk</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># printed results: [(3.3631710974274096, &#39;the cat sat on the mat&#39;), (0.9609060278364028, &#39;the dog sat on the log&#39;)]</span></span></span></code></pre></div>
+  <p class="sr-only">python3 code snippet end</p>
+
+  
+</figure>
+<p>TF-IDF suffers from a lack of document length normalization (e.g., longer documents tend to include the same query token more times) and term frequency saturation (e.g., a document with 20 &ldquo;pizza&rdquo; matches is seen as 2x as relevant as one with 10 &ldquo;pizza&rdquo; matches). A convoluted algorithm, BM25, was created to fix these issues:</p>
+<p>$${\displaystyle {\text{score}}(D,Q)=\sum_{i=1}^{n}{\text{IDF}}(q_{i})\cdot {\frac {f(q_{i},D)\cdot (k_{1}+1)}{f(q_{i},D)+k_{1}\cdot \left(1-b+b\cdot {\frac {|D|}{\text{avgdl}}}\right)}}}.$$</p>
+<p>The issue with lexical retrieval is, if I search <code>Taylor Swift husband</code>, I may not see Travis Kelce 🌲 results, since there are no term matches. Embedding-based retrieval comes to our rescue.</p>
+<h4 id="embedding-based-retrieval" class="scroll-mt-8 group">
+  Embedding-Based Retrieval
+  
+    <a href="#embedding-based-retrieval"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We could use a pretrained LLM to embed query and documents, or we could train our own query and document embeddings. Below are common architectures for learning query and document embeddings:</p>
+<figure><img src="https://raw.githubusercontent.com/UKPLab/sentence-transformers/master/docs/img/Bi_vs_Cross-Encoder.png"
+    alt="Bi-Encoder vs. Cross-Encoder (source: Sentence Transformers doc." width="1800"><figcaption>
+      <p>Bi-Encoder vs. Cross-Encoder (source: Sentence Transformers <a href="https://sbert.net/examples/cross_encoder/applications/README.html">doc</a>.</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li><strong>Bi-encoder</strong>: Embed query and doc separately using two identical towers 👉 compute cosine similarity between outputs.</li>
+<li><strong>Cross-encoder</strong>: Concatenate query and document and embed the concatenated input 👉 feed the output to a binary classification head to predict a <code>[0, 1]</code> relevance score.</li>
+<li><strong>ColBERT</strong>: Bi-encoder doesn&rsquo;t have any query-document interactions whereas cross-encoder performs an early fusion from the start; as a result, bi-encoder is fast but has low quality while cross-encoder has good quality but is slow 👉 to enjoy the best of both worlds, <a href="https://arxiv.org/abs/2004.12832">ColBERT</a> performs a late fusion via MaxSum: for each query token, compute cosine similarity with each document, only keep the maximum score, and sum the scores over all query tokens to get the final relevance score.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/w5ydcd7zfm4d0tl0s4ryu/Screenshot-2025-10-25-at-5.02.19-PM.png?rlkey=uig147bizg5wvb6bz5aukqq2u&amp;st=vk9p8zx7&amp;raw=1"
+    alt="Architecture of ColBERT with late query-document fusion." width="1800"><figcaption>
+      <p>Architecture of ColBERT with late query-document fusion.</p>
+    </figcaption>
+</figure>
+
+<p>Due to its inefficiency, rarely would we use the cross-encoder for retrieval. Moreover, since cross-encoders concatenate queries and documents before embedding, we can&rsquo;t precompute document embeddings offline, which is a hard requirement for low latency. Bi-encoders and ColBERT are therefore good choices for retrieval.</p>
+<p>The brute-force way is, for a query, compute its similarity (e.g., inner product, cosine) with each document and return top k. This approach scales poorly with a large document corpus. In practice, people usually use approximate nearest neighbor (ANN) search to speed up search. To learn more, you can read the <a href="https://www.yuan-meng.com/posts/ebr/#approximate-retrieval-algorithms">ANN part</a> in my blogpost, and a much more comprehensive summary in Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2023-06-23-agent/#maximum-inner-product-search-mips">blogpost</a>. TL;DR is we need to reduce search space by:</p>
+<ul>
+<li><strong>Locality sensitive hash</strong>: Hash each vector into multiple buckets 👉 only search in buckets where the query is assigned to</li>
+<li><strong>Graph traversal</strong> (e.g., HNSW): Performs random walks on the document graph, hoping to minimize query-document distances</li>
+<li><strong>Clustering</strong> (e.g., FAISS): Cluster documents based on their embeddings and only search in clusters where the query is in</li>
+</ul>
+<h4 id="metadata-filtering" class="scroll-mt-8 group">
+  Metadata Filtering
+  
+    <a href="#metadata-filtering"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We can further filter retrieved results based on metadata, such as title, author, creation data, region, etc.. This is not a true retrieval method, but an approach to purge unwanted or irrelevant retrieved results.</p>
+<h3 id="result-fusion" class="scroll-mt-8 group">
+  Result Fusion
+  
+    <a href="#result-fusion"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>We can combine results retrieved from different sources using methods such as the <a href="https://opensearch.org/blog/introducing-reciprocal-rank-fusion-hybrid-search/">reciprocal rank fusion (RRF)</a>.</p>
+<p>There are many knobs we can tune when combing different resources.</p>
+<ul>
+<li><strong>The &ldquo;k&rdquo; parameter in RRF</strong>: RRF rewards documents highly ranked in each list&mdash;$\frac{1}{k + \mathrm{rank_1}} + \frac{1}{k + \mathrm{rank_2}} + \frac{1}{k + \ldots + \mathrm{rank_n}}$, where $\mathrm{rank_i}$ is a document&rsquo;s ranking in the $i$th list. The greater the k, the less a single high ranking matters. RRF cares about rankings, not scores.</li>
+<li><strong>Weight of keyword vs. semantic search</strong>: Based on your understanding of the &ldquo;ideal&rdquo; system, you can make keyword matches more important than EBR, or the reverse. You can also tune the weights based on downstream evaluation results.</li>
 </ul>
 <h3 id="reranking" class="scroll-mt-8 group">
-  reranking
+  Reranking
   
     <a href="#reranking"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
@@ -252,11 +857,11 @@ bm25 deals with:</p>
     </a>
   
 </h3>
-<p>final list is re-ranked</p>
-<h3 id="evaluation" class="scroll-mt-8 group">
-  evaluation
+<p>After selecting documents with highest combined scores, we need to rerank them by relevance and further cap the result length. At this stage, we can use the more expensive but performance cross-encoder.</p>
+<h3 id="retriever-evaluation" class="scroll-mt-8 group">
+  Retriever Evaluation
   
-    <a href="#evaluation"
+    <a href="#retriever-evaluation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -278,84 +883,97 @@ bm25 deals with:</p>
     </a>
   
 </h3>
-<p>evaluate retrieval</p>
-<p><a href="https://www.yuan-meng.com/posts/ltr/">https://www.yuan-meng.com/posts/ltr/</a></p>
-<h2 id="module-3" class="scroll-mt-8 group">
-  Module 3:
-  
-    <a href="#module-3"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
+<p>Results from the retriever can be evaluated end to end (e.g., whether the final generation is &ldquo;good&rdquo;, whatever that means) or on their own. We need the latter for debugging and logging. When evaluating the retriever alone, please read the <a href="https://www.yuan-meng.com/posts/ltr/#what-is-the-right-order">evaluation section</a> in my LTR post:</p>
+<ul>
+<li><strong>Rank-unaware metrics</strong>: Recall@k, Precision@k</li>
+<li><strong>Rank-aware metrics</strong>: nDCG@k (how much top k differs from &ldquo;ideal ranking&rdquo;), MRR (how early the first relevant result appears), MAP@k (how much relevant results are concentrated at the top)</li>
+</ul>
+<!-- # Generation
+## Prompt Template
+messages format
 
-    </a>
-  
-</h2>
-<h2 id="module-4" class="scroll-mt-8 group">
-  Module 4:
-  
-    <a href="#module-4"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
+- system prompt
+  - high-level instructions on how an LLM should behave
+  - tone & personality 
+  - In-context learning may or may not be necessary
+- conversation history
+- retrieved information
+- user prompt
 
-    </a>
-  
-</h2>
-<h2 id="module-5" class="scroll-mt-8 group">
-  Module 5:
-  
-    <a href="#module-5"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
+Tricks
+- in-context learning isn't great for reasoning models
+- can use context pruning: drop old messages
 
-    </a>
-  
-</h2>
+## Pick an LLM
 
+performance
+- context window 
+- training cutoff
+- time to first token
+- tokens per second
+
+LLM arena
+
+## Decoding Strategies
+- greedy: pick 1 most likely
+- top-k: pick exactly k most likely
+- top-p: pick tokens whose cum prob > p
+- repetition penalties (penalize prob of tokens already decoded)
+- logit biases: add or subtract token probs
+- temperature 
+
+## Generation Evaluation
+hallucination: factual claims are consistent; prompt model to cite sources
+- response relevancy
+- citation 
+
+human eval
+
+llm-as-a-judge
+
+
+faithfullness
+sensitivity to irrelavnt info
+noise
+
+
+# Fine-Tuning
+
+## Embeddings for Retrieval
+
+https://www.yuan-meng.com/posts/negative_sampling/
+
+## LLMs for Generation
+
+# Put RAG in Production
+## Performance
+latency, throughput, memory, compute usage 
+## Quality
+Truthfulness Handling Unexpected Queries 
+## Safety
+Security and Privacy
+## Logging and Monitoring
+per component
+- init prompt
+- query sent to retriever
+- chunks returned
+- processing by reranker
+- final prompt
+- response 
+- latency
+end to end 
+
+LLM human rule
+## Experimentation
+
+# Advanced RAGs
+## Agentic Search
+create a workflow => use a different LLM for each task
+workflow types
+- sequential 
+- conditional e.g., router
+- iterative: writer-eval
+- parallel: orchestrator-synthesizer -->
     </div>
   </article>
 
@@ -426,6 +1044,132 @@ bm25 deals with:</p>
   page="/notes/rag/"
 ></content-network-graph>
 
+    </section>
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-newspaper h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5"
+  />
+  <path d="M10 6h8v4h-8V6Z" />
+</svg>
+
+        <span>Posts</span>
+      </h2>
+        <section class="flex flex-col space-y-1">
+          <h3 class="flex flex-row items-center space-x-2 text-sm font-semibold">
+            <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-arrow-up-from-dot h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path d="m5 9 7-7 7 7M12 16V2" />
+  <circle cx="12" cy="21" r="1" />
+</svg>
+
+            <span>Outgoing</span>
+          </h3>
+
+          <ol class="not-prose ml-6">
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ltr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Evolution of Learning to Rank"
+              >An Evolution of Learning to Rank</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/search/"
+                  class="taxonomy"
+                  title="Posts and notes on Search"
+                  >Search</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/learning-to-rank/"
+                  class="taxonomy"
+                  title="Posts and notes on Learning to rank"
+                  >Learning to rank</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ebr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Introduction to Embedding-Based Retrieval"
+              >An Introduction to Embedding-Based Retrieval</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/embedding/"
+                  class="taxonomy"
+                  title="Posts and notes on Embedding"
+                  >Embedding</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/vector-based-search/"
+                  class="taxonomy"
+                  title="Posts and notes on Vector-based search"
+                  >Vector-based search</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+</ol>
+
+        </section>
     </section>
 </aside>
 
