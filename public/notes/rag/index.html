@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="notes">
-    <meta property="article:published_time" content="2025-10-25T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-10-27T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Fundamentals of Retrieval Augmented Generation (RAG)">
   <meta itemprop="description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
-  <meta itemprop="datePublished" content="2025-10-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3354">
+  <meta itemprop="datePublished" content="2025-10-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="4160">
   <meta itemprop="keywords" content="Llm,Search,Rag">
 
   <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-10-25",
+  "datePublished": "2025-10-27",
   "description": "If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.",
   "headline": "Fundamentals of Retrieval Augmented Generation (RAG)",
   "isPartOf": {
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/notes/rag/",
   "name": "Fundamentals of Retrieval Augmented Generation (RAG)",
-  "timeRequired": "PT16M",
+  "timeRequired": "PT20M",
   "url": "http://localhost:1313/notes/rag/",
-  "wordCount": 3354
+  "wordCount": 4160
 }
 </script>
 
@@ -122,13 +122,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Fundamentals of Retrieval Augmented Generation (RAG)</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-10-25T00:00:00&#43;00:00">October 25, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-10-27T00:00:00&#43;00:00">October 27, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 16 minutes
+      Reading time: 20 minutes
     
 
     
@@ -187,13 +187,7 @@
       </ul>
     </li>
     <li><a href="#put-rag-in-production">Put RAG in Production</a></li>
-    <li><a href="#learn-more">Learn More</a>
-      <ul>
-        <li><a href="#agentic-search">Agentic Search</a></li>
-        <li><a href="#llamaindex">LLamaIndex</a></li>
-        <li><a href="#rag-book">RAG Book</a></li>
-      </ul>
-    </li>
+    <li><a href="#learn-more">Learn More</a></li>
   </ul>
 </nav>
         </nav>
@@ -248,9 +242,9 @@
   
 </h2>
 <p><em>Why RAG?</em> Out of the box, an LLM isn&rsquo;t well-suited to generate information it didn&rsquo;t have access to during training&mdash;such as recent events, a company&rsquo;s proprietary knowledge base, personal data, and so on. RAG retrieves missing information the LLM needs in order to generate accurate, up-to-date, and context-aware responses.</p>
-<figure><img src="https://www.dropbox.com/scl/fi/eruy5k5nbt3qsi41647pb/Screenshot-2025-10-24-at-6.25.52-PM.png?rlkey=ur5ljzfju8lmd4ds4jdec0wnm&amp;st=0dg93uma&amp;raw=1"
-    alt="A basic RAG system (source: DeepLearning.AI RAG course)." width="1800"><figcaption>
-      <p>A basic RAG system (source: <a href="https://learn.deeplearning.ai/courses/retrieval-augmented-generation/information">DeepLearning.AI RAG</a> course).</p>
+<figure><img src="https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F45603646e979c62349ce27744a940abf30200d57-3840x2160.png&amp;w=3840&amp;q=75"
+    alt="A standard RAG system (source: Anthropic)." width="1800"><figcaption>
+      <p>A standard RAG system (source: <a href="https://www.anthropic.com/engineering/contextual-retrieval">Anthropic</a>).</p>
     </figcaption>
 </figure>
 
@@ -344,19 +338,23 @@
     </a>
   
 </h4>
-<p>If a document is a book, for instance, it&rsquo;s too coarse to represent the entire book as a single embedding.</p>
+<blockquote>
+<p>As a rule of thumb, if the chunk of text makes sense without the surrounding context to a human, it will make sense to the language model as well. &mdash; <a href="https://www.pinecone.io/learn/chunking-strategies/"><em>Chunking Strategies for LLM Applications</em></a> by Pinecone</p>
+</blockquote>
+<p>If a document is a book, for instance, it would be too coarse to represent the entire book as a single embedding.</p>
 <ul>
-<li><strong>Lack granularity</strong>: It may be hard to retrieve specific topics, chapters, or pages from the book.</li>
-<li><strong>Context window explosion</strong>: Even if we successful deem the whole book as relevant and successfully retrieve it, it will blow up the LLM context window when we plug it into the prompt.</li>
+<li><strong>Lack granularity</strong>: It&rsquo;d be hard to retrieve specific topics, chapters, or pages from the book. Important information may get lost in a sea of irrelevant information.</li>
+<li><strong>Context window explosion</strong>: Even if we deem the whole book as relevant and successfully retrieve it, it will blow up the LLM context window when we plug it into the prompt.</li>
 </ul>
-<p>We can chunk documents into smaller pieces. But how? How about we split the book into words? Good luck knowing what <code>dog</code> or <code>the</code> means without the context. Chunking is critical for a RAG system&rsquo;s performance. Below are common techniques:</p>
+<p>We can chunk documents into smaller pieces. But how? How about we split the book into words? Good luck knowing what <code>dog</code> or <code>the</code> means without context. Chunking is critical for a RAG system&rsquo;s performance. Below are common techniques for text inputs:</p>
 <ul>
 <li><strong>Fixed-size chunking</strong>: We can split the document into chunks containing the same number of tokens (e.g., 250). It&rsquo;s best to have token overlaps between adjacent chunks so the context flows.</li>
-<li><strong>Recursive character splitting</strong>: We can split the document on one (&quot;.&quot;) or several special characters (e.g., all sorts of end-of-sentence symbols). Each chunk may end more naturally.</li>
+<li><strong>Recursive character splitting</strong>: We can split the document on one (<code>&quot;.&quot;</code>) or several special characters (e.g., <code>[&quot;\n\n&quot;, &quot;\n&quot;, &quot; &quot;, &quot;&quot;]</code> in LangChain&rsquo;s <a href="https://python.langchain.com/docs/how_to/recursive_text_splitter/">RecursiveCharacterTextSplitter</a>). Chunks may end on more natural places, not the middle of sentences.</li>
 <li><strong>Semantic chunking</strong>: We can start a chunk with a sentence &mdash; if the next sentence has high cosine similarity with the current sentence, include it in the chunk; otherwise, start a new chunk.</li>
 <li><strong>LLM-based chunking</strong>: We can prompt an LLM to create chunks from a document. Nowaways, this method is becoming increasingly more cost-effective and widely used.</li>
-<li><strong>Context-aware chunking</strong>: This is orthogonal to above methods &mdash; regardless of how we created a chunk, we can use an LLM to add context to it &mdash; e.g., whether a chunk from a dissertation pertains to a title, an acknowledgement, a method, or something else.</li>
+<li><strong>Context-aware chunking</strong>: This is orthogonal to above methods &mdash; regardless of how we created a chunk, we can use an LLM to add context to it &mdash; Anthropic has a <a href="https://www.anthropic.com/engineering/contextual-retrieval">great article</a> on context retrieval. A good example is, on its own, the chunk <code>&quot;The company's revenue grew by 3% over the previous quarter.&quot;</code> seems meaningless when a user searches for a specific company&rsquo;s earnings. After all, what company is it even talking about? 😂 To solve this problem, we could use an LLM to contextualize it into <code>&quot;This chunk is from an SEC filing on ACME corp's performance in Q2 2023; the previous quarter's revenue was $314 million. The company's revenue grew by 3% over the previous quarter.&quot;</code>. With costs of LLMs going down, this method has become more cost-effective today.</li>
 </ul>
+<p>Things can get more complicated when the document is a PDF, image, Markdown/LaTeX/HTML/DOCX file, or code file, as special chunking techniques are needed to preserve structural information. Check out Pinecone&rsquo;s <a href="https://www.pinecone.io/learn/chunking-strategies/">blogpost</a> for more details. TL;DR: different languages have their own structural symbols&mdash;e.g., headers and body text may appear in different parts of a PDF page, HTML uses tags to mark sections, and Markdown and LaTeX have their own section organizations. You can customize your splitter based on language-specific symbols.</p>
 <h4 id="store-embeddings-in-vector-databases" class="scroll-mt-8 group">
   Store Embeddings in Vector Databases
   
@@ -1084,7 +1082,7 @@
     </figcaption>
 </figure>
 
-<p>Nowadays, RAG evaluation has become more comprehensive. For instance, in addition to the triad, LlamaIndex also <a href="https://developers.llamaindex.ai/python/framework/module_guides/evaluating/">outlined</a> several other metrics:</p>
+<p>RAG evaluation has become more comprehensive now. For instance, in addition to the triad, LlamaIndex also <a href="https://developers.llamaindex.ai/python/framework/module_guides/evaluating/">outlined</a> several other metrics:</p>
 <ul>
 <li><strong>Correctness</strong>: Whether the generated answer matches that of the reference answer given the query (requires labels).</li>
 <li><strong>Semantic similarity</strong>: Whether the predicted answer is semantically similar to the reference answer (requires labels).</li>
@@ -1147,9 +1145,11 @@
     </a>
   
 </h3>
-<!-- Metric learning 
-
-https://www.yuan-meng.com/posts/negative_sampling/ -->
+<p>Quite likely an out-of-box embedding model doesn&rsquo;t understand your documents and queries well, in which case we can fine-tune embeddings for better retrieval. For this kind of &ldquo;metric learning&rdquo; problems, a typical solution is to find positive query-document pairs, sample negative pairs, and do some sort of contrastive representation learning (see Lilian Weng&rsquo;s <a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/">blogpost</a> for a comprehensive review).</p>
+<p>In recommender systems, positive samples come free (e.g., engagements you wish to predict, like clicks or conversions) and negatives can be sampled (see <a href="/posts/ltr/" class="backlink">my post</a>
+  
+  ) from the same batch (batch negative sampling), the corpus (random negative sampling), a combination of both (mixed negative sampling), or hard-to-predict samples during training (online hard negative sampling). For RAG, we don&rsquo;t have click labels (since documents aren&rsquo;t returned to users directly) or the time/budget to annotate many query-document pairs.</p>
+<p>A common solution is to use an LLM to generate example queries for your documents and treat synthetic query-document pairs as positives. You can use an LLM-as-a-judge to filter out low-quality queries. In the end, you can sample in-batch negatives for contrastive learning. This process is summarize in a Databricks <a href="https://www.databricks.com/blog/improving-retrieval-and-rag-embedding-model-finetuning">blogpost</a>. While fine-tuning can improve retrieval, do start from a strong position by selecting a strong model from the <a href="https://huggingface.co/spaces/mteb/leaderboard">Embedding Leaderboard</a>.</p>
 <h3 id="llms-for-generation" class="scroll-mt-8 group">
   LLMs for Generation
   
@@ -1175,6 +1175,14 @@ https://www.yuan-meng.com/posts/negative_sampling/ -->
     </a>
   
 </h3>
+<p>Your LLM may be trained to generate a response from a prompt, but not necessarily (1) <em>judging</em> which documents are most relevant to the prompt and (2) only <em>selecting</em> them to generate a response. <a href="https://arxiv.org/abs/2403.10131">Retrieval Augmented FineTuning</a> (RAFT) is a fine-tuning recipe that teaches an LLM to ignore documents that don&rsquo;t help answering the question.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/hlmkdvpozme82873a02rp/Screenshot-2025-10-27-at-7.04.56-PM.png?rlkey=4dymunsmiqrm7mqtpnlpn1tdd&amp;st=0ca27g47&amp;raw=1"
+    alt="RAFT." width="600"><figcaption>
+      <p>RAFT.</p>
+    </figcaption>
+</figure>
+
+<p>The training data for RAFT consists of three parts: (1) a question ($\mathbf{Q}$), (2) a set of documents, including &ldquo;golden&rdquo; documents ($\mathbf{D^*}$) with answer-relevant information and &ldquo;distractor&rdquo; documents ($\mathbf{D}$) without, and (3) a chain-of-thought style answer ($\mathbf{A}$) generated from a golden document. In $(1-P)$ of the data, there&rsquo;s no golden documents. The LLM is trained to generate the given answer using given documents. RAFT improves response quality (see <a href="https://www.yuan-meng.com/notes/rag/#generation-evaluation">&ldquo;Generation Evaluation&rdquo;</a>) within the fine-tuned domain. Ablation studies showed that including the data without golden documents made the LLM more robust.</p>
 <h2 id="put-rag-in-production" class="scroll-mt-8 group">
   Put RAG in Production
   
@@ -1200,25 +1208,22 @@ https://www.yuan-meng.com/posts/negative_sampling/ -->
     </a>
   
 </h2>
-<!-- ## Performance
-latency, throughput, memory, compute usage 
-## Quality
-Truthfulness Handling Unexpected Queries 
-## Safety
-Security and Privacy
-## Logging and Monitoring
-per component
-- init prompt
-- query sent to retriever
-- chunks returned
-- processing by reranker
-- final prompt
-- response 
-- latency
-end to end 
-
-LLM human rule -->
-<!-- ## Experimentation -->
+<p>Productionizing RAG is like productionizing any search engine&mdash;you need to define and track key metrics to measure system performance:</p>
+<ul>
+<li><strong>System metrics</strong>: latency (p50, p90, p95, p99 end-to-end and per component), throughput, memory and compute usage, success rate, timeout rate, null search rate, and so on.</li>
+<li><strong>Quality metrics</strong>: retrieval metrics (e.g., MRR, MAP@k, nDCG@k, P@k, R@k), generation metrics (e.g., response &lt;&gt; query relevance, context &lt;&gt; query relevance, response &lt;&gt; context groundedness, correctness, semantic similarity, faithfulness, guideline adherence), handling of unexpected or adversarial queries, etc..</li>
+<li><strong>Security and safety</strong>: prompt injection and data leakage prevention, access control and audit logging, PII redaction, hallucination rate, jailbreak detection, and content moderation.</li>
+</ul>
+<p>In both online experiments and daily monitoring, you should log per-component as well as end-to-end performance. For debugging and observability purposes, it&rsquo;s useful to log as much as you can:</p>
+<ul>
+<li>The raw user query (before parsing or analysis)</li>
+<li>The rewritten or analyzed query sent to the retriever</li>
+<li>The initial prompt without retrieved documents</li>
+<li>The retrieved chunks (top-k before and after reranking)</li>
+<li>The final prompt assembled for the LLM</li>
+<li>The LLM-generated response</li>
+</ul>
+<p>Most quality metrics can come from using an LLM-as-a-judge. For metrics like correctness or faithfulness, you can periodically sample outputs for human-in-the-loop evaluation. Any significant degradation should trigger alerts for on-call engineers and model owners to investigate, ideally with dashboards that trace issues back to individual components (retriever, reranker, generator, etc.) or data sources.</p>
 <h2 id="learn-more" class="scroll-mt-8 group">
   Learn More
   
@@ -1244,88 +1249,13 @@ LLM human rule -->
     </a>
   
 </h2>
-<h3 id="agentic-search" class="scroll-mt-8 group">
-  Agentic Search
-  
-    <a href="#agentic-search"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<!-- create a workflow => use a different LLM for each task
-workflow types
-- sequential 
-- conditional e.g., router
-- iterative: writer-eval
-- parallel: orchestrator-synthesizer
- -->
-<h3 id="llamaindex" class="scroll-mt-8 group">
-  LLamaIndex
-  
-    <a href="#llamaindex"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
-<h3 id="rag-book" class="scroll-mt-8 group">
-  RAG Book
-  
-    <a href="#rag-book"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h3>
+<ul>
+<li>Agentic Search</li>
+<li>LLamaIndex</li>
+<li>LangChain</li>
+<li>Pinecone</li>
+<li>RAG Book</li>
+</ul>
 
     </div>
   </article>
@@ -1515,6 +1445,46 @@ workflow types
                   class="taxonomy"
                   title="Posts and notes on Vector-based search"
                   >Vector-based search</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ltr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Evolution of Learning to Rank"
+              >An Evolution of Learning to Rank</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/search/"
+                  class="taxonomy"
+                  title="Posts and notes on Search"
+                  >Search</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/learning-to-rank/"
+                  class="taxonomy"
+                  title="Posts and notes on Learning to rank"
+                  >Learning to rank</a
                 >
               </li>
           </ul>

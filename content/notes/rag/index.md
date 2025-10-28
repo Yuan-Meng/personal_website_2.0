@@ -1,6 +1,6 @@
 ---
 title: "Fundamentals of Retrieval Augmented Generation (RAG)"
-date: 2025-10-25
+date: 2025-10-27
 categories: ["llm", "search", "rag"]
 math: true
 toc: true
@@ -14,7 +14,7 @@ In this post, I'll summarize RAG fundamentals from LangChain's RAG from Scratch 
 
 *Why RAG?* Out of the box, an LLM isn't well-suited to generate information it didn't have access to during training---such as recent events, a company's proprietary knowledge base, personal data, and so on. RAG retrieves missing information the LLM needs in order to generate accurate, up-to-date, and context-aware responses.
 
-{{< figure src="https://www.dropbox.com/scl/fi/eruy5k5nbt3qsi41647pb/Screenshot-2025-10-24-at-6.25.52-PM.png?rlkey=ur5ljzfju8lmd4ds4jdec0wnm&st=0dg93uma&raw=1" caption="A basic RAG system (source: [DeepLearning.AI RAG](https://learn.deeplearning.ai/courses/retrieval-augmented-generation/information) course)." width="1800">}}
+{{< figure src="https://www.anthropic.com/_next/image?url=https%3A%2F%2Fwww-cdn.anthropic.com%2Fimages%2F4zrzovbb%2Fwebsite%2F45603646e979c62349ce27744a940abf30200d57-3840x2160.png&w=3840&q=75" caption="A standard RAG system (source: [Anthropic](https://www.anthropic.com/engineering/contextual-retrieval))." width="1800">}}
 
 - **Retriever**: The query is first routed to the retriever, which retrieves relevant documents from the knowledge base and ranks them relative to the prompt to select the top-k.
 - **Generation**: The retrieved documents are used to augment the prompt, which is then sent to an LLM to generate a response.
@@ -36,17 +36,23 @@ For structured data, we can store them in relational (e.g., Snowflake, MySQL) or
 For traditional search engine indexing, I highly recommend the [Relevant Search](https://www.oreilly.com/library/view/relevant-search/9781617292774/) book. Amazing how nothing beats its comprehensiveness, when it still uses Python 2.7. Below we'll focus on more "fashionable" techniques designed for vector databases.
 
 ### Chunk Raw Documents
-If a document is a book, for instance, it's too coarse to represent the entire book as a single embedding. 
-- **Lack granularity**: It may be hard to retrieve specific topics, chapters, or pages from the book.
-- **Context window explosion**: Even if we successful deem the whole book as relevant and successfully retrieve it, it will blow up the LLM context window when we plug it into the prompt.
 
-We can chunk documents into smaller pieces. But how? How about we split the book into words? Good luck knowing what `dog` or `the` means without the context. Chunking is critical for a RAG system's performance. Below are common techniques:
+> As a rule of thumb, if the chunk of text makes sense without the surrounding context to a human, it will make sense to the language model as well. --- [*Chunking Strategies for LLM Applications*](https://www.pinecone.io/learn/chunking-strategies/) by Pinecone
+
+If a document is a book, for instance, it would be too coarse to represent the entire book as a single embedding. 
+- **Lack granularity**: It'd be hard to retrieve specific topics, chapters, or pages from the book. Important information may get lost in a sea of irrelevant information.
+- **Context window explosion**: Even if we deem the whole book as relevant and successfully retrieve it, it will blow up the LLM context window when we plug it into the prompt.
+
+We can chunk documents into smaller pieces. But how? How about we split the book into words? Good luck knowing what `dog` or `the` means without context. Chunking is critical for a RAG system's performance. Below are common techniques for text inputs:
 
 - **Fixed-size chunking**: We can split the document into chunks containing the same number of tokens (e.g., 250). It's best to have token overlaps between adjacent chunks so the context flows.
-- **Recursive character splitting**: We can split the document on one (".") or several special characters (e.g., all sorts of end-of-sentence symbols). Each chunk may end more naturally. 
+- **Recursive character splitting**: We can split the document on one (`"."`) or several special characters (e.g., `["\n\n", "\n", " ", ""]` in LangChain's [RecursiveCharacterTextSplitter](https://python.langchain.com/docs/how_to/recursive_text_splitter/)). Chunks may end on more natural places, not the middle of sentences.
 - **Semantic chunking**: We can start a chunk with a sentence --- if the next sentence has high cosine similarity with the current sentence, include it in the chunk; otherwise, start a new chunk.
 - **LLM-based chunking**: We can prompt an LLM to create chunks from a document. Nowaways, this method is becoming increasingly more cost-effective and widely used. 
-- **Context-aware chunking**: This is orthogonal to above methods --- regardless of how we created a chunk, we can use an LLM to add context to it --- e.g., whether a chunk from a dissertation pertains to a title, an acknowledgement, a method, or something else.
+- **Context-aware chunking**: This is orthogonal to above methods --- regardless of how we created a chunk, we can use an LLM to add context to it --- Anthropic has a [great article](https://www.anthropic.com/engineering/contextual-retrieval) on context retrieval. A good example is, on its own, the chunk `"The company's revenue grew by 3% over the previous quarter."` seems meaningless when a user searches for a specific company's earnings. After all, what company is it even talking about? 😂 To solve this problem, we could use an LLM to contextualize it into `"This chunk is from an SEC filing on ACME corp's performance in Q2 2023; the previous quarter's revenue was $314 million. The company's revenue grew by 3% over the previous quarter."`. With costs of LLMs going down, this method has become more cost-effective today.
+
+Things can get more complicated when the document is a PDF, image, Markdown/LaTeX/HTML/DOCX file, or code file, as special chunking techniques are needed to preserve structural information. Check out Pinecone's [blogpost](https://www.pinecone.io/learn/chunking-strategies/) for more details. TL;DR: different languages have their own structural symbols---e.g., headers and body text may appear in different parts of a PDF page, HTML uses tags to mark sections, and Markdown and LaTeX have their own section organizations. You can customize your splitter based on language-specific symbols.
+
 
 ### Store Embeddings in Vector Databases
 
@@ -298,7 +304,7 @@ In the early days, the RAG triad was a popular evaluation framework:
 
 {{< figure src="https://truera.com/wp-content/uploads/2024/03/TruEra-The-Rag-Triad-1.png" caption="The RAG triad for evaluating relevance (source: [TruEra](https://truera.com/ai-quality-education/generative-ai-rags/what-is-the-rag-triad/))." width="600">}}
 
-Nowadays, RAG evaluation has become more comprehensive. For instance, in addition to the triad, LlamaIndex also [outlined](https://developers.llamaindex.ai/python/framework/module_guides/evaluating/) several other metrics:
+RAG evaluation has become more comprehensive now. For instance, in addition to the triad, LlamaIndex also [outlined](https://developers.llamaindex.ai/python/framework/module_guides/evaluating/) several other metrics:
 
 - **Correctness**: Whether the generated answer matches that of the reference answer given the query (requires labels).
 - **Semantic similarity**: Whether the predicted answer is semantically similar to the reference answer (requires labels).
@@ -314,42 +320,40 @@ For other metrics, LLM-as-a-judge is a scalable alternative: We can use another 
 
 ## Embeddings for Retrieval
 
-<!-- Metric learning 
+Quite likely an out-of-box embedding model doesn't understand your documents and queries well, in which case we can fine-tune embeddings for better retrieval. For this kind of "metric learning" problems, a typical solution is to find positive query-document pairs, sample negative pairs, and do some sort of contrastive representation learning (see Lilian Weng's [blogpost](https://lilianweng.github.io/posts/2021-05-31-contrastive/) for a comprehensive review). 
 
-https://www.yuan-meng.com/posts/negative_sampling/ -->
+In recommender systems, positive samples come free (e.g., engagements you wish to predict, like clicks or conversions) and negatives can be sampled (see {{< backlink "ltr" "my post">}}) from the same batch (batch negative sampling), the corpus (random negative sampling), a combination of both (mixed negative sampling), or hard-to-predict samples during training (online hard negative sampling). For RAG, we don't have click labels (since documents aren't returned to users directly) or the time/budget to annotate many query-document pairs. 
+
+A common solution is to use an LLM to generate example queries for your documents and treat synthetic query-document pairs as positives. You can use an LLM-as-a-judge to filter out low-quality queries. In the end, you can sample in-batch negatives for contrastive learning. This process is summarize in a Databricks [blogpost](https://www.databricks.com/blog/improving-retrieval-and-rag-embedding-model-finetuning). While fine-tuning can improve retrieval, do start from a strong position by selecting a strong model from the [Embedding Leaderboard](https://huggingface.co/spaces/mteb/leaderboard).
 
 ## LLMs for Generation
 
+Your LLM may be trained to generate a response from a prompt, but not necessarily (1) *judging* which documents are most relevant to the prompt and (2) only *selecting* them to generate a response. [Retrieval Augmented FineTuning](https://arxiv.org/abs/2403.10131) (RAFT) is a fine-tuning recipe that teaches an LLM to ignore documents that don't help answering the question. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/hlmkdvpozme82873a02rp/Screenshot-2025-10-27-at-7.04.56-PM.png?rlkey=4dymunsmiqrm7mqtpnlpn1tdd&st=0ca27g47&raw=1" caption="RAFT." width="600">}}
+
+The training data for RAFT consists of three parts: (1) a question ($\mathbf{Q}$), (2) a set of documents, including "golden" documents ($\mathbf{D^*}$) with answer-relevant information and "distractor" documents ($\mathbf{D}$) without, and (3) a chain-of-thought style answer ($\mathbf{A}$) generated from a golden document. In $(1-P)$ of the data, there's no golden documents. The LLM is trained to generate the given answer using given documents. RAFT improves response quality (see ["Generation Evaluation"](https://www.yuan-meng.com/notes/rag/#generation-evaluation)) within the fine-tuned domain. Ablation studies showed that including the data without golden documents made the LLM more robust.
+
 # Put RAG in Production
-<!-- ## Performance
-latency, throughput, memory, compute usage 
-## Quality
-Truthfulness Handling Unexpected Queries 
-## Safety
-Security and Privacy
-## Logging and Monitoring
-per component
-- init prompt
-- query sent to retriever
-- chunks returned
-- processing by reranker
-- final prompt
-- response 
-- latency
-end to end 
 
-LLM human rule -->
+Productionizing RAG is like productionizing any search engine---you need to define and track key metrics to measure system performance:
+- **System metrics**: latency (p50, p90, p95, p99 end-to-end and per component), throughput, memory and compute usage, success rate, timeout rate, null search rate, and so on.
+- **Quality metrics**: retrieval metrics (e.g., MRR, MAP@k, nDCG@k, P@k, R@k), generation metrics (e.g., response <> query relevance, context <> query relevance, response <> context groundedness, correctness, semantic similarity, faithfulness, guideline adherence), handling of unexpected or adversarial queries, etc..
+- **Security and safety**: prompt injection and data leakage prevention, access control and audit logging, PII redaction, hallucination rate, jailbreak detection, and content moderation.
 
-<!-- ## Experimentation -->
+In both online experiments and daily monitoring, you should log per-component as well as end-to-end performance. For debugging and observability purposes, it's useful to log as much as you can:
+- The raw user query (before parsing or analysis)
+- The rewritten or analyzed query sent to the retriever
+- The initial prompt without retrieved documents
+- The retrieved chunks (top-k before and after reranking)
+- The final prompt assembled for the LLM
+- The LLM-generated response
+
+Most quality metrics can come from using an LLM-as-a-judge. For metrics like correctness or faithfulness, you can periodically sample outputs for human-in-the-loop evaluation. Any significant degradation should trigger alerts for on-call engineers and model owners to investigate, ideally with dashboards that trace issues back to individual components (retriever, reranker, generator, etc.) or data sources.
 
 # Learn More
-## Agentic Search
-<!-- create a workflow => use a different LLM for each task
-workflow types
-- sequential 
-- conditional e.g., router
-- iterative: writer-eval
-- parallel: orchestrator-synthesizer
- -->
-## LLamaIndex
-## RAG Book
+- Agentic Search
+- LLamaIndex
+- LangChain
+- Pinecone
+- RAG Book
