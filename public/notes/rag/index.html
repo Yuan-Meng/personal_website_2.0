@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Fundamentals of Retrieval Augmented Generation (RAG)">
   <meta itemprop="description" content="If you ask 100 ML engineers about their career goals, 90 of them will say they want to work on LLMs someday. If you ask which part of LLMs they want to work on, probably 80 out of those 90 will say pretraining, post-training, or whatever is perceived as “core modeling work.” Quite likely they never could. The remaining 10 may or may not land jobs on applied research engineering teams at {OpenAI, Anthropic, xAI, GDM}, Perplexity, Glean, Anysphere, or the likes, building AI products (e.g., chatbots, web/enterprise search, etc.) that people commonly use. Retrieval-Augmented Generation (RAG) and, later, AI agents are top technologies behind popular AI applications.">
   <meta itemprop="datePublished" content="2025-10-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4160">
+  <meta itemprop="wordCount" content="4347">
   <meta itemprop="keywords" content="Llm,Search,Rag">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/notes/rag/",
   "name": "Fundamentals of Retrieval Augmented Generation (RAG)",
-  "timeRequired": "PT20M",
+  "timeRequired": "PT21M",
   "url": "http://localhost:1313/notes/rag/",
-  "wordCount": 4160
+  "wordCount": 4347
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 20 minutes
+      Reading time: 21 minutes
     
 
     
@@ -1249,13 +1249,9 @@
     </a>
   
 </h2>
-<ul>
-<li>Agentic Search</li>
-<li>LLamaIndex</li>
-<li>LangChain</li>
-<li>Pinecone</li>
-<li>RAG Book</li>
-</ul>
+<p>I feel RAG is one of those things you can explain in two sentences but the actual system you attempt to build can fail in 500 ways. Otherwise, there&rsquo;s no need to hire so many engineers to work on it :)</p>
+<p>Even when using basic RAG, you might ask, how to best analyze the types of queries your users are most likely to search (some UX insights could help)? How do you chunk the documents you have? Exactly what documents do you have? If retrieving from multiple sources, against what metrics do you tune their relative weights? How do you identify which component is under-performing? If embeddings are no good, how do you fine-tune? What about the LLM? To name a few.</p>
+<p>Nowaways, many companies are shifting towards <a href="https://arxiv.org/abs/2501.05366">Agentic Search</a> &mdash; rather than following a set procedure, an &ldquo;agent&rdquo; can decide whether to retrieve documents or directly generate a response, whether to search again in case the response is irrelevant, and so on. To learn more, you can check out tutorials form <a href="https://developers.llamaindex.ai/python/framework/understanding/rag/">LLamaIndex</a>, <a href="https://python.langchain.com/docs/tutorials/agents/">LangChain</a>, Pinecone (<a href="https://www.pinecone.io/learn/retrieval-augmented-generation/">RAG</a>, <a href="https://www.pinecone.io/learn/series/langchain/langchain-agents/">Agent</a>), or skim a book (e.g., <a href="https://www.manning.com/books/a-simple-guide-to-retrieval-augmented-generation">A Simple Guide to Retrieval Augmented Generation</a>) for a more comprehensive overview.</p>
 
     </div>
   </article>

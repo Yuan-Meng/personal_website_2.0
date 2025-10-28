@@ -64,7 +64,8 @@
       "in": [],
       "out": [
         "/posts/ltr/",
-        "/posts/ebr/"
+        "/posts/ebr/",
+        "/posts/ltr/"
       ]
     },
     "/notes/resolutions-2022/": {
@@ -130,6 +131,7 @@
     "/posts/ltr/": {
       "in": [
         "/posts/seq_user_modeling/",
+        "/notes/rag/",
         "/notes/rag/"
       ],
       "out": []

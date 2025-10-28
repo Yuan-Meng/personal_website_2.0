@@ -352,8 +352,8 @@ In both online experiments and daily monitoring, you should log per-component as
 Most quality metrics can come from using an LLM-as-a-judge. For metrics like correctness or faithfulness, you can periodically sample outputs for human-in-the-loop evaluation. Any significant degradation should trigger alerts for on-call engineers and model owners to investigate, ideally with dashboards that trace issues back to individual components (retriever, reranker, generator, etc.) or data sources.
 
 # Learn More
-- Agentic Search
-- LLamaIndex
-- LangChain
-- Pinecone
-- RAG Book
+I feel RAG is one of those things you can explain in two sentences but the actual system you attempt to build can fail in 500 ways. Otherwise, there's no need to hire so many engineers to work on it :) 
+
+Even when using basic RAG, you might ask, how to best analyze the types of queries your users are most likely to search (some UX insights could help)? How do you chunk the documents you have? Exactly what documents do you have? If retrieving from multiple sources, against what metrics do you tune their relative weights? How do you identify which component is under-performing? If embeddings are no good, how do you fine-tune? What about the LLM? To name a few.
+
+Nowaways, many companies are shifting towards [Agentic Search](https://arxiv.org/abs/2501.05366) --- rather than following a set procedure, an "agent" can decide whether to retrieve documents or directly generate a response, whether to search again in case the response is irrelevant, and so on. To learn more, you can check out tutorials form [LLamaIndex](https://developers.llamaindex.ai/python/framework/understanding/rag/), [LangChain](https://python.langchain.com/docs/tutorials/agents/), Pinecone ([RAG](https://www.pinecone.io/learn/retrieval-augmented-generation/), [Agent](https://www.pinecone.io/learn/series/langchain/langchain-agents/)), or skim a book (e.g., [A Simple Guide to Retrieval Augmented Generation](https://www.manning.com/books/a-simple-guide-to-retrieval-augmented-generation)) for a more comprehensive overview.
