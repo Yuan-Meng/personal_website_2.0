@@ -10,26 +10,30 @@
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
-    Recommender systems | Yuan Meng
+    Semantic Search Tricks from Recent Papers | Yuan Meng
 </title>
-  <meta name="description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections." />
-<meta property="og:url" content="http://localhost:1313/categories/recommender-systems/">
+  <meta name="description" content=" EmbeddingGemma " />
+<meta property="og:url" content="http://localhost:1313/notes/search_tricks/">
   <meta property="og:site_name" content="Yuan Meng">
-  <meta property="og:title" content="Recommender systems">
-  <meta property="og:description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
+  <meta property="og:title" content="Semantic Search Tricks from Recent Papers">
+  <meta property="og:description" content="EmbeddingGemma">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="notes">
+    <meta property="article:published_time" content="2025-11-15T00:00:00+00:00">
 
 
-  <meta itemprop="name" content="Recommender systems">
-  <meta itemprop="description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
-  <meta itemprop="datePublished" content="2024-11-17T00:00:00+00:00">
+  <meta itemprop="name" content="Semantic Search Tricks from Recent Papers">
+  <meta itemprop="description" content="EmbeddingGemma">
+  <meta itemprop="datePublished" content="2025-11-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1">
+  <meta itemprop="keywords" content="Search,Rag">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Recommender systems">
-  <meta name="twitter:description" content="Yuan&#39;s musings about machine learning, human learning, and career reflections.">
+  <meta name="twitter:title" content="Semantic Search Tricks from Recent Papers">
+  <meta name="twitter:description" content="EmbeddingGemma">
 
-<link rel="canonical" href="http://localhost:1313/categories/recommender-systems/" /><link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/categories/recommender-systems/index.xml" />
+<link rel="canonical" href="http://localhost:1313/notes/search_tricks/" />
 
     <link rel="stylesheet" href="/css/index.css" />
 
@@ -37,11 +41,30 @@
       <script src="/js/main.js" defer></script>
   
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
 
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/notes/search_tricks/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Search",
+    "Rag"
+  ],
   "author": {
     "@type": "Person",
     "email": "mycaptainmy@gmail.com",
@@ -49,8 +72,19 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "description": "Yuan's musings about machine learning, human learning, and career reflections.",
-  "headline": "Recommender systems"
+  "datePublished": "2025-11-15",
+  "description": " EmbeddingGemma ",
+  "headline": "Semantic Search Tricks from Recent Papers",
+  "isPartOf": {
+    "@id": "http://localhost:1313/notes/",
+    "@type": "Blog",
+    "name": "Notes"
+  },
+  "mainEntityOfPage": "http://localhost:1313/notes/search_tricks/",
+  "name": "Semantic Search Tricks from Recent Papers",
+  "timeRequired": "PT1M",
+  "url": "http://localhost:1313/notes/search_tricks/",
+  "wordCount": 1
 }
 </script>
 
@@ -75,7 +109,7 @@
       >
     </li>
     <li>
-      <a href="/notes/">Notes</a
+      <a aria-current="true" class="ancestor" href="/notes/">Notes</a
       >
     </li>
     </ul>
@@ -84,31 +118,59 @@
 
       </header>
       <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">Semantic Search Tricks from Recent Papers</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2025-11-15T00:00:00&#43;00:00">November 15, 2025</time>
+        </div>
+    </header>
+
+    
+    
+      Reading time: 1 minute
+    
+
+    
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#embeddinggemma">EmbeddingGemma</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
         
-  <div class="flex flex-col space-y-6">
-      <section>
-        <h2>Posts on Recommender systems</h2>
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
 
-        <div class="not-prose">
-  <ol>
-      <li class="mb-6">
-        <article class="flex flex-col space-y-1">
-          <header>
-            <h3 class="text-lg font-semibold leading-none">
-              <a
-                href="/posts/seq_user_modeling/"
-                class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-                >Down the Rabbit Hole: Sequential User Modeling</a
-              >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2024-11-17T00:00:00&#43;00:00"
-              >November 17, 2024</time
-            >
-          </header>
-
-          <div class="text-sm"><h2 id="catch-the-train-of-actions" class="scroll-mt-8 group">
-  Catch the Train of Actions
+    
+    <div class="content">
+      <h2 id="embeddinggemma" class="scroll-mt-8 group">
+  EmbeddingGemma
   
-    <a href="#catch-the-train-of-actions"
+    <a href="#embeddinggemma"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -130,20 +192,76 @@
     </a>
   
 </h2>
-<p>Shown below is my Amazon browsing history last week. Any recommendations on what I might buy next?</p>
-<figure><img src="https://www.dropbox.com/scl/fi/t3fs6pgs8rxlysnpoqeq9/Screenshot-2024-11-11-at-4.25.33-PM.png?rlkey=kv37yorsm6qdlro4y4ot496s8&amp;st=p200ep0j&amp;raw=1"
-    alt="Yuan&rsquo;s Amazon browsing history last week; distinct sessions are color-coded." width="1800"><figcaption>
-      <p>Yuan&rsquo;s Amazon browsing history last week; distinct sessions are color-coded.</p>
-    </figcaption>
-</figure></div>
-        </article>
-      </li>
-  </ol>
-</div>
 
-      </section>
-    
-  </div>
+    </div>
+  </article>
+
+  
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/search/" class="taxonomy category">search</a>
+          </li>
+          <li>
+            <a href="/categories/rag/" class="taxonomy category">rag</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/notes/search_tricks/"
+></content-network-graph>
+
+    </section>
+</aside>
 
       </main>
       <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">

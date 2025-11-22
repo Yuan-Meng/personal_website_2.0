@@ -2,15 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/categories/career/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/infra/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/interview/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/machine-learning/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/ml_infra_interviews/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/rag/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/llm/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/rag/</loc>
   </url><url>
@@ -20,19 +32,11 @@
   </url><url>
     <loc>http://localhost:1313/notes/project_complexity/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/rlhf/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/large-language-models/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/recommender-systems/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/reinforcement-learning-from-human-feedback/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/generative-recommendation/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/generative_recommendation/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
   </url><url>
@@ -58,13 +62,13 @@
   </url><url>
     <loc>http://localhost:1313/notes/awakening/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/machine-learning/</loc>
-  </url><url>
     <loc>http://localhost:1313/notes/ml_wishlist/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/seq_user_modeling/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/information-retrieval/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
   </url><url>
@@ -73,8 +77,6 @@
     <loc>http://localhost:1313/categories/writing/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/mle_interviews/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/career/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/interview/</loc>
   </url><url>

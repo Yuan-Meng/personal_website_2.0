@@ -103,9 +103,7 @@
       "out": []
     },
     "/posts/generative_recommendation/": {
-      "in": [
-        "/posts/rlhf/"
-      ],
+      "in": [],
       "out": [
         "/posts/ebr/",
         "/posts/seq_user_modeling/",
@@ -144,6 +142,10 @@
       "in": [],
       "out": []
     },
+    "/posts/ml_infra_interviews/": {
+      "in": [],
+      "out": []
+    },
     "/posts/mle_interviews/": {
       "in": [
         "/posts/career_reflection/"
@@ -169,12 +171,6 @@
     "/posts/perceptron/": {
       "in": [],
       "out": []
-    },
-    "/posts/rlhf/": {
-      "in": [],
-      "out": [
-        "/posts/generative_recommendation/"
-      ]
     },
     "/posts/seq_user_modeling/": {
       "in": [
@@ -332,6 +328,11 @@
       "section": "posts",
       "title": "Choosing Metrics"
     },
+    "/posts/ml_infra_interviews/": {
+      "permalink": "/posts/ml_infra_interviews/",
+      "section": "posts",
+      "title": "ML Infra Sytem Design Interview"
+    },
     "/posts/mle_interviews/": {
       "permalink": "/posts/mle_interviews/",
       "section": "posts",
@@ -356,11 +357,6 @@
       "permalink": "/posts/perceptron/",
       "section": "posts",
       "title": "Teaching A Peceptron to See"
-    },
-    "/posts/rlhf/": {
-      "permalink": "/posts/rlhf/",
-      "section": "posts",
-      "title": "Elicit Hidden Powers: RLHF is the Aerodynamics for the LLM F1 Race"
     },
     "/posts/seq_user_modeling/": {
       "permalink": "/posts/seq_user_modeling/",
