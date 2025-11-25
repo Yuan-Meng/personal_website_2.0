@@ -6,8 +6,6 @@
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/ml_infra_interviews/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/infra/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/interview/</loc>
@@ -15,6 +13,8 @@
     <loc>http://localhost:1313/categories/machine-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/ml_infra_interviews/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>
@@ -77,8 +77,6 @@
     <loc>http://localhost:1313/categories/writing/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/mle_interviews/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/interview/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/ai/</loc>
   </url><url>
