@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.">
   <meta itemprop="datePublished" content="2025-11-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="200">
+  <meta itemprop="wordCount" content="713">
   <meta itemprop="keywords" content="Career,Machine learning,Infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -84,9 +84,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT1M",
+  "timeRequired": "PT4M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 200
+  "wordCount": 713
 }
 </script>
 
@@ -129,7 +129,7 @@
 
     
     
-      Reading time: 1 minute
+      Reading time: 4 minutes
     
 
     
@@ -143,7 +143,37 @@
           <nav id="TableOfContents">
   <ul>
     <li><a href="#the-knowledge-dilemma-those-who-build-models-for-scalable-recsys-dont-work-on-scalable-infra">The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don&rsquo;t Work on Scalable Infra</a></li>
-    <li><a href="#references">References</a></li>
+    <li><a href="#type-1-pipeline-walk-through">Type 1: Pipeline Walk-Through</a>
+      <ul>
+        <li><a href="#online-inference">Online Inference</a></li>
+        <li><a href="#online-processing">Online Processing</a></li>
+      </ul>
+    </li>
+    <li><a href="#type-2-component-design">Type 2: Component Design</a>
+      <ul>
+        <li><a href="#feature-stores">Feature Stores</a></li>
+        <li><a href="#real-time-feature-updates">Real-Time Feature Updates</a></li>
+        <li><a href="#distributed-training">Distributed Training</a></li>
+      </ul>
+    </li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#end-to-end-systems">End-to-End Systems</a>
+          <ul>
+            <li><a href="#abstract-ml-systems">Abstract ML Systems</a></li>
+            <li><a href="#model-use-cases">Model Use Cases</a></li>
+          </ul>
+        </li>
+        <li><a href="#ml-infra-components">ML Infra Components</a>
+          <ul>
+            <li><a href="#feature--data-generation">Feature + Data Generation</a></li>
+            <li><a href="#distributed-training-1">Distributed Training</a></li>
+            <li><a href="#real-time-features">Real-Time Features</a></li>
+            <li><a href="#gpu-serving">GPU Serving</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav>
         </nav>
@@ -197,6 +227,198 @@
 </h2>
 <p>A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML <em>infra</em> design round for MLE candidates. The focus isn&rsquo;t on model development &mdash; like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments &mdash; but on offline + online pipelines that support an ML system. You might walk through the entire online + offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.</p>
 <p>Here&rsquo;s the funny thing: If you are an ML engineer working at a company with large-scale recommender systems like Meta, Google, or Pinterest, you may have a fairly shallow understanding of ML infra only as a user, since there are dedicated infra teams handling logging, training, and inference for you. Your job is mostly model iteration, experiments, and maybe some observability. However, if you don&rsquo;t need to make recommendations at scale, this knowledge is irrelevant.</p>
+<p>Before you prepare for this round, first decide if it&rsquo;s worth it.</p>
+<ul>
+<li>
+<p><strong>Case 1</strong>: The role is called MLE but actually focuses on infra</p>
+<ul>
+<li>You should definitely find it out by asking your recruiter (ideal) or your phone interviewer (the latest).</li>
+<li>In this case, think about whether this role fits your career goals. If not, turn down the interview to save everyone time.</li>
+</ul>
+</li>
+<li>
+<p><strong>Case 2</strong>: The role focuses on ML but still tests infra knowledge</p>
+<ul>
+<li>You&rsquo;ll probably want a solid understanding of ML infra anyway &mdash; it makes collaboration with infra partners much easier and helps you design better end-to-end solutions.</li>
+<li>If this is is the case, treat the preparation as a chance to learn something fun/new! (Perhaps rest assured that other model-focused ML engineers are doing the same to jump the hoop.)</li>
+</ul>
+</li>
+</ul>
+<h2 id="type-1-pipeline-walk-through" class="scroll-mt-8 group">
+  Type 1: Pipeline Walk-Through
+  
+    <a href="#type-1-pipeline-walk-through"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="online-inference" class="scroll-mt-8 group">
+  Online Inference
+  
+    <a href="#online-inference"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="online-processing" class="scroll-mt-8 group">
+  Online Processing
+  
+    <a href="#online-processing"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h2 id="type-2-component-design" class="scroll-mt-8 group">
+  Type 2: Component Design
+  
+    <a href="#type-2-component-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="feature-stores" class="scroll-mt-8 group">
+  Feature Stores
+  
+    <a href="#feature-stores"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="real-time-feature-updates" class="scroll-mt-8 group">
+  Real-Time Feature Updates
+  
+    <a href="#real-time-feature-updates"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h3 id="distributed-training" class="scroll-mt-8 group">
+  Distributed Training
+  
+    <a href="#distributed-training"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
 <h2 id="references" class="scroll-mt-8 group">
   References
   
@@ -222,6 +444,245 @@
     </a>
   
 </h2>
+<h3 id="end-to-end-systems" class="scroll-mt-8 group">
+  End-to-End Systems
+  
+    <a href="#end-to-end-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="abstract-ml-systems" class="scroll-mt-8 group">
+  Abstract ML Systems
+  
+    <a href="#abstract-ml-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>To begin, get an abstract overview of end-to-end systems:</p>
+<ul>
+<li><a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">Distributed Machine Learning Patterns</a> 👉 good overview of end-to-end ML systems (specific stacks may be dated)</li>
+<li><a href="https://eng.snap.com/introducing-bento">Introducing Bento, Snap&rsquo;s ML Platform</a> 👉 Snap&rsquo;s all-in-one ML platform for feature engineering, training data generation, model training, and online inference</li>
+<li><a href="https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4">Scaling AI/ML Infrastructure at Uber</a> 👉</li>
+<li>Metaflow 👉 Netflix&rsquo;s open-source framework for model training and inference: <a href="https://docs.metaflow.org/metaflow/basics">basics</a>, <a href="https://docs.metaflow.org/internals/technical-overview">tech overview</a></li>
+</ul>
+<h4 id="model-use-cases" class="scroll-mt-8 group">
+  Model Use Cases
+  
+    <a href="#model-use-cases"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Then, dig into specific systems designed for particular models:</p>
+<ul>
+<li><a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Evolution and Scale of Uber’s Delivery Search Platform</a> 👉 Uber Eats&rsquo; search platform</li>
+<li><a href="https://eng.snap.com/embedding-based-retrieval">Embedding-based Retrieval with Two-Tower Models in Spotlight</a> 👉 Snap&rsquo;s retrieval model for spotlight videos</li>
+<li><a href="https://eng.snap.com/snap-ads-understanding">Snap Ads Understanding</a> 👉 Snap&rsquo;s video ads content understanding model</li>
+<li><a href="https://eng.snap.com/machine-learning-snap-ad-ranking">Machine Learning for Snapchat Ad Ranking</a> 👉 Snap&rsquo;s pCVR model</li>
+<li><code>ApplyingML</code> 👉 <a href="https://applyingml.com/resources/">blogposts</a> on ML model and system designs</li>
+</ul>
+<h3 id="ml-infra-components" class="scroll-mt-8 group">
+  ML Infra Components
+  
+    <a href="#ml-infra-components"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="feature--data-generation" class="scroll-mt-8 group">
+  Feature + Data Generation
+  
+    <a href="#feature--data-generation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<ul>
+<li><a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">The Dataflow Model</a> 👉 Google&rsquo;s seminal paper on large-scale data generation</li>
+<li><a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce: Simplified Data Processing on Large Clusters</a> 👉 Jeff Dean&rsquo;s original MapReduce paper</li>
+<li><a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">Point-in-Time Correctness in Real-Time Machine Learning</a> 👉 data leakage prevention</li>
+<li><a href="https://eng.snap.com/speed-up-feature-engineering">Speed Up Feature Engineering for Recommendation Systems</a> 👉 Robusta, Snap&rsquo;s feature pipeline</li>
+<li><a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Michelangelo Palette: A Feature Engineering Platform at Uber</a> 👉 Palette, Uber&rsquo;s feature pipeline and feature store</li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline – Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
+<li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
+</ul>
+<h4 id="distributed-training-1" class="scroll-mt-8 group">
+  Distributed Training
+  
+    <a href="#distributed-training-1"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<ul>
+<li><a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook</a> 👉 train LLMs on GPU clusters</li>
+<li><a href="https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html">How to train a model on 10k H100 GPUs?</a> 👉 PyTorch author&rsquo;s short blogpost</li>
+<li><a href="https://eng.snap.com/training-models-with-tpus">Training Large-Scale Recommendation Models with TPUs</a> 👉 Snap has been using Google&rsquo;s TPUs since 2022</li>
+</ul>
+<h4 id="real-time-features" class="scroll-mt-8 group">
+  Real-Time Features
+  
+    <a href="#real-time-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<ul>
+<li><a href="https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8">How Pinterest Leverages Realtime User Actions in Recommendation to Boost Homefeed Engagement Volume</a> 👉 real-time user aggregation features</li>
+<li><a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9">Large-scale User Sequences at Pinterest</a> 👉 real-time user sequence features</li>
+</ul>
+<h4 id="gpu-serving" class="scroll-mt-8 group">
+  GPU Serving
+  
+    <a href="#gpu-serving"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<ul>
+<li><a href="https://eng.snap.com/applying_gpu_to_snap">Applying GPU to Snap</a> 👉 Snap&rsquo;s switch from CPU to GPU serving</li>
+<li><a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">GPU-accelerated ML Inference at Pinterest</a> 👉 Pinterest did the same a year later</li>
+<li><a href="https://openai.com/index/triton/">Introducing Triton: Open-Source GPU Programming for Neural Networks</a> 👉 OpenAI&rsquo;s Triton kernels</li>
+<li><a href="https://developer.nvidia.com/blog/cuda-graphs/">Getting Started with CUDA Graphs</a> 👉 CUDA graphs are often used in GPU serving</li>
+</ul>
 
     </div>
   </article>
