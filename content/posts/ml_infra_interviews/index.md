@@ -27,7 +27,7 @@ Before you prepare for this round, first decide if it's worth it.
 
 ## Offline Processing
 
-# Interview type 2: Component Design
+# Interview Type 2: Component Design
 
 ## Feature Stores
 
