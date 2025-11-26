@@ -43,12 +43,12 @@ To begin, get an abstract overview of end-to-end systems:
 
 1. [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 good overview of end-to-end ML systems (specific stacks may be dated)
 2. [Introducing Bento, Snap's ML Platform](https://eng.snap.com/introducing-bento) 👉 Snap's all-in-one ML platform for feature engineering, training data generation, model training, and online inference
-3. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉
+3. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉 evolution of Uber's Michaelangelo platform
 4. Metaflow 👉 Netflix's open-source framework for model training and inference: [basics](https://docs.metaflow.org/metaflow/basics), [tech overview](https://docs.metaflow.org/internals/technical-overview)
 
 
 ### Model Use Cases
-Then, dig into specific systems designed for particular models:
+Then, dig into systems designed for specific models:
 
 5. [Evolution and Scale of Uber’s Delivery Search Platform](https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/) 👉 Uber Eats' search platform
 6. [Introducing DoorDash’s in-house search engine](https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/) 👉 Argo, DoorDash's search platform; [debugging](https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/)
