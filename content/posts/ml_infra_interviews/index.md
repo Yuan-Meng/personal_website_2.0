@@ -21,13 +21,13 @@ Before you prepare for this round, first decide if it's worth it.
   - You'll probably want a solid understanding of ML infra anyway --- it makes collaboration with infra partners much easier and helps you design better end-to-end solutions.
   - If this is is the case, treat the preparation as a chance to learn something fun/new! (Perhaps rest assured that other model-focused ML engineers are doing the same to jump the hoop.)
 
-# Type 1: Pipeline Walk-Through
+# Interview Type 1: Full Pipeline Walk-Through
 
 ## Online Inference
 
-## Online Processing
+## Offline Processing
 
-# Type 2: Component Design
+# Interview type 2: Component Design
 
 ## Feature Stores
 
@@ -38,7 +38,6 @@ Before you prepare for this round, first decide if it's worth it.
 # References
 
 ## End-to-End Systems
-
 ### Abstract ML Systems
 To begin, get an abstract overview of end-to-end systems:
 - [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 good overview of end-to-end ML systems (specific stacks may be dated)
@@ -50,6 +49,7 @@ To begin, get an abstract overview of end-to-end systems:
 ### Model Use Cases
 Then, dig into specific systems designed for particular models:
 - [Evolution and Scale of Uber’s Delivery Search Platform](https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/) 👉 Uber Eats' search platform
+- [Introducing DoorDash’s in-house search engine](https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/) 👉 Argo, DoorDash's search platform; [debugging](https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/)
 - [Embedding-based Retrieval with Two-Tower Models in Spotlight](https://eng.snap.com/embedding-based-retrieval) 👉 Snap's retrieval model for spotlight videos 
 - [Snap Ads Understanding](https://eng.snap.com/snap-ads-understanding) 👉 Snap's video ads content understanding model
 - [Machine Learning for Snapchat Ad Ranking](https://eng.snap.com/machine-learning-snap-ad-ranking) 👉 Snap's pCVR model
@@ -82,5 +82,3 @@ Then, dig into specific systems designed for particular models:
 - [GPU-accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
 - [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
 - [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
-
-

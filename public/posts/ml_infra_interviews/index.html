@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.">
   <meta itemprop="datePublished" content="2025-11-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="713">
+  <meta itemprop="wordCount" content="727">
   <meta itemprop="keywords" content="Career,Machine learning,Infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -86,7 +86,7 @@
   "name": "Preparing for ML Infra System Design Interviews",
   "timeRequired": "PT4M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 713
+  "wordCount": 727
 }
 </script>
 
@@ -143,13 +143,13 @@
           <nav id="TableOfContents">
   <ul>
     <li><a href="#the-knowledge-dilemma-those-who-build-models-for-scalable-recsys-dont-work-on-scalable-infra">The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don&rsquo;t Work on Scalable Infra</a></li>
-    <li><a href="#type-1-pipeline-walk-through">Type 1: Pipeline Walk-Through</a>
+    <li><a href="#interview-type-1-full-pipeline-walk-through">Interview Type 1: Full Pipeline Walk-Through</a>
       <ul>
         <li><a href="#online-inference">Online Inference</a></li>
-        <li><a href="#online-processing">Online Processing</a></li>
+        <li><a href="#offline-processing">Offline Processing</a></li>
       </ul>
     </li>
-    <li><a href="#type-2-component-design">Type 2: Component Design</a>
+    <li><a href="#interview-type-2-component-design">Interview type 2: Component Design</a>
       <ul>
         <li><a href="#feature-stores">Feature Stores</a></li>
         <li><a href="#real-time-feature-updates">Real-Time Feature Updates</a></li>
@@ -244,10 +244,10 @@
 </ul>
 </li>
 </ul>
-<h2 id="type-1-pipeline-walk-through" class="scroll-mt-8 group">
-  Type 1: Pipeline Walk-Through
+<h2 id="interview-type-1-full-pipeline-walk-through" class="scroll-mt-8 group">
+  Interview Type 1: Full Pipeline Walk-Through
   
-    <a href="#type-1-pipeline-walk-through"
+    <a href="#interview-type-1-full-pipeline-walk-through"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -294,10 +294,10 @@
     </a>
   
 </h3>
-<h3 id="online-processing" class="scroll-mt-8 group">
-  Online Processing
+<h3 id="offline-processing" class="scroll-mt-8 group">
+  Offline Processing
   
-    <a href="#online-processing"
+    <a href="#offline-processing"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -319,10 +319,10 @@
     </a>
   
 </h3>
-<h2 id="type-2-component-design" class="scroll-mt-8 group">
-  Type 2: Component Design
+<h2 id="interview-type-2-component-design" class="scroll-mt-8 group">
+  Interview type 2: Component Design
   
-    <a href="#type-2-component-design"
+    <a href="#interview-type-2-component-design"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -529,6 +529,7 @@
 <p>Then, dig into specific systems designed for particular models:</p>
 <ul>
 <li><a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Evolution and Scale of Uber’s Delivery Search Platform</a> 👉 Uber Eats&rsquo; search platform</li>
+<li><a href="https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/">Introducing DoorDash’s in-house search engine</a> 👉 Argo, DoorDash&rsquo;s search platform; <a href="https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/">debugging</a></li>
 <li><a href="https://eng.snap.com/embedding-based-retrieval">Embedding-based Retrieval with Two-Tower Models in Spotlight</a> 👉 Snap&rsquo;s retrieval model for spotlight videos</li>
 <li><a href="https://eng.snap.com/snap-ads-understanding">Snap Ads Understanding</a> 👉 Snap&rsquo;s video ads content understanding model</li>
 <li><a href="https://eng.snap.com/machine-learning-snap-ad-ranking">Machine Learning for Snapchat Ad Ranking</a> 👉 Snap&rsquo;s pCVR model</li>
