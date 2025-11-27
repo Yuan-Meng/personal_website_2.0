@@ -7,19 +7,13 @@ toc: true
 ---
 
 # The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don't Work on Scalable Infra
+Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.
 
-A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML *infra* design round for MLE candidates. The focus isn't on model development --- like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments --- but on offline + online pipelines that support an ML system. You might walk through the entire online + offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.
+ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.
 
-Here's the funny thing: If you are an ML engineer working at a company with large-scale recommender systems like Meta, Google, or Pinterest, you may have a fairly shallow understanding of ML infra only as a user, since there are dedicated infra teams handling logging, training, and inference for you. Your job is mostly model iteration, experiments, and maybe some observability. However, if you don't need to make recommendations at scale, this knowledge is irrelevant.
+Here's the funny thing: If your company serves truly large-scale recommender systems (e.g., recommending billions of items to hundreds of millions of DAUs), you're likely working with dedicated infra teams that handle logging, training, and inference for you. Your job is to optimize a narrow set of North Star metrics your team is funded for (e.g., CTR, CVR, revenue, search relevance). If your company isn't making recommendations at scale, the knowledge of how to build scalable ML systems may be years away from your reality.
 
-Before you prepare for this round, first decide if it's worth it.
-- **Case 1**: The role is called MLE but actually focuses on infra
-  - You should definitely find it out by asking your recruiter (ideal) or your phone interviewer (the latest).
-  - In this case, think about whether this role fits your career goals. If not, turn down the interview to save everyone time.
-
-- **Case 2**: The role focuses on ML but still tests infra knowledge
-  - You'll probably want a solid understanding of ML infra anyway --- it makes collaboration with infra partners much easier and helps you design better end-to-end solutions.
-  - If this is is the case, treat the preparation as a chance to learn something fun/new! (Perhaps rest assured that other model-focused ML engineers are doing the same to jump the hoop.)
+That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams --- even if you ask Max Verstappen to build a car, he couldn't do it to save his life, but no driver on the grid doesn't have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren't working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. Solid ML infra knowledge goes a long way in an impactful career. So even if you never take an ML infra interview, you should still spend time learning this knowledge.
 
 # Interview Type 1: Full Pipeline Walk-Through
 
@@ -41,7 +35,11 @@ Before you prepare for this round, first decide if it's worth it.
 ### Abstract ML Systems
 To begin, get an abstract overview of end-to-end systems:
 
-1. [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 good overview of end-to-end ML systems (specific stacks may be dated)
+> Many books have been written on either machine learning or distributed systems. However, there is currently no book available that talks about the combination of both and bridges the gap between them. --- *Distributed Machine Learning Patterns*
+
+1. [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 this is a *fantastic* book about ML infra. Some folks dismiss it because the author still uses (1) TensorFlow and (2) the Fashion-MINST dataset to illustrate the model component, but I bet they didn't read the book. 
+   - (1) is understandable because the author was a main contributor of *Google*'s Kubeflow. Do we expect PyTorch? 🤣
+   - (2) is the point --- the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. Only a toy dataset fits.
 2. [Introducing Bento, Snap's ML Platform](https://eng.snap.com/introducing-bento) 👉 Snap's all-in-one ML platform for feature engineering, training data generation, model training, and online inference
 3. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉 evolution of Uber's Michaelangelo platform
 4. Metaflow 👉 Netflix's open-source framework for model training and inference: [basics](https://docs.metaflow.org/metaflow/basics), [tech overview](https://docs.metaflow.org/internals/technical-overview)

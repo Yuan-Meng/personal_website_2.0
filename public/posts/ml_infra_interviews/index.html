@@ -12,11 +12,11 @@
 <title>
     Preparing for ML Infra System Design Interviews | Yuan Meng
 </title>
-  <meta name="description" content=" The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs." />
+  <meta name="description" content=" The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers." />
 <meta property="og:url" content="http://localhost:1313/posts/ml_infra_interviews/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="Preparing for ML Infra System Design Interviews">
-  <meta property="og:description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.">
+  <meta property="og:description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -24,14 +24,14 @@
 
 
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
-  <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.">
+  <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="727">
+  <meta itemprop="wordCount" content="941">
   <meta itemprop="keywords" content="Career,Machine learning,Infra,Interview">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Preparing for ML Infra System Design Interviews">
-  <meta name="twitter:description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline &#43; online pipelines that support an ML system. You might walk through the entire online &#43; offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.">
+  <meta name="twitter:description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
 
 <link rel="canonical" href="http://localhost:1313/posts/ml_infra_interviews/" />
 
@@ -75,7 +75,7 @@
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2025-11-25",
-  "description": " The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML infra design round for MLE candidates. The focus isn’t on model development — like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments — but on offline + online pipelines that support an ML system. You might walk through the entire online + offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.",
+  "description": " The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.",
   "headline": "Preparing for ML Infra System Design Interviews",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
@@ -84,9 +84,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT4M",
+  "timeRequired": "PT5M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 727
+  "wordCount": 941
 }
 </script>
 
@@ -129,7 +129,7 @@
 
     
     
-      Reading time: 4 minutes
+      Reading time: 5 minutes
     
 
     
@@ -149,7 +149,7 @@
         <li><a href="#offline-processing">Offline Processing</a></li>
       </ul>
     </li>
-    <li><a href="#interview-type-2-component-design">Interview type 2: Component Design</a>
+    <li><a href="#interview-type-2-component-design">Interview Type 2: Component Design</a>
       <ul>
         <li><a href="#feature-stores">Feature Stores</a></li>
         <li><a href="#real-time-feature-updates">Real-Time Feature Updates</a></li>
@@ -225,25 +225,29 @@
     </a>
   
 </h2>
-<p>A handful of companies (Netflix, Reddit, Snap, DoorDash, Notion, etc.) conduct an ML <em>infra</em> design round for MLE candidates. The focus isn&rsquo;t on model development &mdash; like collecting training data and generating labels, choosing features and model architectures, or running online/offline experiments &mdash; but on offline + online pipelines that support an ML system. You might walk through the entire online + offline pipelines or design a specific component, such as feature stores, real-time feature updates, or distributed training. The goal is to see whether you have a full picture of how different pieces of ML infra work together and know how to scale each part and make trade-offs.</p>
-<p>Here&rsquo;s the funny thing: If you are an ML engineer working at a company with large-scale recommender systems like Meta, Google, or Pinterest, you may have a fairly shallow understanding of ML infra only as a user, since there are dedicated infra teams handling logging, training, and inference for you. Your job is mostly model iteration, experiments, and maybe some observability. However, if you don&rsquo;t need to make recommendations at scale, this knowledge is irrelevant.</p>
-<p>Before you prepare for this round, first decide if it&rsquo;s worth it.</p>
-<ul>
-<li>
-<p><strong>Case 1</strong>: The role is called MLE but actually focuses on infra</p>
-<ul>
-<li>You should definitely find it out by asking your recruiter (ideal) or your phone interviewer (the latest).</li>
-<li>In this case, think about whether this role fits your career goals. If not, turn down the interview to save everyone time.</li>
-</ul>
-</li>
-<li>
-<p><strong>Case 2</strong>: The role focuses on ML but still tests infra knowledge</p>
-<ul>
-<li>You&rsquo;ll probably want a solid understanding of ML infra anyway &mdash; it makes collaboration with infra partners much easier and helps you design better end-to-end solutions.</li>
-<li>If this is is the case, treat the preparation as a chance to learn something fun/new! (Perhaps rest assured that other model-focused ML engineers are doing the same to jump the hoop.)</li>
-</ul>
-</li>
-</ul>
+<p>Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you&rsquo;ll never have to interview with them. However, apart from the frontier AI <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >labs</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.<span class="sr-only">)</span>
+  </small>
+</span>
+ (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.</p>
+<p>ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.</p>
+<p>Here&rsquo;s the funny thing: If your company serves truly large-scale recommender systems (e.g., recommending billions of items to hundreds of millions of DAUs), you&rsquo;re likely working with dedicated infra teams that handle logging, training, and inference for you. Your job is to optimize a narrow set of North Star metrics your team is funded for (e.g., CTR, CVR, revenue, search relevance). If your company isn&rsquo;t making recommendations at scale, the knowledge of how to build scalable ML systems may be years away from your reality.</p>
+<p>That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams &mdash; even if you ask Max Verstappen to build a car, he couldn&rsquo;t do it to save his life, but no driver on the grid doesn&rsquo;t have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren&rsquo;t working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. Solid ML infra knowledge goes a long way in an impactful career. So even if you never take an ML infra interview, you should still spend time learning this knowledge.</p>
 <h2 id="interview-type-1-full-pipeline-walk-through" class="scroll-mt-8 group">
   Interview Type 1: Full Pipeline Walk-Through
   
@@ -320,7 +324,7 @@
   
 </h3>
 <h2 id="interview-type-2-component-design" class="scroll-mt-8 group">
-  Interview type 2: Component Design
+  Interview Type 2: Component Design
   
     <a href="#interview-type-2-component-design"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
@@ -495,12 +499,20 @@
   
 </h4>
 <p>To begin, get an abstract overview of end-to-end systems:</p>
+<blockquote>
+<p>Many books have been written on either machine learning or distributed systems. However, there is currently no book available that talks about the combination of both and bridges the gap between them. &mdash; <em>Distributed Machine Learning Patterns</em></p>
+</blockquote>
+<ol>
+<li><a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">Distributed Machine Learning Patterns</a> 👉 this is a <em>fantastic</em> book about ML infra. Some folks dismiss it because the author still uses (1) TensorFlow and (2) the Fashion-MINST dataset to illustrate the model component, but I bet they didn&rsquo;t read the book.
 <ul>
-<li><a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">Distributed Machine Learning Patterns</a> 👉 good overview of end-to-end ML systems (specific stacks may be dated)</li>
-<li><a href="https://eng.snap.com/introducing-bento">Introducing Bento, Snap&rsquo;s ML Platform</a> 👉 Snap&rsquo;s all-in-one ML platform for feature engineering, training data generation, model training, and online inference</li>
-<li><a href="https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4">Scaling AI/ML Infrastructure at Uber</a> 👉</li>
-<li>Metaflow 👉 Netflix&rsquo;s open-source framework for model training and inference: <a href="https://docs.metaflow.org/metaflow/basics">basics</a>, <a href="https://docs.metaflow.org/internals/technical-overview">tech overview</a></li>
+<li>(1) is understandable because the author was a main contributor of <em>Google</em>&rsquo;s Kubeflow. Do we expect PyTorch? 🤣</li>
+<li>(2) is the point &mdash; the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. Only a toy dataset fits.</li>
 </ul>
+</li>
+<li><a href="https://eng.snap.com/introducing-bento">Introducing Bento, Snap&rsquo;s ML Platform</a> 👉 Snap&rsquo;s all-in-one ML platform for feature engineering, training data generation, model training, and online inference</li>
+<li><a href="https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4">Scaling AI/ML Infrastructure at Uber</a> 👉 evolution of Uber&rsquo;s Michaelangelo platform</li>
+<li>Metaflow 👉 Netflix&rsquo;s open-source framework for model training and inference: <a href="https://docs.metaflow.org/metaflow/basics">basics</a>, <a href="https://docs.metaflow.org/internals/technical-overview">tech overview</a></li>
+</ol>
 <h4 id="model-use-cases" class="scroll-mt-8 group">
   Model Use Cases
   
@@ -526,15 +538,15 @@
     </a>
   
 </h4>
-<p>Then, dig into specific systems designed for particular models:</p>
-<ul>
-<li><a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Evolution and Scale of Uber’s Delivery Search Platform</a> 👉 Uber Eats&rsquo; search platform</li>
-<li><a href="https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/">Introducing DoorDash’s in-house search engine</a> 👉 Argo, DoorDash&rsquo;s search platform; <a href="https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/">debugging</a></li>
-<li><a href="https://eng.snap.com/embedding-based-retrieval">Embedding-based Retrieval with Two-Tower Models in Spotlight</a> 👉 Snap&rsquo;s retrieval model for spotlight videos</li>
-<li><a href="https://eng.snap.com/snap-ads-understanding">Snap Ads Understanding</a> 👉 Snap&rsquo;s video ads content understanding model</li>
+<p>Then, dig into systems designed for specific models:</p>
+<ol start="5">
+<li><a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Evolution and Scale of Uber&rsquo;s Delivery Search Platform</a> 👉 Uber Eats&rsquo; search platform</li>
+<li><a href="https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/">Introducing DoorDash&rsquo;s In-House Search Engine</a> 👉 Argo, DoorDash&rsquo;s search platform; <a href="https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/">debugging</a></li>
+<li><a href="https://eng.snap.com/embedding-based-retrieval">Embedding-Based Retrieval with Two-Tower Models in Spotlight</a> 👉 Snap&rsquo;s retrieval model for spotlight videos</li>
+<li><a href="https://eng.snap.com/snap-ads-understanding">Snap Ads Understanding</a> 👉 Snap&rsquo;s video ad content understanding model</li>
 <li><a href="https://eng.snap.com/machine-learning-snap-ad-ranking">Machine Learning for Snapchat Ad Ranking</a> 👉 Snap&rsquo;s pCVR model</li>
 <li><code>ApplyingML</code> 👉 <a href="https://applyingml.com/resources/">blogposts</a> on ML model and system designs</li>
-</ul>
+</ol>
 <h3 id="ml-infra-components" class="scroll-mt-8 group">
   ML Infra Components
   
@@ -585,13 +597,15 @@
     </a>
   
 </h4>
-<ul>
+<ol start="11">
 <li><a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">The Dataflow Model</a> 👉 Google&rsquo;s seminal paper on large-scale data generation</li>
 <li><a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce: Simplified Data Processing on Large Clusters</a> 👉 Jeff Dean&rsquo;s original MapReduce paper</li>
 <li><a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">Point-in-Time Correctness in Real-Time Machine Learning</a> 👉 data leakage prevention</li>
 <li><a href="https://eng.snap.com/speed-up-feature-engineering">Speed Up Feature Engineering for Recommendation Systems</a> 👉 Robusta, Snap&rsquo;s feature pipeline</li>
 <li><a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Michelangelo Palette: A Feature Engineering Platform at Uber</a> 👉 Palette, Uber&rsquo;s feature pipeline and feature store</li>
-<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline – Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
+<li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline &mdash; Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
+</ol>
+<ul>
 <li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
 </ul>
 <h4 id="distributed-training-1" class="scroll-mt-8 group">
@@ -619,11 +633,11 @@
     </a>
   
 </h4>
-<ul>
+<ol start="17">
 <li><a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook</a> 👉 train LLMs on GPU clusters</li>
-<li><a href="https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html">How to train a model on 10k H100 GPUs?</a> 👉 PyTorch author&rsquo;s short blogpost</li>
+<li><a href="https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html">How to Train a Model on 10k H100 GPUs?</a> 👉 PyTorch author&rsquo;s short blogpost</li>
 <li><a href="https://eng.snap.com/training-models-with-tpus">Training Large-Scale Recommendation Models with TPUs</a> 👉 Snap has been using Google&rsquo;s TPUs since 2022</li>
-</ul>
+</ol>
 <h4 id="real-time-features" class="scroll-mt-8 group">
   Real-Time Features
   
@@ -649,10 +663,10 @@
     </a>
   
 </h4>
-<ul>
+<ol start="20">
 <li><a href="https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8">How Pinterest Leverages Realtime User Actions in Recommendation to Boost Homefeed Engagement Volume</a> 👉 real-time user aggregation features</li>
 <li><a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9">Large-scale User Sequences at Pinterest</a> 👉 real-time user sequence features</li>
-</ul>
+</ol>
 <h4 id="gpu-serving" class="scroll-mt-8 group">
   GPU Serving
   
@@ -678,12 +692,12 @@
     </a>
   
 </h4>
-<ul>
+<ol start="22">
 <li><a href="https://eng.snap.com/applying_gpu_to_snap">Applying GPU to Snap</a> 👉 Snap&rsquo;s switch from CPU to GPU serving</li>
-<li><a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">GPU-accelerated ML Inference at Pinterest</a> 👉 Pinterest did the same a year later</li>
+<li><a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">GPU-Accelerated ML Inference at Pinterest</a> 👉 Pinterest did the same a year later</li>
 <li><a href="https://openai.com/index/triton/">Introducing Triton: Open-Source GPU Programming for Neural Networks</a> 👉 OpenAI&rsquo;s Triton kernels</li>
 <li><a href="https://developer.nvidia.com/blog/cuda-graphs/">Getting Started with CUDA Graphs</a> 👉 CUDA graphs are often used in GPU serving</li>
-</ul>
+</ol>
 
     </div>
   </article>

@@ -3294,3 +3294,19 @@ footer a:hover {
     padding: 1.5rem;
   }
 }
+
+/* Disable automatic quote marks in blockquotes */
+.prose :where(blockquote):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  quotes: none;
+}
+
+.prose
+  :where(blockquote p:first-of-type):not(
+    :where([class~='not-prose'], [class~='not-prose'] *)
+  )::before,
+.prose
+  :where(blockquote p:last-of-type):not(
+    :where([class~='not-prose'], [class~='not-prose'] *)
+  )::after {
+  content: none;
+}
