@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-11-27T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-11-28T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
-  <meta itemprop="datePublished" content="2025-11-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1593">
+  <meta itemprop="datePublished" content="2025-11-28T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2024">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-11-27",
+  "datePublished": "2025-11-28",
   "description": " The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.",
   "headline": "Preparing for ML Infra System Design Interviews",
   "isPartOf": {
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT8M",
+  "timeRequired": "PT10M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 1593
+  "wordCount": 2024
 }
 </script>
 
@@ -122,13 +122,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Preparing for ML Infra System Design Interviews</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-11-27T00:00:00&#43;00:00">November 27, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-11-28T00:00:00&#43;00:00">November 28, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 8 minutes
+      Reading time: 10 minutes
     
 
     
@@ -147,7 +147,12 @@
         <li><a href="#a-bare-bone-ml-system">A Bare-Bone ML System</a></li>
         <li><a href="#interview-answer-organization">Interview Answer Organization</a>
           <ul>
+            <li><a href="#typical-questions">Typical Questions</a></li>
             <li><a href="#top-principle-design-interview--leadership--time-management--domain-knowledge">Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge</a></li>
+          </ul>
+        </li>
+        <li><a href="#case-study-design-google-map-search">Case Study: Design Google Map Search</a>
+          <ul>
             <li><a href="#online-inference-life-cycle-of-a-ranking-request">Online Inference: Life Cycle of a Ranking Request</a></li>
             <li><a href="#offline-processing-generate-data-to-train-models">Offline Processing: Generate Data to Train Models</a></li>
           </ul>
@@ -252,7 +257,7 @@
  (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.</p>
 <p>ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.</p>
 <p>Here&rsquo;s the funny thing: If your company serves truly large-scale recommender systems (e.g., recommending billions of items to hundreds of millions of DAUs), you&rsquo;re likely working with dedicated infra teams that handle logging, training, and inference for you. Your job is to optimize a narrow set of North Star metrics your team is funded for (e.g., CTR, CVR, revenue, search relevance). If your company isn&rsquo;t making recommendations at scale, the knowledge of how to build scalable ML systems may be years away from your reality.</p>
-<p>That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams &mdash; even if you ask Max Verstappen to build a car, he couldn&rsquo;t do it to save his life, but no driver on the grid doesn&rsquo;t have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren&rsquo;t working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. Solid ML infra knowledge goes a long way in an impactful career. So even if you never take an ML infra interview, you should still spend time learning this knowledge.</p>
+<p>That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams &mdash; even if you ask Max Verstappen to build a car, he couldn&rsquo;t do it to save his life, but no driver on the grid doesn&rsquo;t have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren&rsquo;t working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. So, solid ML infra knowledge goes a long way in an impactful career. Therefore, even if you never take an ML infra interview, you should still spend time learning this knowledge.</p>
 <h2 id="interview-type-1-pipeline-walk-through" class="scroll-mt-8 group">
   Interview Type 1: Pipeline Walk-Through
   
@@ -305,8 +310,8 @@
 </h3>
 <p>A bare-bone ML system consists of the following components:</p>
 <figure><img src="https://www.dropbox.com/scl/fi/rdbqiv5wk1vs8967e0rt5/Screenshot-2025-11-27-at-4.30.41-PM.png?rlkey=kyjd9hf8ol4w6ekx4diqqzh3t&amp;st=oocf1im6&amp;raw=1"
-    alt="A bare-bone ML system." width="1800"><figcaption>
-      <p>A bare-bone ML system.</p>
+    alt="A bare-bone ML system (Distributed Machine Learning Patterns, Chapters 2-6)." width="1800"><figcaption>
+      <p>A bare-bone ML system (<a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">Distributed Machine Learning Patterns</a>, Chapters 2-6).</p>
     </figcaption>
 </figure>
 
@@ -318,17 +323,17 @@
 <li><em>Caching</em>: if we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs</li>
 </ul>
 </li>
-<li><strong>Model training</strong>: initialize a model, train it on ingested data in a distributed fashion (data or model parallel), and save checkpoints
+<li><strong>Model training</strong>: initialize a model, train it on ingested data in a distributed fashion (using DDP or DMP), and save checkpoints
 <ul>
 <li>How to distribute model training
 <ul>
-<li><em>Distributed data parallel (DDP)</em>: copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
+<li><em>Distributed data parallel (DDP)</em>: copy the full model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
 <li><em>Distributed model parallel (DMP)</em>: if a huge model can&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
 </ul>
 </li>
 <li>How to ensure eventual consistency
 <ul>
-<li><em>Use parameter severs</em>: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch</li>
+<li><em>Centralized parameter severs</em>: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch</li>
 <li><em>Collective communication via <code>allreduce</code> (<code>reduce + broadcast</code>)</em>: each worker computes gradients independently 👉 aggregate gradients across workers (<code>reduce</code>) 👉 send the aggregated gradients back to all workers so they can update parameters (<code>broadcast</code>)</li>
 </ul>
 </li>
@@ -367,6 +372,51 @@
     </a>
   
 </h3>
+<h4 id="typical-questions" class="scroll-mt-8 group">
+  Typical Questions
+  
+    <a href="#typical-questions"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In interviews, there&rsquo;s no way you&rsquo;ll be asked to sketch out the abstract system. The prompt is always grounded in a specific model use case:</p>
+<ul>
+<li><strong>Feed (organic + ads)</strong>: Can you design XXX recommendations? 👉 choose from <code>{content, people, product}</code>
+<ul>
+<li>Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), to name a few.</li>
+<li>People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.</li>
+<li>Product could be anything sold by the platform or sellers</li>
+</ul>
+</li>
+<li><strong>Search</strong>: Can you design XXX search? 👉 choose from <code>{consumer vs. enterprise}</code> × <code>{open-domain vs. closed-domain}</code> × <code>{conversational vs. one-off}</code>
+<ul>
+<li>Feed vs. search: people think they are alike but their origins and goals are quite different 👉 feed makes educated guesses about what users might like, whereas search is <em>question answering</em> &mdash; the system is strictly required to retrieve relevant documents to satisfy the user&rsquo;s information need.</li>
+<li>Who&rsquo;s asking: consumer search (e.g., Google, Perplexity, Amazon) handles huge amounts of traffic, whereas enterprise search (e.g., Glean) has to be extra permission-aware</li>
+<li>Asking about what: web search allows you to search anything (e.g., Google, Perplexity, ChatGPT), whereas e-commerce (e.g., Amazon, DoorDash, Uber Eats) or other specialty websites (e.g., Airbnb, LinkedIn) typically only allow you to search products or entities that exist on that platform</li>
+<li>How to get answers: traditional search engines returns a list of ranked documents &mdash; if you&rsquo;re not happy, you have to reformulate your query (e.g., typos? too vague? too specific?) and search again; conversational search allows you to have back-and-forth chats with the system to clarify your intent or ask follow-up questions and get a good answer in a few turns</li>
+</ul>
+</li>
+<li><strong>Other common topics</strong>: trust and safety (e.g., harmful content detection), <code>{user, content, query}</code> understanding</li>
+</ul>
+<p><strong>Note</strong>: These aren&rsquo;t interview questions I&rsquo;ve personally faced. Instead, think of this list as a &ldquo;generator&rdquo; of potential questions you&rsquo;ll ever get as a general MLE hire (perhaps recall: <code>.95</code>). In backend system design interviews, you could be asked to design a rate limiter, a KV store, or systems like Twitter, YouTube, Dropbox, or Slack &mdash; even if you haven&rsquo;t worked on them. These services tap into universal design patterns like realtime updates or scaling reads/writes. Likewise, in ML infra designs, you might be asked to design feed or trust and safety systems because they tap into common ML infra patterns, not because you&rsquo;re interviewing with those teams or have the exact experience.</p>
 <h4 id="top-principle-design-interview--leadership--time-management--domain-knowledge" class="scroll-mt-8 group">
   Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge
   
@@ -429,6 +479,31 @@
   </div>
 </figure>
 
+<h3 id="case-study-design-google-map-search" class="scroll-mt-8 group">
+  Case Study: Design Google Map Search
+  
+    <a href="#case-study-design-google-map-search"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
 <h4 id="online-inference-life-cycle-of-a-ranking-request" class="scroll-mt-8 group">
   Online Inference: Life Cycle of a Ranking Request
   
@@ -654,7 +729,7 @@
     </a>
   
 </h4>
-<p>To begin, get an abstract overview of end-to-end systems:</p>
+<p>To begin, get an abstract overview of end-to-end ML systems:</p>
 <blockquote>
 <p>Many books have been written on either machine learning or distributed systems. However, there is currently no book available that talks about the combination of both and bridges the gap between them. &mdash; <em>Distributed Machine Learning Patterns</em></p>
 </blockquote>
@@ -694,7 +769,7 @@
     </a>
   
 </h4>
-<p>Then, dig into systems designed for specific models:</p>
+<p>Then, dig into ML systems designed for specific models:</p>
 <ol start="5">
 <li><a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Evolution and Scale of Uber&rsquo;s Delivery Search Platform</a> 👉 Uber Eats&rsquo; search platform</li>
 <li><a href="https://careersatdoordash.com/blog/introducing-doordashs-in-house-search-engine/">Introducing DoorDash&rsquo;s In-House Search Engine</a> 👉 Argo, DoorDash&rsquo;s search platform; <a href="https://careersatdoordash.com/blog/doordash-optimizing-in-house-search-engine-platform/">debugging</a></li>
