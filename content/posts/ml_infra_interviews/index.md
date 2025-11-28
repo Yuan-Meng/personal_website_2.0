@@ -1,8 +1,8 @@
 ---
 title: Preparing for ML Infra System Design Interviews
-date: 2025-11-25
+date: 2025-11-27
 math: true
-categories: ["career", "machine learning", "infra", "interview"]
+categories: ["career", "ml infra", "interview"]
 toc: true
 ---
 
@@ -15,11 +15,41 @@ Here's the funny thing: If your company serves truly large-scale recommender sys
 
 That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams --- even if you ask Max Verstappen to build a car, he couldn't do it to save his life, but no driver on the grid doesn't have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren't working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. Solid ML infra knowledge goes a long way in an impactful career. So even if you never take an ML infra interview, you should still spend time learning this knowledge.
 
-# Interview Type 1: Full Pipeline Walk-Through
+# Interview Type 1: Pipeline Walk-Through
 
-## Online Inference
+## A Bare-Bone System
+
+A bare-bone ML system consists of the following components:
+
+{{< figure src="https://www.dropbox.com/scl/fi/rdbqiv5wk1vs8967e0rt5/Screenshot-2025-11-27-at-4.30.41-PM.png?rlkey=kyjd9hf8ol4w6ekx4diqqzh3t&st=oocf1im6&raw=1" caption="A bare-bone ML system." width="1800">}}
+
+
+1. **Data ingestion**: consume training data (features + labels + metadata) either all at once or in a streaming fashion 👉 preprocess the data so they're ready to be fed into the model
+   - *Batching*: we usually can't load the entire training set at once 👉 split it into mini-batches and train on one batch at a time
+   - *Sharding*: extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from some shards
+   - *Caching*: if we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs
+2. **Model training**: initialize a model, train it on ingested data in a distributed way (data or model parallel), and write out checkpoints
+   - How to distribute model training
+      - *Distributed data parallel (DDP)*: to increase throughput, copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
+      - *Distributed model parallel (DMP)*: if a huge model doesn't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
+   - How to ensure eventual consistency
+      - *Use parameter severs*: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch
+      - *Collective communication via `allreduce` (`reduce + broadcast`)*: each worker computes gradients independently 👉 aggregate gradients across workers (`reduce`) 👉 send the aggregated gradients back to all workers so they can update parameters (`broadcast`)
+3. **Model serving**: load a trained model and use it to make predictions for new inputs (realtime or batched)
+      - *Replication*: to handle high QPS with low latency, replicate the model across multiple servers and use a load balancer to distribute traffic
+      - *Sharding*: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results
+      - *Even-driven processing*: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)
+<!-- ## Online Inference
+
+### Model Deployment 
+
+### Handle Requests
 
 ## Offline Processing
+
+### Data Ingestion
+
+### Model Training -->
 
 # Interview Type 2: Component Design
 
@@ -39,11 +69,10 @@ To begin, get an abstract overview of end-to-end systems:
 
 1. [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 this is a *fantastic* book about ML infra. Some folks dismiss it because the author still uses (1) TensorFlow and (2) the Fashion-MINST dataset to illustrate the model component, but I bet they didn't read the book. 
    - (1) is understandable because the author was a main contributor of *Google*'s Kubeflow. Do we expect PyTorch? 🤣
-   - (2) is the point --- the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. Only a toy dataset fits.
+   - (2) is the point --- the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. A toy dataset is what fits.
 2. [Introducing Bento, Snap's ML Platform](https://eng.snap.com/introducing-bento) 👉 Snap's all-in-one ML platform for feature engineering, training data generation, model training, and online inference
 3. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉 evolution of Uber's Michaelangelo platform
-4. Metaflow 👉 Netflix's open-source framework for model training and inference: [Why Metaflow](https://docs.metaflow.org/introduction/why-metaflow)
-, [basics](https://docs.metaflow.org/metaflow/basics), [tech overview](https://docs.metaflow.org/internals/technical-overview)
+4. Metaflow 👉 Netflix's open-source framework for model training and inference: [Why Metaflow](https://docs.metaflow.org/introduction/why-metaflow), [paper](https://arxiv.org/abs/2303.11761), [blog](https://netflixtechblog.com/supercharging-the-ml-and-ai-development-experience-at-netflix-b2d5b95c63eb), [tech overview](https://docs.metaflow.org/internals/technical-overview)
 
 
 ### Model Use Cases

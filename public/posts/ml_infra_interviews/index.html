@@ -20,14 +20,14 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-11-25T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-11-27T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
-  <meta itemprop="datePublished" content="2025-11-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="941">
-  <meta itemprop="keywords" content="Career,Machine learning,Infra,Interview">
+  <meta itemprop="datePublished" content="2025-11-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1337">
+  <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Preparing for ML Infra System Design Interviews">
@@ -63,8 +63,7 @@
   "@type": "BlogPosting",
   "articleSection": [
     "Career",
-    "Machine learning",
-    "Infra",
+    "Ml infra",
     "Interview"
   ],
   "author": {
@@ -74,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-11-25",
+  "datePublished": "2025-11-27",
   "description": " The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.",
   "headline": "Preparing for ML Infra System Design Interviews",
   "isPartOf": {
@@ -84,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT5M",
+  "timeRequired": "PT7M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 941
+  "wordCount": 1337
 }
 </script>
 
@@ -123,13 +122,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Preparing for ML Infra System Design Interviews</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-11-25T00:00:00&#43;00:00">November 25, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-11-27T00:00:00&#43;00:00">November 27, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 5 minutes
+      Reading time: 7 minutes
     
 
     
@@ -143,10 +142,9 @@
           <nav id="TableOfContents">
   <ul>
     <li><a href="#the-knowledge-dilemma-those-who-build-models-for-scalable-recsys-dont-work-on-scalable-infra">The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don&rsquo;t Work on Scalable Infra</a></li>
-    <li><a href="#interview-type-1-full-pipeline-walk-through">Interview Type 1: Full Pipeline Walk-Through</a>
+    <li><a href="#interview-type-1-pipeline-walk-through">Interview Type 1: Pipeline Walk-Through</a>
       <ul>
-        <li><a href="#online-inference">Online Inference</a></li>
-        <li><a href="#offline-processing">Offline Processing</a></li>
+        <li><a href="#a-bare-bone-system">A Bare-Bone System</a></li>
       </ul>
     </li>
     <li><a href="#interview-type-2-component-design">Interview Type 2: Component Design</a>
@@ -248,10 +246,10 @@
 <p>ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.</p>
 <p>Here&rsquo;s the funny thing: If your company serves truly large-scale recommender systems (e.g., recommending billions of items to hundreds of millions of DAUs), you&rsquo;re likely working with dedicated infra teams that handle logging, training, and inference for you. Your job is to optimize a narrow set of North Star metrics your team is funded for (e.g., CTR, CVR, revenue, search relevance). If your company isn&rsquo;t making recommendations at scale, the knowledge of how to build scalable ML systems may be years away from your reality.</p>
 <p>That said, I do think ML infra interviews are valuable: modern recommender system teams function like Formula One teams &mdash; even if you ask Max Verstappen to build a car, he couldn&rsquo;t do it to save his life, but no driver on the grid doesn&rsquo;t have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren&rsquo;t working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. Solid ML infra knowledge goes a long way in an impactful career. So even if you never take an ML infra interview, you should still spend time learning this knowledge.</p>
-<h2 id="interview-type-1-full-pipeline-walk-through" class="scroll-mt-8 group">
-  Interview Type 1: Full Pipeline Walk-Through
+<h2 id="interview-type-1-pipeline-walk-through" class="scroll-mt-8 group">
+  Interview Type 1: Pipeline Walk-Through
   
-    <a href="#interview-type-1-full-pipeline-walk-through"
+    <a href="#interview-type-1-pipeline-walk-through"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -273,10 +271,10 @@
     </a>
   
 </h2>
-<h3 id="online-inference" class="scroll-mt-8 group">
-  Online Inference
+<h3 id="a-bare-bone-system" class="scroll-mt-8 group">
+  A Bare-Bone System
   
-    <a href="#online-inference"
+    <a href="#a-bare-bone-system"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -298,31 +296,56 @@
     </a>
   
 </h3>
-<h3 id="offline-processing" class="scroll-mt-8 group">
-  Offline Processing
-  
-    <a href="#offline-processing"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
+<p>A bare-bone ML system consists of the following components:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/rdbqiv5wk1vs8967e0rt5/Screenshot-2025-11-27-at-4.30.41-PM.png?rlkey=kyjd9hf8ol4w6ekx4diqqzh3t&amp;st=oocf1im6&amp;raw=1"
+    alt="A bare-bone ML system." width="1800"><figcaption>
+      <p>A bare-bone ML system.</p>
+    </figcaption>
+</figure>
 
-    </a>
-  
-</h3>
+<ol>
+<li><strong>Data ingestion</strong>: consume training data (features + labels + metadata) either all at once or in a streaming fashion 👉 preprocess the data so they&rsquo;re ready to be fed into the model
+<ul>
+<li><em>Batching</em>: we usually can&rsquo;t load the entire training set at once 👉 split it into mini-batches and train on one batch at a time</li>
+<li><em>Sharding</em>: extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from some shards</li>
+<li><em>Caching</em>: if we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs</li>
+</ul>
+</li>
+<li><strong>Model training</strong>: initialize a model, train it on ingested data in a distributed way (data or model parallel), and write out checkpoints
+<ul>
+<li>How to distribute model training
+<ul>
+<li><em>Distributed data parallel (DDP)</em>: to increase throughput, copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
+<li><em>Distributed model parallel (DMP)</em>: if a huge model doesn&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
+</ul>
+</li>
+<li>How to ensure eventual consistency
+<ul>
+<li><em>Use parameter severs</em>: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch</li>
+<li><em>Collective communication via <code>allreduce</code> (<code>reduce + broadcast</code>)</em>: each worker computes gradients independently 👉 aggregate gradients across workers (<code>reduce</code>) 👉 send the aggregated gradients back to all workers so they can update parameters (<code>broadcast</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Model serving</strong>: load a trained model and use it to make predictions for new inputs (realtime or batched)
+<ul>
+<li><em>Replication</em>: to handle high QPS with low latency, replicate the model across multiple servers and use a load balancer to distribute traffic</li>
+<li><em>Sharding</em>: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results</li>
+<li><em>Even-driven processing</em>: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)</li>
+</ul>
+</li>
+</ol>
+<!-- ## Online Inference
+
+### Model Deployment 
+
+### Handle Requests
+
+## Offline Processing
+
+### Data Ingestion
+
+### Model Training -->
 <h2 id="interview-type-2-component-design" class="scroll-mt-8 group">
   Interview Type 2: Component Design
   
@@ -506,12 +529,12 @@
 <li><a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">Distributed Machine Learning Patterns</a> 👉 this is a <em>fantastic</em> book about ML infra. Some folks dismiss it because the author still uses (1) TensorFlow and (2) the Fashion-MINST dataset to illustrate the model component, but I bet they didn&rsquo;t read the book.
 <ul>
 <li>(1) is understandable because the author was a main contributor of <em>Google</em>&rsquo;s Kubeflow. Do we expect PyTorch? 🤣</li>
-<li>(2) is the point &mdash; the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. Only a toy dataset fits.</li>
+<li>(2) is the point &mdash; the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. A toy dataset is what fits.</li>
 </ul>
 </li>
 <li><a href="https://eng.snap.com/introducing-bento">Introducing Bento, Snap&rsquo;s ML Platform</a> 👉 Snap&rsquo;s all-in-one ML platform for feature engineering, training data generation, model training, and online inference</li>
 <li><a href="https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4">Scaling AI/ML Infrastructure at Uber</a> 👉 evolution of Uber&rsquo;s Michaelangelo platform</li>
-<li>Metaflow 👉 Netflix&rsquo;s open-source framework for model training and inference: <a href="https://docs.metaflow.org/metaflow/basics">basics</a>, <a href="https://docs.metaflow.org/internals/technical-overview">tech overview</a></li>
+<li>Metaflow 👉 Netflix&rsquo;s open-source framework for model training and inference: <a href="https://docs.metaflow.org/introduction/why-metaflow">Why Metaflow</a>, <a href="https://arxiv.org/abs/2303.11761">paper</a>, <a href="https://netflixtechblog.com/supercharging-the-ml-and-ai-development-experience-at-netflix-b2d5b95c63eb">blog</a>, <a href="https://docs.metaflow.org/internals/technical-overview">tech overview</a></li>
 </ol>
 <h4 id="model-use-cases" class="scroll-mt-8 group">
   Model Use Cases
@@ -732,10 +755,7 @@
             <a href="/categories/career/" class="taxonomy category">career</a>
           </li>
           <li>
-            <a href="/categories/machine-learning/" class="taxonomy category">machine learning</a>
-          </li>
-          <li>
-            <a href="/categories/infra/" class="taxonomy category">infra</a>
+            <a href="/categories/ml-infra/" class="taxonomy category">ml infra</a>
           </li>
           <li>
             <a href="/categories/interview/" class="taxonomy category">interview</a>
