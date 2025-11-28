@@ -7,7 +7,7 @@ toc: true
 ---
 
 # The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don't Work on Scalable Infra
-Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.
+Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates --- in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.
 
 ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.
 
@@ -26,9 +26,9 @@ A bare-bone ML system consists of the following components:
 
 1. **Data ingestion**: consume training data (features + labels + metadata) either all at once or in a streaming fashion 👉 preprocess the data so they're ready to be fed into the model
    - *Batching*: we usually can't load the entire training set at once 👉 split it into mini-batches and train on one batch at a time
-   - *Sharding*: extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from some shards
+   - *Sharding*: extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from assigned data shards
    - *Caching*: if we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs
-2. **Model training**: initialize a model, train it on ingested data in a distributed way (data or model parallel), and write out checkpoints
+2. **Model training**: initialize a model, train it on ingested data in a distributed fashion (data or model parallel), and save checkpoints
    - How to distribute model training
       - *Distributed data parallel (DDP)*: copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
       - *Distributed model parallel (DMP)*: if a huge model can't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
@@ -44,25 +44,25 @@ A bare-bone ML system consists of the following components:
 
 ### Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge
 
-A design interview is a perfect venue to showcase leadership, time management, and communication skills, on top of  domain knowledge. 
+A design interview is a perfect venue to showcase leadership, time management, and communication skills --- not just domain knowledge. 
 
 An ML infra system has many moving parts (like all distributed systems do) --- from generating and validating training data, scheduling training, to handling high QPS how it makes the most sense for your product, to name a few. You need a coherent story to tie those little pieces together and gotta sell your story telling to your interviewer. You must be assertive when the interviewer doesn't have a strong preference, but flexible when they do. That's what leadership is: influencing without authority and staying open-minded to different ideas.
 
 Last but not least, painting a high-level picture is far from enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
 
 {{< admonition >}}
-I usually start with a user request life cycle, which is what the system is built for. Then, I'll discuss offline data ingestion and model training. 
+I like to start with the life cycle of a user request, which is why we build the system. Then I'll discuss offline data ingestion and model training. 
 
-I'd say something like: *"I'd like to go over an example user request and discuss the components involved. Then, we can dive into offline pipelines like feature and data generation and model training. Does it sound good?"*
+I'd say something like: *"I'd like to go over a typical user request and discuss the online components. Then, we can dive into offline pipelines such as feature and data generation and model training. Does it sound good?"*
 
 {{< /admonition >}}
 
 
-### Online Inference: Request Life Cycle
+### Online Inference: Life Cycle of a Ranking Request
 
 
 
-### Offline Processing: Get Data to Train Models
+### Offline Processing: Generate Data to Train Models
 
 # Interview Type 2: Component Design
 
@@ -126,3 +126,5 @@ Then, dig into systems designed for specific models:
 23. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
 24. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
 25. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
+
+<!-- other details: continuous batching by HuggingFace, request-level broadcast by Meta + Pinterest -->
