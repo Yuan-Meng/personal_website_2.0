@@ -35,7 +35,7 @@ A bare-bone ML system consists of the following components:
    - How to ensure eventual consistency
       - *Use parameter severs*: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch
       - *Collective communication via `allreduce` (`reduce + broadcast`)*: each worker computes gradients independently 👉 aggregate gradients across workers (`reduce`) 👉 send the aggregated gradients back to all workers so they can update parameters (`broadcast`)
-3. **Model serving**: load a trained model and use it to make predictions for new inputs (realtime or batched)
+3. **Model serving**: load a trained model and use it to make predictions for new inputs (realtime or batched fashion)
       - *Replication*: to handle high many concurrent queries with low latency, replicate the model across multiple model servers and use a load balancer to distribute traffic evenly
       - *Sharding*: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results
       - *Even-driven processing*: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)
@@ -46,11 +46,21 @@ A bare-bone ML system consists of the following components:
 
 A design interview is a perfect venue to showcase leadership, time management, and communication skills, on top of  domain knowledge. 
 
-An ML system has many moving parts (like all distributed systems do) --- from generating and validating training data, scheduling training, to handling high QPS in a way that makes the most sense for your product. You need a coherent story to tie those little pieces together and sell your story-telling plan to your interviewer. You should be assertive when the interviewer doesn't have a strong preference, and flexible when they do. That's essentially what leadership is: influencing without authority and staying open-minded to different ideas.
+An ML infra system has many moving parts (like all distributed systems do) --- from generating and validating training data, scheduling training, to handling high QPS how it makes the most sense for your product, to name a few. You need a coherent story to tie those little pieces together and gotta sell your story telling to your interviewer. You must be assertive when the interviewer doesn't have a strong preference, but flexible when they do. That's what leadership is: influencing without authority and staying open-minded to different ideas.
 
-Last but not least, painting a high-level picture isn't enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on the mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
+Last but not least, painting a high-level picture is far from enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
 
-### Online Inference: Query Life Cycle
+{{< admonition >}}
+I usually start with a user request life cycle, which is what the system is built for. Then, I'll discuss offline data ingestion and model training. 
+
+I'd say something like: *"I'd like to go over an example user request and discuss the components involved. Then, we can dive into offline pipelines like feature and data generation and model training. Does it sound good?"*
+
+{{< /admonition >}}
+
+
+### Online Inference: Request Life Cycle
+
+
 
 ### Offline Processing: Get Data to Train Models
 

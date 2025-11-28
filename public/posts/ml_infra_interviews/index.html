@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1516">
+  <meta itemprop="wordCount" content="1585">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "Preparing for ML Infra System Design Interviews",
   "timeRequired": "PT8M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 1516
+  "wordCount": 1585
 }
 </script>
 
@@ -148,7 +148,7 @@
         <li><a href="#interview-answer-organization">Interview Answer Organization</a>
           <ul>
             <li><a href="#top-principle-design-interview--leadership--time-management--domain-knowledge">Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge</a></li>
-            <li><a href="#online-inference-query-life-cycle">Online Inference: Query Life Cycle</a></li>
+            <li><a href="#online-inference-request-life-cycle">Online Inference: Request Life Cycle</a></li>
             <li><a href="#offline-processing-get-data-to-train-models">Offline Processing: Get Data to Train Models</a></li>
           </ul>
         </li>
@@ -334,7 +334,7 @@
 </li>
 </ul>
 </li>
-<li><strong>Model serving</strong>: load a trained model and use it to make predictions for new inputs (realtime or batched)
+<li><strong>Model serving</strong>: load a trained model and use it to make predictions for new inputs (realtime or batched fashion)
 <ul>
 <li><em>Replication</em>: to handle high many concurrent queries with low latency, replicate the model across multiple model servers and use a load balancer to distribute traffic evenly</li>
 <li><em>Sharding</em>: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results</li>
@@ -393,12 +393,46 @@
   
 </h4>
 <p>A design interview is a perfect venue to showcase leadership, time management, and communication skills, on top of  domain knowledge.</p>
-<p>An ML system has many moving parts (like all distributed systems do) &mdash; from generating and validating training data, scheduling training, to handling high QPS in a way that makes the most sense for your product. You need a coherent story to tie those little pieces together and sell your story-telling plan to your interviewer. You should be assertive when the interviewer doesn&rsquo;t have a strong preference, and flexible when they do. That&rsquo;s essentially what leadership is: influencing without authority and staying open-minded to different ideas.</p>
-<p>Last but not least, painting a high-level picture isn&rsquo;t enough &mdash; you must identify and deep dive into the most interesting parts of your system, rather than dwelling on the mundane or trivial parts. That&rsquo;s where your time management instincts and domain knowledge shine.</p>
-<h4 id="online-inference-query-life-cycle" class="scroll-mt-8 group">
-  Online Inference: Query Life Cycle
+<p>An ML infra system has many moving parts (like all distributed systems do) &mdash; from generating and validating training data, scheduling training, to handling high QPS how it makes the most sense for your product, to name a few. You need a coherent story to tie those little pieces together and gotta sell your story telling to your interviewer. You must be assertive when the interviewer doesn&rsquo;t have a strong preference, but flexible when they do. That&rsquo;s what leadership is: influencing without authority and staying open-minded to different ideas.</p>
+<p>Last but not least, painting a high-level picture is far from enough &mdash; you must identify and deep dive into the most interesting parts of your system, rather than dwelling on mundane or trivial parts. That&rsquo;s where your time management instincts and domain knowledge shine.</p>
+<figure
+  role="note"
+  id="admonition-02"
+  aria-labelledby="admonition-caption-02"
+  class="admonition note  not-prose"
+>
+  <div class="flex items-center space-x-2 pb-2 font-semibold">
+      <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-info block"
+>
+  <circle cx="12" cy="12" r="10" />
+  <path d="M12 16v-4M12 8h.01" />
+</svg>
+
+    <figcaption id="admonition-caption-02">
+        Note
+    </figcaption>
+  </div>
+
+  <div class="prose pl-8 text-inherit marker:text-inherit">
+    <p>I usually start with a user request life cycle, which is what the system is built for. Then, I&rsquo;ll discuss offline data ingestion and model training.</p>
+<p>I&rsquo;d say something like: <em>&ldquo;I&rsquo;d like to go over an example user request and discuss the components involved. Then, we can dive into offline pipelines like feature and data generation and model training. Does it sound good?&rdquo;</em></p>
+
+  </div>
+</figure>
+
+<h4 id="online-inference-request-life-cycle" class="scroll-mt-8 group">
+  Online Inference: Request Life Cycle
   
-    <a href="#online-inference-query-life-cycle"
+    <a href="#online-inference-request-life-cycle"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
