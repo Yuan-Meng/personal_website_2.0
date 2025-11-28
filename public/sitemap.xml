@@ -6,11 +6,9 @@
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/infra/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/interview/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/machine-learning/</loc>
+    <loc>http://localhost:1313/categories/ml-infra/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
@@ -61,6 +59,8 @@
     <loc>http://localhost:1313/posts/career_reflection/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/awakening/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/machine-learning/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/ml_wishlist/</loc>
   </url><url>

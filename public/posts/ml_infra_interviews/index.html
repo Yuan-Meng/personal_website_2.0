@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don’t Work on Scalable Infra Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates, in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1337">
+  <meta itemprop="wordCount" content="1516">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT7M",
+  "timeRequired": "PT8M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 1337
+  "wordCount": 1516
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 7 minutes
+      Reading time: 8 minutes
     
 
     
@@ -144,7 +144,14 @@
     <li><a href="#the-knowledge-dilemma-those-who-build-models-for-scalable-recsys-dont-work-on-scalable-infra">The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don&rsquo;t Work on Scalable Infra</a></li>
     <li><a href="#interview-type-1-pipeline-walk-through">Interview Type 1: Pipeline Walk-Through</a>
       <ul>
-        <li><a href="#a-bare-bone-system">A Bare-Bone System</a></li>
+        <li><a href="#a-bare-bone-ml-system">A Bare-Bone ML System</a></li>
+        <li><a href="#interview-answer-organization">Interview Answer Organization</a>
+          <ul>
+            <li><a href="#top-principle-design-interview--leadership--time-management--domain-knowledge">Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge</a></li>
+            <li><a href="#online-inference-query-life-cycle">Online Inference: Query Life Cycle</a></li>
+            <li><a href="#offline-processing-get-data-to-train-models">Offline Processing: Get Data to Train Models</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#interview-type-2-component-design">Interview Type 2: Component Design</a>
@@ -271,10 +278,10 @@
     </a>
   
 </h2>
-<h3 id="a-bare-bone-system" class="scroll-mt-8 group">
-  A Bare-Bone System
+<h3 id="a-bare-bone-ml-system" class="scroll-mt-8 group">
+  A Bare-Bone ML System
   
-    <a href="#a-bare-bone-system"
+    <a href="#a-bare-bone-ml-system"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -315,8 +322,8 @@
 <ul>
 <li>How to distribute model training
 <ul>
-<li><em>Distributed data parallel (DDP)</em>: to increase throughput, copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
-<li><em>Distributed model parallel (DMP)</em>: if a huge model doesn&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
+<li><em>Distributed data parallel (DDP)</em>: copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
+<li><em>Distributed model parallel (DMP)</em>: if a huge model can&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
 </ul>
 </li>
 <li>How to ensure eventual consistency
@@ -329,23 +336,115 @@
 </li>
 <li><strong>Model serving</strong>: load a trained model and use it to make predictions for new inputs (realtime or batched)
 <ul>
-<li><em>Replication</em>: to handle high QPS with low latency, replicate the model across multiple servers and use a load balancer to distribute traffic</li>
+<li><em>Replication</em>: to handle high many concurrent queries with low latency, replicate the model across multiple model servers and use a load balancer to distribute traffic evenly</li>
 <li><em>Sharding</em>: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results</li>
 <li><em>Even-driven processing</em>: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)</li>
 </ul>
 </li>
 </ol>
-<!-- ## Online Inference
+<h3 id="interview-answer-organization" class="scroll-mt-8 group">
+  Interview Answer Organization
+  
+    <a href="#interview-answer-organization"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-### Model Deployment 
+    </a>
+  
+</h3>
+<h4 id="top-principle-design-interview--leadership--time-management--domain-knowledge" class="scroll-mt-8 group">
+  Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge
+  
+    <a href="#top-principle-design-interview--leadership--time-management--domain-knowledge"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-### Handle Requests
+    </a>
+  
+</h4>
+<p>A design interview is a perfect venue to showcase leadership, time management, and communication skills, on top of  domain knowledge.</p>
+<p>An ML system has many moving parts (like all distributed systems do) &mdash; from generating and validating training data, scheduling training, to handling high QPS in a way that makes the most sense for your product. You need a coherent story to tie those little pieces together and sell your story-telling plan to your interviewer. You should be assertive when the interviewer doesn&rsquo;t have a strong preference, and flexible when they do. That&rsquo;s essentially what leadership is: influencing without authority and staying open-minded to different ideas.</p>
+<p>Last but not least, painting a high-level picture isn&rsquo;t enough &mdash; you must identify and deep dive into the most interesting parts of your system, rather than dwelling on the mundane or trivial parts. That&rsquo;s where your time management instincts and domain knowledge shine.</p>
+<h4 id="online-inference-query-life-cycle" class="scroll-mt-8 group">
+  Online Inference: Query Life Cycle
+  
+    <a href="#online-inference-query-life-cycle"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-## Offline Processing
+    </a>
+  
+</h4>
+<h4 id="offline-processing-get-data-to-train-models" class="scroll-mt-8 group">
+  Offline Processing: Get Data to Train Models
+  
+    <a href="#offline-processing-get-data-to-train-models"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
 
-### Data Ingestion
-
-### Model Training -->
+    </a>
+  
+</h4>
 <h2 id="interview-type-2-component-design" class="scroll-mt-8 group">
   Interview Type 2: Component Design
   

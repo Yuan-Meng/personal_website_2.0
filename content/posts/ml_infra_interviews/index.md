@@ -17,7 +17,7 @@ That said, I do think ML infra interviews are valuable: modern recommender syste
 
 # Interview Type 1: Pipeline Walk-Through
 
-## A Bare-Bone System
+## A Bare-Bone ML System
 
 A bare-bone ML system consists of the following components:
 
@@ -30,26 +30,29 @@ A bare-bone ML system consists of the following components:
    - *Caching*: if we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs
 2. **Model training**: initialize a model, train it on ingested data in a distributed way (data or model parallel), and write out checkpoints
    - How to distribute model training
-      - *Distributed data parallel (DDP)*: to increase throughput, copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
-      - *Distributed model parallel (DMP)*: if a huge model doesn't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
+      - *Distributed data parallel (DDP)*: copy the model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
+      - *Distributed model parallel (DMP)*: if a huge model can't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
    - How to ensure eventual consistency
       - *Use parameter severs*: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch
       - *Collective communication via `allreduce` (`reduce + broadcast`)*: each worker computes gradients independently 👉 aggregate gradients across workers (`reduce`) 👉 send the aggregated gradients back to all workers so they can update parameters (`broadcast`)
 3. **Model serving**: load a trained model and use it to make predictions for new inputs (realtime or batched)
-      - *Replication*: to handle high QPS with low latency, replicate the model across multiple servers and use a load balancer to distribute traffic
+      - *Replication*: to handle high many concurrent queries with low latency, replicate the model across multiple model servers and use a load balancer to distribute traffic evenly
       - *Sharding*: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results
       - *Even-driven processing*: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)
-<!-- ## Online Inference
 
-### Model Deployment 
+## Interview Answer Organization
 
-### Handle Requests
+### Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge
 
-## Offline Processing
+A design interview is a perfect venue to showcase leadership, time management, and communication skills, on top of  domain knowledge. 
 
-### Data Ingestion
+An ML system has many moving parts (like all distributed systems do) --- from generating and validating training data, scheduling training, to handling high QPS in a way that makes the most sense for your product. You need a coherent story to tie those little pieces together and sell your story-telling plan to your interviewer. You should be assertive when the interviewer doesn't have a strong preference, and flexible when they do. That's essentially what leadership is: influencing without authority and staying open-minded to different ideas.
 
-### Model Training -->
+Last but not least, painting a high-level picture isn't enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on the mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
+
+### Online Inference: Query Life Cycle
+
+### Offline Processing: Get Data to Train Models
 
 # Interview Type 2: Component Design
 

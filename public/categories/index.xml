@@ -14,29 +14,22 @@
     <item>
       <title>Career</title>
       <link>http://localhost:1313/categories/career/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/career/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Infra</title>
-      <link>http://localhost:1313/categories/infra/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/infra/</guid>
       <description></description>
     </item>
     <item>
       <title>Interview</title>
       <link>http://localhost:1313/categories/interview/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/interview/</guid>
       <description></description>
     </item>
     <item>
-      <title>Machine learning</title>
-      <link>http://localhost:1313/categories/machine-learning/</link>
-      <pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/machine-learning/</guid>
+      <title>Ml infra</title>
+      <link>http://localhost:1313/categories/ml-infra/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/ml-infra/</guid>
       <description></description>
     </item>
     <item>
@@ -114,6 +107,13 @@
       <link>http://localhost:1313/categories/memory/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/memory/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine learning</title>
+      <link>http://localhost:1313/categories/machine-learning/</link>
+      <pubDate>Sat, 23 Nov 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/machine-learning/</guid>
       <description></description>
     </item>
     <item>
