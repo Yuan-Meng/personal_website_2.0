@@ -7,7 +7,8 @@ toc: true
 ---
 
 # The Knowledge Dilemma: Those Who Build Models for Scalable RecSys Don't Work on Scalable Infra
-Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates --- in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay (far) more than most at the same level. Many solid MLEs are incentivized to pass their interviews at some point in their careers.
+
+Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates --- in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.
 
 ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.
 
@@ -39,24 +40,30 @@ A bare-bone ML system consists of the following components:
       - *Sharding*: if a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results
       - *Even-driven processing*: in systems with strong surge patterns (e.g., Uber ride requests, Airbnb bookings), create a shared resource pool that processes can borrow from during peak hours (with a rate limiter to prevent resource exhaustion)
 
+We can use a workflow to connect components in an ML system, specifying their trigger logic and dependencies, typically via a directed acyclic graph (DAG). Some companies like to build in-house solutions (e.g., Meta, Pinterest), whereas others like to distribute or adopt open-source solutions such as Netflix's [Metaflow](https://docs.metaflow.org/) and Google's [Kubeflow](https://www.kubeflow.org/). 
+
+Snap has a fantastic blogpost on [Bento](https://eng.snap.com/introducing-bento), a unified ML platform for feature and data generation, model training, and model serving. [Netflix](https://netflixtechblog.com/supercharging-the-ml-and-ai-development-experience-at-netflix-b2d5b95c63eb), [Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4), and [Pinterest](https://medium.com/pinterest-engineering/a-decade-of-ai-platform-at-pinterest-4e3b37c0f758) also wrote vividly about ML platform evolution. It's worth revisiting those posts to digest design choices.
+
 ## Interview Answer Organization
 
-### Typical Questions
+### Typical Question Generator
 
 In interviews, there's no way you'll be asked to sketch out the abstract system. The prompt is always grounded in a specific model use case:
 
 - **Feed (organic + ads)**: Can you design XXX recommendations? 👉 choose from `{content, people, product}`
-  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), to name a few.
+  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), to name a few
   - People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.
   - Product could be anything sold by the platform or sellers
 - **Search**: Can you design XXX search? 👉 choose from `{consumer vs. enterprise}` × `{open-domain vs. closed-domain}` × `{conversational vs. one-off}` 
-  - Feed vs. search: people think they are alike but their origins and goals are quite different 👉 feed makes educated guesses about what users might like, whereas search is *question answering* --- the system is strictly required to retrieve relevant documents to satisfy the user's information need.
+  - Feed vs. search: many think the two are alike but their origins and goals are quite different 👉 feed makes educated guesses about what users might like, whereas search is *question answering* --- the system is strictly required to retrieve *relevant* documents to satisfy the user's *information need*.
   - Who's asking: consumer search (e.g., Google, Perplexity, Amazon) handles huge amounts of traffic, whereas enterprise search (e.g., Glean) has to be extra permission-aware
   - Asking about what: web search allows you to search anything (e.g., Google, Perplexity, ChatGPT), whereas e-commerce (e.g., Amazon, DoorDash, Uber Eats) or other specialty websites (e.g., Airbnb, LinkedIn) typically only allow you to search products or entities that exist on that platform
   - How to get answers: traditional search engines returns a list of ranked documents --- if you're not happy, you have to reformulate your query (e.g., typos? too vague? too specific?) and search again; conversational search allows you to have back-and-forth chats with the system to clarify your intent or ask follow-up questions and get a good answer in a few turns
-- **Other common topics**: trust and safety (e.g., harmful content detection), `{user, content, query}` understanding
+- **Other common topics**: trust and safety (e.g., harmful content detection), `{user, content, query}` understanding, etc.
+  - `{user, content, query}` understanding: usually some sort of deep representation learning model trained with some sort of contrastive objectives (see Lilian Weng's amazing [post](https://lilianweng.github.io/posts/2021-05-31-contrastive/)) to embed single entities or entity pairs/triads/etc. 👉 from a system perspective, the interesting parts are how to do distributed training (especially if you're fine-tuning an LLM too large to to fit in worker memory), how to index trained embeddings with low storage costs without metric loss, how to version and roll back embeddings, etc. (see [Uber post](https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/))
+  - Harmful content detection: usually some sort of multimodal, multi-task, multi-label classification model trained on a combination of `{user, annotator, LLM}`-generated labels to predict the probability of each type of harm, based on which we can take automatic or human-reviewed actions
 
-**Note**: These aren't interview questions I've personally faced. Instead, think of this list as a "generator" of potential questions you'll ever get as a general MLE hire (perhaps recall: `.95`). In backend system design interviews, you could be asked to design a rate limiter, a KV store, or systems like Twitter, YouTube, Dropbox, or Slack --- even if you haven't worked on them. These services tap into universal design patterns like realtime updates or scaling reads/writes. Likewise, in ML infra designs, you might be asked to design feed or trust and safety systems because they tap into common ML infra patterns, not because you're interviewing with those teams or have the exact experience.
+**Note**: These aren't exactly interview questions I've personally faced. Rather, think of this list as a "generator" with a `.95` Recall of all potential questions for non-research track, general MLE/RE hires. In backend system design interviews, you could be asked to design a rate limiter, a KV store, a blob storage, or systems like Twitter, YouTube, Dropbox, or Slack --- even if you haven't worked on them. These seemingly random services tap into universal design patterns like realtime updates or scaling reads/writes. Likewise, in ML infra designs, you might be asked to design feed or trust and safety systems because they tap into common ML infra patterns like batch/online inferences or distributed training, not necessarily because you're interviewing with those teams or have related experience on your resume.
 
 ### Top Principle: Design Interview == Leadership + Time Management + Domain Knowledge
 
@@ -66,14 +73,15 @@ An ML infra system has many moving parts (like all distributed systems do) --- f
 
 Last but not least, painting a high-level picture is far from enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
 
+
+## Case Study: Design Google Maps Search
+
 {{< admonition >}}
 I like to start with the life cycle of a user request, which is why we build the system. Then I'll discuss offline data ingestion and model training. 
 
 I'd say something like: *"I'd like to go over a typical user request and discuss the online components. Then, we can dive into offline pipelines such as feature and data generation and model training. Does it sound good?"*
 
 {{< /admonition >}}
-
-## Case Study: Design Google Map Search
 
 ### Online Inference: Life Cycle of a Ranking Request
 
@@ -83,9 +91,15 @@ I'd say something like: *"I'd like to go over a typical user request and discuss
 
 ## Feature Stores
 
+co-location with inference engine: mentioned in Snap's and Pinterest's blogs
+
 ## Real-Time Feature Updates
 
 ## Distributed Training
+
+## GPU Serving
+goal: keep GPU busy
+Model Flops Utilization (MFU)
 
 # References
 
@@ -98,9 +112,9 @@ To begin, get an abstract overview of end-to-end ML systems:
 1. [Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022) 👉 this is a *fantastic* book about ML infra. Some folks dismiss it because the author still uses (1) TensorFlow and (2) the Fashion-MINST dataset to illustrate the model component, but I bet they didn't read the book. 
    - (1) is understandable because the author was a main contributor of *Google*'s Kubeflow. Do we expect PyTorch? 🤣
    - (2) is the point --- the author wants readers to build an end-to-end ML infra system on their own machine and has provided probably the cleanest and most vividly explained instructions on how to do so. A toy dataset is what fits.
-2. [Introducing Bento, Snap's ML Platform](https://eng.snap.com/introducing-bento) 👉 Snap's all-in-one ML platform for feature engineering, training data generation, model training, and online inference
-3. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉 evolution of Uber's Michaelangelo platform
-4. Metaflow 👉 Netflix's open-source framework for model training and inference: [Why Metaflow](https://docs.metaflow.org/introduction/why-metaflow), [paper](https://arxiv.org/abs/2303.11761), [blog](https://netflixtechblog.com/supercharging-the-ml-and-ai-development-experience-at-netflix-b2d5b95c63eb), [tech overview](https://docs.metaflow.org/internals/technical-overview)
+2. Metaflow 👉 Netflix's open-source framework for model training and inference: [Why Metaflow](https://docs.metaflow.org/introduction/why-metaflow), [paper](https://arxiv.org/abs/2303.11761), [blog](https://netflixtechblog.com/supercharging-the-ml-and-ai-development-experience-at-netflix-b2d5b95c63eb), [tech overview](https://docs.metaflow.org/internals/technical-overview)
+3. [Introducing Bento, Snap's ML Platform](https://eng.snap.com/introducing-bento) 👉 Snap's all-in-one ML platform for feature engineering, training data generation, model training, and online inference
+4. [Scaling AI/ML Infrastructure at Uber](https://www.uber.com/blog/scaling-ai-ml-infrastructure-at-uber/?uclick_id=d2051111-296f-44e0-b45d-0a6bd4cc98b4) 👉 evolution of Uber's Michaelangelo platform
 
 
 ### Model Use Cases
