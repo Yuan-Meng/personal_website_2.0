@@ -1,6 +1,6 @@
 ---
 title: Preparing for ML Infra System Design Interviews
-date: 2025-11-29
+date: 2025-11-30
 math: true
 categories: ["career", "ml infra", "interview"]
 toc: true
@@ -80,7 +80,7 @@ Last but not least, painting a high-level picture is far from enough --- you mus
 
 ### Clarification Questions & Problem Statement
 
-Nowadays it's rare to see a candidate jump straight into the design. More often than not, many candidates feel the urge to ask a dozen questions because they've been told that jumping straight into the design in is a red flag. I think one should ask as many questions as needed to align on a clear, reasonable scope for 45 min. Each question should either narrow the scope or clarify requirements. 
+Nowadays it's rare to see a candidate jump straight into the design. More often than not, many candidates feel the urge to ask a dozen questions because they've been told that jumping straight into the design in is a red flag. I think one should ask a handful of questions essential for aligning on a clear, reasonable scope for 45 min. Each question should either narrow the scope or clarify requirements. 
 
 1. *Xiaohongshu has several feeds: Follow Feed, Explore Feed, and Nearby Feed. Should we focus on one or all of them?*
    - **Why ask**: A reasonable interviewer will pick one or let you choose. This spares you the pain of building 3 systems with very different candidates and optimization objectives.
@@ -216,8 +216,6 @@ Which one feels scarier: Spending an hour glancing over an end-to-end ML system,
 
 ## Offline Feature + Data Generation
 
-> [...] we will never know if or when we have seen all of our data, only that new data will arrive, old data
-may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [...]. Since money is involved, correctness is paramount. --- [*The Data Flow Model (2015)*](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)
 
 ### Context: What Data Do We Need?
 
@@ -239,7 +237,7 @@ Where does the model fetch features from? Some features are pre-computed and sto
 For model training, we need to stitch together (features $\mathbf{x}$, label $y$) pairs for each impression, or at least impressions we sample. Labels come from event logging and features can be obtained in 2 ways:
 
 - **Forward logging**: When we log an engagement event, we can also log its features. If we must log all events (e.g., for ads) but don't have space for all their features, we can use a separate logging job to record features for only a fraction of impressions. The advantage is that forward logging mitigates online-offline discrepancies in feature values. The downside is that when you have new features, you must wait X days to get X days of training data with all features. If X is large (e.g., 90 days), it hurts velocity.
-- **Backfill**: As mentioned, some features are fetched from the Feature Store while others are computed on the fly. If we can find the correct feature values at {{< sidenote "impression time" >}}Prediction time is more accurate, but not usually logged and available for join.{{< /sidenote >}}, then we can join them with labels (e.g., on `impression_id`) to build training data. The pro is that we don't need to wait for forward logging. The downside is that even the most experienced engineers can suffer from data leakage by joining "future" feature values --- values computed after the impression time --- with that impression's label. See this [blogpost](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) for a cautionary example.
+- **Backfill**: As mentioned, some features are fetched from the Feature Store while others are computed on the fly. If we can find the correct feature values at {{< sidenote "impression time" >}}Prediction time is more accurate, but not usually logged and available for join.{{< /sidenote >}}, then we can join them with labels (e.g., on `impression_id`) to build training data. The pro is that we don't need to wait for forward logging. The downside is that even the most experienced engineers can suffer from {{< sidenote "data leakage" >}}I've witnessed an entire team's scope gone because the engineer who was supposed to lead their "flagship" model joined features with labels incorrectly and the model performance flopped... Then the project was handed over to an engineer on the sister team, who shifted the join date and delivered the model in a few weeks. {{< /sidenote >}} by joining "future" feature values --- values computed after the impression time --- with that impression's label. See this [blogpost](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) for a cautionary example.
 
 To debug model performance issues, we need the full (features $\mathbf{x}$, prediction $\hat{y}$, label $y$) triads in order to examine how much model evaluation metrics (computed on ($\hat{y}$, $y$) pairs) change if we tweak the current problematic model or use another model to make predictions.
 
@@ -315,7 +313,7 @@ Say we want to know for each `snap_id`, how many views it got in the last 6 hour
          - Increment view count in bucket: `rep_block(snap_id, 16:00–16:05) += 1`
       - Write the new or updated block to
          - Iceberg table (e.g., `snap_view_blocks_5m`)
-         - Online features store (e.g., Aerospike)
+         - Online features store (e.g., [Aerospike](https://en.wikipedia.org/wiki/Aerospike_(database)))
    - Batch job: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) --- the goal is to ensure completeness
       - Every hour/day, run job to 
          - Re-scan the raw event table `snap_views_raw`
@@ -373,23 +371,61 @@ I think everyone can tell Snap's [Robusta](https://eng.snap.com/speed-up-feature
 
 By contrast, Uber's Feature Store [Palette](https://www.uber.com/blog/palette-meta-store-journey/) uses a more general, flexible design, with the core abstraction being features. Features can be generated in many ways --- e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping results to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later ingested into the offline store to keep training and serving consistent. It's less effective at heavy aggregations, but better at handling "weird" or "random" features. 
 
-
-### Deep Dives
-
-items: co-location with inference engine: mentioned in Snap's and Pinterest's blogs
-
-backward fill: pinterest uses 
-
 ## Real-Time Features
 
-Uber [Palette](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F)
-Kafka listens to events and publishes some data
+### Kafka and Flink 101
 
-Users write Flink SQL to transform interesting Kafka streams into real-time features.
+> [...] we will never know if or when we have seen all of our data, only that new data will arrive, old data
+may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [...]. Since money is involved, correctness is paramount. --- [*The Data Flow Model (2015)*](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)
 
-we can upload the features to a reatime feature store
+In the Feature Store section, we've seen streaming jobs generating near realtime features. Samuel Flender wrote an awesome [blogpost](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) covering this topic. Before reading it, perhaps check out Hello Interview's articles on [Kafka](https://www.hellointerview.com/learn/system-design/deep-dives/kafka) and [Flink](https://www.hellointerview.com/learn/system-design/deep-dives/flink) and Chapter 11 in [Designing Data-Intensive Applications](https://dataintensive.net/). There's even a [children's book](https://www.gentlydownthe.stream/) on Kafka. A backend design question closely related to realtime features is [Design an Ad Click Aggregator](https://medium.com/@bugfreeai/designing-an-ad-click-aggregation-system-meta-senior-engineer-system-design-interview-guide-18db8a974c3b), which is considered pretty hard.
 
-Real-time features ingest first into online store, then sync back to offline (supports backfill)
+When an engagement event occurs (e.g., a user clicks on a post), a producer creates a message with `(key, value, timestamp, headers)` and sends it to a Kafka topic (e.g., `post_clicks`). 
+   - To allow multiple consumer groups to listen to the same topic, each topic has multiple partitions (shards) 
+      - `key` determines the partition number within a topic
+      - `timestamp` orders messages within a partition
+      - `headers` stores metadata as key-value pairs
+   - A minimalist example of a user post click message:
+     ```json
+     {
+        "topic": "post_clicks",
+        "key": "user_12345",
+        "value": {
+          "user_id": "user_12345",
+          "post_id": "post_98765",
+          "event_type": "click"
+        },
+        "timestamp": 1732945692123,
+        "headers": {
+          "schema_version": "1"
+        }
+     }
+     ```
+
+Consumers can subscribe to specific topics, such as `post_clicks`. 
+
+To transform Kafka streams into realtime features within some aggregation window, we can use a stream processing engine like [Flink](https://en.wikipedia.org/wiki/Apache_Flink). If we want rolling click count in the last 5 min, we can write Flink SQL:
+```sql
+SELECT
+  window_start,
+  window_end,
+  COUNT(*) AS click_cnt
+FROM TABLE(
+  HOP(
+    TABLE post_clicks,
+    DESCRIPTOR(event_time),
+    INTERVAL '1' MINUTE,   -- slide
+    INTERVAL '5' MINUTE    -- window size
+  )
+)
+GROUP BY window_start, window_end;
+
+```
+Aggregated feature are written to an online Feature Store ("sink").
+
+### Case Study: Realtime Count Features
+
+### Case Study: Realtime User Sequences
 
 ## Distributed Training
 
@@ -425,27 +461,27 @@ Then, dig into ML systems designed for specific models:
 
 ## ML Infra Components
 ### Offline Feature + Data Generation
-11. [The Dataflow Model](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/) 👉 Google's seminal paper on large-scale data generation
-12. [MapReduce: Simplified Data Processing on Large Clusters](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) 👉 Jeff Dean's original MapReduce paper
-13. [Point-in-Time Correctness in Real-Time Machine Learning](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) 👉 data leakage prevention
-14. [Speed Up Feature Engineering for Recommendation Systems](https://eng.snap.com/speed-up-feature-engineering) 👉 Robusta, Snap's feature pipeline
-15. [Building a Spark-Powered Platform for ML Data Needs at Snap](https://eng.snap.com/prism) 👉 Prism, Snap's training data pipeline
+11. [The Dataflow Model](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/) 👉 using windows to tame unbounded data
+12. [MapReduce: Simplified Data Processing on Large Clusters](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) 👉 the original MapReduce paper
+13. [Point-in-Time Correctness in Real-Time Machine Learning](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) 👉 data leakage prevention for backfill
+14. [Speed Up Feature Engineering for Recommendation Systems](https://eng.snap.com/speed-up-feature-engineering) 👉 Robusta, Snap's feature pipeline that unified online + offline feature and data generation
+15. [Building a Spark-Powered Platform for ML Data Needs at Snap](https://eng.snap.com/prism) 👉 Prism, Snap's control-plane + workflow orchestration for Spark/ML data jobs
 16. [Michelangelo Palette: A Feature Engineering Platform at Uber](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F) 👉 Palette, Uber's feature pipeline and feature store
 17. [Zipline --- Airbnb's ML Data Management Framework](https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf) 👉 Zipline, Airbnb's feature pipeline and feature store
 
-
 ### Real-Time Features
-18. [Feature Infrastructure Engineering: A Comprehensive Guide](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) 👉 Samuel Flender's new blogpost on real-time signals
-19. [How Pinterest Leverages Realtime User Actions in Recommendation to Boost Homefeed Engagement Volume](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) 👉 real-time user aggregation features
-20. [Large-scale User Sequences at Pinterest](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9) 👉 real-time user sequence features
+18. [Designing Data-Intensive Applications](https://dataintensive.net/) 👉 before you read anything else, read Chapter 11: Stream Processing
+19. [Feature Infrastructure Engineering: A Comprehensive Guide](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) 👉 Samuel Flender's new blogpost on real-time signals
+20. [Real-Time User Signal Serving for Feature Engineering](https://medium.com/pinterest-engineering/real-time-user-signal-serving-for-feature-engineering-ead9a01e5b) 👉 an old Pinterest blogpost on realtime aggregation features
+21. Pinterest's Realtime User Sequences on Organic Homefeed 👉 blogposts written by [ML engineers](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) and [ML infra engineers](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)
 
 ### Distributed Training
-21. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
-22. [How to Train a Model on 10k H100 GPUs?](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html) 👉 PyTorch author's short blogpost
-23. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
+22. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
+23. [How to Train a Model on 10k H100 GPUs?](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html) 👉 PyTorch author's short blogpost
+24. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
 
 ### GPU Serving
-24. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
-25. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
-26. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
-27. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
+25. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
+26. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
+27. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
+28. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving

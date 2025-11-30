@@ -174,6 +174,7 @@
     },
     "/posts/seq_user_modeling/": {
       "in": [
+        "/posts/generative_recommendation/",
         "/posts/hardware_aware_transformers/"
       ],
       "out": [

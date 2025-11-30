@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-11-29T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-11-30T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.">
-  <meta itemprop="datePublished" content="2025-11-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5983">
+  <meta itemprop="datePublished" content="2025-11-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="6293">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-11-29",
+  "datePublished": "2025-11-30",
   "description": " Dilemma: Model Builders != Infra Builders Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.",
   "headline": "Preparing for ML Infra System Design Interviews",
   "isPartOf": {
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT29M",
+  "timeRequired": "PT30M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 5983
+  "wordCount": 6293
 }
 </script>
 
@@ -122,13 +122,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Preparing for ML Infra System Design Interviews</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-11-29T00:00:00&#43;00:00">November 29, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-11-30T00:00:00&#43;00:00">November 30, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 29 minutes
+      Reading time: 30 minutes
     
 
     
@@ -169,10 +169,15 @@
             <li><a href="#problem-statement-unified-feature-platform">Problem Statement: Unified Feature Platform</a></li>
             <li><a href="#high-level-design-from-events-to-features">High-Level Design: From Events to Features</a></li>
             <li><a href="#core-abstractions-blocks-vs-features">Core Abstractions: Blocks vs. Features</a></li>
-            <li><a href="#deep-dives">Deep Dives</a></li>
           </ul>
         </li>
-        <li><a href="#real-time-features">Real-Time Features</a></li>
+        <li><a href="#real-time-features">Real-Time Features</a>
+          <ul>
+            <li><a href="#kafka-and-flink-101">Kafka and Flink 101</a></li>
+            <li><a href="#case-study-realtime-count-features">Case Study: Realtime Count Features</a></li>
+            <li><a href="#case-study-realtime-user-sequences">Case Study: Realtime User Sequences</a></li>
+          </ul>
+        </li>
         <li><a href="#distributed-training">Distributed Training</a></li>
         <li><a href="#gpu-serving">GPU Serving</a></li>
       </ul>
@@ -516,7 +521,7 @@
     </a>
   
 </h4>
-<p>Nowadays it&rsquo;s rare to see a candidate jump straight into the design. More often than not, many candidates feel the urge to ask a dozen questions because they&rsquo;ve been told that jumping straight into the design in is a red flag. I think one should ask as many questions as needed to align on a clear, reasonable scope for 45 min. Each question should either narrow the scope or clarify requirements.</p>
+<p>Nowadays it&rsquo;s rare to see a candidate jump straight into the design. More often than not, many candidates feel the urge to ask a dozen questions because they&rsquo;ve been told that jumping straight into the design in is a red flag. I think one should ask a handful of questions essential for aligning on a clear, reasonable scope for 45 min. Each question should either narrow the scope or clarify requirements.</p>
 <ol>
 <li><em>Xiaohongshu has several feeds: Follow Feed, Explore Feed, and Nearby Feed. Should we focus on one or all of them?</em>
 <ul>
@@ -1029,10 +1034,6 @@
     </a>
   
 </h3>
-<blockquote>
-<p>[&hellip;] we will never know if or when we have seen all of our data, only that new data will arrive, old data
-may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [&hellip;]. Since money is involved, correctness is paramount. &mdash; <a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/"><em>The Data Flow Model (2015)</em></a></p>
-</blockquote>
 <h4 id="context-what-data-do-we-need" class="scroll-mt-8 group">
   Context: What Data Do We Need?
   
@@ -1092,7 +1093,26 @@ list of embs -->
     <span class="sr-only"> (sidenote: </span>Prediction time is more accurate, but not usually logged and available for join.<span class="sr-only">)</span>
   </small>
 </span>
-, then we can join them with labels (e.g., on <code>impression_id</code>) to build training data. The pro is that we don&rsquo;t need to wait for forward logging. The downside is that even the most experienced engineers can suffer from data leakage by joining &ldquo;future&rdquo; feature values &mdash; values computed after the impression time &mdash; with that impression&rsquo;s label. See this <a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">blogpost</a> for a cautionary example.</li>
+, then we can join them with labels (e.g., on <code>impression_id</code>) to build training data. The pro is that we don&rsquo;t need to wait for forward logging. The downside is that even the most experienced engineers can suffer from <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-07"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
+    class="sidenote-mark"
+    >data leakage</label
+  >
+  <small id="sidenote-07" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>I've witnessed an entire team's scope gone because the engineer who was supposed to lead their "flagship" model joined features with labels incorrectly and the model performance flopped... Then the project was handed over to an engineer on the sister team, who shifted the join date and delivered the model in a few weeks. <span class="sr-only">)</span>
+  </small>
+</span>
+ by joining &ldquo;future&rdquo; feature values &mdash; values computed after the impression time &mdash; with that impression&rsquo;s label. See this <a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">blogpost</a> for a cautionary example.</li>
 </ul>
 <p>To debug model performance issues, we need the full (features $\mathbf{x}$, prediction $\hat{y}$, label $y$) triads in order to examine how much model evaluation metrics (computed on ($\hat{y}$, $y$) pairs) change if we tweak the current problematic model or use another model to make predictions.</p>
 <h4 id="problem-statement-unified-feature-platform" class="scroll-mt-8 group">
@@ -1373,7 +1393,7 @@ list of embs -->
 <li>Write the new or updated block to
 <ul>
 <li>Iceberg table (e.g., <code>snap_view_blocks_5m</code>)</li>
-<li>Online features store (e.g., Aerospike)</li>
+<li>Online features store (e.g., <a href="https://en.wikipedia.org/wiki/Aerospike_(database)">Aerospike</a>)</li>
 </ul>
 </li>
 </ul>
@@ -1560,33 +1580,6 @@ list of embs -->
 </h4>
 <p>I think everyone can tell Snap&rsquo;s <a href="https://eng.snap.com/speed-up-feature-engineering">Robusta</a> has an unmistakable Google flavor (think <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a>, <a href="https://research.google/pubs/flumejava-easy-efficient-data-parallel-pipelines/">FlumeJava</a>, <a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">Dataflow</a>) &mdash; just like the rest of their ML stacks (Kubeflow, TensorFlow). I haven&rsquo;t checked, but Snap&rsquo;s ML team must have been founded by Google engineers. This aligned block design is incredibly complex and clever, and perhaps unusual. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid loading last 30 days&rsquo; data every day to recompute 30-day aggregations, seeing how today&rsquo;s data has a 29-day overlap with that of yesterday. People thought it was a good idea but couldn&rsquo;t be done. Snap&rsquo;s idea of pre-computing small aggregation blocks and assembling them into arbitrary windows is ingenious.</p>
 <p>By contrast, Uber&rsquo;s Feature Store <a href="https://www.uber.com/blog/palette-meta-store-journey/">Palette</a> uses a more general, flexible design, with the core abstraction being features. Features can be generated in many ways &mdash; e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping results to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later ingested into the offline store to keep training and serving consistent. It&rsquo;s less effective at heavy aggregations, but better at handling &ldquo;weird&rdquo; or &ldquo;random&rdquo; features.</p>
-<h4 id="deep-dives" class="scroll-mt-8 group">
-  Deep Dives
-  
-    <a href="#deep-dives"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h4>
-<p>items: co-location with inference engine: mentioned in Snap&rsquo;s and Pinterest&rsquo;s blogs</p>
-<p>backward fill: pinterest uses</p>
 <h3 id="real-time-features" class="scroll-mt-8 group">
   Real-Time Features
   
@@ -1612,11 +1605,255 @@ list of embs -->
     </a>
   
 </h3>
-<p>Uber <a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Palette</a>
-Kafka listens to events and publishes some data</p>
-<p>Users write Flink SQL to transform interesting Kafka streams into real-time features.</p>
-<p>we can upload the features to a reatime feature store</p>
-<p>Real-time features ingest first into online store, then sync back to offline (supports backfill)</p>
+<h4 id="kafka-and-flink-101" class="scroll-mt-8 group">
+  Kafka and Flink 101
+  
+    <a href="#kafka-and-flink-101"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<blockquote>
+<p>[&hellip;] we will never know if or when we have seen all of our data, only that new data will arrive, old data
+may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [&hellip;]. Since money is involved, correctness is paramount. &mdash; <a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/"><em>The Data Flow Model (2015)</em></a></p>
+</blockquote>
+<p>In the Feature Store section, we&rsquo;ve seen streaming jobs generating near realtime features. Samuel Flender wrote an awesome <a href="https://mlfrontiers.substack.com/p/feature-infrastructure-engineering">blogpost</a> covering this topic. Before reading it, perhaps check out Hello Interview&rsquo;s articles on <a href="https://www.hellointerview.com/learn/system-design/deep-dives/kafka">Kafka</a> and <a href="https://www.hellointerview.com/learn/system-design/deep-dives/flink">Flink</a> and Chapter 11 in <a href="https://dataintensive.net/">Designing Data-Intensive Applications</a>. There&rsquo;s even a <a href="https://www.gentlydownthe.stream/">children&rsquo;s book</a> on Kafka. A backend design question closely related to realtime features is <a href="https://medium.com/@bugfreeai/designing-an-ad-click-aggregation-system-meta-senior-engineer-system-design-interview-guide-18db8a974c3b">Design an Ad Click Aggregator</a>, which is considered pretty hard.</p>
+<p>When an engagement event occurs (e.g., a user clicks on a post), a producer creates a message with <code>(key, value, timestamp, headers)</code> and sends it to a Kafka topic (e.g., <code>post_clicks</code>).</p>
+<ul>
+<li>To allow multiple consumer groups to listen to the same topic, each topic has multiple partitions (shards)
+<ul>
+<li><code>key</code> determines the partition number within a topic</li>
+<li><code>timestamp</code> orders messages within a partition</li>
+<li><code>headers</code> stores metadata as key-value pairs</li>
+</ul>
+</li>
+<li>A minimalist example of a user post click message:
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-07">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">json</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-07 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-07"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">json code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&#34;topic&#34;</span><span class="p">:</span> <span class="s2">&#34;post_clicks&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;user_12345&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&#34;value&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="nt">&#34;user_id&#34;</span><span class="p">:</span> <span class="s2">&#34;user_12345&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">     <span class="nt">&#34;post_id&#34;</span><span class="p">:</span> <span class="s2">&#34;post_98765&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">     <span class="nt">&#34;event_type&#34;</span><span class="p">:</span> <span class="s2">&#34;click&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">},</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&#34;timestamp&#34;</span><span class="p">:</span> <span class="mi">1732945692123</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="nt">&#34;headers&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">     <span class="nt">&#34;schema_version&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+  <p class="sr-only">json code snippet end</p>
+
+  
+</figure>
+</li>
+</ul>
+<p>Consumers can subscribe to specific topics, such as <code>post_clicks</code>.</p>
+<p>To transform Kafka streams into realtime features within some aggregation window, we can use a stream processing engine like <a href="https://en.wikipedia.org/wiki/Apache_Flink">Flink</a>. If we want rolling click count in the last 5 min, we can write Flink SQL:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-08">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">sql</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-08 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-08"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">sql code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">window_start</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">window_end</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">click_cnt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="k">TABLE</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">HOP</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">TABLE</span><span class="w"> </span><span class="n">post_clicks</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">DESCRIPTOR</span><span class="p">(</span><span class="n">event_time</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">MINUTE</span><span class="p">,</span><span class="w">   </span><span class="c1">-- slide
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;5&#39;</span><span class="w"> </span><span class="k">MINUTE</span><span class="w">    </span><span class="c1">-- window size
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">  </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">window_start</span><span class="p">,</span><span class="w"> </span><span class="n">window_end</span><span class="p">;</span></span></span></code></pre></div>
+  <p class="sr-only">sql code snippet end</p>
+
+  
+</figure>
+<p>Aggregated feature are written to an online Feature Store (&ldquo;sink&rdquo;).</p>
+<h4 id="case-study-realtime-count-features" class="scroll-mt-8 group">
+  Case Study: Realtime Count Features
+  
+    <a href="#case-study-realtime-count-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<h4 id="case-study-realtime-user-sequences" class="scroll-mt-8 group">
+  Case Study: Realtime User Sequences
+  
+    <a href="#case-study-realtime-user-sequences"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <h3 id="distributed-training" class="scroll-mt-8 group">
   Distributed Training
   
@@ -1845,11 +2082,11 @@ continuous batching from HF</p>
   
 </h4>
 <ol start="11">
-<li><a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">The Dataflow Model</a> 👉 Google&rsquo;s seminal paper on large-scale data generation</li>
-<li><a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce: Simplified Data Processing on Large Clusters</a> 👉 Jeff Dean&rsquo;s original MapReduce paper</li>
-<li><a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">Point-in-Time Correctness in Real-Time Machine Learning</a> 👉 data leakage prevention</li>
-<li><a href="https://eng.snap.com/speed-up-feature-engineering">Speed Up Feature Engineering for Recommendation Systems</a> 👉 Robusta, Snap&rsquo;s feature pipeline</li>
-<li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
+<li><a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">The Dataflow Model</a> 👉 using windows to tame unbounded data</li>
+<li><a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce: Simplified Data Processing on Large Clusters</a> 👉 the original MapReduce paper</li>
+<li><a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">Point-in-Time Correctness in Real-Time Machine Learning</a> 👉 data leakage prevention for backfill</li>
+<li><a href="https://eng.snap.com/speed-up-feature-engineering">Speed Up Feature Engineering for Recommendation Systems</a> 👉 Robusta, Snap&rsquo;s feature pipeline that unified online + offline feature and data generation</li>
+<li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s control-plane + workflow orchestration for Spark/ML data jobs</li>
 <li><a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Michelangelo Palette: A Feature Engineering Platform at Uber</a> 👉 Palette, Uber&rsquo;s feature pipeline and feature store</li>
 <li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline &mdash; Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
 </ol>
@@ -1879,9 +2116,10 @@ continuous batching from HF</p>
   
 </h4>
 <ol start="18">
+<li><a href="https://dataintensive.net/">Designing Data-Intensive Applications</a> 👉 before you read anything else, read Chapter 11: Stream Processing</li>
 <li><a href="https://mlfrontiers.substack.com/p/feature-infrastructure-engineering">Feature Infrastructure Engineering: A Comprehensive Guide</a> 👉 Samuel Flender&rsquo;s new blogpost on real-time signals</li>
-<li><a href="https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8">How Pinterest Leverages Realtime User Actions in Recommendation to Boost Homefeed Engagement Volume</a> 👉 real-time user aggregation features</li>
-<li><a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9">Large-scale User Sequences at Pinterest</a> 👉 real-time user sequence features</li>
+<li><a href="https://medium.com/pinterest-engineering/real-time-user-signal-serving-for-feature-engineering-ead9a01e5b">Real-Time User Signal Serving for Feature Engineering</a> 👉 an old Pinterest blogpost on realtime aggregation features</li>
+<li>Pinterest&rsquo;s Realtime User Sequences on Organic Homefeed 👉 blogposts written by <a href="https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8">ML engineers</a> and <a href="https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9">ML infra engineers</a></li>
 </ol>
 <h4 id="distributed-training-1" class="scroll-mt-8 group">
   Distributed Training
@@ -1908,7 +2146,7 @@ continuous batching from HF</p>
     </a>
   
 </h4>
-<ol start="21">
+<ol start="22">
 <li><a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook</a> 👉 train LLMs on GPU clusters</li>
 <li><a href="https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html">How to Train a Model on 10k H100 GPUs?</a> 👉 PyTorch author&rsquo;s short blogpost</li>
 <li><a href="https://eng.snap.com/training-models-with-tpus">Training Large-Scale Recommendation Models with TPUs</a> 👉 Snap has been using Google&rsquo;s TPUs since 2022</li>
@@ -1938,7 +2176,7 @@ continuous batching from HF</p>
     </a>
   
 </h4>
-<ol start="24">
+<ol start="25">
 <li><a href="https://eng.snap.com/applying_gpu_to_snap">Applying GPU to Snap</a> 👉 Snap&rsquo;s switch from CPU to GPU serving</li>
 <li><a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">GPU-Accelerated ML Inference at Pinterest</a> 👉 Pinterest did the same a year later</li>
 <li><a href="https://openai.com/index/triton/">Introducing Triton: Open-Source GPU Programming for Neural Networks</a> 👉 OpenAI&rsquo;s Triton kernels</li>
