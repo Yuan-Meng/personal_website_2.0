@@ -264,18 +264,18 @@ Many modern ML teams have built unified feature platforms that support consisten
 
 {{< figure src="https://www.dropbox.com/scl/fi/b691em8ao42vn4vvbgtot/Screenshot-2025-11-29-at-4.56.09-PM.png?rlkey=xgo0hxjns2h2ubz1hsls799jx&st=3sfjgsnc&raw=1" caption="Robusta, Snap's feature engineering platform (source: [Snap eng blog](https://eng.snap.com/speed-up-feature-engineering))." width="1800">}}
 
-Say we want to know for each snap, how many views it got in the last 6 hours (`snap_view_count_last_6h`). Let's look at 3 scenarios:
+Say we want to know for each `snap_id`, how many views it got in the last 6 hours (`snap_view_count_last_6h`). We want to know:
 - Realtime updates: What happens when a *view event* happens?
 - Online path: What happens when we *serve a request online*?
-- Offline path: What happens when we *build training data offline*?
+- Offline path: What happens when we *create training data offline*?
 
-1. **Declarative feature spec**: First, we need to allow MLE users to define this feature with online + offline paths
-   - Config: User define features by specifying a few parameters 
+1. **Declarative feature spec**: First, we need to allow users (ML engineers) to define this feature with online + offline paths
+   - Config: User defines features by specifying some parameters 
       - Aggregation type: e.g., <span style="background-color: #FFC31B">`count`</span>, `sum`, `last_n`, `approx_quantile`
       - Keys to group by: e.g., <span style="background-color: #FFC31B">`DOCUMENT_ID`</span>, `USER_ID`, `HOUR_OF_DAY` --- can select a primary key
       - Window granularity: e.g., 5 min, 1h, <span style="background-color: #FFC31B">6h</span>, 30d, etc.
-      - Filters: e.g., view duration, view day of week
-   - Execution: The engine will compute aggregations you specify via associate + communicative operations
+      - Optional filters: e.g., view duration, view day of week
+   - Execution: The engine will compute the aggregations you specify via associate + communicative operations
       - Fundamental assumptions: `sum` meets both
          - Associative: Grouping doesn't change results
          - Communicative: Reordering doesn't change results
@@ -319,8 +319,8 @@ Say we want to know for each snap, how many views it got in the last 6 hours (`s
    - Batch job: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) --- the goal is to ensure completeness
       - Every hour/day, run job to 
          - Re-scan the raw event table `snap_views_raw`
-         - Recompute block view counts
-            - 5 min blocks for correction, if needed
+         - Recompute block view counts in 
+            - 5 min blocks to repair gaps or errors if needed
             - 1h blocks by summing 12 x 5 min blocks
       - Write new or updated blocks to Iceberg + Feature Store
          - Each row is `(primary_key, window_start, window_size, feature_id, representation_blob)`
@@ -355,7 +355,7 @@ Say we want to know for each snap, how many views it got in the last 6 hours (`s
            "feature_watermark": "2025-11-29T16:05:00Z"  // up to which blocks we trust
          }
          ```
-5. **Offline path**: If this is a new feature we've yet to forward log or has wrong serving values we want to fix, we can generate feature values that the model would've seen online (point-in-time correctness) and join them with labels for training
+5. **Offline path**: If this is a new feature we've yet to forward log or if it has wrong serving values we want to fix, we can generate feature values that the model would've seen online (point-in-time correctness) and join them with labels for training
    - Offline feature generation via point-in-time lookup
       - The impression's `feature_watermark` is 16:05 --- that means, the largest time bucket used for online prediction was 16:05 👉 to prevent data leakage, we should not use newer buckets than this 
       - Search for 1h + 5m pre-aggregated blocks from Iceberg to cover the range `[10:10, 16:05)`
@@ -367,26 +367,29 @@ Say we want to know for each snap, how many views it got in the last 6 hours (`s
       - Join on `(snap_id, impression_id)` within buckets
       - The final table has all features needed to train new models: `[user_id, snap_id, ts, label, snap_id_view_count_last_6h_offline, other features...]`
 
+### Core Abstractions: Blocks vs. Features
 
-**Note**: The design above is based on Snap's blog post. It's clever and more complex than any feature platforms I've seen. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid reloading last 30 days' data every day to recompute a 30-day aggregations. People thought it was a good idea but couldn't be done. Snap's idea of pre-computing aggregation blocks and assembling them into arbitrary windows is ingenious. My colleague asked that question in late 2024, and Snap had been doing this before 2022.
+I think everyone can tell Snap's [Robusta](https://eng.snap.com/speed-up-feature-engineering) has an unmistakable Google flavor (think [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/), [FlumeJava](https://research.google/pubs/flumejava-easy-efficient-data-parallel-pipelines/), [Dataflow](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)) --- just like the rest of their ML stacks (Kubeflow, TensorFlow). I haven't checked, but Snap's ML team must have been founded by Google engineers. This aligned block design is incredibly complex and clever, and perhaps unusual. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid loading last 30 days' data every day to recompute 30-day aggregations, seeing how today's data has a 29-day overlap with that of yesterday. People thought it was a good idea but couldn't be done. Snap's idea of pre-computing small aggregation blocks and assembling them into arbitrary windows is ingenious. 
 
-### Deep Dive #1: Backfill
-
-### Deep Dive #2: Co-Location
-
-offline vs. online code
-
-items: 
-co-location with inference engine: mentioned in Snap's and Pinterest's blogs
+By contrast, Uber's Feature Store [Palette](https://www.uber.com/blog/palette-meta-store-journey/) uses a more general, flexible design, with the core abstraction being features. Features can be generated in many ways --- e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping results to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later ingested into the offline store to keep training and serving consistent. It's less effective at heavy aggregations, but better at handling "weird" or "random" features. 
 
 
-forward fill
-backward fill: pinterest blogpost
-intrainer join
+### Deep Dives
+
+items: co-location with inference engine: mentioned in Snap's and Pinterest's blogs
+
+backward fill: pinterest uses 
 
 ## Real-Time Features
 
-Kafka, Flink
+Uber [Palette](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F)
+Kafka listens to events and publishes some data
+
+Users write Flink SQL to transform interesting Kafka streams into real-time features.
+
+we can upload the features to a reatime feature store
+
+Real-time features ingest first into online store, then sync back to offline (supports backfill)
 
 ## Distributed Training
 
@@ -426,9 +429,10 @@ Then, dig into ML systems designed for specific models:
 12. [MapReduce: Simplified Data Processing on Large Clusters](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) 👉 Jeff Dean's original MapReduce paper
 13. [Point-in-Time Correctness in Real-Time Machine Learning](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) 👉 data leakage prevention
 14. [Speed Up Feature Engineering for Recommendation Systems](https://eng.snap.com/speed-up-feature-engineering) 👉 Robusta, Snap's feature pipeline
-15. [Michelangelo Palette: A Feature Engineering Platform at Uber](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F) 👉 Palette, Uber's feature pipeline and feature store
-16. [Zipline --- Airbnb's ML Data Management Framework](https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf) 👉 Zipline, Airbnb's feature pipeline and feature store
-17. [Building a Spark-Powered Platform for ML Data Needs at Snap](https://eng.snap.com/prism) 👉 Prism, Snap's training data pipeline
+15. [Building a Spark-Powered Platform for ML Data Needs at Snap](https://eng.snap.com/prism) 👉 Prism, Snap's training data pipeline
+16. [Michelangelo Palette: A Feature Engineering Platform at Uber](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F) 👉 Palette, Uber's feature pipeline and feature store
+17. [Zipline --- Airbnb's ML Data Management Framework](https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf) 👉 Zipline, Airbnb's feature pipeline and feature store
+
 
 ### Real-Time Features
 18. [Feature Infrastructure Engineering: A Comprehensive Guide](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) 👉 Samuel Flender's new blogpost on real-time signals

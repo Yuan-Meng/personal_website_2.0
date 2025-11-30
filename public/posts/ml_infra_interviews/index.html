@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5797">
+  <meta itemprop="wordCount" content="5983">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT28M",
+  "timeRequired": "PT29M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 5797
+  "wordCount": 5983
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 28 minutes
+      Reading time: 29 minutes
     
 
     
@@ -168,8 +168,8 @@
             <li><a href="#context-what-data-do-we-need">Context: What Data Do We Need?</a></li>
             <li><a href="#problem-statement-unified-feature-platform">Problem Statement: Unified Feature Platform</a></li>
             <li><a href="#high-level-design-from-events-to-features">High-Level Design: From Events to Features</a></li>
-            <li><a href="#deep-dive-1-backfill">Deep Dive #1: Backfill</a></li>
-            <li><a href="#deep-dive-2-co-location">Deep Dive #2: Co-Location</a></li>
+            <li><a href="#core-abstractions-blocks-vs-features">Core Abstractions: Blocks vs. Features</a></li>
+            <li><a href="#deep-dives">Deep Dives</a></li>
           </ul>
         </li>
         <li><a href="#real-time-features">Real-Time Features</a></li>
@@ -1172,24 +1172,24 @@ list of embs -->
     </figcaption>
 </figure>
 
-<p>Say we want to know for each snap, how many views it got in the last 6 hours (<code>snap_view_count_last_6h</code>). Let&rsquo;s look at 3 scenarios:</p>
+<p>Say we want to know for each <code>snap_id</code>, how many views it got in the last 6 hours (<code>snap_view_count_last_6h</code>). We want to know:</p>
 <ul>
 <li>Realtime updates: What happens when a <em>view event</em> happens?</li>
 <li>Online path: What happens when we <em>serve a request online</em>?</li>
-<li>Offline path: What happens when we <em>build training data offline</em>?</li>
+<li>Offline path: What happens when we <em>create training data offline</em>?</li>
 </ul>
 <ol>
-<li><strong>Declarative feature spec</strong>: First, we need to allow MLE users to define this feature with online + offline paths
+<li><strong>Declarative feature spec</strong>: First, we need to allow users (ML engineers) to define this feature with online + offline paths
 <ul>
-<li>Config: User define features by specifying a few parameters
+<li>Config: User defines features by specifying some parameters
 <ul>
 <li>Aggregation type: e.g., <span style="background-color: #FFC31B"><code>count</code></span>, <code>sum</code>, <code>last_n</code>, <code>approx_quantile</code></li>
 <li>Keys to group by: e.g., <span style="background-color: #FFC31B"><code>DOCUMENT_ID</code></span>, <code>USER_ID</code>, <code>HOUR_OF_DAY</code> &mdash; can select a primary key</li>
 <li>Window granularity: e.g., 5 min, 1h, <span style="background-color: #FFC31B">6h</span>, 30d, etc.</li>
-<li>Filters: e.g., view duration, view day of week</li>
+<li>Optional filters: e.g., view duration, view day of week</li>
 </ul>
 </li>
-<li>Execution: The engine will compute aggregations you specify via associate + communicative operations
+<li>Execution: The engine will compute the aggregations you specify via associate + communicative operations
 <ul>
 <li>Fundamental assumptions: <code>sum</code> meets both
 <ul>
@@ -1383,9 +1383,9 @@ list of embs -->
 <li>Every hour/day, run job to
 <ul>
 <li>Re-scan the raw event table <code>snap_views_raw</code></li>
-<li>Recompute block view counts
+<li>Recompute block view counts in
 <ul>
-<li>5 min blocks for correction, if needed</li>
+<li>5 min blocks to repair gaps or errors if needed</li>
 <li>1h blocks by summing 12 x 5 min blocks</li>
 </ul>
 </li>
@@ -1509,7 +1509,7 @@ list of embs -->
 </li>
 </ul>
 </li>
-<li><strong>Offline path</strong>: If this is a new feature we&rsquo;ve yet to forward log or has wrong serving values we want to fix, we can generate feature values that the model would&rsquo;ve seen online (point-in-time correctness) and join them with labels for training
+<li><strong>Offline path</strong>: If this is a new feature we&rsquo;ve yet to forward log or if it has wrong serving values we want to fix, we can generate feature values that the model would&rsquo;ve seen online (point-in-time correctness) and join them with labels for training
 <ul>
 <li>Offline feature generation via point-in-time lookup
 <ul>
@@ -1533,11 +1533,10 @@ list of embs -->
 </ul>
 </li>
 </ol>
-<p><strong>Note</strong>: The design above is based on Snap&rsquo;s blog post. It&rsquo;s clever and more complex than any feature platforms I&rsquo;ve seen. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid reloading last 30 days&rsquo; data every day to recompute a 30-day aggregations. People thought it was a good idea but couldn&rsquo;t be done. Snap&rsquo;s idea of pre-computing aggregation blocks and assembling them into arbitrary windows is ingenious. My colleague asked that question in late 2024, and Snap had been doing this before 2022.</p>
-<h4 id="deep-dive-1-backfill" class="scroll-mt-8 group">
-  Deep Dive #1: Backfill
+<h4 id="core-abstractions-blocks-vs-features" class="scroll-mt-8 group">
+  Core Abstractions: Blocks vs. Features
   
-    <a href="#deep-dive-1-backfill"
+    <a href="#core-abstractions-blocks-vs-features"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1559,10 +1558,12 @@ list of embs -->
     </a>
   
 </h4>
-<h4 id="deep-dive-2-co-location" class="scroll-mt-8 group">
-  Deep Dive #2: Co-Location
+<p>I think everyone can tell Snap&rsquo;s <a href="https://eng.snap.com/speed-up-feature-engineering">Robusta</a> has an unmistakable Google flavor (think <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a>, <a href="https://research.google/pubs/flumejava-easy-efficient-data-parallel-pipelines/">FlumeJava</a>, <a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/">Dataflow</a>) &mdash; just like the rest of their ML stacks (Kubeflow, TensorFlow). I haven&rsquo;t checked, but Snap&rsquo;s ML team must have been founded by Google engineers. This aligned block design is incredibly complex and clever, and perhaps unusual. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid loading last 30 days&rsquo; data every day to recompute 30-day aggregations, seeing how today&rsquo;s data has a 29-day overlap with that of yesterday. People thought it was a good idea but couldn&rsquo;t be done. Snap&rsquo;s idea of pre-computing small aggregation blocks and assembling them into arbitrary windows is ingenious.</p>
+<p>By contrast, Uber&rsquo;s Feature Store <a href="https://www.uber.com/blog/palette-meta-store-journey/">Palette</a> uses a more general, flexible design, with the core abstraction being features. Features can be generated in many ways &mdash; e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping results to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later ingested into the offline store to keep training and serving consistent. It&rsquo;s less effective at heavy aggregations, but better at handling &ldquo;weird&rdquo; or &ldquo;random&rdquo; features.</p>
+<h4 id="deep-dives" class="scroll-mt-8 group">
+  Deep Dives
   
-    <a href="#deep-dive-2-co-location"
+    <a href="#deep-dives"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1584,12 +1585,8 @@ list of embs -->
     </a>
   
 </h4>
-<p>offline vs. online code</p>
-<p>items:
-co-location with inference engine: mentioned in Snap&rsquo;s and Pinterest&rsquo;s blogs</p>
-<p>forward fill
-backward fill: pinterest blogpost
-intrainer join</p>
+<p>items: co-location with inference engine: mentioned in Snap&rsquo;s and Pinterest&rsquo;s blogs</p>
+<p>backward fill: pinterest uses</p>
 <h3 id="real-time-features" class="scroll-mt-8 group">
   Real-Time Features
   
@@ -1615,7 +1612,11 @@ intrainer join</p>
     </a>
   
 </h3>
-<p>Kafka, Flink</p>
+<p>Uber <a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Palette</a>
+Kafka listens to events and publishes some data</p>
+<p>Users write Flink SQL to transform interesting Kafka streams into real-time features.</p>
+<p>we can upload the features to a reatime feature store</p>
+<p>Real-time features ingest first into online store, then sync back to offline (supports backfill)</p>
 <h3 id="distributed-training" class="scroll-mt-8 group">
   Distributed Training
   
@@ -1848,9 +1849,9 @@ continuous batching from HF</p>
 <li><a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce: Simplified Data Processing on Large Clusters</a> 👉 Jeff Dean&rsquo;s original MapReduce paper</li>
 <li><a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">Point-in-Time Correctness in Real-Time Machine Learning</a> 👉 data leakage prevention</li>
 <li><a href="https://eng.snap.com/speed-up-feature-engineering">Speed Up Feature Engineering for Recommendation Systems</a> 👉 Robusta, Snap&rsquo;s feature pipeline</li>
+<li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
 <li><a href="https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F">Michelangelo Palette: A Feature Engineering Platform at Uber</a> 👉 Palette, Uber&rsquo;s feature pipeline and feature store</li>
 <li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline &mdash; Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
-<li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
 </ol>
 <h4 id="real-time-features-1" class="scroll-mt-8 group">
   Real-Time Features
