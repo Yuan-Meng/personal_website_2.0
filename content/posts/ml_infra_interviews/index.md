@@ -214,11 +214,177 @@ For me personally, it's most natural to follow the lifecycle of an online reques
 
 Which one feels scarier: Spending an hour glancing over an end-to-end ML system, or spending 45 minutes digging into a single component? I imagine the main risk with the former is running out of time --- which is fixable with better practice and structure, whereas the main risk with the latter is running out of knowledge --- which you can't do much about in the short term. IMO, the latter is a good failure to have because it informs you what to learn more about in the future.
 
-## Feature Stores
+## Offline Feature + Data Generation
+
+> [...] we will never know if or when we have seen all of our data, only that new data will arrive, old data
+may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [...]. Since money is involved, correctness is paramount. --- [*The Data Flow Model (2015)*](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)
+
+### Context: What Data Do We Need?
+
+In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y,; y \in {0,1}$). Features arrive first --- they're fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results. 
+
+<!-- features 
+item, user, context, cross
+
+scalar: count, ratio
+ID
+embedding
+timestamps
+list of ID
+list of scalars
+list of embs -->
+
+Where does the model fetch features from? Some features are pre-computed and stored in a Feature Store (usually a distributed KV store) and updated on a regular basis (e.g., daily), such as the average CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, and so son. Some features are computed on the fly, such as the BM25 score between a query and a document. Some features are pre-computed but updated in a near realtime fashion, such as user action sequences or action counts. 
+
+For model training, we need to stitch together (features $\mathbf{x}$, label $y$) pairs for each impression, or at least impressions we sample. Labels come from event logging and features can be obtained in 2 ways:
+
+- **Forward logging**: When we log an engagement event, we can also log its features. If we must log all events (e.g., for ads) but don't have space for all their features, we can use a separate logging job to record features for only a fraction of impressions. The advantage is that forward logging mitigates online-offline discrepancies in feature values. The downside is that when you have new features, you must wait X days to get X days of training data with all features. If X is large (e.g., 90 days), it hurts velocity.
+- **Backfill**: As mentioned, some features are fetched from the Feature Store while others are computed on the fly. If we can find the correct feature values at {{< sidenote "impression time" >}}Prediction time is more accurate, but not usually logged and available for join.{{< /sidenote >}}, then we can join them with labels (e.g., on `impression_id`) to build training data. The pro is that we don't need to wait for forward logging. The downside is that even the most experienced engineers can suffer from data leakage by joining "future" feature values --- values computed after the impression time --- with that impression's label. See this [blogpost](https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/) for a cautionary example.
+
+To debug model performance issues, we need the full (features $\mathbf{x}$, prediction $\hat{y}$, label $y$) triads in order to examine how much model evaluation metrics (computed on ($\hat{y}$, $y$) pairs) change if we tweak the current problematic model or use another model to make predictions.
+
+### Problem Statement: Unified Feature Platform
+
+Even just a few years ago, even at early ML adopters like Pinterest, it was common for ML engineers to write their own feature code for offline iterations, while backend engineers translated it into Java/C++/Go for online serving (see Pinterest's ML infra [blogpost](https://medium.com/pinterest-engineering/a-decade-of-ai-platform-at-pinterest-4e3b37c0f758)). Even today, ML engineers often write feature pipelines for backfill, while backend or infra engineers implement forward logging and realtime feature updates. These inconsistent implementations may lead to online–offline discrepancies and hinder iteration velocity.
+
+Many modern ML teams have built unified feature platforms that support consistent and efficient feature generation across forward logging, backfill, and realtime updates (Snap [blog](https://eng.snap.com/speed-up-feature-engineering)). Let's aim for this.
+
+- **Functional requirements**: The Feature Store needs to support multiple common feature generation methods
+   - *Forward log*: Must be able to log inference feature values
+   - *Batch backfill*: Must be able to generate new or expensive features offline and join them with other features to create training data with point-in-time correctness
+   - *Real-time updates*: Must be able to update frequently changing features with near-realtime cadence
+- **Non-functional requirements**: The Feature Store must allow easy feature specification as well as fast and correct feature generation
+   - *Usability*: Feature users can define new features via a [declarative language](https://en.wikipedia.org/wiki/Declarative_programming) rather than manually deploying code
+   - *Velocity*: Feature users shouldn't have to wait weeks to forward log new features for training
+   - *Scale*: The system should be able to process thousands of aggregation features from billions of events per day
+
+### High-Level Design: From Events to Features
+
+> Users specify a *map* function that processes a key/value pair to generate a set of intermediate key/value pairs, and a *reduce* function that merges all intermediate values associated with the same intermediate key. Many real world tasks are expressible in this model [...]. --- [*MapReduce (2004)*](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/)
+
+{{< figure src="https://www.dropbox.com/scl/fi/b691em8ao42vn4vvbgtot/Screenshot-2025-11-29-at-4.56.09-PM.png?rlkey=xgo0hxjns2h2ubz1hsls799jx&st=3sfjgsnc&raw=1" caption="Robusta, Snap's feature engineering platform (source: [Snap eng blog](https://eng.snap.com/speed-up-feature-engineering))." width="1800">}}
+
+Say we want to know for each snap, how many views it got in the last 6 hours (`snap_view_count_last_6h`). Let's look at 3 scenarios:
+- Realtime updates: What happens when a *view event* happens?
+- Online path: What happens when we *serve a request online*?
+- Offline path: What happens when we *build training data offline*?
+
+1. **Declarative feature spec**: First, we need to allow MLE users to define this feature with online + offline paths
+   - Config: User define features by specifying a few parameters 
+      - Aggregation type: e.g., <span style="background-color: #FFC31B">`count`</span>, `sum`, `last_n`, `approx_quantile`
+      - Keys to group by: e.g., <span style="background-color: #FFC31B">`DOCUMENT_ID`</span>, `USER_ID`, `HOUR_OF_DAY` --- can select a primary key
+      - Window granularity: e.g., 5 min, 1h, <span style="background-color: #FFC31B">6h</span>, 30d, etc.
+      - Filters: e.g., view duration, view day of week
+   - Execution: The engine will compute aggregations you specify via associate + communicative operations
+      - Fundamental assumptions: `sum` meets both
+         - Associative: Grouping doesn't change results
+         - Communicative: Reordering doesn't change results
+      - The engine later computes the following aggregations
+        - `map(event) -> rep`: map each view event to `rep = 1` (each view contributes a value of 1)
+        - `combine(rep_a, rep_b) -> rep_ab`: combine reps by `sum` (associative + communicative)
+        - `finalized(rep) -> feature_value`: identity --- just return the `sum` (total views in a window)
+2. **Event stream**: Ingest, clean, and store engagement events
+   - When this view happens, the online service logs an event --- 
+      ```json
+      {
+        "event": "view",
+        "user_id": "U123",
+        "snap_id": "S456",
+        "surface": "spotlight",
+        "event_ts": "2025-11-29T16:03:10Z",
+        "request_id": "R999"
+      }
+
+      ```
+   - Data ingestion: The event goes to a Kafka topic (e.g., `snap_views`), which gets periodically written to an Iceberg table (e.g., `snap_views_raw`) partitioned by date/hour
+   - Team-specific tables: Each team can define a Spark table with custom schema, filtering, dedup, transformation, etc. 👉 each row is a clean event `(snap_id, event_time, …)`
+      ```sql
+      CREATE VIEW spotlight_snap_view_data AS
+      SELECT
+        user_id,
+        snap_id,
+        ts AS event_time
+      FROM snap_views_raw
+      WHERE surface = 'spotlight';
+
+      ```
+3. **Aggregation engine**: To avoid duplicate work, the engine computes pre-aggregated blocks at various granularities and saves them to Iceberg, which are building blocks of all jobs
+   - Streaming job: Computes pre-aggregated blocks at 5-min intervals --- the goal is to ensure freshness
+      - For each incoming row `(snap_id, event_time)`
+         - Get its 5-min bucket --- in this case, `16:00–16:05`
+         - Increment view count in bucket: `rep_block(snap_id, 16:00–16:05) += 1`
+      - Write the new or updated block to
+         - Iceberg table (e.g., `snap_view_blocks_5m`)
+         - Online features store (e.g., Aerospike)
+   - Batch job: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) --- the goal is to ensure completeness
+      - Every hour/day, run job to 
+         - Re-scan the raw event table `snap_views_raw`
+         - Recompute block view counts
+            - 5 min blocks for correction, if needed
+            - 1h blocks by summing 12 x 5 min blocks
+      - Write new or updated blocks to Iceberg + Feature Store
+         - Each row is `(primary_key, window_start, window_size, feature_id, representation_blob)`
+         - The table is partitioned by `(primary_key_shard, window_start_bucket)` so that
+            - Online reads can fetch blocks for given key
+            - Offline jobs can scan by shard + time range
+4. **Online path**: Fetch latest feature values for the current request
+      - Say a request comes in at 16:10 for `snap_id = S456`
+      - Option 1: Assemble from intermediate blocks upon request 
+         - We need to fetch blocks to cover the last 6 hours, dating back from the request time: `[10:10, 16:10)`
+         - Select non-overlapping blocks that best cover this range
+            - 1h blocks: `11:00–12:00`, `12:00–13:00`, `13:00–14:00`, `14:00–15:00`, `15:00–16:00`
+            - 5 min blocks: `10:10–10:15` to `10:55–11:00`, `16:00–16:05`, `16:05–16:10`
+         - Combine counts in those blocks to get the final answer
+         - When to use: For large or rare features we don't want to pre-materialize, we can sacrifice some latency for space
+      - Option 2: Pre-assemble in the feature store
+         - Periodically scan `snap_view_blocks_5m` to compute the full feature value for each `snap_id`
+         - Write `(snap_id, snap_view_count_last_6h, watermark_ts)` to a KV store or a document index file
+         - When to use: If we score the same `snap_id` many times, we should pre-assemble feature values to reduce latency, at the expensive of slight staleness --- for most ranking candidate features, we should do this if possible
+      - Forward logging: Regardless of how we get the feature, we can log it with other features and model predictions
+         ```json
+         {
+           "impression_id": "IMP123",
+           "user_id": "U999",
+           "snap_id": "S456",
+           "event_ts": "2025-11-29T16:10:05Z",
+           "model_score": 0.78,
+           "features": {
+             "snap_id_view_count_last_6h": 137,
+             ...
+           },
+           "feature_watermark": "2025-11-29T16:05:00Z"  // up to which blocks we trust
+         }
+         ```
+5. **Offline path**: If this is a new feature we've yet to forward log or has wrong serving values we want to fix, we can generate feature values that the model would've seen online (point-in-time correctness) and join them with labels for training
+   - Offline feature generation via point-in-time lookup
+      - The impression's `feature_watermark` is 16:05 --- that means, the largest time bucket used for online prediction was 16:05 👉 to prevent data leakage, we should not use newer buckets than this 
+      - Search for 1h + 5m pre-aggregated blocks from Iceberg to cover the range `[10:10, 16:05)`
+      - Sum counts in these buckets to generate `snap_id_view_count_last_6h_offline`
+   - Training data generation via bucketed join
+      - We can join impression logs with offline features
+         - LHS (left-hand side): impression logs bucketed by `snap_id`
+         - RHS (right-hand side): offline-generate feature table `(snap_id, impression_id, snap_id_view_count_last_6h_offline, ...)`
+      - Join on `(snap_id, impression_id)` within buckets
+      - The final table has all features needed to train new models: `[user_id, snap_id, ts, label, snap_id_view_count_last_6h_offline, other features...]`
+
+
+**Note**: The design above is based on Snap's blog post. It's clever and more complex than any feature platforms I've seen. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid reloading last 30 days' data every day to recompute a 30-day aggregations. People thought it was a good idea but couldn't be done. Snap's idea of pre-computing aggregation blocks and assembling them into arbitrary windows is ingenious. My colleague asked that question in late 2024, and Snap had been doing this before 2022.
+
+### Deep Dive #1: Backfill
+
+### Deep Dive #2: Co-Location
+
+offline vs. online code
+
 items: 
 co-location with inference engine: mentioned in Snap's and Pinterest's blogs
 
-## Real-Time Feature Updates
+
+forward fill
+backward fill: pinterest blogpost
+intrainer join
+
+## Real-Time Features
 
 Kafka, Flink
 

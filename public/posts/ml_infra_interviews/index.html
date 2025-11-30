@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don&#39;t necessarily get paid more than you would at Netflix or Snap at the same level.) (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3968">
+  <meta itemprop="wordCount" content="5797">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT19M",
+  "timeRequired": "PT28M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 3968
+  "wordCount": 5797
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 19 minutes
+      Reading time: 28 minutes
     
 
     
@@ -163,8 +163,16 @@
     </li>
     <li><a href="#interview-type-2-component-designs">Interview Type 2: Component Designs</a>
       <ul>
-        <li><a href="#feature-stores">Feature Stores</a></li>
-        <li><a href="#real-time-feature-updates">Real-Time Feature Updates</a></li>
+        <li><a href="#offline-feature--data-generation">Offline Feature + Data Generation</a>
+          <ul>
+            <li><a href="#context-what-data-do-we-need">Context: What Data Do We Need?</a></li>
+            <li><a href="#problem-statement-unified-feature-platform">Problem Statement: Unified Feature Platform</a></li>
+            <li><a href="#high-level-design-from-events-to-features">High-Level Design: From Events to Features</a></li>
+            <li><a href="#deep-dive-1-backfill">Deep Dive #1: Backfill</a></li>
+            <li><a href="#deep-dive-2-co-location">Deep Dive #2: Co-Location</a></li>
+          </ul>
+        </li>
+        <li><a href="#real-time-features">Real-Time Features</a></li>
         <li><a href="#distributed-training">Distributed Training</a></li>
         <li><a href="#gpu-serving">GPU Serving</a></li>
       </ul>
@@ -179,8 +187,8 @@
         </li>
         <li><a href="#ml-infra-components">ML Infra Components</a>
           <ul>
-            <li><a href="#offline-feature--data-generation">Offline Feature + Data Generation</a></li>
-            <li><a href="#real-time-features">Real-Time Features</a></li>
+            <li><a href="#offline-feature--data-generation-1">Offline Feature + Data Generation</a></li>
+            <li><a href="#real-time-features-1">Real-Time Features</a></li>
             <li><a href="#distributed-training-1">Distributed Training</a></li>
             <li><a href="#gpu-serving-1">GPU Serving</a></li>
           </ul>
@@ -996,10 +1004,10 @@
   
 </h2>
 <p>Which one feels scarier: Spending an hour glancing over an end-to-end ML system, or spending 45 minutes digging into a single component? I imagine the main risk with the former is running out of time &mdash; which is fixable with better practice and structure, whereas the main risk with the latter is running out of knowledge &mdash; which you can&rsquo;t do much about in the short term. IMO, the latter is a good failure to have because it informs you what to learn more about in the future.</p>
-<h3 id="feature-stores" class="scroll-mt-8 group">
-  Feature Stores
+<h3 id="offline-feature--data-generation" class="scroll-mt-8 group">
+  Offline Feature + Data Generation
   
-    <a href="#feature-stores"
+    <a href="#offline-feature--data-generation"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1021,12 +1029,571 @@
     </a>
   
 </h3>
+<blockquote>
+<p>[&hellip;] we will never know if or when we have seen all of our data, only that new data will arrive, old data
+may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [&hellip;]. Since money is involved, correctness is paramount. &mdash; <a href="https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/"><em>The Data Flow Model (2015)</em></a></p>
+</blockquote>
+<h4 id="context-what-data-do-we-need" class="scroll-mt-8 group">
+  Context: What Data Do We Need?
+  
+    <a href="#context-what-data-do-we-need"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y,; y \in {0,1}$). Features arrive first &mdash; they&rsquo;re fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results.</p>
+<!-- features 
+item, user, context, cross
+
+scalar: count, ratio
+ID
+embedding
+timestamps
+list of ID
+list of scalars
+list of embs -->
+<p>Where does the model fetch features from? Some features are pre-computed and stored in a Feature Store (usually a distributed KV store) and updated on a regular basis (e.g., daily), such as the average CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, and so son. Some features are computed on the fly, such as the BM25 score between a query and a document. Some features are pre-computed but updated in a near realtime fashion, such as user action sequences or action counts.</p>
+<p>For model training, we need to stitch together (features $\mathbf{x}$, label $y$) pairs for each impression, or at least impressions we sample. Labels come from event logging and features can be obtained in 2 ways:</p>
+<ul>
+<li><strong>Forward logging</strong>: When we log an engagement event, we can also log its features. If we must log all events (e.g., for ads) but don&rsquo;t have space for all their features, we can use a separate logging job to record features for only a fraction of impressions. The advantage is that forward logging mitigates online-offline discrepancies in feature values. The downside is that when you have new features, you must wait X days to get X days of training data with all features. If X is large (e.g., 90 days), it hurts velocity.</li>
+<li><strong>Backfill</strong>: As mentioned, some features are fetched from the Feature Store while others are computed on the fly. If we can find the correct feature values at <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-06"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-06"
+    for="sidenote-checkbox-06"
+    class="sidenote-mark"
+    >impression time</label
+  >
+  <small id="sidenote-06" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Prediction time is more accurate, but not usually logged and available for join.<span class="sr-only">)</span>
+  </small>
+</span>
+, then we can join them with labels (e.g., on <code>impression_id</code>) to build training data. The pro is that we don&rsquo;t need to wait for forward logging. The downside is that even the most experienced engineers can suffer from data leakage by joining &ldquo;future&rdquo; feature values &mdash; values computed after the impression time &mdash; with that impression&rsquo;s label. See this <a href="https://towardsdatascience.com/point-in-time-correctness-in-real-time-machine-learning-32770f322fb1/">blogpost</a> for a cautionary example.</li>
+</ul>
+<p>To debug model performance issues, we need the full (features $\mathbf{x}$, prediction $\hat{y}$, label $y$) triads in order to examine how much model evaluation metrics (computed on ($\hat{y}$, $y$) pairs) change if we tweak the current problematic model or use another model to make predictions.</p>
+<h4 id="problem-statement-unified-feature-platform" class="scroll-mt-8 group">
+  Problem Statement: Unified Feature Platform
+  
+    <a href="#problem-statement-unified-feature-platform"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Even just a few years ago, even at early ML adopters like Pinterest, it was common for ML engineers to write their own feature code for offline iterations, while backend engineers translated it into Java/C++/Go for online serving (see Pinterest&rsquo;s ML infra <a href="https://medium.com/pinterest-engineering/a-decade-of-ai-platform-at-pinterest-4e3b37c0f758">blogpost</a>). Even today, ML engineers often write feature pipelines for backfill, while backend or infra engineers implement forward logging and realtime feature updates. These inconsistent implementations may lead to online–offline discrepancies and hinder iteration velocity.</p>
+<p>Many modern ML teams have built unified feature platforms that support consistent and efficient feature generation across forward logging, backfill, and realtime updates (Snap <a href="https://eng.snap.com/speed-up-feature-engineering">blog</a>). Let&rsquo;s aim for this.</p>
+<ul>
+<li><strong>Functional requirements</strong>: The Feature Store needs to support multiple common feature generation methods
+<ul>
+<li><em>Forward log</em>: Must be able to log inference feature values</li>
+<li><em>Batch backfill</em>: Must be able to generate new or expensive features offline and join them with other features to create training data with point-in-time correctness</li>
+<li><em>Real-time updates</em>: Must be able to update frequently changing features with near-realtime cadence</li>
+</ul>
+</li>
+<li><strong>Non-functional requirements</strong>: The Feature Store must allow easy feature specification as well as fast and correct feature generation
+<ul>
+<li><em>Usability</em>: Feature users can define new features via a <a href="https://en.wikipedia.org/wiki/Declarative_programming">declarative language</a> rather than manually deploying code</li>
+<li><em>Velocity</em>: Feature users shouldn&rsquo;t have to wait weeks to forward log new features for training</li>
+<li><em>Scale</em>: The system should be able to process thousands of aggregation features from billions of events per day</li>
+</ul>
+</li>
+</ul>
+<h4 id="high-level-design-from-events-to-features" class="scroll-mt-8 group">
+  High-Level Design: From Events to Features
+  
+    <a href="#high-level-design-from-events-to-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<blockquote>
+<p>Users specify a <em>map</em> function that processes a key/value pair to generate a set of intermediate key/value pairs, and a <em>reduce</em> function that merges all intermediate values associated with the same intermediate key. Many real world tasks are expressible in this model [&hellip;]. &mdash; <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/"><em>MapReduce (2004)</em></a></p>
+</blockquote>
+<figure><img src="https://www.dropbox.com/scl/fi/b691em8ao42vn4vvbgtot/Screenshot-2025-11-29-at-4.56.09-PM.png?rlkey=xgo0hxjns2h2ubz1hsls799jx&amp;st=3sfjgsnc&amp;raw=1"
+    alt="Robusta, Snap&rsquo;s feature engineering platform (source: Snap eng blog)." width="1800"><figcaption>
+      <p>Robusta, Snap&rsquo;s feature engineering platform (source: <a href="https://eng.snap.com/speed-up-feature-engineering">Snap eng blog</a>).</p>
+    </figcaption>
+</figure>
+
+<p>Say we want to know for each snap, how many views it got in the last 6 hours (<code>snap_view_count_last_6h</code>). Let&rsquo;s look at 3 scenarios:</p>
+<ul>
+<li>Realtime updates: What happens when a <em>view event</em> happens?</li>
+<li>Online path: What happens when we <em>serve a request online</em>?</li>
+<li>Offline path: What happens when we <em>build training data offline</em>?</li>
+</ul>
+<ol>
+<li><strong>Declarative feature spec</strong>: First, we need to allow MLE users to define this feature with online + offline paths
+<ul>
+<li>Config: User define features by specifying a few parameters
+<ul>
+<li>Aggregation type: e.g., <span style="background-color: #FFC31B"><code>count</code></span>, <code>sum</code>, <code>last_n</code>, <code>approx_quantile</code></li>
+<li>Keys to group by: e.g., <span style="background-color: #FFC31B"><code>DOCUMENT_ID</code></span>, <code>USER_ID</code>, <code>HOUR_OF_DAY</code> &mdash; can select a primary key</li>
+<li>Window granularity: e.g., 5 min, 1h, <span style="background-color: #FFC31B">6h</span>, 30d, etc.</li>
+<li>Filters: e.g., view duration, view day of week</li>
+</ul>
+</li>
+<li>Execution: The engine will compute aggregations you specify via associate + communicative operations
+<ul>
+<li>Fundamental assumptions: <code>sum</code> meets both
+<ul>
+<li>Associative: Grouping doesn&rsquo;t change results</li>
+<li>Communicative: Reordering doesn&rsquo;t change results</li>
+</ul>
+</li>
+<li>The engine later computes the following aggregations
+<ul>
+<li><code>map(event) -&gt; rep</code>: map each view event to <code>rep = 1</code> (each view contributes a value of 1)</li>
+<li><code>combine(rep_a, rep_b) -&gt; rep_ab</code>: combine reps by <code>sum</code> (associative + communicative)</li>
+<li><code>finalized(rep) -&gt; feature_value</code>: identity &mdash; just return the <code>sum</code> (total views in a window)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Event stream</strong>: Ingest, clean, and store engagement events
+<ul>
+<li>When this view happens, the online service logs an event &mdash;
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-04">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">json</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-04 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-04"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">json code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;event&#34;</span><span class="p">:</span> <span class="s2">&#34;view&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;user_id&#34;</span><span class="p">:</span> <span class="s2">&#34;U123&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;snap_id&#34;</span><span class="p">:</span> <span class="s2">&#34;S456&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;surface&#34;</span><span class="p">:</span> <span class="s2">&#34;spotlight&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;event_ts&#34;</span><span class="p">:</span> <span class="s2">&#34;2025-11-29T16:03:10Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;request_id&#34;</span><span class="p">:</span> <span class="s2">&#34;R999&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+  <p class="sr-only">json code snippet end</p>
+
+  
+</figure>
+</li>
+<li>Data ingestion: The event goes to a Kafka topic (e.g., <code>snap_views</code>), which gets periodically written to an Iceberg table (e.g., <code>snap_views_raw</code>) partitioned by date/hour</li>
+<li>Team-specific tables: Each team can define a Spark table with custom schema, filtering, dedup, transformation, etc. 👉 each row is a clean event <code>(snap_id, event_time, …)</code>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-05">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">sql</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-05 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-05"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">sql code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">CREATE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="n">spotlight_snap_view_data</span><span class="w"> </span><span class="k">AS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">user_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">snap_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="n">ts</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">event_time</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w"> </span><span class="n">snap_views_raw</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="n">surface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;spotlight&#39;</span><span class="p">;</span></span></span></code></pre></div>
+  <p class="sr-only">sql code snippet end</p>
+
+  
+</figure>
+</li>
+</ul>
+</li>
+<li><strong>Aggregation engine</strong>: To avoid duplicate work, the engine computes pre-aggregated blocks at various granularities and saves them to Iceberg, which are building blocks of all jobs
+<ul>
+<li>Streaming job: Computes pre-aggregated blocks at 5-min intervals &mdash; the goal is to ensure freshness
+<ul>
+<li>For each incoming row <code>(snap_id, event_time)</code>
+<ul>
+<li>Get its 5-min bucket &mdash; in this case, <code>16:00–16:05</code></li>
+<li>Increment view count in bucket: <code>rep_block(snap_id, 16:00–16:05) += 1</code></li>
+</ul>
+</li>
+<li>Write the new or updated block to
+<ul>
+<li>Iceberg table (e.g., <code>snap_view_blocks_5m</code>)</li>
+<li>Online features store (e.g., Aerospike)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Batch job: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) &mdash; the goal is to ensure completeness
+<ul>
+<li>Every hour/day, run job to
+<ul>
+<li>Re-scan the raw event table <code>snap_views_raw</code></li>
+<li>Recompute block view counts
+<ul>
+<li>5 min blocks for correction, if needed</li>
+<li>1h blocks by summing 12 x 5 min blocks</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Write new or updated blocks to Iceberg + Feature Store
+<ul>
+<li>Each row is <code>(primary_key, window_start, window_size, feature_id, representation_blob)</code></li>
+<li>The table is partitioned by <code>(primary_key_shard, window_start_bucket)</code> so that
+<ul>
+<li>Online reads can fetch blocks for given key</li>
+<li>Offline jobs can scan by shard + time range</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Online path</strong>: Fetch latest feature values for the current request
+<ul>
+<li>Say a request comes in at 16:10 for <code>snap_id = S456</code></li>
+<li>Option 1: Assemble from intermediate blocks upon request
+<ul>
+<li>We need to fetch blocks to cover the last 6 hours, dating back from the request time: <code>[10:10, 16:10)</code></li>
+<li>Select non-overlapping blocks that best cover this range
+<ul>
+<li>1h blocks: <code>11:00–12:00</code>, <code>12:00–13:00</code>, <code>13:00–14:00</code>, <code>14:00–15:00</code>, <code>15:00–16:00</code></li>
+<li>5 min blocks: <code>10:10–10:15</code> to <code>10:55–11:00</code>, <code>16:00–16:05</code>, <code>16:05–16:10</code></li>
+</ul>
+</li>
+<li>Combine counts in those blocks to get the final answer</li>
+<li>When to use: For large or rare features we don&rsquo;t want to pre-materialize, we can sacrifice some latency for space</li>
+</ul>
+</li>
+<li>Option 2: Pre-assemble in the feature store
+<ul>
+<li>Periodically scan <code>snap_view_blocks_5m</code> to compute the full feature value for each <code>snap_id</code></li>
+<li>Write <code>(snap_id, snap_view_count_last_6h, watermark_ts)</code> to a KV store or a document index file</li>
+<li>When to use: If we score the same <code>snap_id</code> many times, we should pre-assemble feature values to reduce latency, at the expensive of slight staleness &mdash; for most ranking candidate features, we should do this if possible</li>
+</ul>
+</li>
+<li>Forward logging: Regardless of how we get the feature, we can log it with other features and model predictions
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-06">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">json</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-06 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-06"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">json code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;impression_id&#34;</span><span class="p">:</span> <span class="s2">&#34;IMP123&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;user_id&#34;</span><span class="p">:</span> <span class="s2">&#34;U999&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;snap_id&#34;</span><span class="p">:</span> <span class="s2">&#34;S456&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;event_ts&#34;</span><span class="p">:</span> <span class="s2">&#34;2025-11-29T16:10:05Z&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;model_score&#34;</span><span class="p">:</span> <span class="mf">0.78</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;features&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;snap_id_view_count_last_6h&#34;</span><span class="p">:</span> <span class="mi">137</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="err">...</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;feature_watermark&#34;</span><span class="p">:</span> <span class="s2">&#34;2025-11-29T16:05:00Z&#34;</span>  <span class="c1">// up to which blocks we trust
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span></span></span></code></pre></div>
+  <p class="sr-only">json code snippet end</p>
+
+  
+</figure>
+</li>
+</ul>
+</li>
+<li><strong>Offline path</strong>: If this is a new feature we&rsquo;ve yet to forward log or has wrong serving values we want to fix, we can generate feature values that the model would&rsquo;ve seen online (point-in-time correctness) and join them with labels for training
+<ul>
+<li>Offline feature generation via point-in-time lookup
+<ul>
+<li>The impression&rsquo;s <code>feature_watermark</code> is 16:05 &mdash; that means, the largest time bucket used for online prediction was 16:05 👉 to prevent data leakage, we should not use newer buckets than this</li>
+<li>Search for 1h + 5m pre-aggregated blocks from Iceberg to cover the range <code>[10:10, 16:05)</code></li>
+<li>Sum counts in these buckets to generate <code>snap_id_view_count_last_6h_offline</code></li>
+</ul>
+</li>
+<li>Training data generation via bucketed join
+<ul>
+<li>We can join impression logs with offline features
+<ul>
+<li>LHS (left-hand side): impression logs bucketed by <code>snap_id</code></li>
+<li>RHS (right-hand side): offline-generate feature table <code>(snap_id, impression_id, snap_id_view_count_last_6h_offline, ...)</code></li>
+</ul>
+</li>
+<li>Join on <code>(snap_id, impression_id)</code> within buckets</li>
+<li>The final table has all features needed to train new models: <code>[user_id, snap_id, ts, label, snap_id_view_count_last_6h_offline, other features...]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>Note</strong>: The design above is based on Snap&rsquo;s blog post. It&rsquo;s clever and more complex than any feature platforms I&rsquo;ve seen. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid reloading last 30 days&rsquo; data every day to recompute a 30-day aggregations. People thought it was a good idea but couldn&rsquo;t be done. Snap&rsquo;s idea of pre-computing aggregation blocks and assembling them into arbitrary windows is ingenious. My colleague asked that question in late 2024, and Snap had been doing this before 2022.</p>
+<h4 id="deep-dive-1-backfill" class="scroll-mt-8 group">
+  Deep Dive #1: Backfill
+  
+    <a href="#deep-dive-1-backfill"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<h4 id="deep-dive-2-co-location" class="scroll-mt-8 group">
+  Deep Dive #2: Co-Location
+  
+    <a href="#deep-dive-2-co-location"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>offline vs. online code</p>
 <p>items:
 co-location with inference engine: mentioned in Snap&rsquo;s and Pinterest&rsquo;s blogs</p>
-<h3 id="real-time-feature-updates" class="scroll-mt-8 group">
-  Real-Time Feature Updates
+<p>forward fill
+backward fill: pinterest blogpost
+intrainer join</p>
+<h3 id="real-time-features" class="scroll-mt-8 group">
+  Real-Time Features
   
-    <a href="#real-time-feature-updates"
+    <a href="#real-time-features"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1251,10 +1818,10 @@ continuous batching from HF</p>
     </a>
   
 </h3>
-<h4 id="offline-feature--data-generation" class="scroll-mt-8 group">
+<h4 id="offline-feature--data-generation-1" class="scroll-mt-8 group">
   Offline Feature + Data Generation
   
-    <a href="#offline-feature--data-generation"
+    <a href="#offline-feature--data-generation-1"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -1285,10 +1852,10 @@ continuous batching from HF</p>
 <li><a href="https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf">Zipline &mdash; Airbnb&rsquo;s ML Data Management Framework</a> 👉 Zipline, Airbnb&rsquo;s feature pipeline and feature store</li>
 <li><a href="https://eng.snap.com/prism">Building a Spark-Powered Platform for ML Data Needs at Snap</a> 👉 Prism, Snap&rsquo;s training data pipeline</li>
 </ol>
-<h4 id="real-time-features" class="scroll-mt-8 group">
+<h4 id="real-time-features-1" class="scroll-mt-8 group">
   Real-Time Features
   
-    <a href="#real-time-features"
+    <a href="#real-time-features-1"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
