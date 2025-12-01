@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-11-30T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-12-01T00:00:00+00:00">
 
 
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: If you do get an offer from a frontier AI lab but outside of the research org, you don&#39;t necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).) (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.">
-  <meta itemprop="datePublished" content="2025-11-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="8453">
+  <meta itemprop="datePublished" content="2025-12-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="9265">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-11-30",
+  "datePublished": "2025-12-01",
   "description": " Dilemma: Model Builders != Infra Builders A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: If you do get an offer from a frontier AI lab but outside of the research org, you don't necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).) (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.",
   "headline": "Preparing for ML Infra System Design Interviews",
   "isPartOf": {
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT40M",
+  "timeRequired": "PT44M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 8453
+  "wordCount": 9265
 }
 </script>
 
@@ -122,13 +122,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">Preparing for ML Infra System Design Interviews</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-11-30T00:00:00&#43;00:00">November 30, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-12-01T00:00:00&#43;00:00">December 1, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 40 minutes
+      Reading time: 44 minutes
     
 
     
@@ -155,8 +155,8 @@
           <ul>
             <li><a href="#clarification-questions--problem-statement">Clarification Questions &amp; Problem Statement</a></li>
             <li><a href="#high-level-design">High-Level Design</a></li>
-            <li><a href="#online-inference-life-cycle-of-a-ranking-request">Online Inference: Life Cycle of a Ranking Request</a></li>
-            <li><a href="#offline-processing-generate-data-to-train-models">Offline Processing: Generate Data to Train Models</a></li>
+            <li><a href="#online-path-life-cycle-of-a-feed-request">Online Path: Life Cycle of a Feed Request</a></li>
+            <li><a href="#offline-path-generate-data-to-train-models">Offline Path: Generate Data to Train Models</a></li>
           </ul>
         </li>
       </ul>
@@ -343,10 +343,10 @@
 </figure>
 
 <ol>
-<li><strong>Data ingestion</strong>: Consume training data (features + labels + metadata) either all at once or in a streaming fashion 👉 preprocess the data so they&rsquo;re ready to be fed into the model
+<li><strong>Data ingestion</strong>: Consume training data (features + labels; metadata) either all at once or in a streaming fashion 👉 preprocess the data so they are ready to be fed into the model
 <ul>
 <li><em>Batching</em>: We usually can&rsquo;t load the entire training set at once 👉 split it into mini-batches and train on one batch at a time</li>
-<li><em>Sharding</em>: Extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from assigned data shards</li>
+<li><em>Sharding</em>: Extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume batches from assigned data shards</li>
 <li><em>Caching</em>: If we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs</li>
 </ul>
 </li>
@@ -354,14 +354,14 @@
 <ul>
 <li>How to distribute model training
 <ul>
-<li><em>Distributed data parallel (DDP)</em>: copy the full model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
-<li><em>Distributed model parallel (DMP)</em>: if a huge model can&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
+<li><em>Distributed data parallel (DDP)</em>: Copy the full model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters</li>
+<li><em>Distributed model parallel (DMP)</em>: If a huge model can&rsquo;t fit in one worker&rsquo;s memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns</li>
 </ul>
 </li>
 <li>How to ensure eventual consistency
 <ul>
-<li><em>Centralized parameter severs</em>: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch</li>
-<li><em>Collective communication via <code>allreduce</code> (<code>reduce + broadcast</code>)</em>: each worker computes gradients independently 👉 aggregate gradients across workers (<code>reduce</code>) 👉 send the aggregated gradients back to all workers so they can update parameters (<code>broadcast</code>)</li>
+<li><em>Centralized parameter severs</em>: A parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch (<span style="background-color: #FFC31B">not used in modern systems anymore!</span>)</li>
+<li><em>Collective communication via <code>allreduce</code> (<code>reduce + broadcast</code>)</em>: Each worker computes gradients independently and sends gradients to all other workers 👉 each worker aggregates gradients from all other workers (<code>reduce</code>) 👉 each worker sends aggregated gradients all other workers (<code>broadcast</code>)</li>
 </ul>
 </li>
 </ul>
@@ -430,7 +430,7 @@
 <ul>
 <li><strong>Feed (organic + ads)</strong>: Can you design XXX recommendations? 👉 choose from <code>{content, people, product}</code>
 <ul>
-<li>Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), to name a few</li>
+<li>Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, to name a few</li>
 <li>People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.</li>
 <li>Product could be anything sold by the platform or sellers</li>
 </ul>
@@ -575,8 +575,12 @@
 <li><strong>Why ask</strong>: This may be the least useful question here &mdash; as the creator of Hello Interview <a href="https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery">pointed out</a>, QPS is obviously high, latency obviously has to be low, and you waste time only signaling you can do division. Still, you can mention that high QPS and low latency requirements justify a multi-stage design and caching wherever possible.</li>
 </ul>
 </li>
+<li><em>For feed, it&rsquo;s important that we remove harmful content and ensure diversity. Do we need to focus on these considerations today?</em>
+<ul>
+<li><strong>Why ask</strong>: Feed is not just about ranking content by <code>pAction</code>, but providing a good experience by showing relevant, safe, and diverse contents to users. It can be important to show such awareness and know some re-ranking methods (e.g., Xiaohongshu published a <a href="https://arxiv.org/abs/2107.05204">paper</a> on diversity). However, don&rsquo;t start with this part and only deep dive if you&rsquo;ve already presented a complete ranking solution.</li>
+</ul>
+</li>
 </ol>
-<!-- remove harmful content, ensure diversity, address cold start    -->
 <p><strong>Problem statement</strong>: We will build Xiaohongshu&rsquo;s Explore Feed, focusing on organic content. Explore Feed surfaces relevant notes from a corpus of billions. The system must handle high <span class="sidenote">
   <input
     aria-label="Show sidenote"
@@ -622,6 +626,7 @@
     </a>
   
 </h4>
+<p>For me personally, it feels natural to start with the online path by following a request lifecycle and move to the offline path including data ingestion and model training. I&rsquo;ll check in with the interviewer: <em>&ldquo;To structure the design, I&rsquo;ll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?&rdquo;</em></p>
 <p>Below is a high-level design of Xiaohongshu Explore Feed (references: Instagram Explore Feed <a href="https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/">model</a> and <a href="https://engineering.fb.com/2025/05/21/production-engineering/journey-to-1000-models-scaling-instagrams-recommendation-system/">infra</a> designs).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/adw63e6ubvsowmmsepo5j/Screenshot-2025-11-28-at-8.55.12-PM.png?rlkey=1uvtzqjk3p07vfqoxhs9q3av3&amp;st=5jplk53m&amp;raw=1"
     alt="A boilerplate design for (almost any) large-scale ranking systems." width="1800"><figcaption>
@@ -629,11 +634,10 @@
     </figcaption>
 </figure>
 
-<p>For me personally, it&rsquo;s most natural to follow the lifecycle of an online request and move into offline data ingestion and model training pipelines. I&rsquo;ll check in with the interviewer by saying something like: <em>&ldquo;To structure the design, I&rsquo;ll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?&rdquo;</em></p>
-<h4 id="online-inference-life-cycle-of-a-ranking-request" class="scroll-mt-8 group">
-  Online Inference: Life Cycle of a Ranking Request
+<h4 id="online-path-life-cycle-of-a-feed-request" class="scroll-mt-8 group">
+  Online Path: Life Cycle of a Feed Request
   
-    <a href="#online-inference-life-cycle-of-a-ranking-request"
+    <a href="#online-path-life-cycle-of-a-feed-request"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -659,7 +663,8 @@
 <li>
 <p><strong>Client request</strong>: The client fires a request whenever the user needs a new page of notes &mdash; for example, when they land on the homepage, refresh it, or approach the end of the current page.</p>
 <ul>
-<li><em>Load balancing</em>: To handle high QPS, we use a load balancer to distribute traffic across multiple retrieval and ranking servers. We can use round-robin or least-connections algorithms for a stateless service. If we have heavy per-user cache on server memory, we can apply consistent-hashing on <code>userId</code> to maintain the state (<code>server = hash(userId) mod N</code>).</li>
+<li><em>Load balancing</em>: To handle high QPS with low latency, we can use a load balancer to distribute traffic across multiple retrieval and ranking servers. We can use round-robin or least-connections algorithms, which are stateless and good for most ranking use cases. If we have heavy per-user cache on server memory, we can apply consistent-hashing on <code>userId</code> to route the same user to the same server (<code>server = hash(userId) mod N</code>).</li>
+<li><em>Hot key handling</em>: Consistent hashing may create hot keys (e.g., if a user is super active or a post is super popular). If this occurs, we can (1) re-consider using stateless algorithms, (2) switch to another key to hash, (3) use a compound key (e.g., <code>postId-countryId</code>), or (4) add a <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">random salt</a> to the hash.</li>
 </ul>
 </li>
 <li>
@@ -965,10 +970,10 @@
 </ul>
 </li>
 </ol>
-<h4 id="offline-processing-generate-data-to-train-models" class="scroll-mt-8 group">
-  Offline Processing: Generate Data to Train Models
+<h4 id="offline-path-generate-data-to-train-models" class="scroll-mt-8 group">
+  Offline Path: Generate Data to Train Models
   
-    <a href="#offline-processing-generate-data-to-train-models"
+    <a href="#offline-path-generate-data-to-train-models"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -991,11 +996,11 @@
   
 </h4>
 <ol>
-<li>Offline feature pipeline</li>
-<li>Realtime feature pipeline</li>
-<li>Training data pipeline</li>
-<li>Model training pipeline</li>
-<li>Model deployment pipeline</li>
+<li><strong>Offline feature generation</strong>: Some features are expensive to compute (e.g., outputs from a large model) and don&rsquo;t require realtime updates, such as user and content understanding embeddings. We can compute these embeddings on a daily basis (e.g., via a cron job) and upload versioned embeddings to the Feature Store (e.g., Cassandra). Aggregation features, such as counts or ratios for a user, a piece of content, or a user–content pair over the last N hours or N days, can be pre-computed offline on an hourly or a daily basis, but we should allow realtime updates to those features when new engagements occur.</li>
+<li><strong>Realtime feature generation</strong>: Some features come from the client (e.g., <code>userId</code>, <code>deviceId</code>, <code>deviceType</code>, <code>geohash</code>, <code>country</code>) &mdash; these can only be logged at inference time. Other features may need frequent updates, such as engagement counts or ratios. To generate realtime features, we typically combine a distributed messaging system like Kafka with a stream processing engine like Flink. When an engagement occurs, the client or a backend service logs an event to a Kafka topic (e.g., <code>user_post_clicks</code>). Consumers read these topics, and Flink processes the event stream to compute realtime features (e.g., post clicks in the last 5 minutes). These features can then be written to the Feature Store for serving. We can also incrementally update longer-range features &mdash; such as hourly or daily post-click counts &mdash; using the same realtime stream.</li>
+<li><strong>Training data pipeline</strong>: For most features, we can log feature values together with user actions for each request in the engagement logs. This forward logging approach is cheap and guarantees that feature values match exactly what the model saw during inference. However, if we introduce new features, want to fix wrong features, or have features that are too expensive to log (e.g., a user&rsquo;s lifelong action sequences), then we need to backfill those features offline and join them with engagement labels. To prevent data leakage, we should only use the latest feature values <em>before</em> the impression time (or a feature watermark indicating the latest feature timestamp used, in the &ldquo;fix wrong feature&rdquo; case).</li>
+<li><strong>Model training pipeline</strong>: Once all required features are joined with labels, we can use the dataset to train models. How many days of data to use depends on how much compute and training time we can afford. Using a wider date range usually improves generalization, and therefore test metrics, but requires more GPU workers and longer training. For feed ranking models, it&rsquo;s common to use at least a few weeks of data or even a few months. We can use distributed training to increase throughput. For ranking models, we typically use Distributed Data Parallel (DDP), where multiple workers process different batches simultaneously, compute local gradients, and then aggregate them via <code>all-reduce</code> (each worker reduces gradients from peers and then receives the fully aggregated gradients) before applying updates. We should save model checkpoints and optimizer states frequently to ensure fault-tolerant training. It&rsquo;s also important to track which batches have already been consumed so that, when resuming from a checkpoint, we don&rsquo;t repeat data and overfit.</li>
+<li><strong>Model deployment pipeline</strong>: After training, raw PyTorch models are typically exported to TorchScript to optimize for inference. Before deploying a new model, we should verify that offline metrics such as normalized cross-entropy (1 − treatment CE / baseline CE), AUC, and PR-AUC are not degraded. For low latency inference, the model needs to remain in memory on the server. To avoid downtime, we can deploy the model to a fresh set of servers and gradually shift traffic to them. During rollout, we should closely monitor online metrics such as post CTR, share rate, hide rate, and other engagement signals to ensure model quality. If online metrics degrade, we should immediately roll back. For models with new architectures or features, we should run an A/B experiment and only roll out the new model design if we see statistically significant improvements with no or justifiable degradation in business or performance metrics.</li>
 </ol>
 <h2 id="interview-type-2-component-designs" class="scroll-mt-8 group">
   Interview Type 2: Component Designs
@@ -1074,16 +1079,6 @@
   
 </h4>
 <p>In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y; y \in {0,1}$). Features arrive first &mdash; they&rsquo;re fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the initial ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results.</p>
-<!-- features 
-item, user, context, cross
-
-scalar: count, ratio
-ID
-embedding
-timestamps
-list of ID
-list of scalars
-list of embs -->
 <p>Where does the model fetch features from? Some features, such as the CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, etc., are pre-computed and stored in a Feature Store (usually a distributed KV store) updated in batch or streaming fashion. Some features are computed on the fly, such as the BM25 score between a query and a document.</p>
 <p>For model training, we need to stitch together (features $\mathbf{x}$, label $y$) pairs for each impression, or at least impressions we sample. Labels come from event logging and features can be obtained in 2 ways:</p>
 <ul>

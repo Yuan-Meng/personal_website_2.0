@@ -1,6 +1,6 @@
 ---
 title: Preparing for ML Infra System Design Interviews
-date: 2025-11-30
+date: 2025-12-01
 math: true
 categories: ["career", "ml infra", "interview"]
 toc: true
@@ -24,17 +24,17 @@ A bare-bone ML system consists of the following components:
 
 {{< figure src="https://www.dropbox.com/scl/fi/uvptgcmfbhjs2o5y58i0e/Screenshot-2025-11-28-at-6.54.39-PM.png?rlkey=4oop20e6lbho45elw1ut46z2q&st=c3hwud96&raw=1" caption="A bare-bone ML system ([Distributed Machine Learning Patterns](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022), Chapters 2-6)." width="1800">}}
 
-1. **Data ingestion**: Consume training data (features + labels + metadata) either all at once or in a streaming fashion 👉 preprocess the data so they're ready to be fed into the model
+1. **Data ingestion**: Consume training data (features + labels; metadata) either all at once or in a streaming fashion 👉 preprocess the data so they are ready to be fed into the model
    - *Batching*: We usually can't load the entire training set at once 👉 split it into mini-batches and train on one batch at a time
-   - *Sharding*: Extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume from assigned data shards
+   - *Sharding*: Extremely large datasets may not fit on a single machine 👉 shard data across multiple machines and let each worker consume batches from assigned data shards
    - *Caching*: If we read data from a remote source (e.g., a database or datalake) or have expensive preprocessing, we can cache preprocessed data in RAM for future epochs
 2. **Model training**: Initialize a model, train it on ingested data in a distributed fashion (using DDP or DMP), and save checkpoints
    - How to distribute model training
-      - *Distributed data parallel (DDP)*: copy the full model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
-      - *Distributed model parallel (DMP)*: if a huge model can't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
+      - *Distributed data parallel (DDP)*: Copy the full model to multiple workers 👉 each worker consumes data and computes gradients independently 👉 aggregate gradients (e.g., sum them) to update parameters
+      - *Distributed model parallel (DMP)*: If a huge model can't fit in one worker's memory (e.g., hundreds of Transformer blocks), split the model across workers 👉 each worker consumes source data or upstream outputs to compute gradients and update the parameters it owns
    - How to ensure eventual consistency
-      - *Centralized parameter severs*: a parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch
-      - *Collective communication via `allreduce` (`reduce + broadcast`)*: each worker computes gradients independently 👉 aggregate gradients across workers (`reduce`) 👉 send the aggregated gradients back to all workers so they can update parameters (`broadcast`)
+      - *Centralized parameter severs*: A parameter server stores the authoritative model parameters 👉 workers push gradients to it, the server applies updates, and workers pull the latest parameters before training the next batch (<span style="background-color: #FFC31B">not used in modern systems anymore!</span>)
+      - *Collective communication via `allreduce` (`reduce + broadcast`)*: Each worker computes gradients independently and sends gradients to all other workers 👉 each worker aggregates gradients from all other workers (`reduce`) 👉 each worker sends aggregated gradients all other workers (`broadcast`)
 3. **Model serving**: Load a trained model and use it to make predictions for new inputs (realtime or batched fashion)
       - *Replication*: To handle high many concurrent queries with low latency, replicate the model across multiple model servers and use a load balancer to distribute traffic evenly
       - *Sharding*: If a request is too large for a single worker and can be decomposed (e.g., frame-level video understanding) 👉 distribute sub-requests to shards 👉 aggregate results
@@ -51,7 +51,7 @@ Snap has a fantastic blogpost on [Bento](https://eng.snap.com/introducing-bento)
 In interviews, there's no way you'll be asked to sketch out the abstract system. The prompt is always grounded in a specific model use case:
 
 - **Feed (organic + ads)**: Can you design XXX recommendations? 👉 choose from `{content, people, product}`
-  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), to name a few
+  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, to name a few
   - People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.
   - Product could be anything sold by the platform or sellers
 - **Search**: Can you design XXX search? 👉 choose from `{consumer vs. enterprise}` × `{open-domain vs. closed-domain}` × `{conversational vs. one-off}` 
@@ -89,23 +89,24 @@ Nowadays it's rare to see a candidate jump straight into the design. More often 
    - **Why ask**: If the corpus is huge, you may need sharding, or must do vertical scaling in order to still co-locate the full corpus with models on the model server. And if you're doing nearest-neighbor retrieval, exhaustive KNN is unrealistic, so you need ANN.
 4. *What are the average and peak QPS? What's the latency target?*
    - **Why ask**: This may be the least useful question here --- as the creator of Hello Interview [pointed out](https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery), QPS is obviously high, latency obviously has to be low, and you waste time only signaling you can do division. Still, you can mention that high QPS and low latency requirements justify a multi-stage design and caching wherever possible.
-
-<!-- remove harmful content, ensure diversity, address cold start    -->
+5. *For feed, it's important that we remove harmful content and ensure diversity. Do we need to focus on these considerations today?*
+   - **Why ask**: Feed is not just about ranking content by `pAction`, but providing a good experience by showing relevant, safe, and diverse contents to users. It can be important to show such awareness and know some re-ranking methods (e.g., Xiaohongshu published a [paper](https://arxiv.org/abs/2107.05204) on diversity). However, don't start with this part and only deep dive if you've already presented a complete ranking solution.
 
 **Problem statement**: We will build Xiaohongshu's Explore Feed, focusing on organic content. Explore Feed surfaces relevant notes from a corpus of billions. The system must handle high {{< sidenote "QPS" >}}Xiaohongshu has 100 million DAUs in the last known report. Suppose each DAU fetches Explore Feed 10 times a day, the average QPS is $\frac{1\mathrm{e}^9}{864000} \approx \frac{1\mathrm{e}^9}{1\mathrm{e}^5} = 10000.$  Peak QPS is usually 6x-10x. {{< /sidenote >}} (average: > 10k; peak: > 100k) while keeping end-to-end p99 latency < 500 ms. The system availability should also be high (e.g., > 99.9% uptime).
 
 ### High-Level Design
 
+For me personally, it feels natural to start with the online path by following a request lifecycle and move to the offline path including data ingestion and model training. I'll check in with the interviewer: *"To structure the design, I'll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?"*
+
 Below is a high-level design of Xiaohongshu Explore Feed (references: Instagram Explore Feed [model](https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/) and [infra](https://engineering.fb.com/2025/05/21/production-engineering/journey-to-1000-models-scaling-instagrams-recommendation-system/) designs).
 
 {{< figure src="https://www.dropbox.com/scl/fi/adw63e6ubvsowmmsepo5j/Screenshot-2025-11-28-at-8.55.12-PM.png?rlkey=1uvtzqjk3p07vfqoxhs9q3av3&st=5jplk53m&raw=1" caption="A boilerplate design for (almost any) large-scale ranking systems." width="1800">}}
 
-For me personally, it's most natural to follow the lifecycle of an online request and move into offline data ingestion and model training pipelines. I'll check in with the interviewer by saying something like: *"To structure the design, I'll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?"*
-
-### Online Inference: Life Cycle of a Ranking Request
+### Online Path: Life Cycle of a Feed Request
 
 1. **Client request**: The client fires a request whenever the user needs a new page of notes --- for example, when they land on the homepage, refresh it, or approach the end of the current page.
-   - *Load balancing*: To handle high QPS, we use a load balancer to distribute traffic across multiple retrieval and ranking servers. We can use round-robin or least-connections algorithms for a stateless service. If we have heavy per-user cache on server memory, we can apply consistent-hashing on `userId` to maintain the state (`server = hash(userId) mod N`).
+   - *Load balancing*: To handle high QPS with low latency, we can use a load balancer to distribute traffic across multiple retrieval and ranking servers. We can use round-robin or least-connections algorithms, which are stateless and good for most ranking use cases. If we have heavy per-user cache on server memory, we can apply consistent-hashing on `userId` to route the same user to the same server (`server = hash(userId) mod N`).
+   - *Hot key handling*: Consistent hashing may create hot keys (e.g., if a user is super active or a post is super popular). If this occurs, we can (1) re-consider using stateless algorithms, (2) switch to another key to hash, (3) use a compound key (e.g., `postId-countryId`), or (4) add a [random salt](https://en.wikipedia.org/wiki/Salt_(cryptography)) to the hash.
 
 2. **Candidate generation**: We retrieve thousands of candidates (from billions) that may rank highly at later stages.
    - *Generators*: to ensure good recall and diversity, we fetch candidates from multiple generators. Some generators rely on heuristics (e.g., trending notes, notes from followed authors, the user's top interest topics). Others use similarity between the user and each item (user-to-item) or between previously engaged items and new items (item-to-item).
@@ -203,13 +204,13 @@ For me personally, it's most natural to follow the lifecycle of an online reques
    - *System performance monitoring*: We should also monitor the latency, throughput, CPU/CPU utilization of each service.
    - *Logging*: For each request, we can immediately log feature values and model predictions. Some user engagements may be delayed (e.g., I might read a hilarious note in the afternoon but only share it with a friend before bed). Engagements are usually logged separately, after they happen, and later joined with features on `impression_id` or some other keys that reliably link labels back to the original request.
 
-### Offline Processing: Generate Data to Train Models
+### Offline Path: Generate Data to Train Models
 
-1. Offline feature pipeline
-2. Realtime feature pipeline
-3. Training data pipeline
-4. Model training pipeline
-5. Model deployment pipeline 
+1. **Offline feature generation**: Some features are expensive to compute (e.g., outputs from a large model) and don't require realtime updates, such as user and content understanding embeddings. We can compute these embeddings on a daily basis (e.g., via a cron job) and upload versioned embeddings to the Feature Store (e.g., Cassandra). Aggregation features, such as counts or ratios for a user, a piece of content, or a user–content pair over the last N hours or N days, can be pre-computed offline on an hourly or a daily basis, but we should allow realtime updates to those features when new engagements occur.
+2. **Realtime feature generation**: Some features come from the client (e.g., `userId`, `deviceId`, `deviceType`, `geohash`, `country`) --- these can only be logged at inference time. Other features may need frequent updates, such as engagement counts or ratios. To generate realtime features, we typically combine a distributed messaging system like Kafka with a stream processing engine like Flink. When an engagement occurs, the client or a backend service logs an event to a Kafka topic (e.g., `user_post_clicks`). Consumers read these topics, and Flink processes the event stream to compute realtime features (e.g., post clicks in the last 5 minutes). These features can then be written to the Feature Store for serving. We can also incrementally update longer-range features --- such as hourly or daily post-click counts --- using the same realtime stream.
+3. **Training data pipeline**: For most features, we can log feature values together with user actions for each request in the engagement logs. This forward logging approach is cheap and guarantees that feature values match exactly what the model saw during inference. However, if we introduce new features, want to fix wrong features, or have features that are too expensive to log (e.g., a user's lifelong action sequences), then we need to backfill those features offline and join them with engagement labels. To prevent data leakage, we should only use the latest feature values *before* the impression time (or a feature watermark indicating the latest feature timestamp used, in the "fix wrong feature" case).
+4. **Model training pipeline**: Once all required features are joined with labels, we can use the dataset to train models. How many days of data to use depends on how much compute and training time we can afford. Using a wider date range usually improves generalization, and therefore test metrics, but requires more GPU workers and longer training. For feed ranking models, it's common to use at least a few weeks of data or even a few months. We can use distributed training to increase throughput. For ranking models, we typically use Distributed Data Parallel (DDP), where multiple workers process different batches simultaneously, compute local gradients, and then aggregate them via `all-reduce` (each worker reduces gradients from peers and then receives the fully aggregated gradients) before applying updates. We should save model checkpoints and optimizer states frequently to ensure fault-tolerant training. It's also important to track which batches have already been consumed so that, when resuming from a checkpoint, we don't repeat data and overfit.
+5. **Model deployment pipeline**: After training, raw PyTorch models are typically exported to TorchScript to optimize for inference. Before deploying a new model, we should verify that offline metrics such as normalized cross-entropy (1 − treatment CE / baseline CE), AUC, and PR-AUC are not degraded. For low latency inference, the model needs to remain in memory on the server. To avoid downtime, we can deploy the model to a fresh set of servers and gradually shift traffic to them. During rollout, we should closely monitor online metrics such as post CTR, share rate, hide rate, and other engagement signals to ensure model quality. If online metrics degrade, we should immediately roll back. For models with new architectures or features, we should run an A/B experiment and only roll out the new model design if we see statistically significant improvements with no or justifiable degradation in business or performance metrics.
 
 # Interview Type 2: Component Designs
 
@@ -217,21 +218,9 @@ Which one feels scarier: Spending an hour glancing over an end-to-end ML system,
 
 ## Offline Feature + Data Generation
 
-
 ### Context: What Data Do We Need?
 
 In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y; y \in {0,1}$). Features arrive first --- they're fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the initial ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results. 
-
-<!-- features 
-item, user, context, cross
-
-scalar: count, ratio
-ID
-embedding
-timestamps
-list of ID
-list of scalars
-list of embs -->
 
 Where does the model fetch features from? Some features, such as the CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, etc., are pre-computed and stored in a Feature Store (usually a distributed KV store) updated in batch or streaming fashion. Some features are computed on the fly, such as the BM25 score between a query and a document. 
 
@@ -574,5 +563,3 @@ Then, dig into ML systems designed for specific models:
 28. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
 29. [Continuous Batching](https://huggingface.co/blog/continuous_batching) 👉 continuous batching speeds up language model inference, which may apply to recommender systems
 30. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
-
-
