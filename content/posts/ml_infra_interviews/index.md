@@ -51,7 +51,7 @@ Snap has a fantastic blogpost on [Bento](https://eng.snap.com/introducing-bento)
 In interviews, there's no way you'll be asked to sketch out the abstract system. The prompt is always grounded in a specific model use case:
 
 - **Feed (organic + ads)**: Can you design XXX recommendations? 👉 choose from `{content, people, product}`
-  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, to name a few
+  - Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, query suggestions, to name a few
   - People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.
   - Product could be anything sold by the platform or sellers
 - **Search**: Can you design XXX search? 👉 choose from `{consumer vs. enterprise}` × `{open-domain vs. closed-domain}` × `{conversational vs. one-off}` 
