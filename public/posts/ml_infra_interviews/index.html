@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: If you do get an offer from a frontier AI lab but outside of the research org, you don&#39;t necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).) (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="8298">
+  <meta itemprop="wordCount" content="8453">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT39M",
+  "timeRequired": "PT40M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 8298
+  "wordCount": 8453
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 39 minutes
+      Reading time: 40 minutes
     
 
     
@@ -184,7 +184,13 @@
             <li><a href="#new-standard-all-reduce">New Standard: <code>all-reduce</code></a></li>
           </ul>
         </li>
-        <li><a href="#gpu-serving">GPU Serving</a></li>
+        <li><a href="#gpu-serving">GPU Serving</a>
+          <ul>
+            <li><a href="#debug-throughput-by-profiling">Debug Throughput by Profiling</a></li>
+            <li><a href="#optimize-by-eliminating-small-kernels">Optimize by Eliminating Small Kernels</a></li>
+            <li><a href="#triton-faster-custom-kernels">Triton: Faster, Custom Kernels</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#references">References</a>
@@ -2029,6 +2035,31 @@ may be retracted, and the only way to make this problem tractable is via princip
     </a>
   
 </h3>
+<h4 id="debug-throughput-by-profiling" class="scroll-mt-8 group">
+  Debug Throughput by Profiling
+  
+    <a href="#debug-throughput-by-profiling"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>As a wise person once said (I&rsquo;ve forgotten who 😂), the key to efficient training and serving is keeping your machines busy, as measured by Model FLOPs Utilization (MFU). Most operations in deep learning models (e.g., projections, attention) boil down to General Matrix Multiplication (GEMM), which GPUs excel at. I learned from tenured colleagues that GPU serving was a game changer for Pinterest: Within a year of enabling it, ranking models grew larger and more expressive, delivering gain after gain. This <a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">blogpost</a> recounts on how it all started.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/pfdctl0fahh24as9gi3ch/Screenshot-2025-12-01-at-12.41.42-AM.png?rlkey=rl457xfnoiwi71l5cdp0y6vvk&amp;st=ukb405dv&amp;raw=1"
     alt="Many small kernels inimitably led to lower-than-expected throughput." width="1800"><figcaption>
@@ -2036,13 +2067,66 @@ may be retracted, and the only way to make this problem tractable is via princip
     </figcaption>
 </figure>
 
-<p>In the beginning, serving throughput didn&rsquo;t increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline. Long story short is that they improved performance via several optimizations:</p>
+<p>In the beginning, serving throughput didn&rsquo;t increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline.</p>
+<h4 id="optimize-by-eliminating-small-kernels" class="scroll-mt-8 group">
+  Optimize by Eliminating Small Kernels
+  
+    <a href="#optimize-by-eliminating-small-kernels"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>The infra team made improvements via several optimizations:</p>
 <ul>
 <li><strong>Fused embedding lookup</strong>: Embedding lookups were slow &mdash; for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using <a href="https://github.com/NVIDIA/cuCollections">cuCollections</a>, we could fuse all lookups into one.</li>
 <li><strong>One-time feature copy</strong>: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of <code>cudaMemcpy()</code> calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.</li>
 <li><strong>Using CUDA graph</strong>: A <a href="https://developer.nvidia.com/blog/cuda-graphs/">GPU graph</a> captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.</li>
 <li><strong>Using larger batches</strong>: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops. Conceptually, request batching is similar to what HuggingFace calls <a href="https://huggingface.co/blog/continuous_batching">&ldquo;continuous batching&rdquo;</a>, which aims to improve GPU utilization for LLM inference also by merging many small inference &ldquo;requests&rdquo;. The LLM case is only more complex since each &ldquo;request&rdquo; (generating a sequence) requires multiple steps, whereas each ranking request can be done in one forward pass.</li>
 </ul>
+<h4 id="triton-faster-custom-kernels" class="scroll-mt-8 group">
+  Triton: Faster, Custom Kernels
+  
+    <a href="#triton-faster-custom-kernels"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>We&rsquo;ve seen some CUDA kernels, such as cuCollections that can be used to fuse embedding lookups. CUDA graph runs whatever kernels you already have, but just more efficiently. OpenAI&rsquo;s <a href="https://openai.com/index/triton/">Triton</a> is a kernel compiler that allows you to write custom GPU kernels, which can beat PyTorch kernels and NVIDIA&rsquo;s CUDA kernels. You can even fuse ops from different libraries and across autograd boundaries.</p>
+<p>For example, to optimize serving for lifelong sequence models, Pinterest (<a href="https://medium.com/pinterest-engineering/next-level-personalization-how-16k-lifelong-user-actions-supercharge-pinterests-recommendations-bd5989f8f5d3">blogpost</a>) built a custom Triton kernel to fuse QKV projection, attention, layer norm, and feed-forward into a single op. This eliminates the need to write intermediate tensors to GPU HBM (off-chip memory, large but slow), allowing all weights and data to stay in GPU SRAM (on-chip memory, tiny but extremely fast). Throughput improved by 6.6× as the fused Triton kernel removes kernel launch overhead and repeated data transfers between HBM and SRAM.</p>
 <h2 id="references" class="scroll-mt-8 group">
   References
   

@@ -498,15 +498,28 @@ For distributed training on GPUs, check out the PyTorch author's blogpost, [*How
 
 ## GPU Serving
 
+### Debug Throughput by Profiling
+
 As a wise person once said (I've forgotten who 😂), the key to efficient training and serving is keeping your machines busy, as measured by Model FLOPs Utilization (MFU). Most operations in deep learning models (e.g., projections, attention) boil down to General Matrix Multiplication (GEMM), which GPUs excel at. I learned from tenured colleagues that GPU serving was a game changer for Pinterest: Within a year of enabling it, ranking models grew larger and more expressive, delivering gain after gain. This [blogpost](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) recounts on how it all started. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/pfdctl0fahh24as9gi3ch/Screenshot-2025-12-01-at-12.41.42-AM.png?rlkey=rl457xfnoiwi71l5cdp0y6vvk&st=ukb405dv&raw=1" caption="Many small kernels inimitably led to lower-than-expected throughput." width="1800">}}
 
-In the beginning, serving throughput didn't increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline. Long story short is that they improved performance via several optimizations:
+In the beginning, serving throughput didn't increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline. 
+
+### Optimize by Eliminating Small Kernels
+
+The infra team made improvements via several optimizations:
 - **Fused embedding lookup**: Embedding lookups were slow --- for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using [cuCollections](https://github.com/NVIDIA/cuCollections), we could fuse all lookups into one.
 - **One-time feature copy**: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of `cudaMemcpy()` calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.
 - **Using CUDA graph**: A [GPU graph](https://developer.nvidia.com/blog/cuda-graphs/) captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.
 - **Using larger batches**: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops. Conceptually, request batching is similar to what HuggingFace calls ["continuous batching"](https://huggingface.co/blog/continuous_batching), which aims to improve GPU utilization for LLM inference also by merging many small inference "requests". The LLM case is only more complex since each "request" (generating a sequence) requires multiple steps, whereas each ranking request can be done in one forward pass.
+
+### Triton: Faster, Custom Kernels
+
+We've seen some CUDA kernels, such as cuCollections that can be used to fuse embedding lookups. CUDA graph runs whatever kernels you already have, but just more efficiently. OpenAI's [Triton](https://openai.com/index/triton/) is a kernel compiler that allows you to write custom GPU kernels, which can beat PyTorch kernels and NVIDIA's CUDA kernels. You can even fuse ops from different libraries and across autograd boundaries.
+
+For example, to optimize serving for lifelong sequence models, Pinterest ([blogpost](https://medium.com/pinterest-engineering/next-level-personalization-how-16k-lifelong-user-actions-supercharge-pinterests-recommendations-bd5989f8f5d3
+)) built a custom Triton kernel to fuse QKV projection, attention, layer norm, and feed-forward into a single op. This eliminates the need to write intermediate tensors to GPU HBM (off-chip memory, large but slow), allowing all weights and data to stay in GPU SRAM (on-chip memory, tiny but extremely fast). Throughput improved by 6.6× as the fused Triton kernel removes kernel launch overhead and repeated data transfers between HBM and SRAM.
 
 # References
 
