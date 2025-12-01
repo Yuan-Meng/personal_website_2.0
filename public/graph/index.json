@@ -103,7 +103,9 @@
       "out": []
     },
     "/posts/generative_recommendation/": {
-      "in": [],
+      "in": [
+        "/posts/ml_infra_interviews/"
+      ],
       "out": [
         "/posts/ebr/",
         "/posts/seq_user_modeling/",
@@ -144,7 +146,10 @@
     },
     "/posts/ml_infra_interviews/": {
       "in": [],
-      "out": []
+      "out": [
+        "/posts/generative_recommendation/",
+        "/posts/seq_user_modeling/"
+      ]
     },
     "/posts/mle_interviews/": {
       "in": [
@@ -175,7 +180,8 @@
     "/posts/seq_user_modeling/": {
       "in": [
         "/posts/generative_recommendation/",
-        "/posts/hardware_aware_transformers/"
+        "/posts/hardware_aware_transformers/",
+        "/posts/ml_infra_interviews/"
       ],
       "out": [
         "/posts/attention_as_dict/",

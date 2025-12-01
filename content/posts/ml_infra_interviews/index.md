@@ -466,6 +466,32 @@ Another interesting point is that we should be able to create new attribute sequ
 
 ## Distributed Training
 
+Ranking models are tiny compared to LLMs. Recently, Meta published a blogpost on [Generative Ads Recommendation Model](https://engineering.fb.com/2025/11/10/ml-applications/metas-generative-ads-model-gem-the-central-brain-accelerating-ads-recommendation-ai-innovation/) (GEM), a foundation model for ads ranking that rivals LLM scale. In North America, however, I don't think any companies besides Meta (and perhaps Google) can or want/need to train such large ranking models. So for training, distributed model parallel (DMP) is often unnecessary (exception: in [this paper](https://arxiv.org/html/2508.05700v1), Pinterest ads ranking uses embedding tables so large that they need to be sharded across multiple CPUs). 
+
+However, engagement data for training ranking models can be massive (e.g., billions of records each day, even after downsampling). If the model reads one batch at a time, training will take forever. Distributed data parallel (DDP) is a must, where multiples workers read different batches and aggregate gradients to update model parameters.
+
+How do we aggregate gradients from different workers to update a single model? A classic solution is to use a parameter server to store authoritative model parameters. After processing a batch, each worker pushes its gradients to the server, the server applies the update, and the worker pulls the latest parameters before the next batch. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/of5w5mgdrakp7nd72msd1/Screenshot-2025-11-30-at-9.54.11-PM.png?rlkey=rsa22b9wpe3p1tj1u3q8hbuxz&st=dgv01ij4&raw=1" caption="A gross simplification of the parameter server pattern." width="1800">}}
+
+However, this design is dangerous --- if some workers are slow and push gradients computed on old parameters (like "lap cars" in a race), they can push parameters in the wrong direction, which hinders learning. Modern distributed training rarely uses this architecture.
+
+Modern distributed training systems commonly use *collective communication* between peer workers. A naive approach is all-to-all communication with $O(N^2)$ time complexity ($N$: number of workers).
+
+{{< figure src="https://www.dropbox.com/scl/fi/jk8zbxrml9f3d2a3ekzei/Screenshot-2025-11-30-at-11.11.53-PM.png?rlkey=j313fk9b3r4u3llpsut5uqxk4&st=bfy5vjws&raw=1" caption="Collective communication between workers via the allreduce operation." width="1800">}}
+
+When each worker finishes computing gradients, it sends them to all other workers in the group. Upon receiving gradients from all other workers, each worker aggregates the gradients (`reduce`) and sends the aggregated gradients back to all other workers (`broadcast`). The combination of `reduce` and `broadcast` is called `allreduce`. This design makes sure all workers are on the same page.
+
+However, you might ask: Is it really necessary for each worker to send its aggregated gradients back to all other workers? Doesn't each worker already possess the full gradients after the `reduce`? Fair question. In reality, we can let each worker only communicate with its two neighboring workers so it would only hold three gradients (its own and those of its two neighbors). These partial gradients are then broadcast and aggregated across all workers. This algorithm is called `ring-allreduce` and has a $O(2 \cdot (N-1)$ time complexity.
+
+In their [blogpost](https://eng.snap.com/training-models-with-tpus), Snap explains how they distribute training across TPU cores: Each core processes a different slice of input data and maintains a local copy of the model. Gradients from all cores are synchronized via `all-reduce` that we just discussed, and large embedding tables are automatically sharded across the TPU cluster. When comparing performance, they report that 4× A100 GPUs offer lower throughput than a TPU v3-32 pod --- but the GPU setup did not use embedding-lookup optimizations, while the TPU did.
+
+For distributed training on GPUs, check out the PyTorch author's blogpost, [*How to train a model on 10k H100 GPUs?*](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html?utm_source=chatgpt.com). Key lessons:
+- **Maximize parallelism & memory efficiency**: Distribute not just over batches (data parallel), but also across model layers (layer + pipeline parallelism); use memory-saving tricks (e.g., checkpointing, sharding weights) to scale model and batch sizes. 
+- **Overlap communication and computation**: Start gradient communications (e.g., `all-reduce`) as soon as parts of the backward pass finish, so network transfer happens in parallel with ongoing compute rather than blocking it. 
+- **Leverage network and hardware topology**: Use optimal collective-communication libraries (e.g., NCCL, RDMA) to exploit interconnect topology, minimize cross-node data movement, and reduce latency when synchronizing across many GPUs. 
+- **Design for fault tolerance and checkpointing**: At the scale of thousands of GPUs, hardware failures, node dropouts, and even silent memory bit-flips become nontrivial. A robust system shards model state, checkpoints frequently (preferably asynchronously), and monitors for stragglers or unresponsive nodes.
+
 ## GPU Serving
 goal: keep GPU busy
 Model Flops Utilization (MFU)
@@ -514,9 +540,9 @@ Then, dig into ML systems designed for specific models:
 22. Pinterest's Realtime User Sequences on Organic Homefeed 👉 blogposts written by [ML engineers](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) and [ML infra engineers](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)
 
 ### Distributed Training
-23. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
+23. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
 24. [How to Train a Model on 10k H100 GPUs?](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html) 👉 PyTorch author's short blogpost
-25. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
+25. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
 
 ### GPU Serving
 26. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
