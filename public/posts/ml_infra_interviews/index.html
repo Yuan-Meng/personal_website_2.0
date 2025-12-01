@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: If you do get an offer from a frontier AI lab but outside of the research org, you don&#39;t necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).) (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7898">
+  <meta itemprop="wordCount" content="8244">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -83,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/ml_infra_interviews/",
   "name": "Preparing for ML Infra System Design Interviews",
-  "timeRequired": "PT38M",
+  "timeRequired": "PT39M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 7898
+  "wordCount": 8244
 }
 </script>
 
@@ -128,7 +128,7 @@
 
     
     
-      Reading time: 38 minutes
+      Reading time: 39 minutes
     
 
     
@@ -178,7 +178,12 @@
             <li><a href="#case-study-realtime-sequence-features">Case Study: Realtime Sequence Features</a></li>
           </ul>
         </li>
-        <li><a href="#distributed-training">Distributed Training</a></li>
+        <li><a href="#distributed-training">Distributed Training</a>
+          <ul>
+            <li><a href="#old-paradigm-parameter-servers">Old Paradigm: Parameter Servers</a></li>
+            <li><a href="#new-standard-all-reduce">New Standard: <code>all-reduce</code></a></li>
+          </ul>
+        </li>
         <li><a href="#gpu-serving">GPU Serving</a></li>
       </ul>
     </li>
@@ -1924,6 +1929,31 @@ may be retracted, and the only way to make this problem tractable is via princip
 </h3>
 <p>Ranking models are tiny compared to LLMs. Recently, Meta published a blogpost on <a href="https://engineering.fb.com/2025/11/10/ml-applications/metas-generative-ads-model-gem-the-central-brain-accelerating-ads-recommendation-ai-innovation/">Generative Ads Recommendation Model</a> (GEM), a foundation model for ads ranking that rivals LLM scale. In North America, however, I don&rsquo;t think any companies besides Meta (and perhaps Google) can or want/need to train such large ranking models. So for training, distributed model parallel (DMP) is often unnecessary (exception: in <a href="https://arxiv.org/html/2508.05700v1">this paper</a>, Pinterest ads ranking uses embedding tables so large that they need to be sharded across multiple CPUs).</p>
 <p>However, engagement data for training ranking models can be massive (e.g., billions of records each day, even after downsampling). If the model reads one batch at a time, training will take forever. Distributed data parallel (DDP) is a must, where multiples workers read different batches and aggregate gradients to update model parameters.</p>
+<h4 id="old-paradigm-parameter-servers" class="scroll-mt-8 group">
+  Old Paradigm: Parameter Servers
+  
+    <a href="#old-paradigm-parameter-servers"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>How do we aggregate gradients from different workers to update a single model? A classic solution is to use a parameter server to store authoritative model parameters. After processing a batch, each worker pushes its gradients to the server, the server applies the update, and the worker pulls the latest parameters before the next batch.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/of5w5mgdrakp7nd72msd1/Screenshot-2025-11-30-at-9.54.11-PM.png?rlkey=rsa22b9wpe3p1tj1u3q8hbuxz&amp;st=dgv01ij4&amp;raw=1"
     alt="A gross simplification of the parameter server pattern." width="1800"><figcaption>
@@ -1932,6 +1962,31 @@ may be retracted, and the only way to make this problem tractable is via princip
 </figure>
 
 <p>However, this design is dangerous &mdash; if some workers are slow and push gradients computed on old parameters (like &ldquo;lap cars&rdquo; in a race), they can push parameters in the wrong direction, which hinders learning. Modern distributed training rarely uses this architecture.</p>
+<h4 id="new-standard-all-reduce" class="scroll-mt-8 group">
+  New Standard: <code>all-reduce</code>
+  
+    <a href="#new-standard-all-reduce"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>Modern distributed training systems commonly use <em>collective communication</em> between peer workers. A naive approach is all-to-all communication with $O(N^2)$ time complexity ($N$: number of workers).</p>
 <figure><img src="https://www.dropbox.com/scl/fi/jk8zbxrml9f3d2a3ekzei/Screenshot-2025-11-30-at-11.11.53-PM.png?rlkey=j313fk9b3r4u3llpsut5uqxk4&amp;st=bfy5vjws&amp;raw=1"
     alt="Collective communication between workers via the allreduce operation." width="1800"><figcaption>
@@ -1974,9 +2029,20 @@ may be retracted, and the only way to make this problem tractable is via princip
     </a>
   
 </h3>
-<p>goal: keep GPU busy
-Model Flops Utilization (MFU)
-continuous batching from HF</p>
+<p>As a wise person once said (I&rsquo;ve forgotten who 😂), the key to efficient training and serving is keeping your machines busy, as measured by Model FLOPs Utilization (MFU). Most operations in deep learning models (e.g., projections, attention) boil down to General Matrix Multiplication (GEMM), which GPUs excel at. I learned from tenured colleagues that GPU serving was a game changer for Pinterest: Within a year of enabling it, ranking models grew larger and more expressive, delivering gain after gain. This <a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">blogpost</a> recounts on how it all started.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/pfdctl0fahh24as9gi3ch/Screenshot-2025-12-01-at-12.41.42-AM.png?rlkey=rl457xfnoiwi71l5cdp0y6vvk&amp;st=ukb405dv&amp;raw=1"
+    alt="Many small kernels inimitably led to lower-than-expected throughput." width="1800"><figcaption>
+      <p>Many small kernels inimitably led to lower-than-expected throughput.</p>
+    </figcaption>
+</figure>
+
+<p>In the beginning, serving throughput didn&rsquo;t increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline. Long story short is that they improved performance via several optimizations:</p>
+<ul>
+<li><strong>Fused embedding lookup</strong>: Embedding lookups were slow &mdash; for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using <a href="https://github.com/NVIDIA/cuCollections">cuCollections</a>, we could fuse all lookups into one.</li>
+<li><strong>One-time feature copy</strong>: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of <code>cudaMemcpy()</code> calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.</li>
+<li><strong>Using CUDA graph</strong>: A <a href="https://developer.nvidia.com/blog/cuda-graphs/">GPU graph</a> captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.</li>
+<li><strong>Using larger batches</strong>: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops.</li>
+</ul>
 <h2 id="references" class="scroll-mt-8 group">
   References
   

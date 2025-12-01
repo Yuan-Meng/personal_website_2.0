@@ -470,11 +470,15 @@ Ranking models are tiny compared to LLMs. Recently, Meta published a blogpost on
 
 However, engagement data for training ranking models can be massive (e.g., billions of records each day, even after downsampling). If the model reads one batch at a time, training will take forever. Distributed data parallel (DDP) is a must, where multiples workers read different batches and aggregate gradients to update model parameters.
 
+### Old Paradigm: Parameter Servers
+
 How do we aggregate gradients from different workers to update a single model? A classic solution is to use a parameter server to store authoritative model parameters. After processing a batch, each worker pushes its gradients to the server, the server applies the update, and the worker pulls the latest parameters before the next batch. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/of5w5mgdrakp7nd72msd1/Screenshot-2025-11-30-at-9.54.11-PM.png?rlkey=rsa22b9wpe3p1tj1u3q8hbuxz&st=dgv01ij4&raw=1" caption="A gross simplification of the parameter server pattern." width="1800">}}
 
 However, this design is dangerous --- if some workers are slow and push gradients computed on old parameters (like "lap cars" in a race), they can push parameters in the wrong direction, which hinders learning. Modern distributed training rarely uses this architecture.
+
+### New Standard: `all-reduce`
 
 Modern distributed training systems commonly use *collective communication* between peer workers. A naive approach is all-to-all communication with $O(N^2)$ time complexity ($N$: number of workers).
 
@@ -493,9 +497,16 @@ For distributed training on GPUs, check out the PyTorch author's blogpost, [*How
 - **Design for fault tolerance and checkpointing**: At the scale of thousands of GPUs, hardware failures, node dropouts, and even silent memory bit-flips become nontrivial. A robust system shards model state, checkpoints frequently (preferably asynchronously), and monitors for stragglers or unresponsive nodes.
 
 ## GPU Serving
-goal: keep GPU busy
-Model Flops Utilization (MFU)
-continuous batching from HF
+
+As a wise person once said (I've forgotten who 😂), the key to efficient training and serving is keeping your machines busy, as measured by Model FLOPs Utilization (MFU). Most operations in deep learning models (e.g., projections, attention) boil down to General Matrix Multiplication (GEMM), which GPUs excel at. I learned from tenured colleagues that GPU serving was a game changer for Pinterest: Within a year of enabling it, ranking models grew larger and more expressive, delivering gain after gain. This [blogpost](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) recounts on how it all started. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/pfdctl0fahh24as9gi3ch/Screenshot-2025-12-01-at-12.41.42-AM.png?rlkey=rl457xfnoiwi71l5cdp0y6vvk&st=ukb405dv&raw=1" caption="Many small kernels inimitably led to lower-than-expected throughput." width="1800">}}
+
+In the beginning, serving throughput didn't increase as much as expected. The infra team profiled the model during inference and discovered that many small kernels dominated the timeline. Long story short is that they improved performance via several optimizations:
+- **Fused embedding lookup**: Embedding lookups were slow --- for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using [cuCollections](https://github.com/NVIDIA/cuCollections), we could fuse all lookups into one.
+- **One-time feature copy**: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of `cudaMemcpy()` calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.
+- **Using CUDA graph**: A [GPU graph](https://developer.nvidia.com/blog/cuda-graphs/) captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.
+- **Using larger batches**: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops.
 
 # References
 
