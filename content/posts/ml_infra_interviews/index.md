@@ -506,7 +506,7 @@ In the beginning, serving throughput didn't increase as much as expected. The in
 - **Fused embedding lookup**: Embedding lookups were slow --- for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using [cuCollections](https://github.com/NVIDIA/cuCollections), we could fuse all lookups into one.
 - **One-time feature copy**: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of `cudaMemcpy()` calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.
 - **Using CUDA graph**: A [GPU graph](https://developer.nvidia.com/blog/cuda-graphs/) captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.
-- **Using larger batches**: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops.
+- **Using larger batches**: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops. Conceptually, request batching is similar to what HuggingFace calls ["continuous batching"](https://huggingface.co/blog/continuous_batching), which aims to improve GPU utilization for LLM inference also by merging many small inference "requests". The LLM case is only more complex since each "request" (generating a sequence) requires multiple steps, whereas each ranking request can be done in one forward pass.
 
 # References
 
@@ -556,8 +556,10 @@ Then, dig into ML systems designed for specific models:
 25. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
 
 ### GPU Serving
-26. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
-27. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
-28. [Continuous Batching](https://huggingface.co/blog/continuous_batching) 👉 continuous batching speeds up language model inference, which may apply to recommender systems
-29. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
-30. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
+26. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
+27. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
+28. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
+29. [Continuous Batching](https://huggingface.co/blog/continuous_batching) 👉 continuous batching speeds up language model inference, which may apply to recommender systems
+30. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
+
+

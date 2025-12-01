@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Preparing for ML Infra System Design Interviews">
   <meta itemprop="description" content="Dilemma: Model Builders != Infra Builders A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates — in addition to standard ML system design. Maybe you’ll never have to interview with them. However, apart from the frontier AI labs (sidenote: If you do get an offer from a frontier AI lab but outside of the research org, you don&#39;t necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).) (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.">
   <meta itemprop="datePublished" content="2025-11-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="8244">
+  <meta itemprop="wordCount" content="8298">
   <meta itemprop="keywords" content="Career,Ml infra,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "Preparing for ML Infra System Design Interviews",
   "timeRequired": "PT39M",
   "url": "http://localhost:1313/posts/ml_infra_interviews/",
-  "wordCount": 8244
+  "wordCount": 8298
 }
 </script>
 
@@ -2041,7 +2041,7 @@ may be retracted, and the only way to make this problem tractable is via princip
 <li><strong>Fused embedding lookup</strong>: Embedding lookups were slow &mdash; for each raw ID, we must first look up its index in the embedding table, and then retrieve the embedding vector. A model may need to look up hundreds or even thousands of IDs (think sequence models). Using <a href="https://github.com/NVIDIA/cuCollections">cuCollections</a>, we could fuse all lookups into one.</li>
 <li><strong>One-time feature copy</strong>: Copying each feature tensor from CPU to GPU individually incurred a large overhead. Instead, we can pre-allocate a contiguous host memory buffer, copy all feature tensors into it, and copy the buffer into GPU at once. On the GPU side, tensors were reconstructed to point into the buffer using offsets, reducing hundreds of <code>cudaMemcpy()</code> calls per request into just one. This cut data copy latency from ~10 ms down to sub-1 ms.</li>
 <li><strong>Using CUDA graph</strong>: A <a href="https://developer.nvidia.com/blog/cuda-graphs/">GPU graph</a> captures the full inference process as a static graph rather than a sequence of individual kernel launches. GPU executes the graph as one unit, eliminating much of the kernel launch overhead and idle gaps between ops. The trade-off: Tensors must be padded to fixed sizes, making tensor shapes less flexible and increasing memory footprint.</li>
-<li><strong>Using larger batches</strong>: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops.</li>
+<li><strong>Using larger batches</strong>: By merging multiple user requests into larger batches, GPU can run batch matrix operations efficiently. While we wait longer for requests, per-request latency drops. Conceptually, request batching is similar to what HuggingFace calls <a href="https://huggingface.co/blog/continuous_batching">&ldquo;continuous batching&rdquo;</a>, which aims to improve GPU utilization for LLM inference also by merging many small inference &ldquo;requests&rdquo;. The LLM case is only more complex since each &ldquo;request&rdquo; (generating a sequence) requires multiple steps, whereas each ranking request can be done in one forward pass.</li>
 </ul>
 <h2 id="references" class="scroll-mt-8 group">
   References
@@ -2314,11 +2314,11 @@ may be retracted, and the only way to make this problem tractable is via princip
   
 </h4>
 <ol start="26">
-<li><a href="https://openai.com/index/triton/">Introducing Triton: Open-Source GPU Programming for Neural Networks</a> 👉 OpenAI&rsquo;s Triton kernels</li>
-<li><a href="https://developer.nvidia.com/blog/cuda-graphs/">Getting Started with CUDA Graphs</a> 👉 CUDA graphs are often used in GPU serving</li>
-<li><a href="https://huggingface.co/blog/continuous_batching">Continuous Batching</a> 👉 continuous batching speeds up language model inference, which may apply to recommender systems</li>
 <li><a href="https://eng.snap.com/applying_gpu_to_snap">Applying GPU to Snap</a> 👉 Snap&rsquo;s switch from CPU to GPU serving</li>
 <li><a href="https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d">GPU-Accelerated ML Inference at Pinterest</a> 👉 Pinterest did the same a year later</li>
+<li><a href="https://developer.nvidia.com/blog/cuda-graphs/">Getting Started with CUDA Graphs</a> 👉 CUDA graphs are often used in GPU serving</li>
+<li><a href="https://huggingface.co/blog/continuous_batching">Continuous Batching</a> 👉 continuous batching speeds up language model inference, which may apply to recommender systems</li>
+<li><a href="https://openai.com/index/triton/">Introducing Triton: Open-Source GPU Programming for Neural Networks</a> 👉 OpenAI&rsquo;s Triton kernels</li>
 </ol>
 
     </div>
