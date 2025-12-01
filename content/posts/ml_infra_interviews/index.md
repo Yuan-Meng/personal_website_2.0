@@ -8,13 +8,13 @@ toc: true
 
 # Dilemma: Model Builders != Infra Builders
 
-Only a handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates --- in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}In fact, even if you get an offer from a frontier lab, but as a Research Engineer rather than a Research Scientist, you don't necessarily get paid more than you would at Netflix or Snap at the same level.{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, Google DeepMind, Reflection), the first two pay more than most at the same level. I guess many solid MLEs are incentivized to pass their interviews at some point in their careers.
+A handful of companies like Netflix, Snap, Reddit, Notion, and DoorDash have an ML infra system design round for MLE candidates --- in addition to standard ML system design. Maybe you'll never have to interview with them. However, apart from the frontier AI {{< sidenote "labs" >}}If you do get an offer from a frontier AI lab but outside of the research org, you don't necessarily get paid more than an MLE at Netflix or Snap at the same level (e.g., OpenAI L4 Research Engineer vs. Snap/Netflix L5 MLE).{{< /sidenote >}} (e.g., OpenAI, Anthropic, xAI, DeepMind, Meta TBD, Thinking Machines Lab, Reflection), the first two pay more than other companies are able to match at the same level. So I feel that many talented MLEs are incentivized to pass their interviews at some point in their careers.
 
 ML system design focuses on translating business objectives into ML objectives, choosing training data, labels, and model architectures, and evaluating models offline and online. By contrast, <span style="background-color: #D9CEFF">ML infra system design focuses on the offline + online pipelines that support an ML system</span>. One type of question asks you to walk through full online + offline pipelines; another asks you to design specific components, such as a feature store, real-time feature updates, or distributed training.
 
 Here's the funny thing: If your company serves truly large-scale recommender systems (e.g., recommending billions of items to hundreds of millions of DAUs), you're likely working with dedicated infra teams that handle logging, training, and inference for you. Your job is to optimize a narrow set of North Star metrics your team is funded for (e.g., CTR, CVR, revenue, search relevance). If your company isn't making recommendations at scale, the knowledge of how to build scalable ML systems may be years away from your reality.
 
-That said, I do think ML infra interviews are valuable: Modern recommender system teams function like Formula One teams --- even if you ask Max Verstappen to build a car, he couldn't do it to save his life, but no driver on the grid doesn't have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren't working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable requests of their ML infra partners well ahead of major projects. So, solid ML infra knowledge goes a long way in an impactful career. Therefore, even if you never take an ML infra interview, you should still spend time learning this knowledge.
+That said, I do think ML infra interviews are valuable: Modern recommender system teams function like Formula One teams --- even if you ask Max Verstappen to build a car, he likely can't it to save his life, but no driver on the grid doesn't have an intimate knowledge of car mechanics. The best drivers have a fantastic feel for which parts are or aren't working and collaborate with technicians to improve the car throughout a season. Similarly, the best ML engineers can make necessary, timely, and reasonable asks to their ML infra partners well ahead of major projects. So, solid ML infra knowledge goes a long way in an impactful career. Therefore, even if you never take an ML infra interview, you should still spend time learning this knowledge.
 
 # Interview Type 1: Pipeline Walk-Through
 
@@ -63,7 +63,7 @@ In interviews, there's no way you'll be asked to sketch out the abstract system.
   - `{user, content, query}` understanding: Usually some sort of deep representation learning model trained with some sort of contrastive objectives (see Lilian Weng's amazing [post](https://lilianweng.github.io/posts/2021-05-31-contrastive/)) to embed single entities or entity pairs/triads/etc. 👉 from a system perspective, the interesting parts are how to do distributed training (especially if you're fine-tuning an LLM too large to to fit in worker memory), how to index trained embeddings with low storage costs without metric loss, how to version and roll back embeddings, etc. (see [Uber post](https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/))
   - Harmful content detection: Usually some sort of multimodal, multi-task, multi-label classification model trained on a combination of `{user, annotator, LLM}`-generated labels to predict the probability of each type of harm, based on which we can take automatic or human-reviewed actions
 
-**Note**: These aren't exactly interview questions I've personally faced. Rather, think of this list as a "generator" with a `.95` Recall of all potential questions for non-research track, general MLE/RE hires. In backend system design interviews, you could be asked to design a rate limiter, a KV store, a blob storage, or systems like Twitter, YouTube, Dropbox, or Slack --- even if you haven't worked on them. These seemingly random services tap into universal design patterns like realtime updates or scaling reads/writes. Likewise, in ML infra designs, you might be asked to design feed or trust and safety systems because they tap into common ML infra patterns like batch/online inferences or distributed training, not necessarily because you're interviewing with those teams or have related experience on your resume.
+> **Note**: These aren't exactly interview questions I've personally faced. Rather, think of this list as a "generator" with a `.95` Recall of all potential questions for non-research track, general MLE/RE hires. In backend system design interviews, you could be asked to design a rate limiter, a KV store, a blob storage, or systems like Twitter, YouTube, Dropbox, or Slack --- even if you haven't worked on them. These seemingly random services tap into universal design patterns like realtime updates or scaling reads/writes. Likewise, in ML infra designs, you might be asked to design feed or trust and safety systems because they tap into common ML infra patterns like batch/online inferences or distributed training, not necessarily because you're interviewing with those teams or have related experience on your resume.
 
 ### Signals: Leadership + Time Management + Expertise
 
@@ -72,7 +72,6 @@ A design interview is a perfect venue to showcase leadership, time management, a
 An ML infra system has many moving parts (like all distributed systems do) --- from generating and validating training data, scheduling training, to handling high QPS how it makes the most sense for your product, to name a few. You need a coherent story to tie those little pieces together and gotta sell your story telling to your interviewer. You must be assertive when the interviewer doesn't have a strong preference, but flexible when they do. That's what leadership is: influencing without authority and staying open-minded to different ideas.
 
 Last but not least, painting a high-level picture is far from enough --- you must identify and deep dive into the most interesting parts of your system, rather than dwelling on mundane or trivial parts. That's where your time management instincts and domain knowledge shine.
-
 
 ## Case Study: Design Xiaohongshu Feed
 
@@ -91,6 +90,8 @@ Nowadays it's rare to see a candidate jump straight into the design. More often 
 4. *What are the average and peak QPS? What's the latency target?*
    - **Why ask**: This may be the least useful question here --- as the creator of Hello Interview [pointed out](https://www.hellointerview.com/learn/system-design/in-a-hurry/delivery), QPS is obviously high, latency obviously has to be low, and you waste time only signaling you can do division. Still, you can mention that high QPS and low latency requirements justify a multi-stage design and caching wherever possible.
 
+<!-- remove harmful content, ensure diversity, address cold start    -->
+
 **Problem statement**: We will build Xiaohongshu's Explore Feed, focusing on organic content. Explore Feed surfaces relevant notes from a corpus of billions. The system must handle high {{< sidenote "QPS" >}}Xiaohongshu has 100 million DAUs in the last known report. Suppose each DAU fetches Explore Feed 10 times a day, the average QPS is $\frac{1\mathrm{e}^9}{864000} \approx \frac{1\mathrm{e}^9}{1\mathrm{e}^5} = 10000.$  Peak QPS is usually 6x-10x. {{< /sidenote >}} (average: > 10k; peak: > 100k) while keeping end-to-end p99 latency < 500 ms. The system availability should also be high (e.g., > 99.9% uptime).
 
 ### High-Level Design
@@ -99,7 +100,7 @@ Below is a high-level design of Xiaohongshu Explore Feed (references: Instagram 
 
 {{< figure src="https://www.dropbox.com/scl/fi/adw63e6ubvsowmmsepo5j/Screenshot-2025-11-28-at-8.55.12-PM.png?rlkey=1uvtzqjk3p07vfqoxhs9q3av3&st=5jplk53m&raw=1" caption="A boilerplate design for (almost any) large-scale ranking systems." width="1800">}}
 
-For me personally, it's most natural to follow the lifecycle of an online request and move into offline data ingestion and model training pipelines. I usually check in with the interviewer by saying something like: *"To structure the design, I'll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?"*
+For me personally, it's most natural to follow the lifecycle of an online request and move into offline data ingestion and model training pipelines. I'll check in with the interviewer by saying something like: *"To structure the design, I'll start by walking through a user request and the online inference path. Then we can switch to the offline pipelines for feature and data generation and model training. Does it sound good?"*
 
 ### Online Inference: Life Cycle of a Ranking Request
 
@@ -212,14 +213,14 @@ For me personally, it's most natural to follow the lifecycle of an online reques
 
 # Interview Type 2: Component Designs
 
-Which one feels scarier: Spending an hour glancing over an end-to-end ML system, or spending 45 minutes digging into a single component? I imagine the main risk with the former is running out of time --- which is fixable with better practice and structure, whereas the main risk with the latter is running out of knowledge --- which you can't do much about in the short term. IMO, the latter is a good failure to have because it informs you what to learn more about in the future.
+Which one feels scarier: Spending an hour glancing over an end-to-end ML system, or 45 minutes digging into a single component? I imagine the main risk with the former is running out of time --- which is fixable with more practice and better structure, whereas the main risk with the latter is running out of knowledge --- which you can't do much about in the short term. IMO, the latter is a good failure to have because it informs you what to learn more about in the future.
 
 ## Offline Feature + Data Generation
 
 
 ### Context: What Data Do We Need?
 
-In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y,; y \in {0,1}$). Features arrive first --- they're fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results. 
+In many ranking applications, the model maps a feature vector $\mathbf{x}$ to a binary label $y$ (i.e., $f: \mathbf{x} \mapsto y; y \in {0,1}$). Features arrive first --- they're fetched from Feature Stores or computed on the fly and then passed into the model. Model predictions follow, typically tens of milliseconds later, and are used to produce the initial ranking. Labels arrive seconds, minutes, or even days or weeks later, after users have engaged (e.g., clicked an ad, watched a video, purchased a product, reported a post, or did nothing) with the ranked results. 
 
 <!-- features 
 item, user, context, cross
@@ -232,7 +233,7 @@ list of ID
 list of scalars
 list of embs -->
 
-Where does the model fetch features from? Some features are pre-computed and stored in a Feature Store (usually a distributed KV store) and updated on a regular basis (e.g., daily), such as the average CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, and so son. Some features are computed on the fly, such as the BM25 score between a query and a document. Some features are pre-computed but updated in a near realtime fashion, such as user action sequences or action counts. 
+Where does the model fetch features from? Some features, such as the CTR or total clicks between this user and this advertiser in the past 24 hours, 3 days, 7 days, 30 days, etc., are pre-computed and stored in a Feature Store (usually a distributed KV store) updated in batch or streaming fashion. Some features are computed on the fly, such as the BM25 score between a query and a document. 
 
 For model training, we need to stitch together (features $\mathbf{x}$, label $y$) pairs for each impression, or at least impressions we sample. Labels come from event logging and features can be obtained in 2 ways:
 
@@ -243,7 +244,7 @@ To debug model performance issues, we need the full (features $\mathbf{x}$, pred
 
 ### Problem Statement: Unified Feature Platform
 
-Even just a few years ago, even at early ML adopters like Pinterest, it was common for ML engineers to write their own feature code for offline iterations, while backend engineers translated it into Java/C++/Go for online serving (see Pinterest's ML infra [blogpost](https://medium.com/pinterest-engineering/a-decade-of-ai-platform-at-pinterest-4e3b37c0f758)). Even today, ML engineers often write feature pipelines for backfill, while backend or infra engineers implement forward logging and realtime feature updates. These inconsistent implementations may lead to online–offline discrepancies and hinder iteration velocity.
+Even just a few years ago, even at early ML adopters like Pinterest, it was common for ML engineers to write their own feature code for offline iterations, while backend engineers translated it into Java/C++/Go for online serving (see Pinterest's ML infra [blogpost](https://medium.com/pinterest-engineering/a-decade-of-ai-platform-at-pinterest-4e3b37c0f758)). Even today, ML engineers often write feature pipelines for backfill, while backend or infra engineers take care of forward logging and realtime feature updates. These inconsistent implementations may lead to online–offline discrepancies and hinder iteration velocity.
 
 Many modern ML teams have built unified feature platforms that support consistent and efficient feature generation across forward logging, backfill, and realtime updates (Snap [blog](https://eng.snap.com/speed-up-feature-engineering)). Let's aim for this.
 
@@ -258,22 +259,20 @@ Many modern ML teams have built unified feature platforms that support consisten
 
 ### High-Level Design: From Events to Features
 
-> Users specify a *map* function that processes a key/value pair to generate a set of intermediate key/value pairs, and a *reduce* function that merges all intermediate values associated with the same intermediate key. Many real world tasks are expressible in this model [...]. --- [*MapReduce (2004)*](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/)
-
 {{< figure src="https://www.dropbox.com/scl/fi/b691em8ao42vn4vvbgtot/Screenshot-2025-11-29-at-4.56.09-PM.png?rlkey=xgo0hxjns2h2ubz1hsls799jx&st=3sfjgsnc&raw=1" caption="Robusta, Snap's feature engineering platform (source: [Snap eng blog](https://eng.snap.com/speed-up-feature-engineering))." width="1800">}}
 
-Say we want to know for each `snap_id`, how many views it got in the last 6 hours (`snap_view_count_last_6h`). We want to know:
-- Realtime updates: What happens when a *view event* happens?
-- Online path: What happens when we *serve a request online*?
-- Offline path: What happens when we *create training data offline*?
+Say we want to know for each `snap_id`, how many views it got in the last 6 hours (`snap_view_count_last_6h`). We should ask:
+- **Realtime updates**: What happens when a *view event* happens?
+- **Online path**: What happens when we *serve a request online*?
+- **Offline path**: What happens when we *create training data offline*?
 
-1. **Declarative feature spec**: First, we need to allow users (ML engineers) to define this feature with online + offline paths
-   - Config: User defines features by specifying some parameters 
+1. **Declarative feature spec**: First, we need to allow users (ML engineers) to define such a feature with online + offline paths
+   - *Config*: User defines features by specifying some parameters 
       - Aggregation type: e.g., <span style="background-color: #FFC31B">`count`</span>, `sum`, `last_n`, `approx_quantile`
       - Keys to group by: e.g., <span style="background-color: #FFC31B">`DOCUMENT_ID`</span>, `USER_ID`, `HOUR_OF_DAY` --- can select a primary key
       - Window granularity: e.g., 5 min, 1h, <span style="background-color: #FFC31B">6h</span>, 30d, etc.
       - Optional filters: e.g., view duration, view day of week
-   - Execution: The engine will compute the aggregations you specify via associate + communicative operations
+   - *Execution*: The engine will compute the aggregations you specify via associate + communicative operations
       - Fundamental assumptions: `sum` meets both
          - Associative: Grouping doesn't change results
          - Communicative: Reordering doesn't change results
@@ -294,8 +293,8 @@ Say we want to know for each `snap_id`, how many views it got in the last 6 hour
       }
 
       ```
-   - Data ingestion: The event goes to a Kafka topic (e.g., `snap_views`), which gets periodically written to an Iceberg table (e.g., `snap_views_raw`) partitioned by date/hour
-   - Team-specific tables: Each team can define a Spark table with custom schema, filtering, dedup, transformation, etc. 👉 each row is a clean event `(snap_id, event_time, …)`
+   - *Data ingestion*: The event goes to a Kafka topic (e.g., `snap_views`), which gets periodically written to an Iceberg table (e.g., `snap_views_raw`) partitioned by date/hour
+   - *Team-specific tables*: Each team can define a Spark table with custom schema, filtering, dedup, transformation, etc. 👉 each row is a clean event `(snap_id, event_time, …)`
       ```sql
       CREATE VIEW spotlight_snap_view_data AS
       SELECT
@@ -307,14 +306,14 @@ Say we want to know for each `snap_id`, how many views it got in the last 6 hour
 
       ```
 3. **Aggregation engine**: To avoid duplicate work, the engine computes pre-aggregated blocks at various granularities and saves them to Iceberg, which are building blocks of all jobs
-   - Streaming job: Computes pre-aggregated blocks at 5-min intervals --- the goal is to ensure freshness
+   - *Streaming job*: Computes pre-aggregated blocks at 5-min intervals --- the goal is to ensure freshness
       - For each incoming row `(snap_id, event_time)`
          - Get its 5-min bucket --- in this case, `16:00–16:05`
          - Increment view count in bucket: `rep_block(snap_id, 16:00–16:05) += 1`
       - Write the new or updated block to
          - Iceberg table (e.g., `snap_view_blocks_5m`)
          - Online features store (e.g., [Aerospike](https://en.wikipedia.org/wiki/Aerospike_(database)))
-   - Batch job: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) --- the goal is to ensure completeness
+   - *Batch job*: Computes pre-aggregated blocks at coarser intervals (e.g., 1h) --- the goal is to ensure completeness
       - Every hour/day, run job to 
          - Re-scan the raw event table `snap_views_raw`
          - Recompute block view counts in 
@@ -327,18 +326,18 @@ Say we want to know for each `snap_id`, how many views it got in the last 6 hour
             - Offline jobs can scan by shard + time range
 4. **Online path**: Fetch latest feature values for the current request
       - Say a request comes in at 16:10 for `snap_id = S456`
-      - Option 1: Assemble from intermediate blocks upon request 
+      - *Option 1*: Assemble from intermediate blocks upon request 
          - We need to fetch blocks to cover the last 6 hours, dating back from the request time: `[10:10, 16:10)`
          - Select non-overlapping blocks that best cover this range
             - 1h blocks: `11:00–12:00`, `12:00–13:00`, `13:00–14:00`, `14:00–15:00`, `15:00–16:00`
             - 5 min blocks: `10:10–10:15` to `10:55–11:00`, `16:00–16:05`, `16:05–16:10`
          - Combine counts in those blocks to get the final answer
          - When to use: For large or rare features we don't want to pre-materialize, we can sacrifice some latency for space
-      - Option 2: Pre-assemble in the feature store
+      - *Option 2*: Pre-assemble in the feature store
          - Periodically scan `snap_view_blocks_5m` to compute the full feature value for each `snap_id`
          - Write `(snap_id, snap_view_count_last_6h, watermark_ts)` to a KV store or a document index file
          - When to use: If we score the same `snap_id` many times, we should pre-assemble feature values to reduce latency, at the expensive of slight staleness --- for most ranking candidate features, we should do this if possible
-      - Forward logging: Regardless of how we get the feature, we can log it with other features and model predictions
+      - *Forward logging*: Regardless of how we get the feature, we can log it with other features and model predictions
          ```json
          {
            "impression_id": "IMP123",
@@ -367,9 +366,9 @@ Say we want to know for each `snap_id`, how many views it got in the last 6 hour
 
 ### Core Abstractions: Blocks vs. Features
 
-I think everyone can tell Snap's [Robusta](https://eng.snap.com/speed-up-feature-engineering) has an unmistakable Google flavor (think [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/), [FlumeJava](https://research.google/pubs/flumejava-easy-efficient-data-parallel-pipelines/), [Dataflow](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)) --- just like the rest of their ML stacks (Kubeflow, TensorFlow). I haven't checked, but Snap's ML team must have been founded by Google engineers. This aligned block design is incredibly complex and clever, and perhaps unusual. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid loading last 30 days' data every day to recompute 30-day aggregations, seeing how today's data has a 29-day overlap with that of yesterday. People thought it was a good idea but couldn't be done. Snap's idea of pre-computing small aggregation blocks and assembling them into arbitrary windows is ingenious. 
+I think many can tell Snap's [Robusta](https://eng.snap.com/speed-up-feature-engineering) has an unmistakable Google flavor (think [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/), [FlumeJava](https://research.google/pubs/flumejava-easy-efficient-data-parallel-pipelines/), [Dataflow](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)) --- like the rest of their ML stacks (e.g., Kubeflow, TensorFlow). I haven't checked, but Snap's ML team must have been founded by Google engineers. This aligned block design is incredibly complex and clever, and perhaps unusual. In my last weeks at DoorDash, someone asked in the ML platform channel whether we could avoid loading last 30 days' data every day to recompute 30-day aggregations, seeing how today's data has a 29-day overlap with that of yesterday. People thought it was a good idea but couldn't be done. Snap's idea of pre-computing small aggregation blocks and assembling them into arbitrary windows is ingenious. 
 
-By contrast, Uber's Feature Store [Palette](https://www.uber.com/blog/palette-meta-store-journey/) uses a more general, flexible design, with the core abstraction being features. Features can be generated in many ways --- e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping results to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later ingested into the offline store to keep training and serving consistent. It's less effective at heavy aggregations, but better at handling "weird" or "random" features. 
+By contrast, Uber's Feature Store [Palette](https://www.uber.com/blog/palette-meta-store-journey/) uses a more general, flexible design, with the core abstraction being features, not blocks. Features can be generated in many ways --- e.g., via a remote procedure call (e.g. calling an external ETA-service to get store ETA), a Flink SQL job that transforms Kafka streams into realtime features, or an ad-hoc job dumping features to S3. Batch-computed feature outputs are written first to the offline Feature Store (Hive), then synced to the online Feature Store (Cassandra); near-realtime features are ingested directly into the online store and later logged into the offline store to keep training and serving consistent. Maybe it's less effective at heavy aggregations, but better at handling "weird" or "random" features. 
 
 ## Real-Time Features
 
@@ -378,18 +377,18 @@ By contrast, Uber's Feature Store [Palette](https://www.uber.com/blog/palette-me
 > [...] we will never know if or when we have seen all of our data, only that new data will arrive, old data
 may be retracted, and the only way to make this problem tractable is via principled abstractions that allow the practitioner the choice of appropriate tradeoffs along the axes of interest: correctness, latency, and cost [...]. Since money is involved, correctness is paramount. --- [*The Data Flow Model (2015)*](https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/)
 
-In the Feature Store section, we've seen streaming jobs generating near realtime features. Samuel Flender wrote an awesome [blogpost](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) covering this topic. Before reading it, perhaps check out Hello Interview's articles on [Kafka](https://www.hellointerview.com/learn/system-design/deep-dives/kafka) and [Flink](https://www.hellointerview.com/learn/system-design/deep-dives/flink) and Chapter 11 in [Designing Data-Intensive Applications](https://dataintensive.net/). There's even a [children's book](https://www.gentlydownthe.stream/) on Kafka. A backend design question closely related to realtime features is [Design an Ad Click Aggregator](https://medium.com/@bugfreeai/designing-an-ad-click-aggregation-system-meta-senior-engineer-system-design-interview-guide-18db8a974c3b), which is considered pretty hard.
+We saw that streaming jobs generate near realtime features. To dig deeper, read Chapter 11 of [Designing Data-Intensive Applications](https://dataintensive.net/) and Google's seminal Dataflow and MapReduce papers. For a quick read, I like Samuel Flender's [blogpost](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) on feature infra, and Hello Interview's articles on [Kafka](https://www.hellointerview.com/learn/system-design/deep-dives/kafka) and [Flink](https://www.hellointerview.com/learn/system-design/deep-dives/flink). There's even a [children's book](https://www.gentlydownthe.stream/) on Kafka 👶.
 
-When an engagement event occurs (e.g., a user clicks on a post), a producer creates a message with `(key, value, timestamp, headers)` and sends it to a Kafka topic (e.g., `post_clicks`). 
-   - To allow multiple consumer groups to listen to the same topic, each topic has multiple partitions (shards) 
-      - `key` determines the partition number within a topic
-      - `timestamp` orders messages within a partition
-      - `headers` stores metadata as key-value pairs
-   - A minimalist example of a user post click message:
-     ```json
+A backend design question closely related to realtime features is [Design an Ad Click Aggregator](https://medium.com/@bugfreeai/designing-an-ad-click-aggregation-system-meta-senior-engineer-system-design-interview-guide-18db8a974c3b). It's considered pretty challenging in a backend interview, but MLE candidates can usually treat click counts as given and avoid going into rate limiting or click-abuse handling.
+
+Batch processing assumes the input is bounded --- at the end of the hour/day, (we think) we know all the data from that hour/day, stored on some files. In reality, data arrives continuously, as small, self-contained, immutable records carrying information about past events, and is never complete. Streaming processing processes events as they happen (realtime) or shortly afterward (near realtime). 
+
+A *producer* generates an event (e.g., a user clicks a post) and consumers process those events. Related events are grouped into *topics* (e.g., `user_post_clicks`). To ingest massive amounts of events with low latency, we need a distributed messaging system like [Kafka](https://www.linkedin.com/pulse/kafkas-origin-story-linkedin-tanvir-ahmed/): The producer sends a message with event data (e.g., JSON or binary) to a message queue, from which consumers can process events asynchronously. Below is a toy example of a click event message:
+
+   ```json
      {
         "topic": "post_clicks",
-        "key": "user_12345",
+        "key": "post_98765",
         "value": {
           "user_id": "user_12345",
           "post_id": "post_98765",
@@ -400,32 +399,70 @@ When an engagement event occurs (e.g., a user clicks on a post), a producer crea
           "schema_version": "1"
         }
      }
-     ```
+   ``` 
 
 Consumers can subscribe to specific topics, such as `post_clicks`. 
 
-To transform Kafka streams into realtime features within some aggregation window, we can use a stream processing engine like [Flink](https://en.wikipedia.org/wiki/Apache_Flink). If we want rolling click count in the last 5 min, we can write Flink SQL:
-```sql
-SELECT
-  window_start,
-  window_end,
-  COUNT(*) AS click_cnt
-FROM TABLE(
-  HOP(
-    TABLE post_clicks,
-    DESCRIPTOR(event_time),
-    INTERVAL '1' MINUTE,   -- slide
-    INTERVAL '5' MINUTE    -- window size
-  )
-)
-GROUP BY window_start, window_end;
+   - **Horizontal scaling**: To allow multiple consumer groups to listen to each topic, each topic has multiple partitions (append-only "logs") 
+      - `topic` provides a logical grouping of related messages
+      - `key` determines the partition number within a topic --- e.g., via consistent hashing, `hash(key) % num_paritions`
+      - `value` contains detailed information about the event
+      - `timestamp` orders messages within each partition
+      - `headers` stores metadata as key-value pairs
+   - **Fault tolerance**: Kafka has extremely high availability through mechanisms such as replication and redelivery
+      - *Broker*: a sever to which producers send messages, which then pushes them to message queues for consumers to read; one broker can handle multiple topics
+      - *Leader-follower replication*: Each partition is replicated across multiple brokers, with one acting as the leader and the rest as followers. A message from the producer is only acknowledged as received if all (or >= threshold) replicas have received it. If one broker dies, others still have the data.
+      - *Redelivery*: Once a consumer processes a message, it will send an acknowledgement to the broker, which then can delete the message from the queue. If an acknowledgement is not received after a given time, the message is consider lost and the broker will redeliver the message
 
+Upon receiving a message, a consumer can write it to data storage ("sink") such as a database, cache, or search index. To create features (e.g., post clicks in the last 5 min), we need to aggregate events from Kafka streams over some time window --- see the figure below for common window definitions. We can write our own processing logic, but it's more convenient to use a stream processing engine like [Flink](https://en.wikipedia.org/wiki/Apache_Flink).
+
+{{< figure src="https://www.dropbox.com/scl/fi/cpsspd61cy0kzjfj1yqt1/Screenshot-2025-11-30-at-1.42.20-PM.png?rlkey=xyrvazpo7ongbdqscms4lafof&st=dk6w0zv0&raw=1" caption="The Dataflow paper defines 3 types of windows. There are more now." width="1800">}}
+
+Composing Flink operators to process data is similar to writing SQL queries (there's plenty of database analogies in the DDIA book as well) --- below is a toy example for computing rolling 5-min click counts:
+
+```java
+DataStream<ClickEvent> clicks = // input stream
+
+clicks
+  .keyBy(event -> event.getPostId())   // group by post
+  .window(SlidingEventTimeWindows.of(Time.minutes(5), Time.minutes(1)))
+  .reduce(
+      (a, b) -> new ClickEvent(
+          a.getPostId(),
+          a.getCount() + b.getCount()
+      )
+  );
 ```
-Aggregated feature are written to an online Feature Store ("sink").
 
-### Case Study: Realtime Count Features
+Flink can write results to an online Feature Store (e.g., Cassandra), which is fetched for serving. Through forward logging or backfill (if we can reconstruct values), these features can be used for training.
 
-### Case Study: Realtime User Sequences
+<!-- > Users specify a *map* function that processes a key/value pair to generate a set of intermediate key/value pairs, and a *reduce* function that merges all intermediate values associated with the same intermediate key. Many real world tasks are expressible in this model [...]. --- [*MapReduce (2004)*](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) -->
+
+### Case Study: Realtime Aggregation Features
+
+Apps like Xiaohongshu and TikTok feel incredibly sticky not because they retrain models in real time, but because they update engagement features in near real time. The model has already learned that past clicks predict future clicks --- what's amazing is how a new click on a post (thereby its author, topic, etc.) is reflected almost immediately, often within the same session, to help uprank similar content.
+
+{{< figure src="https://www.dropbox.com/scl/fi/gjlt3lnd96kuxauf267ca/Screenshot-2025-11-30-at-4.49.43-PM.png?rlkey=9mx7ysy3tknetizfwfq2gh6s7&st=qgwq8ckr&raw=1" caption="Pinterest's realtime user signal serving (from 2019 and like outdated)." width="1800">}}
+
+This 2019 [blogpost](https://medium.com/pinterest-engineering/real-time-user-signal-serving-for-feature-engineering-ead9a01e5b) from Pinterest is likely dated, but it has some useful lessons. For instance, raw engagement events can be lightweight --- we don't need to record everything but only need to push information such as `userId`, `pinId`, and `actionType` to the Kafka message queue. Consumers can perform feature hydration asynchronously by looking up user and pin features from a Feature Store and write hydrated events to a time sequence event store. 
+
+Another insight is that the aggregator performs [incremental computing](https://en.wikipedia.org/wiki/Incremental_computing) instead of reprocessing a user's entire history on each update. The blogpost is hand-wavy about the details, but a common approach is to build a dependency graph among data elements --- e.g., `clicks_last_5min` and `clicks_last_1hr` both depend on click events. When a new event arrives, the system only needs to update impacted data elements (e.g., increment the count by 1).
+
+### Case Study: Realtime Sequence Features
+
+If you flip through KDD and RecSys papers, you'll see if 2025 is the year of Generative Recommendation (see {{< backlink "generative_recommendation" "my post" >}}), then 2023 and 2024 were all about sequence modeling (see {{< backlink "seq_user_modeling" "my other post" >}}). Many companies realized lots of gains can come from modeling user history as a time-ordered sequence, rather than a bag of engaged items. 
+
+This Pinterest [blogpost](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9) talks about how to build realtime sequences consisting of a user's last 100 actions (this [post](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) talks about the model). 
+
+{{< figure src="https://www.dropbox.com/scl/fi/rc8pyrnudj5fkqs4kasds/Screenshot-2025-11-30-at-5.44.20-PM.png?rlkey=nfxjyti37l044mbu3i17tvsb7&st=57xfc8sd&raw=1" caption="Pinterest's online + offline paths for realtime sequence features." width="1800">}}
+
+For aggregation features (e.g., `count`, `sum`, `avg`), it's not the end of the world if events are slightly out of order --- as long as they fall within the correct window, we'll get the same result for that window. For sequences, however, we must preserve the order. This blogpost, like most engineering blogs, doesn't explain how. Here are some ideas:
+
+- **Maintain an append-only, time-ordered per-user event log**: If we distribute a user's events across multiple partitions, it becomes more complicated to reconstruct their event sequence. Instead, we can keep a user-specific log to ensure $O(1)$ in-order inserts.
+- **Use a small in-memory buffer to handle out-of-order events**: Some events arrive slightly late. We can hold them briefly in a smaller buffer, insert them in the correct event time order, and periodically flush the bugger into the user log in sorted order. To minimize delay, we keep the buffer short (e.g., ~60 seconds).
+- **If sharding is necessary, shard by `userId`**: If logs are stored on multiple paritions, we should apply consistent hashing on `userId` (e.g., `hash(userId) % num_paritions`). This ensures that all of a user's events stay on the same partition.
+
+Another interesting point is that we should be able to create new attribute sequences offline. For instance, suppose we have a time-ordered sequence with content embedding A --- `[a_0, a_1, ..., a_99]` --- but later develop a better content embedding B. We should be able to backfill a new sequence using the logged timestamps and new embedding values at each timestamp, `[b_0, b_1, ..., b_99]`. This allows us iterate on models offline with richer attributes.
 
 ## Distributed Training
 
@@ -468,20 +505,22 @@ Then, dig into ML systems designed for specific models:
 15. [Building a Spark-Powered Platform for ML Data Needs at Snap](https://eng.snap.com/prism) 👉 Prism, Snap's control-plane + workflow orchestration for Spark/ML data jobs
 16. [Michelangelo Palette: A Feature Engineering Platform at Uber](https://www.infoq.com/presentations/michelangelo-palette-uber/#:~:text=Michelangelo%20Palette%20is%20essentially%20a,models%20and%20why%20is%20that%3F) 👉 Palette, Uber's feature pipeline and feature store
 17. [Zipline --- Airbnb's ML Data Management Framework](https://conferences.oreilly.com/strata/strata-ny-2018/cdn.oreillystatic.com/en/assets/1/event/278/Zipline_%20Airbnb_s%20data%20management%20platform%20for%20machine%20learning%20Presentation.pdf) 👉 Zipline, Airbnb's feature pipeline and feature store
+18. [How Pinterest Accelerates ML Feature Iterations via Effective Backfill](https://medium.com/pinterest-engineering/how-pinterest-accelerates-ml-feature-iterations-via-effective-backfill-d67ea125519c) 👉 Pinterest introduced two-stage backfill as well as training time join to speed up backfill 
 
 ### Real-Time Features
-18. [Designing Data-Intensive Applications](https://dataintensive.net/) 👉 before you read anything else, read Chapter 11: Stream Processing
-19. [Feature Infrastructure Engineering: A Comprehensive Guide](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) 👉 Samuel Flender's new blogpost on real-time signals
-20. [Real-Time User Signal Serving for Feature Engineering](https://medium.com/pinterest-engineering/real-time-user-signal-serving-for-feature-engineering-ead9a01e5b) 👉 an old Pinterest blogpost on realtime aggregation features
-21. Pinterest's Realtime User Sequences on Organic Homefeed 👉 blogposts written by [ML engineers](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) and [ML infra engineers](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)
+19. [Designing Data-Intensive Applications](https://dataintensive.net/) 👉 before you read anything else, read Chapter 11: Stream Processing
+20. [Feature Infrastructure Engineering: A Comprehensive Guide](https://mlfrontiers.substack.com/p/feature-infrastructure-engineering) 👉 Samuel Flender's new blogpost on real-time signals
+21. [Real-Time User Signal Serving for Feature Engineering](https://medium.com/pinterest-engineering/real-time-user-signal-serving-for-feature-engineering-ead9a01e5b) 👉 an old Pinterest blogpost on realtime aggregation features
+22. Pinterest's Realtime User Sequences on Organic Homefeed 👉 blogposts written by [ML engineers](https://medium.com/pinterest-engineering/how-pinterest-leverages-realtime-user-actions-in-recommendation-to-boost-homefeed-engagement-volume-165ae2e8cde8) and [ML infra engineers](https://medium.com/pinterest-engineering/large-scale-user-sequences-at-pinterest-78a5075a3fe9)
 
 ### Distributed Training
-22. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
-23. [How to Train a Model on 10k H100 GPUs?](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html) 👉 PyTorch author's short blogpost
-24. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
+23. [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) 👉 train LLMs on GPU clusters
+24. [How to Train a Model on 10k H100 GPUs?](https://soumith.ch/blog/2024-10-02-training-10k-scale.md.html) 👉 PyTorch author's short blogpost
+25. [Training Large-Scale Recommendation Models with TPUs](https://eng.snap.com/training-models-with-tpus) 👉 Snap has been using Google's TPUs since 2022
 
 ### GPU Serving
-25. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
-26. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
-27. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
-28. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
+26. [Introducing Triton: Open-Source GPU Programming for Neural Networks](https://openai.com/index/triton/) 👉 OpenAI's Triton kernels
+27. [Getting Started with CUDA Graphs](https://developer.nvidia.com/blog/cuda-graphs/) 👉 CUDA graphs are often used in GPU serving
+28. [Continuous Batching](https://huggingface.co/blog/continuous_batching) 👉 continuous batching speeds up language model inference, which may apply to recommender systems
+29. [Applying GPU to Snap](https://eng.snap.com/applying_gpu_to_snap) 👉 Snap's switch from CPU to GPU serving
+30. [GPU-Accelerated ML Inference at Pinterest](https://medium.com/@Pinterest_Engineering/gpu-accelerated-ml-inference-at-pinterest-ad1b6a03a16d) 👉 Pinterest did the same a year later
