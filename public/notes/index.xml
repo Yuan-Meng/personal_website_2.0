@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Ambitions, Happiness, and Answers to Life</title>
+      <link>http://localhost:1313/notes/ambition_and_answers/</link>
+      <pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/ambition_and_answers/</guid>
+      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;Encumbered forever by desire and ambition &lt;br/&gt; There&amp;rsquo;s a hunger still unsatisfied &lt;br/&gt; Our weary eyes still stray to the horizon &lt;br/&gt; Though down this road we&amp;rsquo;ve been so many times&lt;br/&gt; The grass was greener &lt;br/&gt; The light was brighter &lt;br/&gt; The taste was sweeter &lt;br/&gt; The nights of wonder &lt;br/&gt; With friends surrounded &lt;br/&gt; &amp;mdash; Pink Floyed, &lt;a href=&#34;https://open.spotify.com/track/5a4MgIUSf9K8wXLSm6xPEx?si=82c5d01120914d6e&#34;&gt;&lt;em&gt;High Hopes&lt;/em&gt;&lt;/a&gt; (1994)&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;Friends sometimes ask about my ambitions, like why I seem to be constantly searching for new knowledge or career advancements. And I wonder about that myself: does working on a more popular product, building more powerful or interesting models, or making xx% more money at a higher level make me happier? I don&amp;rsquo;t know.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Fundamentals of Retrieval Augmented Generation (RAG)</title>
       <link>http://localhost:1313/notes/rag/</link>
       <pubDate>Mon, 27 Oct 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
