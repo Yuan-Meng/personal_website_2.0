@@ -4,7 +4,7 @@ date: "2025-12-06"
 categories: ["personal reflections"]
 ---
 
-> Encumbered forever by desire and ambition <br/> There's a hunger still unsatisfied <br/> Our weary eyes still stray to the horizon <br/> Though down this road we've been so many times<br/> The grass was greener <br/> The light was brighter <br/> The taste was sweeter <br/> The nights of wonder <br/> With friends surrounded <br/> --- Pink Floyed, [*High Hopes*](https://open.spotify.com/track/5a4MgIUSf9K8wXLSm6xPEx?si=82c5d01120914d6e) (1994)
+> Encumbered forever by desire and ambition <br/> There's a hunger still unsatisfied <br/> Our weary eyes still stray to the horizon <br/> Though down this road we've been so many times<br/> The grass was greener <br/> The light was brighter <br/> The taste was sweeter <br/> The nights of wonder <br/> With friends surrounded <br/> --- Pink Floyd, [*High Hopes*](https://open.spotify.com/track/5a4MgIUSf9K8wXLSm6xPEx?si=82c5d01120914d6e) (1994)
 
 Friends sometimes ask about my ambitions, like why I seem to be constantly searching for new knowledge or career advancements. And I wonder about that myself: does working on a more popular product, building more powerful or interesting models, or making xx% more money at a higher level make me happier? I don't know.
 
