@@ -12,24 +12,31 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Personal reflections</title>
-      <link>http://localhost:1313/categories/personal-reflections/</link>
-      <pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/personal-reflections/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Career</title>
       <link>http://localhost:1313/categories/career/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/career/</guid>
       <description></description>
     </item>
     <item>
       <title>Interview</title>
       <link>http://localhost:1313/categories/interview/</link>
-      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/interview/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine learning</title>
+      <link>http://localhost:1313/categories/machine-learning/</link>
+      <pubDate>Fri, 12 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/machine-learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Personal reflections</title>
+      <link>http://localhost:1313/categories/personal-reflections/</link>
+      <pubDate>Sat, 06 Dec 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/personal-reflections/</guid>
       <description></description>
     </item>
     <item>
@@ -107,13 +114,6 @@
       <link>http://localhost:1313/categories/memory/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/memory/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Machine learning</title>
-      <link>http://localhost:1313/categories/machine-learning/</link>
-      <pubDate>Sat, 23 Nov 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/machine-learning/</guid>
       <description></description>
     </item>
     <item>

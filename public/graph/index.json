@@ -108,6 +108,7 @@
     },
     "/posts/generative_recommendation/": {
       "in": [
+        "/posts/mle_interviews_2.0/",
         "/posts/ml_infra_interviews/"
       ],
       "out": [
@@ -149,7 +150,9 @@
       "out": []
     },
     "/posts/ml_infra_interviews/": {
-      "in": [],
+      "in": [
+        "/posts/mle_interviews_2.0/"
+      ],
       "out": [
         "/posts/generative_recommendation/",
         "/posts/seq_user_modeling/"
@@ -157,9 +160,18 @@
     },
     "/posts/mle_interviews/": {
       "in": [
+        "/posts/mle_interviews_2.0/",
         "/posts/career_reflection/"
       ],
       "out": []
+    },
+    "/posts/mle_interviews_2.0/": {
+      "in": [],
+      "out": [
+        "/posts/mle_interviews/",
+        "/posts/ml_infra_interviews/",
+        "/posts/generative_recommendation/"
+      ]
     },
     "/posts/mtml/": {
       "in": [
@@ -352,6 +364,11 @@
       "permalink": "/posts/mle_interviews/",
       "section": "posts",
       "title": "(Opinionated) Guide to ML Engineer Job Hunting"
+    },
+    "/posts/mle_interviews_2.0/": {
+      "permalink": "/posts/mle_interviews_2.0/",
+      "section": "posts",
+      "title": "Tackling Challenging ML + Research Engineering Interviews"
     },
     "/posts/mtml/": {
       "permalink": "/posts/mtml/",
