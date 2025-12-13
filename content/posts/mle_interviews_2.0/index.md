@@ -50,7 +50,7 @@ That reality has changed. Our culture tries to steer clear from the idea of "per
 
 Increasingly more companies now ask for 2–3 references from recent managers, teammates, or internal referrals. I remember this was already the case when I was interviewing for my first job in grad school --- companies like Figma and Roblox have long required reference checks. Nowadays, all frontier AI labs ask for them.
 
-Most companies I interviewed with have a team match stage. Last year, it was pretty quick on my end: I was either matched within a day, or the hiring manager who I meet during onsite extended a direct offer. This year, however, passing an onsite is still far from an offer: dozens of candidates who have clear the interview need to talk to a handful of managers with openings. Your years of experience, project complexity, and interview performance are evaluated all over again.
+Most companies I interviewed with have a team match stage. Last year, it was pretty quick on my end: I was either matched within a day, or the hiring manager who I met during onsite extended a direct offer. This year, however, passing an onsite is still far from an offer: dozens of candidates who have cleared the interview need to talk to a handful of managers with openings. Your years of experience, project complexity, and interview performance are evaluated all over again.
 
 So think carefully before jumping ship. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. Only interview when there's an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be better to stay put and wait for the storm to pass.
 
