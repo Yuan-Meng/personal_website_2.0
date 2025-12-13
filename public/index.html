@@ -27,7 +27,7 @@ In the mood for a Sudoku challenge? 🍀 Solve Reset">
   <meta itemprop="name" content="Probably Approximately Correct">
   <meta itemprop="description" content="An ML engineer’s musings on machine learning and life…
 In the mood for a Sudoku challenge? 🍀 Solve Reset">
-  <meta itemprop="datePublished" content="2025-12-06T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-12-12T00:00:00+00:00">
   <meta itemprop="wordCount" content="19">
 
   <meta name="twitter:card" content="summary">
@@ -321,6 +321,50 @@ document.addEventListener("DOMContentLoaded", function () {
           <header>
             <h3 class="text-lg font-semibold leading-none">
               <a
+                href="/posts/mle_interviews_2.0/"
+                class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+                >Tackling Challenging ML &#43; Research Engineering Interviews</a
+              >
+            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-12-12T00:00:00&#43;00:00"
+              >December 12, 2025</time
+            >
+          </header>
+
+          <div class="text-sm"><h2 id="recap-standard-mle-interviews" class="scroll-mt-8 group">
+  Recap: &ldquo;Standard&rdquo; MLE Interviews
+  
+    <a href="#recap-standard-mle-interviews"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>This is a sequel to my ML interview <a href="/posts/mle_interviews/" class="backlink">blogpost</a>
+  
+   in 2024. Back then, I argued that ML engineers are unicorns: the variety of interview rounds far exceeds that of other job families. A typical full loop had 6 rounds:</p></div>
+        </article>
+      </li>
+      <li class="mb-6">
+        <article class="flex flex-col space-y-1">
+          <header>
+            <h3 class="text-lg font-semibold leading-none">
+              <a
                 href="/posts/ml_infra_interviews/"
                 class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
                 >Preparing for ML Infra System Design Interviews</a
@@ -462,53 +506,6 @@ document.addEventListener("DOMContentLoaded", function () {
   </small>
 </span>
 , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new &ldquo;Generative Recommendation&rdquo; (GR) paradigm for retrieval and ranking, reframing the discriminative <code>pAction</code> prediction task as a generative task, akin to token predictions in language modeling.</p></div>
-        </article>
-      </li>
-      <li class="mb-6">
-        <article class="flex flex-col space-y-1">
-          <header>
-            <h3 class="text-lg font-semibold leading-none">
-              <a
-                href="/posts/hardware_aware_transformers/"
-                class="underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-                >Hardware-Aware Attention for Long Sequence Modeling</a
-              >
-            </h3><time class="text-sm italic leading-5 opacity-80" datetime="2025-03-19T00:00:00&#43;00:00"
-              >March 19, 2025</time
-            >
-          </header>
-
-          <div class="text-sm"><h2 id="attention-is-all-you-need-----if-you-can-afford-the-on2-complexity" class="scroll-mt-8 group">
-  Attention Is All You Need &mdash; if You Can Afford the $O(N^2)$ Complexity
-  
-    <a href="#attention-is-all-you-need-----if-you-can-afford-the-on2-complexity"
-        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
-        aria-hidden="true" title="Link to this heading" tabindex="-1">
-        <svg
-  xmlns="http://www.w3.org/2000/svg"
-  width="16"
-  height="16"
-  fill="none"
-  stroke="currentColor"
-  stroke-linecap="round"
-  stroke-linejoin="round"
-  stroke-width="2"
-  class="lucide lucide-link w-4 h-4 block"
-  viewBox="0 0 24 24"
->
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</svg>
-
-    </a>
-  
-</h2>
-<p>Attention is key to the success of large language models (LLMs). By attending to all (unmasked) tokens in the input sequence at once, attention-based Transformers overcome RNNs&rsquo; difficulty in modeling long-range dependencies, avoiding vanishing and exploding gradients. However, with the power to &ldquo;attend to all&rdquo; comes hefty costs.</p>
-<figure><img src="https://www.dropbox.com/scl/fi/m8vdwmpqwt40c896ty24v/Screenshot-2025-03-15-at-11.37.40-PM.png?rlkey=t6852oqzse600dc48gjg7rfal&amp;st=r3h14cla&amp;raw=1"
-    alt="Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity." width="600"><figcaption>
-      <p>Writing materialized $\mathbf{S}$, $\mathbf{A}$, and $\mathbf{O}$ to the GPU&rsquo;s high-bandwidth memory (HBM) has an $O(N^2)$ IO complexity.</p>
-    </figcaption>
-</figure></div>
         </article>
       </li>
   </ol>
