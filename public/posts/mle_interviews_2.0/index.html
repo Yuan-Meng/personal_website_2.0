@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Tackling Challenging ML &#43; Research Engineering Interviews">
   <meta itemprop="description" content="Recap: “Standard” MLE Interviews This is a sequel to my 2024 interview blogpost — back then, I argued that ML engineers are unicorns: the variety of ML interview rounds far exceeds that of other job families. A typical full loop had 6 rounds:">
   <meta itemprop="datePublished" content="2025-12-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2432">
+  <meta itemprop="wordCount" content="2541">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "Tackling Challenging ML + Research Engineering Interviews",
   "timeRequired": "PT12M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 2432
+  "wordCount": 2541
 }
 </script>
 
@@ -312,7 +312,26 @@
 <li><strong>ML system design</strong>: By now, everyone knows how to sketch a standard ranking pipeline &mdash; L1 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value models, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps &ldquo;One&rdquo; series from Kuaishou or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
   
    in general).</li>
-<li><strong>Project deep dive</strong>: I&rsquo;ve got offers because the team needed someone to work on X, and I happened to have worked on X. In one case, my first interviewer was so interested in X that they skipped the coding question and those in the next few rounds ditched the agenda to ask more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a dated ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for five years. Otherwise, you&rsquo;re cashing out too early and losing your advantage in 2-3 years. That said, you can still fail this round if you talk about a complex project as if it were trivial. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to present complex projects in ways that do them justice.</li>
+<li><strong>Project deep dive</strong>: I&rsquo;ve got offers because the team needed someone to work on X, and I happened to have worked on X. In one case, my first interviewer was so interested in X that they skipped the coding question and those in the next few rounds ditched the agenda to ask more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-04"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-04"
+    for="sidenote-checkbox-04"
+    class="sidenote-mark"
+    >dated</label
+  >
+  <small id="sidenote-04" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won[t capture sufficient interests in deep dives, research presentations, or team matches. Your future career may be limited to designer-driven, pre-IPO companies.<span class="sr-only">)</span>
+  </small>
+</span>
+ ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for five years. Otherwise, you&rsquo;re cashing out too early and losing your advantage in 2-3 years. That said, you can still fail this round if you talk about a complex project as if it were trivial. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to present complex projects in ways that do them justice.</li>
 <li><strong>ML fundamentals</strong>: Most of the time, you&rsquo;ll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they&rsquo;ve solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge.</li>
 <li><strong>Behavior and leadership</strong>: It&rsquo;s hard to reflect on your career while you&rsquo;re still living it. If you claim to know perfectly well how to expand scope, manage priorities, collaborate with difficult teammates, and right all the wrongs, you&rsquo;re essentially saying &ldquo;everyone is drunk while I alone am sober&rdquo; (众人皆醉我独醒). That can&rsquo;t be true. You need repeated, honest conversations with friends and mentors to see where you can grow. Beyond that, you need to be that mentor and friend &mdash; support junior engineers &amp; peers and lead teams through difficult moments &mdash; to show leadership across the board. Just like internal promotions, getting a Senior+ offer often requires showing Staff-level qualities.</li>
 </ol>
@@ -342,7 +361,7 @@
   
 </h3>
 <p>Increasingly more companies now ask for 2–3 references from recent managers, teammates, or internal referrals. I remember this was already the case when I was interviewing for my first job in grad school &mdash; companies like Figma and Roblox have long required reference checks. Nowadays, all frontier AI labs ask for them.</p>
-<p>Most companies I interviewed with have a team match stage. Last year, it was pretty quick on my end: I was either matched within a day, or the hiring manager who I meet during onsite extended a direct offer. This year, however, passing an onsite is still far from an offer: dozens of candidates who have clear the interview need to talk to a handful of managers with openings. Your years of experience, project complexity, and interview performance are evaluated all over again.</p>
+<p>Most companies I interviewed with have a team match stage. Last year, it was pretty quick on my end: I was either matched within a day, or the hiring manager who I met during onsite extended a direct offer. This year, however, passing an onsite is still far from an offer: dozens of candidates who have cleared the interview need to talk to a handful of managers with openings. Your years of experience, project complexity, and interview performance are evaluated all over again.</p>
 <p>So think carefully before jumping ship. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. Only interview when there&rsquo;s an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be better to stay put and wait for the storm to pass.</p>
 <h2 id="up-the-ante-on-interview-prep" class="scroll-mt-8 group">
   Up the Ante on Interview Prep
