@@ -1,5 +1,5 @@
 ---
-title: Tackling Challenging ML + Research Engineering Interviews
+title: "ML Interview 2.0: Research Engineering and Unconventional Rounds"
 date: 2025-12-12
 math: true
 categories: ["career", "machine learning", "interview"]
@@ -8,16 +8,16 @@ toc: true
 
 # Recap: "Standard" MLE Interviews
 
-This is a sequel to my 2024 interview {{< backlink "mle_interviews" "blogpost" >}} --- back then, I argued that ML engineers are unicorns: the variety of ML interview rounds far exceeds that of other job families. A typical full loop had 6 rounds:
+In 2025, most FAANG or similar companies still have the same rounds of MLE interviews, most typically coding, ML system design, ML fundamentals, and behavior. Some companies have made slight changes. For instance, Meta added an OA round even for senior candidates as well as an AI-assisted coding round. Companies like Google, LinkedIn, and many startups (e.g., xAI, Perplexity) now conduct in-person onsite interviews. I wrote about how to prepare for "standard" ML interviews in my 2024 {{< backlink "mle_interviews" "blogpost" >}} --- below is a recap.
 
-1. **Coding**: Medium–to-Hard LeetCode problems, object-oriented programming (often multi-level CodeSignal), and ML coding (e.g., debugging or building and training a PyTorch/NumPy model)
+1. **Coding**: Medium–to-Hard LC problems, object-oriented programming (often multi-level CodeSignal), and ML coding (e.g., debugging or building and training a PyTorch/NumPy model)
 2. **ML system design**: design a {ranking, query understanding, content understanding, NLP, trust & safety} ML system, focusing on data, features, labels, and model architectures
 3. **Project deep dive**: walk through a project you're most proud of
 4. **ML fundamentals**: rapid-fire questions on machine learning foundations, such as common network architectures, optimization routines, loss functions, activation functions, regularization, etc.
 5. **Behavior and leadership**: a time when you demonstrated problem solving, team work, conflict resolution, time management, leadership, adaptability, growth, etc. beyond your level
 6. **Domain knowledge**: woven into all rounds, explaining how you shipped past projects or tackle current problems using expertise
 
-Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky --- by today's standards, you've had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.
+Last year I said the variety of MLE interviews far exceed that of other job families. Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky --- by today's standards, you've had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.
 
 I like to think of candidate selection as discriminating the positive few from a universe of negatives and interview design as negative sampling. Most companies "only" need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox) can afford to search for the best among thousands or more --- so they have to introduce "hard negatives", designing interviews to be harder than most ML engineers can pass.
 
@@ -57,7 +57,7 @@ So think carefully before jumping ship. To prepare well to land a worthwhile off
 
 # Up the Ante on Interview Prep
 
-I don't intend to rewrite my {{< backlink "mle_interviews" "previous post" >}}. For standard MLE interviews, my old tips still stand. I'll add new insights on top.
+I don't intend to rewrite my {{< backlink "mle_interviews" "previous post" >}}. For standard MLE interviews, please read my old post. I'll add new insights on top.
 
 ## Connect General Coding to Scalable Systems
 
@@ -80,7 +80,6 @@ Many LC problems answer these exact questions and tap into your ability and intu
 
 Many complain that LC problems are detached from real work. But once I see them as toy versions of prod data processing and systems tasks, I solve LC problems faster, with more motivation and interest. 
 
-
 ## Practice ML Coding Like Grinding LeetCode
 
 It scares the hell out of most ML engineers to write PyTorch code without inheriting from your team's model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you have no time. 
@@ -99,6 +98,7 @@ Last but not least, not all companies ask you to write PyTorch models. Some ask 
 
 I find it deeply unsatisfying to collect a checklist of “common questions” and prepare only for those. For example:
 - What are common optimizers?
+- What are common activation functions?
 - What are common loss functions?
 - What are common learning rate schedules?
 - What to do if the loss doesn't converge?
