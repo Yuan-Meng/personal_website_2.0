@@ -8,18 +8,27 @@ An ML engineer's musings on machine learning and life...
 <div class="arcade" id="pongArcade">
   <div class="arcade__header">
     <div class="arcade__title">no pongs intended</div>
-    <div class="arcade__hint">🏓 click to begin ⏸️ pause: space 🔄 restart: R</div>
+    <div class="arcade__hint">
+      🏓 click/tap to begin • ⏸️ pause: space key or button • 🔄 restart: R key or button
+    </div>
   </div>
 
   <canvas id="pongCanvas" class="arcade__canvas" width="720" height="420"></canvas>
 
+  <!-- mobile + desktop controls -->
+  <div class="arcade__controls" aria-label="pong controls">
+    <button class="arcade__btn" id="pongStartBtn" type="button">start</button>
+    <button class="arcade__btn" id="pongPauseBtn" type="button">pause</button>
+    <button class="arcade__btn" id="pongRestartBtn" type="button">restart</button>
+  </div>
+
   <div class="arcade__meta">
-    <span class="arcade__pill">you</span>
+    <span class="arcade__pill">will</span>
     <span id="pongLeft" class="arcade__score">0</span>
     <span class="arcade__sep">:</span>
     <span id="pongRight" class="arcade__score">0</span>
-    <span class="arcade__pill">cpu</span>
-    <span id="pongMsg" class="arcade__msg">click to begin</span>
+    <span class="arcade__pill">vecna</span>
+    <span id="pongMsg" class="arcade__msg">click/tap start</span>
   </div>
 </div>
 
@@ -31,6 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const leftScoreEl = document.getElementById("pongLeft");
   const rightScoreEl = document.getElementById("pongRight");
   const msgEl = document.getElementById("pongMsg");
+
+  const startBtn = document.getElementById("pongStartBtn");
+  const pauseBtn = document.getElementById("pongPauseBtn");
+  const restartBtn = document.getElementById("pongRestartBtn");
 
   const W = canvas.width;
   const H = canvas.height;
@@ -70,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     leftY = clamp(leftY ?? (H - paddleH) / 2, 0, H - paddleH);
     rightY = clamp(rightY ?? (H - paddleH) / 2, 0, H - paddleH);
 
-    msgEl.textContent = started ? "" : "click to begin";
+    msgEl.textContent = started ? "" : "click/tap start";
   }
 
   function resetGame() {
@@ -90,6 +103,26 @@ document.addEventListener("DOMContentLoaded", function () {
     return r.bottom > 0 && r.top < window.innerHeight;
   }
 
+  function startGame() {
+    if (!started) {
+      started = true;
+      paused = false;
+      msgEl.textContent = "";
+      resetRound(Math.random() < 0.5 ? -1 : 1);
+      draw();
+    }
+  }
+
+  function togglePause() {
+    if (!started) {
+      msgEl.textContent = "click/tap start";
+      return;
+    }
+    paused = !paused;
+    msgEl.textContent = paused ? "paused" : "";
+    draw();
+  }
+
   // mouse (and touch) controls left paddle
   function setLeftFromClientY(clientY) {
     const r = canvas.getBoundingClientRect();
@@ -98,28 +131,34 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   canvas.addEventListener("mousemove", (e) => setLeftFromClientY(e.clientY));
+
+  // touch drag to move paddle (also prevents page scroll while dragging on canvas)
   canvas.addEventListener("touchmove", (e) => {
     if (!e.touches.length) return;
     setLeftFromClientY(e.touches[0].clientY);
     e.preventDefault();
   }, { passive: false });
 
-  // click to start
-  canvas.addEventListener("mousedown", () => {
-    if (!started) {
-      started = true;
-      msgEl.textContent = "";
-      resetRound(Math.random() < 0.5 ? -1 : 1);
-    }
-  });
+  // click/tap to start (works on desktop + mobile)
+  canvas.addEventListener("mousedown", startGame);
+  canvas.addEventListener("touchstart", (e) => {
+    if (!inView()) return;
+    startGame();
+    // prevent "ghost click" on some mobile browsers
+    e.preventDefault();
+  }, { passive: false });
 
-  // keyboard helpers
+  // button controls (mobile + desktop)
+  startBtn.addEventListener("click", startGame);
+  pauseBtn.addEventListener("click", togglePause);
+  restartBtn.addEventListener("click", resetGame);
+
+  // keyboard helpers (desktop)
   window.addEventListener("keydown", (e) => {
     if (!inView()) return;
     const k = e.key.toLowerCase();
     if (k === " ") {
-      paused = !paused;
-      msgEl.textContent = paused ? "paused — press space to resume" : "";
+      togglePause();
       e.preventDefault();
     } else if (k === "r") {
       resetGame();
@@ -178,8 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
     drawBackground();
     drawPaddlesAndBall();
 
-    if (!started) drawOverlay("click to begin");
-    else if (paused) drawOverlay("paused — press space to resume");
+    if (!started) drawOverlay("click/tap start");
+    else if (paused) drawOverlay("paused — tap pause / press space");
   }
 
   function cpuStep() {
@@ -299,6 +338,36 @@ document.addEventListener("DOMContentLoaded", function () {
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.12);
   background: #000;
+  touch-action: none; /* important for mobile dragging */
+}
+
+/* mobile + desktop buttons */
+.arcade__controls {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.arcade__btn {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.82);
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+}
+
+.arcade__btn:hover {
+  border-color: rgba(255,45,85,0.45);
+  box-shadow: 0 0 18px rgba(255,45,85,0.18);
+}
+
+.arcade__btn:active {
+  transform: translateY(1px);
 }
 
 .arcade__meta {
@@ -341,5 +410,6 @@ document.addEventListener("DOMContentLoaded", function () {
 @media (max-width: 520px) {
   .arcade { padding: 0.9rem 0.85rem 0.85rem; }
   .arcade__hint { font-size: 0.78rem; }
+  .arcade__btn { padding: 0.5rem 0.75rem; }
 }
 </style>

@@ -1,6 +1,6 @@
 ---
 title: "ML Interview 2.0: Research Engineering and Unconventional Rounds"
-date: 2025-12-12
+date: 2025-12-14
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
