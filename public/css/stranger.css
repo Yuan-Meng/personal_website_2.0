@@ -1,0 +1,74 @@
+/* =================================================
+   Stranger Things vibe — hover-only glow
+   ================================================= */
+
+/* accent colors */
+:root {
+  --st-red: #e11d48;
+  --st-red-soft: rgba(225, 29, 72, 0.25);
+  --st-red-strong: rgba(225, 29, 72, 0.6);
+}
+
+/* -------------------------------------------------
+   BASELINE: keep everything clean & readable
+   ------------------------------------------------- */
+
+/* no default glow anywhere */
+h1,
+h2,
+h3,
+a {
+  text-shadow: none;
+}
+
+/* smooth cinematic ramp-up */
+h1,
+h2,
+h3,
+a {
+  transition: text-shadow 160ms ease-out,
+              text-decoration-color 160ms ease-out;
+}
+
+/* -------------------------------------------------
+   HOVER-ONLY STRANGER GLOW (brighter)
+   ------------------------------------------------- */
+
+/* post titles, note titles, and links */
+a:hover h1,
+a:hover h2,
+a:hover h3,
+a:hover {
+  text-shadow:
+    0 0 6px var(--st-red-strong),
+    0 0 18px var(--st-red-soft),
+    0 0 36px rgba(225, 29, 72, 0.35);
+}
+
+/* subtle underline to anchor the glow */
+a:hover {
+  text-decoration-color: var(--st-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* =================================================
+   Optional refinements
+   ================================================= */
+
+/* 1) stronger glow on big titles only */
+a:hover h1 {
+  text-shadow:
+    0 0 8px var(--st-red-strong),
+    0 0 28px var(--st-red-soft),
+    0 0 48px rgba(225, 29, 72, 0.45);
+}
+
+/* 2) glow only on list pages (Posts / Notes) */
+body.section a:hover h2 {
+  text-shadow:
+    0 0 6px var(--st-red-strong),
+    0 0 20px var(--st-red-soft);
+}
+
+

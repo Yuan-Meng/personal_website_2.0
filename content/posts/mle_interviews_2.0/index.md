@@ -17,7 +17,7 @@ In 2025, most FAANG or similar companies still have the same rounds of MLE inter
 5. **Behavior and leadership**: a time when you demonstrated problem solving, team work, conflict resolution, time management, leadership, adaptability, growth, etc. beyond your level
 6. **Domain knowledge**: woven into all rounds, explaining how you shipped past projects or tackle current problems using expertise
 
-Last year I said the variety of MLE interviews far exceed that of other job families. Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky --- by today's standards, you've had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.
+Last year I said the variety of MLE interviews far exceeds that of other job families. Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky --- by today's standards, you've had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.
 
 I like to think of candidate selection as discriminating the positive few from a universe of negatives and interview design as negative sampling. Most companies "only" need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox) can afford to search for the best among thousands or more --- so they have to introduce "hard negatives", designing interviews to be harder than most ML engineers can pass.
 
