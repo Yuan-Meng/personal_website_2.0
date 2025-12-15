@@ -8,10 +8,11 @@ math: true
     <img src="https://www.dropbox.com/scl/fi/xrjctvfi0f81brcm6vlxr/7DC46823-5C4B-4DD6-B202-6334289DC68F_1_201_a.jpeg?rlkey=2m1109quro2f4jmk5e4qfbkrz&st=qpj4ykua&raw=1" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: block; margin: 0 auto;">
 </div>
 
+Hi, I'm Yuan, a machine learning engineer at Pinterest 📌, working on ads L2 ranking and lifelong sequence modeling. Before that, I spent $2 \frac{5}{12}$ years at DoorDash 🥡, building all things search: L1/L2 ranking, query understanding, autocomplete, you name it 🤪. The thrill of building 0→1 models across a wide range of domains @🥡, the craft of pushing models from 95 to SOTA @📌, along with the many great friends and mentors I found, made me who I am as an engineer. 
 
-Hi, I'm Yuan, a machine learning engineer at Pinterest 📌, working on ads L2 ranking. Before this, I spent my first $2 \frac{5}{12}$ years out of grad school at DoorDash 🥡, working on all things search (L1/L2 ranking, query understanding, autocomplete — you name it 🤪). There, I learned to be an engineer and made great friends. In my former life as a computational cognitive scientist, I studied common sense causal and social reasoning, earning a Ph.D. from Berkeley in 2022.
+I was a computational cognitive scientist studying common sense causal and social reasoning, earning my Ph.D. from Berkeley in 2022. DeepMind's [*The Thinking Game*](https://www.youtube.com/watch?v=d95J8yzvjbQ) reminded me of the very passion I had.
 
-My passions in life: Machine learning (ranking, generative models), cognitively inspired AI, tennis, climbing, metal guitar, hot pot, and 🐱.
+Stuff I particularly like: machine learning (ranking, generative models), cognitively inspired AI, tennis, climbing, metal guitar, hot pot, and 🐱.
 
 
 <div id="socials" style="display: flex; gap: 1em;">
