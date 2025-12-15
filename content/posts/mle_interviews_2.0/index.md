@@ -1,5 +1,5 @@
 ---
-title: "ML Interview 2.0: Research Engineering and Unconventional Rounds"
+title: "ML Interview 2.0: Research Engineering and Scary Rounds"
 date: 2025-12-14
 math: true
 categories: ["career", "machine learning", "interview"]
