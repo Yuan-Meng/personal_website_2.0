@@ -35,7 +35,7 @@ My passions in life: Machine learning (ranking, generative models), cognitively 
   </a>
 
   <!-- LinkedIn -->
-  <a href="https://www.linkedin.com/in/yuanmengds/" target="_blank" rel="noopener noreferrer">
+  <a href="https://www.linkedin.com/in/yuanmengmle/" target="_blank" rel="noopener noreferrer">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -56,7 +56,7 @@ My passions in life: Machine learning (ranking, generative models), cognitively 
   </a>
 
   <!-- Email -->
-  <a href="mailto:yuan_meng@berkeley.edu" target="_blank" rel="noopener noreferrer">
+  <a href="mailto:mycaptainmy@gmail.com" target="_blank" rel="noopener noreferrer">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

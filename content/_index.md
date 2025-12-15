@@ -7,9 +7,9 @@ An ML engineer's musings on machine learning and life...
 
 <div class="arcade" id="pongArcade">
   <div class="arcade__header">
-    <div class="arcade__title">no pongs intended</div>
+    <div class="arcade__title">no pong intended</div>
     <div class="arcade__hint">
-      🏓 click/tap to begin • ⏸️ pause: space key or button • 🔄 restart: R key or button
+      🏓 click/tap to begin • ⏸️ pause: space or button • 🔄 restart: R or button
     </div>
   </div>
 
