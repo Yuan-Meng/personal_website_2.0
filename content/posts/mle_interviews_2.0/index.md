@@ -103,7 +103,10 @@ Many LC problems answer these exact questions and tap into your ability and intu
 
 Many complain that LC problems are detached from real work. But once I see them as toy versions of prod data processing and systems tasks, I solve LC problems faster, with more motivation and interest. 
 
-## Practice ML Coding Like Grinding LeetCode
+## Objective-Oritented Programming
+TDB
+
+## ML Coding
 
 It scares the hell out of most ML engineers to write PyTorch code without inheriting from your team's model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you have no time. 
 
@@ -117,7 +120,7 @@ To test your understanding, solve LC-style ML problems on [Deep-ML](https://www.
 Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models. Don't be caught off the guard --- brush up with Educative's [Scikit-learn cheat sheet](https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods).
 
 
-## Build an Impeccable ML Foundation
+## ML Fundamentals: Build an Impeccable Foundation
 
 I find it deeply unsatisfying to collect a checklist of “common questions” and prepare only for those. For example:
 - What are common optimizers?
@@ -130,7 +133,6 @@ I find it deeply unsatisfying to collect a checklist of “common questions” a
 - What is a Transformer? How do encoders and decoders differ?
 - … and so on.
 
-
 I need to understand how concepts connect at a deeper level. My philosophy is that every minute I spend on interview prep should make me a better engineer. After all, I'm not a professional interviewee; I'm a professional ML engineer. Memorizing answers doesn't do that for me.
 
 I treat ML fundamental prep as an opportunity to revisit the foundations of deep learning and uncover knowledge gaps I didn't know I had. While I like Kevin Murphy's [PML series](https://probml.github.io/pml-book/) as always, the clever bits are often scattered across chapters. I've had frequent epiphanies reading his writing, but it's not always phrased in the "standard language" you or your interviewers instinctively think in.
@@ -138,6 +140,7 @@ I treat ML fundamental prep as an opportunity to revisit the foundations of deep
 More recently, I like [Understanding Deep Learning](https://udlbook.github.io/udlbook/). It's less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.
 
 
+## Behavior
 
-
+## Project Deep Dive
 
