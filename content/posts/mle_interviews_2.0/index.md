@@ -1,6 +1,6 @@
 ---
 title: "ML Interview 2.0: Research Engineering and Scary Rounds"
-date: 2025-12-14
+date: 2025-12-22
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
@@ -59,13 +59,36 @@ So think carefully before jumping ship. To prepare well to land a worthwhile off
 
 I don't intend to rewrite my {{< backlink "mle_interviews" "previous post" >}}. For standard MLE interviews, please read my old post. I'll add new insights on top.
 
-## Connect General Coding to Scalable Systems
+## LC-Style Coding
 
-In my experience, if you don't have immediate intuitions after reading the prompt and a few test cases, you won't have time to write a clean solution and handle follow-ups well enough to get a strong yes. You have no time to reason everything from first principles. At the same time, you obviously can't bet on having seen every problem before.
+### Strategy: Crack the Oyster Shell
+
+In my experience, if you don't have immediate intuition after reading the prompt and test cases, you won't have time to write a clean solution and handle follow-ups well enough to get a strong "yes". In this market, you want to shoot for "strong yes" in most rounds for an offer. You have no time to reason everything from first principles. However, you can't rely on having seen every problem before.
+
+The more I interview, the I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless --- one touch and a twist, and the shell opens. If you find yourself grinding so hard that you're smashing the shell, you're 100% doing it wrong.
+
+The implication is this: when practicing LC, stop if you find yourself writing a long-winded solution that goes nowhere. Don't build muscle memory for heavy labor --- it won't serve you well in interviews. Instead, practice finding the "a-ha" moment that cracks the shell open.
+
+Sometimes you know you're close but can't land on that "a-ha" moment. During practice, I usually tell ChatGPT about my "cloudy" intuitions, hoping it can shed light on the opening. Take the [Car Fleet](https://leetcode.com/problems/car-fleet/description/) problem for example: I felt it could be solved with a monotonic stack ("monostack") but couldn't tell why. So I asked ChatGPT:
+
+> I consider using a monostack but don't know why. My feeling might be stirred up by cars travelling unidirectionally, or the no passing rule.
+
+To which it answered:
+> This is a great instinct --- and you're not imagining it.
+> Your brain picked up three real signals:
+> 1. Unidirectional motion
+> 2. No passing = irreversible merging
+> 3. Local interactions resolve global structure
+
+Using more verbal hints that I asked for, I solved this problem and could hardly forget the solution. That said, if you have the right idea and are just fighting bugs, don't ask ChatGPT. Add print statements. Write small test cases. Debug it yourself. In a real interview, that's the last hurdle you must overcome quickly and independently.
+
+Of course, you can't build intuition --- however vague --- without solving enough LC problems. When friends ask me for coding prep advice, I always recommend NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. Finish them before you and I are in a position to speak about intuitions or strategies.
+
+### Mindset: Connect Problems to Scalable Systems
 
 To up a notch on general coding, I've found two kinds of preparation particularly useful for me: one tangible, one mental.
 
-The tangible suggestion is to finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) to get a solid grasp of common algorithms and patterns. If you can't think of a reasonable approach within 5 minutes, talk to ChatGPT for an intuitive explanation. Then, work through company-tagged problems on LC. For companies like Google, Netflix, or Apple, tags are only a rough reference --- interviewers have lots of freedom in question selection. But for many other companies, the question pool is fairly constrained, and LC tags cover a large fraction of what you'll actually see.
+The tangible suggestion, as mentioned just now, is to finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) so you can get a solid grasp on common algorithms and patterns. Then, work through company-tagged problems on LC. For companies like Google, Netflix, or Apple, tags are only a rough reference --- interviewers have lots of freedom in question selection. But for many other companies, the question pool is fairly constrained, and LC tags cover a large fraction of what you'll actually see.
 
 The mental realization mattered just as much for me. I was re-reading the classic [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) paper when it dawned on me that many --- or dare I say, most? --- LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers had to write custom scripts to answer questions like: what are the most frequent queries? how do we build inverted indices? how do we aggregate unbounded streams of data?
 

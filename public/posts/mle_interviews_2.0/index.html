@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-12-14T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-12-22T00:00:00+00:00">
 
 
   <meta itemprop="name" content="ML Interview 2.0: Research Engineering and Scary Rounds">
   <meta itemprop="description" content="Recap: “Standard” MLE Interviews In 2025, most FAANG or similar companies still have the same rounds of MLE interviews, most typically coding, ML system design, ML fundamentals, and behavior. Some companies have made slight changes. For instance, Meta added an OA round even for senior candidates as well as an AI-assisted coding round. Companies like Google, LinkedIn, and many startups (e.g., xAI, Perplexity) now conduct in-person onsite interviews. I wrote about how to prepare for “standard” ML interviews in my 2024 blogpost — below is a recap.">
-  <meta itemprop="datePublished" content="2025-12-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2606">
+  <meta itemprop="datePublished" content="2025-12-22T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2932">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -74,7 +74,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-12-14",
+  "datePublished": "2025-12-22",
   "description": " Recap: “Standard” MLE Interviews In 2025, most FAANG or similar companies still have the same rounds of MLE interviews, most typically coding, ML system design, ML fundamentals, and behavior. Some companies have made slight changes. For instance, Meta added an OA round even for senior candidates as well as an AI-assisted coding round. Companies like Google, LinkedIn, and many startups (e.g., xAI, Perplexity) now conduct in-person onsite interviews. I wrote about how to prepare for “standard” ML interviews in my 2024 blogpost — below is a recap.",
   "headline": "ML Interview 2.0: Research Engineering and Scary Rounds",
   "isPartOf": {
@@ -84,9 +84,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "ML Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT13M",
+  "timeRequired": "PT14M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 2606
+  "wordCount": 2932
 }
 </script>
 
@@ -123,13 +123,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">ML Interview 2.0: Research Engineering and Scary Rounds</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-12-14T00:00:00&#43;00:00">December 14, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-12-22T00:00:00&#43;00:00">December 22, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 13 minutes
+      Reading time: 14 minutes
     
 
     
@@ -152,7 +152,12 @@
     </li>
     <li><a href="#up-the-ante-on-interview-prep">Up the Ante on Interview Prep</a>
       <ul>
-        <li><a href="#connect-general-coding-to-scalable-systems">Connect General Coding to Scalable Systems</a></li>
+        <li><a href="#lc-style-coding">LC-Style Coding</a>
+          <ul>
+            <li><a href="#strategy-crack-the-oyster-shell">Strategy: Crack the Oyster Shell</a></li>
+            <li><a href="#mindset-connect-problems-to-scalable-systems">Mindset: Connect Problems to Scalable Systems</a></li>
+          </ul>
+        </li>
         <li><a href="#practice-ml-coding-like-grinding-leetcode">Practice ML Coding Like Grinding LeetCode</a></li>
         <li><a href="#build-an-impeccable-ml-foundation">Build an Impeccable ML Foundation</a></li>
       </ul>
@@ -392,10 +397,10 @@
 <p>I don&rsquo;t intend to rewrite my <a href="/posts/mle_interviews/" class="backlink">previous post</a>
   
   . For standard MLE interviews, please read my old post. I&rsquo;ll add new insights on top.</p>
-<h3 id="connect-general-coding-to-scalable-systems" class="scroll-mt-8 group">
-  Connect General Coding to Scalable Systems
+<h3 id="lc-style-coding" class="scroll-mt-8 group">
+  LC-Style Coding
   
-    <a href="#connect-general-coding-to-scalable-systems"
+    <a href="#lc-style-coding"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -417,9 +422,77 @@
     </a>
   
 </h3>
-<p>In my experience, if you don&rsquo;t have immediate intuitions after reading the prompt and a few test cases, you won&rsquo;t have time to write a clean solution and handle follow-ups well enough to get a strong yes. You have no time to reason everything from first principles. At the same time, you obviously can&rsquo;t bet on having seen every problem before.</p>
+<h4 id="strategy-crack-the-oyster-shell" class="scroll-mt-8 group">
+  Strategy: Crack the Oyster Shell
+  
+    <a href="#strategy-crack-the-oyster-shell"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In my experience, if you don&rsquo;t have immediate intuition after reading the prompt and test cases, you won&rsquo;t have time to write a clean solution and handle follow-ups well enough to get a strong &ldquo;yes&rdquo;. In this market, you want to shoot for &ldquo;strong yes&rdquo; in most rounds for an offer. You have no time to reason everything from first principles. However, you can&rsquo;t rely on having seen every problem before.</p>
+<p>The more I interview, the I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless &mdash; one touch and a twist, and the shell opens. If you find yourself grinding so hard that you&rsquo;re smashing the shell, you&rsquo;re 100% doing it wrong.</p>
+<p>The implication is this: when practicing LC, stop if you find yourself writing a long-winded solution that goes nowhere. Don&rsquo;t build muscle memory for heavy labor &mdash; it won&rsquo;t serve you well in interviews. Instead, practice finding the &ldquo;a-ha&rdquo; moment that cracks the shell open.</p>
+<p>Sometimes you know you&rsquo;re close but can&rsquo;t land on that &ldquo;a-ha&rdquo; moment. During practice, I usually tell ChatGPT about my &ldquo;cloudy&rdquo; intuitions, hoping it can shed light on the opening. Take the <a href="https://leetcode.com/problems/car-fleet/description/">Car Fleet</a> problem for example: I felt it could be solved with a monotonic stack (&ldquo;monostack&rdquo;) but couldn&rsquo;t tell why. So I asked ChatGPT:</p>
+<blockquote>
+<p>I consider using a monostack but don&rsquo;t know why. My feeling might be stirred up by cars travelling unidirectionally, or the no passing rule.</p>
+</blockquote>
+<p>To which it answered:</p>
+<blockquote>
+<p>This is a great instinct &mdash; and you&rsquo;re not imagining it.
+Your brain picked up three real signals:</p>
+<ol>
+<li>Unidirectional motion</li>
+<li>No passing = irreversible merging</li>
+<li>Local interactions resolve global structure</li>
+</ol>
+</blockquote>
+<p>Using more verbal hints that I asked for, I solved this problem and could hardly forget the solution. That said, if you have the right idea and are just fighting bugs, don&rsquo;t ask ChatGPT. Add print statements. Write small test cases. Debug it yourself. In a real interview, that&rsquo;s the last hurdle you must overcome quickly and independently.</p>
+<p>Of course, you can&rsquo;t build intuition &mdash; however vague &mdash; without solving enough LC problems. When friends ask me for coding prep advice, I always recommend NeetCode. I think <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. Finish them before you and I are in a position to speak about intuitions or strategies.</p>
+<h4 id="mindset-connect-problems-to-scalable-systems" class="scroll-mt-8 group">
+  Mindset: Connect Problems to Scalable Systems
+  
+    <a href="#mindset-connect-problems-to-scalable-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
 <p>To up a notch on general coding, I&rsquo;ve found two kinds of preparation particularly useful for me: one tangible, one mental.</p>
-<p>The tangible suggestion is to finish <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> to get a solid grasp of common algorithms and patterns. If you can&rsquo;t think of a reasonable approach within 5 minutes, talk to ChatGPT for an intuitive explanation. Then, work through company-tagged problems on LC. For companies like Google, Netflix, or Apple, tags are only a rough reference &mdash; interviewers have lots of freedom in question selection. But for many other companies, the question pool is fairly constrained, and LC tags cover a large fraction of what you&rsquo;ll actually see.</p>
+<p>The tangible suggestion, as mentioned just now, is to finish <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> so you can get a solid grasp on common algorithms and patterns. Then, work through company-tagged problems on LC. For companies like Google, Netflix, or Apple, tags are only a rough reference &mdash; interviewers have lots of freedom in question selection. But for many other companies, the question pool is fairly constrained, and LC tags cover a large fraction of what you&rsquo;ll actually see.</p>
 <p>The mental realization mattered just as much for me. I was re-reading the classic <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a> paper when it dawned on me that many &mdash; or dare I say, most? &mdash; LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers had to write custom scripts to answer questions like: what are the most frequent queries? how do we build inverted indices? how do we aggregate unbounded streams of data?</p>
 <p>Many LC problems answer these exact questions and tap into your ability and intuition to process loads of data efficiently. Examples:</p>
 <ul>
