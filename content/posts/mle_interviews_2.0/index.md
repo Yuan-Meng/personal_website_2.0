@@ -65,7 +65,7 @@ I don't intend to rewrite my {{< backlink "mle_interviews" "previous post" >}}. 
 
 In my experience, if you don't have immediate intuition after reading the prompt and test cases, you won't have time to write a clean solution and handle follow-ups well enough to get a strong "yes". In this market, you want to shoot for "strong yes" in most rounds for an offer. You have no time to reason everything from first principles. However, you can't rely on having seen every problem before.
 
-The more I interview, the I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless --- one touch and a twist, and the shell opens. If you find yourself grinding so hard that you're smashing the shell, you're 100% doing it wrong.
+The more I interview, the more I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless --- one touch and a twist, and the shell opens. If you find yourself grinding so hard that you're smashing the shell, you're 100% doing it wrong.
 
 The implication is this: when practicing LC, stop if you find yourself writing a long-winded solution that goes nowhere. Don't build muscle memory for heavy labor --- it won't serve you well in interviews. Instead, practice finding the "a-ha" moment that cracks the shell open.
 
