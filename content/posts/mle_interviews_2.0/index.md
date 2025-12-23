@@ -13,7 +13,7 @@ Under normal circumstances, new hires don't work on high-impact projects immedia
 
 In hindsight, I was lucky to take on a high-visibility, top-down project shortly after joining Pinterest. I won't expect such luck at a future company. Only a few companies can offer sufficient upside for leaving:
 
-- Pay: higher level and/or 30%+ higher compensation
+- Pay: 30%+ higher compensation and/or higher level
 - Domain: the field and tech stacks are future-oriented
   - Type 1: applied AI engineering at a frontier lab
   - Type 2: foundation ranking models at one of the few companies that need and can afford to train them
