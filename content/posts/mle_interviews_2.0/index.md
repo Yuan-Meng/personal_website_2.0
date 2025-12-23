@@ -9,7 +9,7 @@ toc: true
 # Why Do You Wanna Leave?
 Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?
 
-Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll likely find yourself in a worse situation at the new company.
+Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll likely find yourself in a worse situation at the new company.
 
 In hindsight, I was lucky to take on a high-visibility, top-down project shortly after joining Pinterest. I won't expect such luck at a future company. Only a few companies can offer sufficient upside for leaving:
 
