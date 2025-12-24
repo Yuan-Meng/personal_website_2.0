@@ -100,7 +100,7 @@ Of course, you can't build intuition --- however vague --- without solving enoug
 
 ### Mindset: Connect Problems to Scalable Systems
 
-Unless you're a competitive programmer, solving a new or a hard problem in interviews is still challenging. Time goes by quickly as you fumble around. To up a notch on general coding, I've found two kinds of preparation particularly useful for me: one tangible, one mental.
+Unless you're a competitive programmer, solving a new or a hard problem in interviews is still challenging. Time goes by quickly if you fumble around. To up a notch on general coding, I've found two kinds of preparation particularly useful for me: one tangible, one mental.
 
 The tangible suggestion, as mentioned just now, is to finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) so you can get a solid grasp on common algorithms and patterns. Then, work through company-tagged problems on LC. For companies like Google, Netflix, or Apple, tags are only a rough reference --- interviewers have lots of freedom in question selection. But for many other companies, the question pool is fairly constrained, and LC tags cover a large fraction of what you'll actually see.
 
