@@ -26,7 +26,7 @@
   <meta itemprop="name" content="ML Interview 2.0: Research Engineering and Scary Rounds">
   <meta itemprop="description" content="Why Do You Wanna Leave? Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?">
   <meta itemprop="datePublished" content="2025-12-23T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3185">
+  <meta itemprop="wordCount" content="3235">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -84,9 +84,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "ML Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT15M",
+  "timeRequired": "PT16M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 3185
+  "wordCount": 3235
 }
 </script>
 
@@ -129,7 +129,7 @@
 
     
     
-      Reading time: 15 minutes
+      Reading time: 16 minutes
     
 
     
@@ -218,20 +218,39 @@
   
 </h2>
 <p>Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?</p>
-<p>Under normal circumstances, new hires don&rsquo;t work on high-impact projects immediately, and many don&rsquo;t survive enough to ever take on one. If you&rsquo;re already in a rare position to lead high-impact projects, you&rsquo;ll likely find yourself in a worse situation at the new company.</p>
-<p>In hindsight, I was lucky to take on a high-visibility, top-down project shortly after joining Pinterest. I won&rsquo;t expect such luck at a future company. Only a few companies can offer sufficient upside for leaving:</p>
+<p>Under normal circumstances, new hires don&rsquo;t work on high-impact projects immediately, and many don&rsquo;t survive long enough to ever take on one. If you&rsquo;re already in a rare position to lead high-impact projects, you&rsquo;ll likely find yourself in a worse situation at a new company.</p>
+<p>In hindsight, I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. I won&rsquo;t expect such luck again. For me personally, only a few <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >companies</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>In truth, Pinterest is one of the best companies in terms of ML talent density and certainly the very best in terms of immigration policies. As such, it's not really companies, but rather only a few teams, that can offer what I want. It's for those teams that I interview this time.<span class="sr-only">)</span>
+  </small>
+</span>
+ offer sufficient upside for leaving:</p>
 <ul>
-<li>Pay: higher level and/or 30%+ higher compensation</li>
-<li>Domain: the field and tech stacks are future-oriented
+<li><strong>Pay</strong>: 30%+ higher compensation and/or higher level</li>
+<li><strong>Domain</strong>: the domain and tech stacks are future-oriented
 <ul>
-<li>Type 1: applied AI engineering at a frontier lab</li>
-<li>Type 2: foundation ranking models at one of the few companies that need and can afford to train them</li>
+<li>Type 1: foundation ranking models at one of the few companies that need and can afford to train them</li>
+<li>Type 2: applied AI engineering at a frontier lab</li>
 </ul>
 </li>
-<li>WLB: 55–65 hrs/week is OK, but 80+ hrs/week is too much</li>
-<li>Stability: hopefully the company will still exist in 3–4 years</li>
+<li><strong>WLB</strong>: 55–65 hrs/week is OK, but 80+ hrs/week is too much</li>
+<li><strong>Stability</strong>: hopefully the company will still exist in 3–4 years</li>
 </ul>
-<p>Think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. Only interview when there&rsquo;s an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.</p>
+<p>Think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. So only interview when there&rsquo;s an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.</p>
 <h2 id="recap-standard-mle-interviews" class="scroll-mt-8 group">
   Recap: &ldquo;Standard&rdquo; MLE Interviews
   
@@ -362,26 +381,26 @@
 <li><strong>ML system design</strong>: By now, everyone knows how to sketch a standard ranking pipeline &mdash; L1 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value models, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps &ldquo;One&rdquo; series from Kuaishou or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
   
    in general).</li>
-<li><strong>Project deep dive</strong>: I&rsquo;ve got offers because the team needed someone to work on X, and I happened to have worked on X. In one case, my first interviewer was so interested in X that they skipped the coding question and those in the next few rounds ditched the agenda to ask more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
+<li><strong>Project deep dive</strong>: I&rsquo;ve got offers because the team needed someone to work on X, and I happened to have worked on X. In one case, my first interviewer was so interested in X that they skipped the coding question and interviewers in the next few rounds ditched the agenda to ask me more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-04"
+    id="sidenote-checkbox-05"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-04"
-    for="sidenote-checkbox-04"
+    aria-details="sidenote-05"
+    for="sidenote-checkbox-05"
     class="sidenote-mark"
     >dated</label
   >
-  <small id="sidenote-04" class="sidenote-content">
+  <small id="sidenote-05" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches. Your future career may be limited to designer-driven, pre-IPO companies.<span class="sr-only">)</span>
   </small>
 </span>
- ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for five years. Otherwise, you&rsquo;re cashing out too early and losing your advantage in 2-3 years. That said, you can still fail this round if you talk about a complex project as if it were trivial. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to present complex projects in ways that do them justice.</li>
+ ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for five years. Otherwise, you&rsquo;re cashing out too early and losing your advantage in 2-3 years. That said, you can still fail if you talk about a complex project as if it were trivial. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to present complex projects that do them justice.</li>
 <li><strong>ML fundamentals</strong>: Most of the time, you&rsquo;ll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they&rsquo;ve solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge.</li>
 <li><strong>Behavior and leadership</strong>: It&rsquo;s hard to reflect on your career while you&rsquo;re still living it. If you claim to know perfectly well how to expand scope, manage priorities, collaborate with difficult teammates, and right all the wrongs, you&rsquo;re essentially saying &ldquo;everyone is drunk while I alone am sober&rdquo; (众人皆醉我独醒). That can&rsquo;t be true. You need repeated, honest conversations with friends and mentors to see where you can grow. Beyond that, you need to be that mentor and friend &mdash; support junior engineers &amp; peers and lead teams through difficult moments &mdash; to show leadership across the board. Just like internal promotions, getting a Senior+ offer often requires showing Staff-level qualities.</li>
 </ol>
