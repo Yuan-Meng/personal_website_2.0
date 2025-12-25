@@ -20,13 +20,13 @@
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-12-23T00:00:00+00:00">
+    <meta property="article:published_time" content="2025-12-25T00:00:00+00:00">
 
 
   <meta itemprop="name" content="ML Interview 2.0: Research Engineering and Scary Rounds">
   <meta itemprop="description" content="Why Do You Wanna Leave? Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?">
-  <meta itemprop="datePublished" content="2025-12-23T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3235">
+  <meta itemprop="datePublished" content="2025-12-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3580">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -74,7 +74,7 @@
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2025-12-23",
+  "datePublished": "2025-12-25",
   "description": " Why Do You Wanna Leave? Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?",
   "headline": "ML Interview 2.0: Research Engineering and Scary Rounds",
   "isPartOf": {
@@ -84,9 +84,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "ML Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT16M",
+  "timeRequired": "PT17M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 3235
+  "wordCount": 3580
 }
 </script>
 
@@ -123,13 +123,13 @@
         <article class="main">
     <header>
       <h1 class="!mb-1">ML Interview 2.0: Research Engineering and Scary Rounds</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2025-12-23T00:00:00&#43;00:00">December 23, 2025</time>
+          <time class="text-sm italic opacity-80" datetime="2025-12-25T00:00:00&#43;00:00">December 25, 2025</time>
         </div>
     </header>
 
     
     
-      Reading time: 16 minutes
+      Reading time: 17 minutes
     
 
     
@@ -161,7 +161,9 @@
         </li>
         <li><a href="#objective-oriented-programming">Objective-Oriented Programming</a></li>
         <li><a href="#ml-coding">ML Coding</a></li>
-        <li><a href="#ml-fundamentals-build-an-impeccable-foundation">ML Fundamentals: Build an Impeccable Foundation</a></li>
+        <li><a href="#ml-fundamentals">ML Fundamentals</a></li>
+        <li><a href="#ml-infra-design">ML <strong>Infra</strong> Design</a></li>
+        <li><a href="#ml-model-design">ML <strong>Model</strong> Design</a></li>
         <li><a href="#behavior-interview">Behavior Interview</a></li>
         <li><a href="#project-deep-dive">Project Deep Dive</a></li>
       </ul>
@@ -218,8 +220,9 @@
   
 </h2>
 <p>Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?</p>
-<p>Under normal circumstances, new hires don&rsquo;t work on high-impact projects immediately, and many don&rsquo;t survive long enough to ever take on one. If you&rsquo;re already in a rare position to lead high-impact projects, you&rsquo;ll likely find yourself in a worse situation at a new company.</p>
-<p>In hindsight, I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. I won&rsquo;t expect such luck again. For me personally, only a few <span class="sidenote">
+<p>Under normal circumstances, new hires don&rsquo;t work on high-impact projects immediately, and many don&rsquo;t survive long enough to ever take on one. If you&rsquo;re already in a rare position to lead high-impact projects, you&rsquo;ll 99% find yourself in a worse situation at a new company.</p>
+<p>So think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. Only interview when there&rsquo;s an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.</p>
+<p>In hindsight, I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. I won&rsquo;t expect such luck again. So for me in this moment, only a few <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
@@ -238,7 +241,7 @@
     <span class="sr-only"> (sidenote: </span>In truth, Pinterest is one of the best companies in terms of ML talent density and certainly the very best in terms of immigration policies. As such, it's not really companies, but rather only a few teams, that can offer what I want. It's for those teams that I interview this time.<span class="sr-only">)</span>
   </small>
 </span>
- offer sufficient upside for leaving:</p>
+ offer what I want:</p>
 <ul>
 <li><strong>Pay</strong>: 30%+ higher compensation and/or higher level</li>
 <li><strong>Domain</strong>: the domain and tech stacks are future-oriented
@@ -250,7 +253,6 @@
 <li><strong>WLB</strong>: 55–65 hrs/week is OK, but 80+ hrs/week is too much</li>
 <li><strong>Stability</strong>: hopefully the company will still exist in 3–4 years</li>
 </ul>
-<p>Think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. So only interview when there&rsquo;s an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.</p>
 <h2 id="recap-standard-mle-interviews" class="scroll-mt-8 group">
   Recap: &ldquo;Standard&rdquo; MLE Interviews
   
@@ -288,7 +290,7 @@
 <li><strong>Domain knowledge</strong>: woven into all rounds, explaining how you shipped past projects or tackle current problems using expertise</li>
 </ol>
 <p>Last year I said the variety of MLE interviews far exceeds that of other job families. Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky &mdash; by today&rsquo;s standards, you&rsquo;ve had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.</p>
-<p>I like to think of candidate selection as discriminating the positive few from a universe of negatives and interview design as negative sampling. Most companies &ldquo;only&rdquo; need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox) can afford to search for the best among thousands or more &mdash; so they have to introduce &ldquo;hard negatives&rdquo;, designing interviews to be harder than most ML engineers can pass.</p>
+<p>I think of candidate selection as identifying the positive few from a universe of candidates and interview design as negative sampling. Most companies &ldquo;only&rdquo; need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox, Databricks) can afford to search for the best among thousands or more &mdash; so they have to introduce &ldquo;hard negatives&rdquo;, designing interviews to be harder than most great ML engineers can pass.</p>
 <h2 id="mle-interview-20-what-has-changed" class="scroll-mt-8 group">
   MLE Interview 2.0: What Has Changed?
   
@@ -341,8 +343,8 @@
 </h3>
 <p>Many companies start to include more challenging rounds:</p>
 <ol>
-<li><strong>LLM ML coding</strong>: A few years ago, you might be asked to implement a simple model from scratch (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) and fit it on toy data. Today, you&rsquo;re likely to debug or implement LLM training or inference code &mdash; Transformer encoders/decoders, KV cache, LoRA, and more. In especially brutal interviews, you may even be asked to implement <a href="https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a>. The ideal candidate is Andrej Karpathy 2.0: chatting and writing hundreds of lines of code in an hour while vividly explaining LLM fundamentals.</li>
-<li><strong>ML infra design</strong>: I&rsquo;m <strong>not</strong> talking about ML system design that focuses on modeling, where you can get by with &ldquo;scaling considerations&rdquo; by briefly mentioning sharding, caching, and so on. I&rsquo;m talking about ML <strong>infra</strong> design that doesn&rsquo;t focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit that offer great compensations matched only by frontier labs or Meta and Databricks. In some of these high-performing organizations, teams are lean, roles are blurred, and ML engineers are expected to unblock themselves across the entire stack. I recently wrote a <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
+<li><strong>LLM ML coding</strong>: Some &ldquo;traditional&rdquo; companies may ask you to implement a simple model (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) and fit it on toy data. Today, frontier labs will ask you to debug or implement LLM training or inference code &mdash; Transformer encoders/decoders, KV cache, LoRA, and more. In especially brutal interviews, you may even be asked to implement <a href="https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a>. The ideal candidate is Andrej Karpathy 2.0: chatting and writing hundreds of lines of code in an hour while vividly explaining LLM fundamentals.</li>
+<li><strong>ML infra design</strong>: I&rsquo;m <strong>not</strong> talking about ML system design focusing on modeling, where you can get by with briefly mentioning sharding, caching, or the likes to check the &ldquo;scaling awareness&rdquo; box. That would be easy by now. I&rsquo;m talking about ML <strong>infra</strong> design that doesn&rsquo;t focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit, which offer great compensations matched only by frontier labs or Meta and Databricks. In some of these organizations, teams are lean, roles are blurred, and ML engineers are expected to unblock themselves across the entire stack. I recently wrote a <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
   
    on how to prepare for this rare round.</li>
 <li><strong>Research presentation</strong>: In traditional project deep dives, you verbally walk through one or two representative projects. Some Research Engineer roles require a job talk style presentation on your past work. You make ~10 slides, go over technical details, and &ldquo;defend&rdquo; your body of work like a PhD candidate would.</li>
@@ -375,9 +377,15 @@
   
 </h3>
 <p>I used to have an accurate &ldquo;feel&rdquo; for when an offer was coming. Last year, if I solved all the coding problems (even with minor flaws), presented a complete system design, and had an enjoyable conversation with the hiring manager, an offer would usually come.</p>
-<p>That reality has changed. Our culture tries to steer clear from the idea of &ldquo;perfection&rdquo;, seeing it as unattainable or mentally taxing. Sadly, perfection has become the new bar at companies most want to join.</p>
+<p>That reality has changed. Our culture tries to steer clear from the idea of &ldquo;perfection&rdquo;, seeing it as unattainable or mentally taxing. Sadly, perfection is the new bar at companies that most want to join.</p>
 <ol>
-<li><strong>Coding</strong>: In a 45-minute LeetCode-style interview with one Hard problem, the ideal outcome is to write a bug-free solution in 15–20 minutes, come up with sharp test cases, pass them, and then discuss optimizations. If there are follow-ups, you&rsquo;re expected to provide extendable solutions. In a one-hour OOP-style CodeSignal interview, most people can&rsquo;t even type fast enough to finish all 4 levels; you should aim to finish in ~40 minutes so you have time to discuss how to scale the toy system (e.g., it&rsquo;s usually a database, message queue, or workflow) to production. In ML coding, even reading the full training and inference loops can overwhelm most candidates &mdash; but you&rsquo;re expected to complete the implementation and improve model performance in an hour.</li>
+<li><strong>Coding</strong>: As an ML candidate, you may have the funny experience of writing a <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> API yesterday, debugging or writing a Transformer decoder today, and solving an LC hard tomorrow &mdash; all with the expectation of being impeccable. Some friends complain about such expectations, saying that (almost) no one in real life is simultaneously a backend genius, a SOTA model author, and a competitive programmer. I just accept it as reality, swallow the pain, and try my best to get ready for all three.
+<ul>
+<li><strong>LC</strong>: If a LC-style interview is 45 minutes, you may solve 1 Easy + 1 Medium or 2 Medium (Meta), or 1 Hard with several follow-ups (e.g., Google, Snap, Databricks, Pinterest). In the former case, the ideal outcome is to take one look at the problem, come up and describe the solution in 1 min, code it up in 5-8 min, and do a dry run on simple test cases in 1 min. In the latter case, the ideal outcome is to write a bug-free solution in 15–20 minutes, come up with sharp test cases, pass them, and discuss optimizations. For follow-ups, you&rsquo;re expected to provide extendable solutions, either in code (first few) or in words (last one). If you don&rsquo;t see follow-ups, it means you&rsquo;ve spent too long on the main problem.</li>
+<li><strong>OOP</strong>: In a 1-hour OOP-style interview, you&rsquo;ll be writing a toy API to play a game, manage a database, manage a process, or serve other functions. The interview is usually organized into 4 levels. The first level is a simple warmup. Then you gradually expand the API in the next 3 levels. Most people can&rsquo;t type fast enough to finish all 4 levels, but an ideal candidate should finish in ~40 minutes and leave time to discuss how to scale the toy system in production.</li>
+<li><strong>ML</strong>: In a 1-hour ML coding interview, you&rsquo;re either given some model code (e.g., model class, training and inference loops) and asked to debug bad performance, or you&rsquo;ll implement a model from scratch using NumPy or PyTorch and overfit it on toy samples. Many candidates spend too long reading the code or Googling NumPy/PyTorch syntax. An ideal candidate is fluent in PyTorch and NumPy and can code up common model architectures (e.g., linear layers, residual connections, Transformer blocks, non-linear activation functions) without thinking. Googling many times leaves you no time to debug or implement the model.</li>
+</ul>
+</li>
 <li><strong>ML system design</strong>: By now, everyone knows how to sketch a standard ranking pipeline &mdash; L1 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value models, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps &ldquo;One&rdquo; series from Kuaishou or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
   
    in general).</li>
@@ -511,7 +519,7 @@
 </h4>
 <p>In my experience, if you don&rsquo;t have intuition 1-2 minutes after the interviewer pastes the prompt and test cases, you won&rsquo;t get a strong yes, because you likely won&rsquo;t have time to write a clean solution and handle follow-ups. In this market, you want to shoot for &ldquo;strong yes&rdquo; in most rounds for an offer. You can&rsquo;t expect to reason everything from first principles, yet you can&rsquo;t rely on having seen every problem before.</p>
 <p>The more I interview, the more I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless &mdash; one touch and a twist, and the shell opens. If you find yourself grinding so hard that you&rsquo;re smashing the shell, you&rsquo;re 100% doing it wrong.</p>
-<p>The implication: when practicing LC, stop grinding if you find yourself writing a long-winded solution going nowhere. Don&rsquo;t build muscle memory for labor &mdash; it won&rsquo;t serve you well in interviews. Instead, practice searching for the &ldquo;a-ha&rdquo; moment that cracks the shell open.</p>
+<p>The implication: when practicing LC, stop grinding if you find yourself writing a long-winded solution that&rsquo;s going nowhere. Don&rsquo;t build muscle memory for heavy labor &mdash; it won&rsquo;t ever serve you in actual interviews. Instead, build the muscle memory for pausing to examine patterns and finding the &ldquo;a-ha&rdquo; moment that cracks the shell open.</p>
 <p>Sometimes you know you&rsquo;re close but can&rsquo;t land on that &ldquo;a-ha&rdquo; moment. In such cases during practice, I tell ChatGPT about my &ldquo;cloudy&rdquo; intuitions, hoping it can shed light on the opening. Take <a href="https://leetcode.com/problems/car-fleet/description/">Car Fleet</a> for example: I felt it could be solved with a monotonic stack (&ldquo;monostack&rdquo;) but didn&rsquo;t know why or how. So I asked ChatGPT:</p>
 <blockquote>
 <p>I consider using a monostack but don&rsquo;t know why. My feeling might be stirred up by cars travelling unidirectionally, or the no passing rule.</p>
@@ -527,7 +535,7 @@ Your brain picked up three real signals:</p>
 </ol>
 </blockquote>
 <p>Using more hints that I asked for, I solved this problem and won&rsquo;t forget the solution. That said, if you have the right idea but are just fighting bugs, don&rsquo;t ask ChatGPT &mdash; debug it yourself! Add print statements. Write small test cases. In a real interview, finding and fixing bugs is a hurdle you must overcome quickly and independently.</p>
-<p>Of course, you can&rsquo;t build intuition &mdash; however vague &mdash; without solving enough LC problems. When friends ask me for coding prep advice, I always recommend NeetCode. I think <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. Finish them before you and I are in any position at all to speak about intuitions or strategies.</p>
+<p>Of course, you can&rsquo;t build intuition &mdash; however vague &mdash; without solving enough LC problems. When friends ask me for coding prep advice, I always recommend taking the two NeetCode courses (<a href="https://neetcode.io/courses/dsa-for-beginners/0">beginner</a>, <a href="https://neetcode.io/courses/advanced-algorithms/0">advanced</a>) first and then practicing <a href="https://neetcode.io/practice/practice">problems</a> curated by NeetCode. I think <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. Finish these before you are in any position at all to speak about intuitions or strategies. If you have time, you can also participate in LC <a href="https://leetcode.com/contest/">Weekly Contest</a> to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google).</p>
 <h4 id="mindset-connect-problems-to-scalable-systems" class="scroll-mt-8 group">
   Mindset: Connect Problems to Scalable Systems
   
@@ -591,7 +599,7 @@ Your brain picked up three real signals:</p>
     </a>
   
 </h3>
-<p>TBD</p>
+<p>Coming soon&hellip;</p>
 <h3 id="ml-coding" class="scroll-mt-8 group">
   ML Coding
   
@@ -622,10 +630,10 @@ Your brain picked up three real signals:</p>
 <p>Next, be really familiar with Transformer architectures as well as training and inference loops. Read Sebastian Raschka&rsquo;s <a href="https://github.com/rasbt/LLMs-from-scratch">Build a Large Language Model</a> and reproduce all code on your own. Watch Andrej Karpathy&rsquo;s <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">GPT-2 video</a>. If you have enough time on your hands, follow along with Karpathy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a> and read some of his repos (e.g., <a href="https://github.com/karpathy/nanoGPT">nanoGPT</a>, <a href="https://github.com/karpathy/micrograd">micrograd</a>). Also be familiar with common optimization techniques for training and inference (e.g., <a href="https://lubits.ch/flash/">Flash Attention</a>, <a href="https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured">LoRA</a>, <a href="https://huggingface.co/blog/kv-cache">KV cache</a>) and how to implement them from scratch.</p>
 <p>To test your understanding, solve LC-style ML problems on <a href="https://www.deep-ml.com/problems">Deep-ML</a>.</p>
 <p>Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models. Don&rsquo;t be caught off the guard &mdash; brush up with Educative&rsquo;s <a href="https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods">Scikit-learn cheat sheet</a>.</p>
-<h3 id="ml-fundamentals-build-an-impeccable-foundation" class="scroll-mt-8 group">
-  ML Fundamentals: Build an Impeccable Foundation
+<h3 id="ml-fundamentals" class="scroll-mt-8 group">
+  ML Fundamentals
   
-    <a href="#ml-fundamentals-build-an-impeccable-foundation"
+    <a href="#ml-fundamentals"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -662,6 +670,58 @@ Your brain picked up three real signals:</p>
 <p>I need to understand how concepts connect at a deeper level. My philosophy is that every minute I spend on interview prep should make me a better engineer. After all, I&rsquo;m not a professional interviewee; I&rsquo;m a professional ML engineer. Memorizing answers doesn&rsquo;t do that for me.</p>
 <p>I treat ML fundamental prep as an opportunity to revisit the foundations of deep learning and uncover knowledge gaps I didn&rsquo;t know I had. While I like Kevin Murphy&rsquo;s <a href="https://probml.github.io/pml-book/">PML series</a> as always, the clever bits are often scattered across chapters. I&rsquo;ve had frequent epiphanies reading his writing, but it&rsquo;s not always phrased in the &ldquo;standard language&rdquo; you or your interviewers instinctively think in.</p>
 <p>More recently, I like <a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a>. It&rsquo;s less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.</p>
+<h3 id="ml-infra-design" class="scroll-mt-8 group">
+  ML <strong>Infra</strong> Design
+  
+    <a href="#ml-infra-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Coming soon&hellip;</p>
+<h3 id="ml-model-design" class="scroll-mt-8 group">
+  ML <strong>Model</strong> Design
+  
+    <a href="#ml-model-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Coming soon&hellip;</p>
 <h3 id="behavior-interview" class="scroll-mt-8 group">
   Behavior Interview
   
@@ -687,6 +747,7 @@ Your brain picked up three real signals:</p>
     </a>
   
 </h3>
+<p>Coming soon&hellip;</p>
 <h3 id="project-deep-dive" class="scroll-mt-8 group">
   Project Deep Dive
   
@@ -712,6 +773,7 @@ Your brain picked up three real signals:</p>
     </a>
   
 </h3>
+<p>Coming soon&hellip;</p>
 
     </div>
   </article>

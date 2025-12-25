@@ -1,6 +1,6 @@
 ---
 title: "ML Interview 2.0: Research Engineering and Scary Rounds"
-date: 2025-12-23
+date: 2025-12-25
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
@@ -9,9 +9,11 @@ toc: true
 # Why Do You Wanna Leave?
 Okay, before we talk about interviews, ask yourself (and every recruiter and hiring manager will ask you): why do you want to leave?
 
-Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll likely find yourself in a worse situation at a new company.
+Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll 99% find yourself in a worse situation at a new company.
 
-In hindsight, I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. I won't expect such luck again. For me personally, only a few {{< sidenote "companies" >}}In truth, Pinterest is one of the best companies in terms of ML talent density and certainly the very best in terms of immigration policies. As such, it's not really companies, but rather only a few teams, that can offer what I want. It's for those teams that I interview this time.{{< /sidenote >}} offer sufficient upside for leaving:
+So think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. Only interview when there's an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.
+
+In hindsight, I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. I won't expect such luck again. So for me in this moment, only a few {{< sidenote "companies" >}}In truth, Pinterest is one of the best companies in terms of ML talent density and certainly the very best in terms of immigration policies. As such, it's not really companies, but rather only a few teams, that can offer what I want. It's for those teams that I interview this time.{{< /sidenote >}} offer what I want:
 
 - **Pay**: 30%+ higher compensation and/or higher level
 - **Domain**: the domain and tech stacks are future-oriented
@@ -19,8 +21,6 @@ In hindsight, I was lucky to take on high-visibility, top-down projects shortly 
   - Type 2: applied AI engineering at a frontier lab
 - **WLB**: 55–65 hrs/week is OK, but 80+ hrs/week is too much
 - **Stability**: hopefully the company will still exist in 3–4 years
-
-Think clearly about your goals before interviewing. To prepare well to land a worthwhile offer in this market, you inevitably lose some productivity at work. So only interview when there's an undeniable upside. And once you start, commit to finishing within 2 months with full determination. Otherwise, it may be much better to stay put.
 
 # Recap: "Standard" MLE Interviews
 
@@ -35,15 +35,15 @@ Now, onto interview prep. In 2025, most FAANG and similar companies still have t
 
 Last year I said the variety of MLE interviews far exceeds that of other job families. Now I think if you only encounter these 6 rounds in a full-loop interview, count yourself lucky --- by today's standards, you've had an easy-peasy interview. Many ML and Research Engineering roles add extra rounds that most ML practitioners find genuinely hard.
 
-I like to think of candidate selection as discriminating the positive few from a universe of negatives and interview design as negative sampling. Most companies "only" need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox) can afford to search for the best among thousands or more --- so they have to introduce "hard negatives", designing interviews to be harder than most ML engineers can pass.
+I think of candidate selection as identifying the positive few from a universe of candidates and interview design as negative sampling. Most companies "only" need discriminability to find the best among hundreds, so in-batch negatives (with batch sizes of a few hundred) suffice. Frontier AI labs and top-paying companies (e.g., Netflix, Snap, Roblox, Databricks) can afford to search for the best among thousands or more --- so they have to introduce "hard negatives", designing interviews to be harder than most great ML engineers can pass.
 
 # MLE Interview 2.0: What Has Changed?
 
 ## Additional Rounds
 Many companies start to include more challenging rounds:
 
-1. **LLM ML coding**: A few years ago, you might be asked to implement a simple model from scratch (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) and fit it on toy data. Today, you're likely to debug or implement LLM training or inference code --- Transformer encoders/decoders, KV cache, LoRA, and more. In especially brutal interviews, you may even be asked to implement [autograd](https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). The ideal candidate is Andrej Karpathy 2.0: chatting and writing hundreds of lines of code in an hour while vividly explaining LLM fundamentals.
-2. **ML infra design**: I'm **not** talking about ML system design that focuses on modeling, where you can get by with "scaling considerations" by briefly mentioning sharding, caching, and so on. I'm talking about ML **infra** design that doesn't focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit that offer great compensations matched only by frontier labs or Meta and Databricks. In some of these high-performing organizations, teams are lean, roles are blurred, and ML engineers are expected to unblock themselves across the entire stack. I recently wrote a {{< backlink "ml_infra_interviews" "blogpost" >}} on how to prepare for this rare round.
+1. **LLM ML coding**: Some "traditional" companies may ask you to implement a simple model (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) and fit it on toy data. Today, frontier labs will ask you to debug or implement LLM training or inference code --- Transformer encoders/decoders, KV cache, LoRA, and more. In especially brutal interviews, you may even be asked to implement [autograd](https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). The ideal candidate is Andrej Karpathy 2.0: chatting and writing hundreds of lines of code in an hour while vividly explaining LLM fundamentals.
+2. **ML infra design**: I'm **not** talking about ML system design focusing on modeling, where you can get by with briefly mentioning sharding, caching, or the likes to check the "scaling awareness" box. That would be easy by now. I'm talking about ML **infra** design that doesn't focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit, which offer great compensations matched only by frontier labs or Meta and Databricks. In some of these organizations, teams are lean, roles are blurred, and ML engineers are expected to unblock themselves across the entire stack. I recently wrote a {{< backlink "ml_infra_interviews" "blogpost" >}} on how to prepare for this rare round.
 3. **Research presentation**: In traditional project deep dives, you verbally walk through one or two representative projects. Some Research Engineer roles require a job talk style presentation on your past work. You make ~10 slides, go over technical details, and "defend" your body of work like a PhD candidate would.
 
 If you think these rounds are daunting, so does everyone else. Tech interviews evolve from time to time. Back in grad school, I remember watching Mayuko's [YouTube video](https://www.youtube.com/watch?v=e2Y-rhTlHHI) explaining how tech interviews were once all about domain knowledge; then Microsoft popularized domain-agnostic data structures and algorithms questions that we see today to select raw talents, regardless of their background. For a while, SWE candidates found those interviews intimidating, until LeetCode came along and gave everyone a sure fire way to prepare.
@@ -54,9 +54,12 @@ Today, new interview types (e.g., ML coding, ML infra design, research presentat
 
 I used to have an accurate "feel" for when an offer was coming. Last year, if I solved all the coding problems (even with minor flaws), presented a complete system design, and had an enjoyable conversation with the hiring manager, an offer would usually come. 
 
-That reality has changed. Our culture tries to steer clear from the idea of "perfection", seeing it as unattainable or mentally taxing. Sadly, perfection has become the new bar at companies most want to join. 
+That reality has changed. Our culture tries to steer clear from the idea of "perfection", seeing it as unattainable or mentally taxing. Sadly, perfection is the new bar at companies that most want to join. 
 
-1. **Coding**: In a 45-minute LeetCode-style interview with one Hard problem, the ideal outcome is to write a bug-free solution in 15–20 minutes, come up with sharp test cases, pass them, and then discuss optimizations. If there are follow-ups, you're expected to provide extendable solutions. In a one-hour OOP-style CodeSignal interview, most people can't even type fast enough to finish all 4 levels; you should aim to finish in ~40 minutes so you have time to discuss how to scale the toy system (e.g., it's usually a database, message queue, or workflow) to production. In ML coding, even reading the full training and inference loops can overwhelm most candidates --- but you're expected to complete the implementation and improve model performance in an hour.
+1. **Coding**: As an ML candidate, you may have the funny experience of writing a [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) API yesterday, debugging or writing a Transformer decoder today, and solving an LC hard tomorrow --- all with the expectation of being impeccable. Some friends complain about such expectations, saying that (almost) no one in real life is simultaneously a backend genius, a SOTA model author, and a competitive programmer. I just accept it as reality, swallow the pain, and try my best to get ready for all three.
+   - **LC**: If a LC-style interview is 45 minutes, you may solve 1 Easy + 1 Medium or 2 Medium (Meta), or 1 Hard with several follow-ups (e.g., Google, Snap, Databricks, Pinterest). In the former case, the ideal outcome is to take one look at the problem, come up and describe the solution in 1 min, code it up in 5-8 min, and do a dry run on simple test cases in 1 min. In the latter case, the ideal outcome is to write a bug-free solution in 15–20 minutes, come up with sharp test cases, pass them, and discuss optimizations. For follow-ups, you're expected to provide extendable solutions, either in code (first few) or in words (last one). If you don't see follow-ups, it means you've spent too long on the main problem. 
+   - **OOP**: In a 1-hour OOP-style interview, you'll be writing a toy API to play a game, manage a database, manage a process, or serve other functions. The interview is usually organized into 4 levels. The first level is a simple warmup. Then you gradually expand the API in the next 3 levels. Most people can't type fast enough to finish all 4 levels, but an ideal candidate should finish in ~40 minutes and leave time to discuss how to scale the toy system in production. 
+   - **ML**: In a 1-hour ML coding interview, you're either given some model code (e.g., model class, training and inference loops) and asked to debug bad performance, or you'll implement a model from scratch using NumPy or PyTorch and overfit it on toy samples. Many candidates spend too long reading the code or Googling NumPy/PyTorch syntax. An ideal candidate is fluent in PyTorch and NumPy and can code up common model architectures (e.g., linear layers, residual connections, Transformer blocks, non-linear activation functions) without thinking. Googling many times leaves you no time to debug or implement the model.
 2. **ML system design**: By now, everyone knows how to sketch a standard ranking pipeline --- L1 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value models, or "special effects"). If you sound like everyone else, that won't cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you've worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year's standouts are perhaps "One" series from Kuaishou or {{< backlink "generative_recommendation" "generative recommendation" >}} in general).
 3. **Project deep dive**: I've got offers because the team needed someone to work on X, and I happened to have worked on X. In one case, my first interviewer was so interested in X that they skipped the coding question and interviewers in the next few rounds ditched the agenda to ask me more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don't have such experience. I think this is why you need to choose your current projects or next moves carefully --- as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a {{< sidenote "dated" >}}It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches. Your future career may be limited to designer-driven, pre-IPO companies.{{< /sidenote >}} ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for five years. Otherwise, you're cashing out too early and losing your advantage in 2-3 years. That said, you can still fail if you talk about a complex project as if it were trivial. I wrote a [post](https://www.yuan-meng.com/notes/project_complexity/) on how to present complex projects that do them justice.
 4. **ML fundamentals**: Most of the time, you'll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they've solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge. 
@@ -81,8 +84,8 @@ In my experience, if you don't have intuition 1-2 minutes after the interviewer 
 
 The more I interview, the more I see solving LC problems as cracking an oyster shell. A good solution should feel almost effortless --- one touch and a twist, and the shell opens. If you find yourself grinding so hard that you're smashing the shell, you're 100% doing it wrong.
 
-The implication: when practicing LC, stop grinding if you find yourself writing a long-winded solution going nowhere. Don't build muscle memory for labor --- it won't serve you well in interviews. Instead, practice searching for the "a-ha" moment that cracks the shell open.
-
+The implication: when practicing LC, stop grinding if you find yourself writing a long-winded solution that's going nowhere. Don't build muscle memory for heavy labor --- it won't ever serve you in actual interviews. Instead, build the muscle memory for pausing to examine patterns and finding the "a-ha" moment that cracks the shell open.
+ 
 Sometimes you know you're close but can't land on that "a-ha" moment. In such cases during practice, I tell ChatGPT about my "cloudy" intuitions, hoping it can shed light on the opening. Take [Car Fleet](https://leetcode.com/problems/car-fleet/description/) for example: I felt it could be solved with a monotonic stack ("monostack") but didn't know why or how. So I asked ChatGPT:
 
 > I consider using a monostack but don't know why. My feeling might be stirred up by cars travelling unidirectionally, or the no passing rule.
@@ -96,7 +99,7 @@ To which it answered:
 
 Using more hints that I asked for, I solved this problem and won't forget the solution. That said, if you have the right idea but are just fighting bugs, don't ask ChatGPT --- debug it yourself! Add print statements. Write small test cases. In a real interview, finding and fixing bugs is a hurdle you must overcome quickly and independently.
 
-Of course, you can't build intuition --- however vague --- without solving enough LC problems. When friends ask me for coding prep advice, I always recommend NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. Finish them before you and I are in any position at all to speak about intuitions or strategies.
+Of course, you can't build intuition --- however vague --- without solving enough LC problems. When friends ask me for coding prep advice, I always recommend taking the two NeetCode courses ([beginner](https://neetcode.io/courses/dsa-for-beginners/0), [advanced](https://neetcode.io/courses/advanced-algorithms/0)) first and then practicing [problems](https://neetcode.io/practice/practice) curated by NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. Finish these before you are in any position at all to speak about intuitions or strategies. If you have time, you can also participate in LC [Weekly Contest](https://leetcode.com/contest/) to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google). 
 
 ### Mindset: Connect Problems to Scalable Systems
 
@@ -118,7 +121,7 @@ Many LC problems answer these exact questions and tap into your ability and intu
 Many complain that LC problems are detached from real work. But once I see them as toy versions of prod data processing and systems tasks, I solve LC problems faster, with more motivation and interest. 
 
 ## Objective-Oriented Programming
-TBD
+Coming soon...
 
 ## ML Coding
 
@@ -134,7 +137,7 @@ To test your understanding, solve LC-style ML problems on [Deep-ML](https://www.
 Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models. Don't be caught off the guard --- brush up with Educative's [Scikit-learn cheat sheet](https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods).
 
 
-## ML Fundamentals: Build an Impeccable Foundation
+## ML Fundamentals
 
 I find it deeply unsatisfying to collect a checklist of “common questions” and prepare only for those. For example:
 - What are common optimizers?
@@ -153,8 +156,14 @@ I treat ML fundamental prep as an opportunity to revisit the foundations of deep
 
 More recently, I like [Understanding Deep Learning](https://udlbook.github.io/udlbook/). It's less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.
 
+## ML **Infra** Design
+Coming soon...
+
+## ML **Model** Design
+Coming soon...
 
 ## Behavior Interview
+Coming soon...
 
 ## Project Deep Dive
-
+Coming soon...
