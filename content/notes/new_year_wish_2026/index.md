@@ -15,6 +15,6 @@ categories: ["personal reflections"]
    - Some thoughts: build a baby [Olmo 3](https://allenai.org/blog/olmo3) (AI2's open-source model), play with [SGLang](https://github.com/sgl-project/sglang), and revisit Cognitive Science + LLMs (e.g., ReAct instantly reminded me of CogSci research on planning + learning-to-think work and indeed Shunyu Yao was inspired by Tom Griffiths; perhaps some ideas I pondered about as a student now have new answers). 
 3. Start playing sports regularly again. 
 4. Find a non-ML, non-sports hobby to relax.
-5. Finally, finally submit my NIW application and push through any RFEs...
+5. Finally, finally submit my NIW application and answer any RFEs...
 6. Travel somewhere in nature. Maybe in Canada. 
 7. 📅💍?
