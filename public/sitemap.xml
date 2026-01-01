@@ -2,9 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/career/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/new_year_wish_2026/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/personal-reflections/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/career/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/interview/</loc>
   </url><url>
@@ -14,13 +22,7 @@
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-  </url><url>
     <loc>http://localhost:1313/notes/ambition_and_answers/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/ml-infra/</loc>
   </url><url>

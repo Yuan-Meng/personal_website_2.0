@@ -44,6 +44,10 @@
       "in": [],
       "out": []
     },
+    "/notes/new_year_wish_2026/": {
+      "in": [],
+      "out": []
+    },
     "/notes/nothingness/": {
       "in": [],
       "out": []
@@ -266,6 +270,11 @@
       "permalink": "/notes/ml_wishlist/",
       "section": "notes",
       "title": "ML Stuff I Wish to Learn (More) About in 2025"
+    },
+    "/notes/new_year_wish_2026/": {
+      "permalink": "/notes/new_year_wish_2026/",
+      "section": "notes",
+      "title": "New Year Wish 2026"
     },
     "/notes/nothingness/": {
       "permalink": "/notes/nothingness/",
