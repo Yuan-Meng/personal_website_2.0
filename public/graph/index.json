@@ -80,11 +80,15 @@
       "in": [],
       "out": []
     },
+    "/notes/stranger_things/": {
+      "in": [],
+      "out": []
+    },
     "/posts/attention_as_dict/": {
       "in": [
         "/posts/hardware_aware_transformers/",
-        "/posts/seq_user_modeling/",
-        "/posts/generative_recommendation/"
+        "/posts/generative_recommendation/",
+        "/posts/seq_user_modeling/"
       ],
       "out": []
     },
@@ -164,9 +168,9 @@
     },
     "/posts/mle_interviews/": {
       "in": [
-        "/posts/career_reflection/",
         "/posts/mle_interviews_2.0/",
-        "/posts/mle_interviews_2.0/"
+        "/posts/mle_interviews_2.0/",
+        "/posts/career_reflection/"
       ],
       "out": []
     },
@@ -274,7 +278,7 @@
     "/notes/new_year_wish_2026/": {
       "permalink": "/notes/new_year_wish_2026/",
       "section": "notes",
-      "title": "New Year Wish 2026"
+      "title": "New Year Wishes 2026"
     },
     "/notes/nothingness/": {
       "permalink": "/notes/nothingness/",
@@ -310,6 +314,11 @@
       "permalink": "/notes/resolutions-2022/",
       "section": "notes",
       "title": "New Year Resolutions"
+    },
+    "/notes/stranger_things/": {
+      "permalink": "/notes/stranger_things/",
+      "section": "notes",
+      "title": "Irreversibility of Life"
     },
     "/posts/attention_as_dict/": {
       "permalink": "/posts/attention_as_dict/",

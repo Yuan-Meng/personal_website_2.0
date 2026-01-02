@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Memory on Yuan Meng</title>
-    <link>http://localhost:1313/categories/memory/</link>
+    <link>http://localhost:50097/categories/memory/</link>
     <description>Recent content in Memory on Yuan Meng</description>
     <generator>Hugo</generator>
     <language>en-us</language>
@@ -10,12 +10,12 @@
     <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
     <copyright>Yuan Meng</copyright>
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/memory/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:50097/categories/memory/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A Glimpse of Happiness</title>
-      <link>http://localhost:1313/notes/poem/</link>
+      <link>http://localhost:50097/notes/poem/</link>
       <pubDate>Mon, 13 Jan 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/notes/poem/</guid>
+      <guid>http://localhost:50097/notes/poem/</guid>
       <description>&lt;p&gt;&lt;span style=&#34;color: white;&#34;&gt;I loved it when you invited me in; &lt;br/&gt; you giggled when I tickled you and pretended to smother you with your beloved bed sheet. &lt;br/&gt; I examined your eyes, acne, and lips so closely, &lt;br/&gt; as if I was trying to register your everything in my brain. &lt;br/&gt; We chatted about how you got your orange-legged glasses in high school &lt;br/&gt; and put them on in a haste before morning meetings. &lt;br/&gt; So many little things that I never thought of or cared about &lt;br/&gt; suddenly mattered because of you.&lt;/span&gt;&lt;/p&gt;</description>
     </item>
   </channel>
