@@ -1,6 +1,6 @@
 ---
-title: "ML Interview 2.0: Research Engineering and Scary Rounds"
-date: 2026-01-10
+title: "MLE Interview 2.0: Research Engineering and Scary Rounds"
+date: 2026-01-11
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
@@ -14,7 +14,7 @@ toc: true
 
 I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value." That's probably the mindset to have when interviewing with companies everybody wants to join today.
 
-For ML engineers, companies like Google, Meta, Pinterest, and LinkedIn have established ranking teams, good compensations, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard ML interviews in my previous {{< backlink "mle_interviews" "post" >}}. 
+For ML engineers, companies like Google, Meta, Pinterest, and LinkedIn have established ranking teams, good compensations, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard MLE interviews in my previous {{< backlink "mle_interviews" "post" >}}. 
 
 For applied/non-research ML or research engineers, only a few places pay more than the above: research engineers at {xAI, OpenAI, Anthropic, DeepMind} and ML engineers at {Netflix, Roblox, Snap, Databricks}. Some have interview rounds I find genuinely scary, e.g., 
 
@@ -31,7 +31,7 @@ Today, new interview formats feel daunting because they don't have a LeetCode-eq
 
 # Why Do You Wanna Leave?
 
-To do well at ML interviews 2.0, we inevitably lose some productivity at work, so think clearly about why you wanna leave (every recruiter and hiring manager will ask you anyways). And once you start, commit to finishing within 2 months with full determination. Don't drag it out.
+To do well at MLE interviews 2.0, we inevitably lose some productivity at work, so think clearly about why you wanna leave (every recruiter and hiring manager will ask you anyways). And once you start, commit to finishing within 2 months with full determination. Don't drag it out.
 
 Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll 99% find yourself in a worse situation at a new company.
 
@@ -106,13 +106,15 @@ Company tags on LC are added by candidates after seeing these problems in interv
 As hard as it may sound, you gotta let go of the idea that `solving company tags == solving coding interviews` and actually get good at problem solving and coding up the solution in your mind. 
 
 
-First thing first, don't theorize problem solving until you've solved enough problems. I always recommend taking the [beginner](https://neetcode.io/courses/dsa-for-beginners/0) and [advanced](https://neetcode.io/courses/advanced-algorithms/0)) NeetCode courses first and practicing [problems](https://neetcode.io/practice/practice) curated by NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. There's no shortcut. If you have time, you can participate in LC [Weekly Contest](https://leetcode.com/contest/) to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google). 
+First thing first, don't theorize problem solving until you've solved enough problems. I always recommend taking the [beginner](https://neetcode.io/courses/dsa-for-beginners/0) and [advanced](https://neetcode.io/courses/advanced-algorithms/0) NeetCode courses first and practicing [problems](https://neetcode.io/practice/practice) curated by NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. There's no shortcut. If you have time, you can participate in LC [Weekly Contest](https://leetcode.com/contest/) to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google). 
 
 Then, don't memorize concrete data structures you've used for a problem --- figure that out on the fly. For instance, if a problem gives you some dependencies and asks you to find a valid ordering that satisfies them, it's likely a topological sort problem. Usually, LC problems provide dependencies in the form of edge lists or adjacency lists. But what if a new problem provides dependencies as links or pointers? Can you still recognize the problem? Maybe. Can you still construct the adjacency list and the indegree map correctly? Maybe not. You might struggle between recalling old solutions and reasoning about the problem at hand, run out of time, or keep writing bugs.
 
 The implication: when practicing LC, focus on the problem *at hand*. Given the task (e.g., finding an order under dependency constraints), what's a good/likely algorithm? Then use what you're given right here, right now to implement that algorithm, rather than trying to recall concrete bits and pieces from past solutions. If you do write a bug, refrain from asking GPT or looking at the solution right away. Because in a real interview, this is exactly when you should debug on your own --- by printing suspicious parts, or by thinking from first principles.
 
 That said, don't practice randomly. For instance, while you don't need to (and probably never can) go over all Google tags, you can still research what types of problems are most popular at Google (e.g., [Reddit](https://www.reddit.com/r/leetcode/comments/1izv4ln/how_to_actually_prepare_for_google_via_leetcode/) says DP, graphs, and "fancy string problems") and focus on those. Track which algorithms trip you up the most and practice accordingly. For me, it's definitely advanced graphs, linked lists and trees (I hate pointers), bottom-up DP, greedy, and string evaluation (e.g., Basic Calculator I, II, III). I also accept that as an ML engineer, there are so many other rounds that I can't be perfect at coding. If I run into a red-black tree problem, I'll accept today is not my day.
+
+{{< figure src="https://www.dropbox.com/scl/fi/d6bchbb2xewuycaynckkv/Screenshot-2026-01-11-at-10.31.08-AM.png?rlkey=a3fi4vfnhqvy55da0t2nf5612&st=hb43kyx4&raw=1" width="1800" caption="My practice plan for Google coding interviews.">}}
 
 <!-- In my experience, if you don't have intuition 1-2 minutes after the interviewer pastes the prompt and test cases, you won't get a strong yes, because you likely won't have time to write a clean solution and handle follow-ups. In this market, you want to shoot for "strong yes" in most rounds for an offer. You can't expect to reason everything from first principles, yet you can't rely on having seen every problem before.
 

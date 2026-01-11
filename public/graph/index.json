@@ -116,8 +116,8 @@
     },
     "/posts/generative_recommendation/": {
       "in": [
-        "/posts/ml_infra_interviews/",
-        "/posts/mle_interviews_2.0/"
+        "/posts/mle_interviews_2.0/",
+        "/posts/ml_infra_interviews/"
       ],
       "out": [
         "/posts/ebr/",
@@ -179,8 +179,8 @@
       "out": [
         "/posts/mle_interviews/",
         "/posts/ml_infra_interviews/",
-        "/posts/generative_recommendation/",
-        "/posts/mle_interviews/"
+        "/posts/mle_interviews/",
+        "/posts/generative_recommendation/"
       ]
     },
     "/posts/mtml/": {
