@@ -168,9 +168,9 @@
     },
     "/posts/mle_interviews/": {
       "in": [
-        "/posts/career_reflection/",
         "/posts/mle_interviews_2.0/",
-        "/posts/mle_interviews_2.0/"
+        "/posts/mle_interviews_2.0/",
+        "/posts/career_reflection/"
       ],
       "out": []
     },
