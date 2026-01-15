@@ -193,17 +193,17 @@ For each system listed below, generate a **CodeSignal-style 4-level coding promp
 
 ## 3. ML Coding
 
-If I ask my ML engineer friends, 9 out 10 love machine learning, but perhaps 0 out of 10 like ML coding. 
+Okay, so ML coding will be right in our alley, right? That'd be the funniest thing I've heard 🤣🤣🤣. I like OOP 10x more over ML coding.
 
-It scares the hell out of most ML engineers to write PyTorch code without inheriting from your team's model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you have no time. 
+If I ask my ML engineer friends, 9 out 10 will say they love machine learning, but it will scare the hell out of all to write PyTorch code without inheriting from your team's model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you have no time. 
 
 First, be really fluent in PyTorch. Read Raschka's [PyTorch in One Hour](https://sebastianraschka.com/teaching/pytorch-1h/) and play with [TensorGym](https://tensorgym.com/) to learn syntax. For a more comprehensive tutorial, go over [Zero to Mastery Learn PyTorch for Deep Learning](https://www.learnpytorch.io/). 
 
 Next, be really familiar with Transformer architectures as well as training and inference loops. Read Sebastian Raschka's [Build a Large Language Model](https://github.com/rasbt/LLMs-from-scratch) and reproduce all code on your own. Watch Andrej Karpathy's [GPT-2 video](https://www.youtube.com/watch?v=kCc8FmEb1nY). If you have enough time on your hands, follow along with Karpathy's [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) and read some of his repos (e.g., [nanoGPT](https://github.com/karpathy/nanoGPT), [micrograd](https://github.com/karpathy/micrograd)). Also be familiar with common optimization techniques for training and inference (e.g., [Flash Attention](https://lubits.ch/flash/), [LoRA](https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured), [KV cache](https://huggingface.co/blog/kv-cache)) and how to implement them from scratch. 
 
-To test your understanding, solve LC-style ML problems on [Deep-ML](https://www.deep-ml.com/problems).
+To test your understanding, solve LC-style ML problems on [Deep-ML](https://www.deep-ml.com/problems). You probably have no time to practice everything, but do go over common model architectures (e.g., KNN, K-Means, linear regression, logistic regression, MLP, CNN, RNN, causal self-attention, bidirectional self-attention, etc.), activation functions, optimizers (you may need to implement backpropagation and autograd from scratch instead of doing `loss.backward()`), evaluation metrics (e.g., nDCG, AUC), as well as training + inference techniques such as LoRA, beam search, KV cache, etc.. If you encounter problems outside of this list, maybe today isn't your day. You can also go over the [notebooks](https://udlbook.github.io/udlbook/) accompanying the *Understanding Deep Learning* book to cover all common ML concepts.
 
-Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models. Don't be caught off the guard --- brush up with Educative's [Scikit-learn cheat sheet](https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods).
+Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models or use NumPy to implement from scratch. Don't be caught off the guard --- brush up with Educative's [Scikit-learn cheat sheet](https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods). To practice NumPy itself, go over the [numpy-100](https://github.com/rougier/numpy-100) repo and the [*From Python to Numpy*](https://www.labri.fr/perso/nrougier/from-python-to-numpy/) tutorial.
 
 
 ## 4. ML Fundamentals
@@ -224,7 +224,6 @@ I need to understand how concepts connect at a deeper level. My philosophy is th
 I treat ML fundamental prep as an opportunity to revisit the foundations of deep learning and uncover knowledge gaps I didn't know I had. While I like Kevin Murphy's [PML series](https://probml.github.io/pml-book/) as always, the clever bits are often scattered across chapters. I've had frequent epiphanies reading his writing, but it's not always phrased in the "standard language" you or your interviewers instinctively think in.
 
 More recently, I like [Understanding Deep Learning](https://udlbook.github.io/udlbook/). It's less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.
-
 
 ## 5. ML **Model** Design
 Show some examples.
