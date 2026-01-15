@@ -117,6 +117,7 @@
     "/posts/generative_recommendation/": {
       "in": [
         "/posts/mle_interviews_2.0/",
+        "/posts/mle_interviews_2.0/",
         "/posts/ml_infra_interviews/"
       ],
       "out": [
@@ -184,6 +185,7 @@
         "/posts/mle_interviews/",
         "/posts/generative_recommendation/",
         "/posts/ml_infra_interviews/",
+        "/posts/generative_recommendation/",
         "/posts/ml_infra_interviews/"
       ]
     },
@@ -210,7 +212,6 @@
     "/posts/seq_user_modeling/": {
       "in": [
         "/posts/generative_recommendation/",
-        "/posts/hardware_aware_transformers/",
         "/posts/ml_infra_interviews/"
       ],
       "out": [

@@ -547,4 +547,9 @@ in an interview.
 I created a Notion database, where each row is a question. Before interviews, I go over each question once and time myself on delivery.
 
 ## 8. Project Deep Dive
-<!-- Coming soon... -->
+
+In phone screens, hiring manager chats, or design interviews, you may be asked to walk through a project you're most proud of. Some companies have a dedicated 45-minute or 1-hour round for project deep dives. If slides are allowed, 10–12 is a good amount.
+
+There's no skill for this round. If you've led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you're the right person for this team --- e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.
+
+To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my [post](https://www.yuan-meng.com/notes/project_complexity/) for more details.
