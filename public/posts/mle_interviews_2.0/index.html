@@ -29,7 +29,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.">
   <meta itemprop="datePublished" content="2026-01-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="6407">
+  <meta itemprop="wordCount" content="7747">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -88,9 +88,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT31M",
+  "timeRequired": "PT37M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 6407
+  "wordCount": 7747
 }
 </script>
 
@@ -133,7 +133,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 
     
     
-      Reading time: 31 minutes
+      Reading time: 37 minutes
     
 
     
@@ -863,14 +863,14 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </ul>
 <p>Below is how I usually approach ML model design problems:</p>
 <ol>
-<li><strong>Problem framing</strong>: 5-10 min, understand what to build and how
+<li><strong>Problem framing</strong>: understand what to build and how
 <ul>
 <li><strong>Clarify what system to build</strong>: What&rsquo;s the UI and model entry point? How do users engage with recommendations? How do you want them to? What&rsquo;s the corpus size (i.e., how many items to recommend from)? What&rsquo;s the latency target? So on.
 <ul>
 <li>I never have a fixed list of questions. I just close my eyes for a second and let my intuitions speak about what&rsquo;s important for this system that could also impact the design. I sometimes play with the team or the company&rsquo;s product and imagine how I&rsquo;d build it as a PM/EM/MLE.</li>
 </ul>
 </li>
-<li><strong>Understand why build it (business objectives)</strong>: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sells, etc.)? What don&rsquo;t you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.</li>
+<li><strong>Understand why build it (business objectives)</strong>: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sellers, etc.)? What don&rsquo;t you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.</li>
 <li><strong>Propose how to build it with ML (ML objectives)</strong>: If you predict one outcome, what would it be? If you build a multi-task model to predict multiple outcomes, what are they?</li>
 </ul>
 </li>
@@ -905,8 +905,10 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <li><strong>Objective</strong>: predict <code>pAction</code> and rank items by it</li>
 <li><strong>Training data</strong>: impression data (L2 engagements)</li>
 <li><strong>Features</strong>: now we can use a rich set of request features (user + context), item features, and cross features; many companies also include expensive but effective features such as user engagement history for sequence models</li>
-<li><strong>Model architectures</strong>: most companies still use DLRM-style models with feature processing (normalization numeric features and pass them through MLP; look up embedding features and project them; pass sequence features to a Transformer module; concatenate outputs), feature interaction (based on MLP/CNN/RNN, attention, explicit cross networks, or a combination of them), and feature transformation layers (e.g., expert sub-networks each processing features in its own way and gating networks leveraging expert outputs for each task)</li>
-<li><strong>Objectives</strong>: most modern L2 ranking models predict multiple <code>pAction</code> that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it&rsquo;s easy to calibrate; search often uses listwise loss to optimize for the list order</li>
+<li><strong>Model architectures</strong>: while Generative Recommendation is being hyped everywhere (and I <a href="/posts/generative_recommendation/" class="backlink">wrote</a>
+  
+   about it with great curiosities), most companies still use DLRM-style models with feature processing (normalize numeric features and pass them through an MLP; look up embedding features and project them to desired dimensions; pass sequence features to a Transformer module 👉 concatenate outputs), feature interaction (use MLP/CNN/RNN, attention, explicit cross networks, or throw a kitchen sink at the problem like <a href="https://arxiv.org/abs/2203.11014">DHEN</a>), and feature transformation layers (e.g., expert sub-networks each process features in its own way and gating networks leverage expert outputs for each task).</li>
+<li><strong>Objectives</strong>: most modern L2 ranking models predict multiple <code>pAction</code> that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it&rsquo;s easy to calibrate; search often uses pairwise or listwise loss to optimize for order.</li>
 </ul>
 </li>
 </ul>
@@ -947,8 +949,8 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <li>The best way to understand ML infra is to start from the infra teams you collaborate with and learn what they do (e.g., via design docs, <a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">books</a>, and engineering blogs; see <a href="https://www.yuan-meng.com/posts/ml_infra_interviews/#references">resources</a>)
 <ul>
 <li><strong>Data infra</strong>: e.g., how features are defined, computed, stored, and updated (batch vs. streaming); how engagement events are logged; how training data (features + labels) is generated via forward logging or backfill.</li>
-<li><strong>Training infra</strong>: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout.</li>
-<li><strong>Serving infra</strong>: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; request logging.</li>
+<li><strong>Training infra</strong>: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout/rollback.</li>
+<li><strong>Serving infra</strong>: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; engagement event logging.</li>
 </ul>
 </li>
 <li>Brush up on distributed system knowledge, but don&rsquo;t dwell on it. ML infra is a special case of distributed systems, but you usually don&rsquo;t need to go deep on things like rate limiters or post creation/updates. The focus is the infra around <strong>ML</strong>.
@@ -965,7 +967,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   >
     <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
       <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
-        <span class="relative"></span>
+        <span class="relative">markdown</span>
       </div>
       <div>
         <clipboard-copy
@@ -1018,71 +1020,71 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
       </div>
     </div>
   </aside>
-  <p class="sr-only"> code snippet start</p>
-  <pre tabindex="0"><code>## Table of Contents
-
-1. **Problem Framing**
-   - Clarification: What to Build  
-     - Charging Events  
-     - Attribution  
-     - Candidate Size  
-     - Scalability
-   - Business Objectives: Why Build It
-   - ML Objectives: How to Build with ML
-
-2. **Problem Statement**
-
-3. **High-Level Design**
-   - Online Path
-   - Offline Path
-
-4. **Online Path**
-   - Core Entities
-   - API and Data Flow
-     - Ads Serving API
-     - CandidateGenerationService
-     - L1RankingService
-     - L2RankingService
-     - AuctionPolicyService
-     - Logging
-
-5. **Offline Path**
-   - Feature Engineering
-   - Data Generation
-   - Model Training
-   - Item Indexing
-
-6. **Step-by-Step Design**
-   - Candidate Generation
-     - Ads Targeting
-     - Budget Checks
-     - Other Checks
-   - L1 Ranking
-     - Objectives
-     - Training Data
-     - Features
-     - Model Architectures
-   - L2 Ranking
-     - Objectives
-     - Training Data
-     - Features
-     - Model Architectures
-
-7. **Production**
-   - Monitoring
-   - Experimentation
-   - Rollout
-   - Rollback
-
-8. **Deep Dives**
-   - Delayed Conversions
-   - CVR Calibration
-
-9. **References**
-   - Posts
-   - CTR Papers
-   - CVR Papers</code></pre>
-  <p class="sr-only"> code snippet end</p>
+  <p class="sr-only">markdown code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gu">## Table of Contents
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Problem Framing**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Clarification: What to Build  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Charging Events  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Attribution  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Candidate Size  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Scalability
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Business Objectives: Why Build It
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> ML Objectives: How to Build with ML
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Problem Statement**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**High-Level Design**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Online Path
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Offline Path
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> <span class="gs">**Online Path**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Core Entities
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> API and Data Flow
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Ads Serving API
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> CandidateGenerationService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> L1RankingService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> L2RankingService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> AuctionPolicyService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Logging
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">5.</span> <span class="gs">**Offline Path**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Feature Engineering
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Data Generation
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Model Training
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Item Indexing
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">6.</span> <span class="gs">**Step-by-Step Design**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Candidate Generation
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Ads Targeting
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Budget Checks
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Other Checks
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> L1 Ranking
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Objectives
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Training Data
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Features
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Model Architectures
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> L2 Ranking
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Objectives
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Training Data
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Features
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Model Architectures
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">7.</span> <span class="gs">**Production**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Monitoring
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Experimentation
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Rollout
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Rollback
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">8.</span> <span class="gs">**Deep Dives**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Delayed Conversions
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> CVR Calibration
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">9.</span> <span class="gs">**References**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Posts
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> CTR Papers
+</span></span><span class="line"><span class="cl">   - CVR Papers</span></span></code></pre></div>
+  <p class="sr-only">markdown code snippet end</p>
 
   
 </figure>
@@ -1113,7 +1115,240 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<!-- Show the list and prep guide. -->
+<p>99% of the time, behavior questions come from the list below:</p>
+<details class="fold">
+<summary>79 behavioral question by signal</summary>
+<table>
+<thead><tr><th>signal</th><th>question</th></tr></thead>
+<tbody>
+<tr><td>problem solving</td><td>the most challenging / successful project you've delivered</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>how you work with ambiguous requirements</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>a time when you optimized a process within/beyond your team</td></tr>
+<tr><td></td><td>a time when you found an innovative solution to a problem</td></tr>
+<tr><td></td><td>a time when you discovered an overlooked issue on your team</td></tr>
+<tr><td></td><td>tell me about a time when you faced a challenging situation at work</td></tr>
+<tr><td></td><td>a time when you understood and improved a product</td></tr>
+<tr><td></td><td>a time when you had to pivot (proactively or being asked to)</td></tr>
+<tr><td></td><td>a time when you deep dived into data to resolve a problem or made a decision</td></tr>
+<tr><td>teamwork</td><td>how you resolve conflicts with teammates or xfn</td></tr>
+<tr><td></td><td>a time when you had to work with people outside of your team</td></tr>
+<tr><td></td><td>a time when you disagreed with your manager and persuaded them</td></tr>
+<tr><td></td><td>a time when your team disagreed with you on your idea</td></tr>
+<tr><td></td><td>a time when you worked with a difficult / non-collaborative teammate</td></tr>
+<tr><td></td><td>how you get buy-in from peers/xfn/leadership</td></tr>
+<tr><td></td><td>how you collaborate + earn trust from with teammates / xfn</td></tr>
+<tr><td></td><td>a time when you escalated to manager/skip</td></tr>
+<tr><td></td><td>a time when you helped an underperforming teammate</td></tr>
+<tr><td></td><td>how you give and share credit</td></tr>
+<tr><td></td><td>what to do if team is not bonding well/td></tr>
+<tr><td></td><td>how do you handle disagreement with majority decision</td></tr>
+<tr><td>communication</td><td>how you communicate technical ideas to non-tech audience/td></tr>
+<tr><td></td><td>how you give constructive feedback</td></tr>
+<tr><td></td><td>how you receive constructive feedback</td></tr>
+<tr><td></td><td>how you get visibility for your work</td></tr>
+<tr><td>time management</td><td>a time when you met a deadline</td></tr>
+<tr><td></td><td>a time when you missed a deadline</td></tr>
+<tr><td></td><td>a time when you felt overwhelmed / stressed</td></tr>
+<tr><td></td><td>how you deal with conflicting priorities</td></tr>
+<tr><td></td><td>how you balance responsiveness vs. focus time</td></tr>
+<tr><td></td><td>a time when you must deliver an imperfect result</td></tr>
+<tr><td>decision making</td><td>the hardest tech/business trade-off you had to make</td></tr>
+<tr><td></td><td>a time when you made a difficult decision to give up on a project</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and succeeded</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and failed</td></tr>
+<tr><td></td><td>a time when you made a wrong decision and learned from it</td></tr>
+<tr><td></td><td>how you define impact and success of a project</td></tr>
+<tr><td></td><td>a time when you made a decision in limited time</td></tr>
+<tr><td></td><td>a time when you made a decision with incomplete information</td></tr>
+<tr><td></td><td>a time when you made a decision with many sources of information</td></tr>
+<tr><td></td><td>a time when you made a decision without consulting your manager</td></tr>
+<tr><td></td><td>a time you refused to compromise your standards</td></tr>
+<tr><td>initiative</td><td>a time when you unblocked yourself</td></tr>
+<tr><td></td><td>a time when you unblocked others</td></tr>
+<tr><td></td><td>a project initiated by you</td></tr>
+<tr><td></td><td>a project you had to push hard for</td></tr>
+<tr><td></td><td>a time when you went above and beyond your duty</td></tr>
+<tr><td></td><td>a time when you worked on something before mgr approval</td></tr>
+<tr><td>achievement</td><td>a time when you set a goal and achieved it</td></tr>
+<tr><td></td><td>a time when you went above and beyond expectations</td></tr>
+<tr><td></td><td>the biggest accomplishment in your career</td></tr>
+<tr><td></td><td>your biggest strengths</td></tr>
+<tr><td>growth</td><td>the biggest regret in your career</td></tr>
+<tr><td></td><td>a time when you had to persevere for several months</td></tr>
+<tr><td></td><td>a project you would do differently</td></tr>
+<tr><td></td><td>a time when you made a big mistake (reflection → do better)</td></tr>
+<tr><td></td><td>your biggest weaknesses</td></tr>
+<tr><td></td><td>a time when you owned a task outside of your expertise</td></tr>
+<tr><td></td><td>how you find mentors and network within/beyond your team</td></tr>
+<tr><td></td><td>a time when you struggled initially and turned it around</td></tr>
+<tr><td></td><td>how you find time to learn at and outside of work</td></tr>
+<tr><td></td><td>career aspirations + motivation to join xyz company</td></tr>
+<tr><td>leadership</td><td>how you mentor junior engineers</td></tr>
+<tr><td></td><td>a time when you delegated a project</td></tr>
+<tr><td></td><td>a time you advocated for someone on your team</td></tr>
+<tr><td></td><td>a time when you improved company/team culture</td></tr>
+<tr><td></td><td>a time when you took responsibilities for a failure</td></tr>
+<tr><td></td><td>a time when you set roadmap (for a project or a team)</td></tr>
+<tr><td></td><td>what you value in a leader + what kind of leader you aspire to be</td></tr>
+<tr><td></td><td>a time when you drove alignment</td></tr>
+<tr><td></td><td>a time you made a suggestion to improve the team's outcomes</td></tr>
+<tr><td></td><td>positive leadership style you liked + influenced your work style</td></tr>
+<tr><td>adaptability</td><td>a time when you incurred a tech debt to meet deadline</td></tr>
+<tr><td></td><td>a time when you had to change the project scope</td></tr>
+<tr><td></td><td>a time you had to make a last-minute change</td></tr>
+<tr><td></td><td>a time when you delivered under time pressure / lack of resources</td></tr>
+<tr><td></td><td>a time when you received an unreasonable ask or project requirements</td></tr>
+<tr><td></td><td>a time when a project kept getting de-prioritized</td></tr>
+</tbody>
+</table>
+</details>
+<p>Then it boils down to how you pick and tell your stories. While companies ask the same questions, they value different qualities in an engineer. For instance, moving fast and breaking things (e.g., incurring a tech to meet a short-term goal) may be a vice at Google, which values doing things &ldquo;the right way&rdquo;, it&rsquo;s a virtue at companies like DoorDash or startups where scrappiness is the key to survival (your own and that of your company). Friends have told me that studying Amazon&rsquo;s leadership principles is the best way to prepare for behavior interviews, even if you don&rsquo;t interview with Amazon. But for me personally, I&rsquo;m more at ease with the <a href="https://jeffhsipe.medium.com/understanding-googelyness-4d61a70ada95">Googlyness</a> interview: instead of being grilled on reciting stories that map to rigid qualities, you&rsquo;re valued for being emotionally intelligent, ethical, kind, and curious.</p>
+<p>To quickly prepare for each question, I usually start with a rough story &mdash; just a few sentences I hastily jot down about an experience I&rsquo;m proud of or learned from, throw in the company values, and prompt GPT to turn it into a SAIL (situation, action, impact, learning) story.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-03">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">markdown</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-03 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-03"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">markdown code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gu">## Behavioral Interview Story Expansion Prompt
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">### Goal
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Turn a rough, real story (even a few sentences) into a clear, interview-ready
+</span></span><span class="line"><span class="cl">behavioral answer that is explicitly aligned with a company&#39;s values.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Instructions
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">I&#39;m preparing for behavioral interviews.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">I will give you:
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> a <span class="gs">**rough story**</span> (unpolished, informal is fine)
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> a set of <span class="gs">**company values / culture principles**</span> (pasted text or a link)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Please expand the story into a <span class="gs">**structured behavioral answer aligned with those values**</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Do <span class="gs">**not**</span> invent facts or exaggerate impact.
+</span></span><span class="line"><span class="cl">Your job is to organize, clarify, and align — not to embellish.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Input 1 — Rough story
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>This story is intentionally rough and incomplete:
+</span></span><span class="line"><span class="cl">[PASTE YOUR STORY HERE]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Input 2 — Company values
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Here are the company&#39;s values or culture principles I want the story aligned with:
+</span></span><span class="line"><span class="cl">[PASTE VALUES HERE OR PROVIDE URL]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Output Requirements
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">#### 1. Structured behavioral story
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Rewrite the story using the following sections:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **situation:** brief context; what was happening; responsibility, goal, or challenge I faced
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **action:** what I actually did  
+</span></span><span class="line"><span class="cl">  (focus on judgment, communication, trade-offs, and decisions)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **impact:** concrete outcome or change  
+</span></span><span class="line"><span class="cl">  (metrics, behavior shift, decision made, unblocked work, etc.)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **learning:** what I learned or how this changed my approach
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Style constraints**</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> first-person
+</span></span><span class="line"><span class="cl"><span class="k">-</span> natural, spoken tone
+</span></span><span class="line"><span class="cl"><span class="k">-</span> concise (60–120 seconds spoken)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> honest and professional
+</span></span><span class="line"><span class="cl"><span class="k">-</span> avoid buzzwords and filler phrases like &#34;i learned a lot&#34;
+</span></span><span class="line"><span class="cl"><span class="k">-</span> do <span class="gs">**not**</span> add new facts — only clarify and organize what&#39;s already there
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">#### 2. Values alignment
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Add a section titled exactly:
+</span></span><span class="line"><span class="cl">✅ why this is highly aligned with <span class="p">&lt;</span><span class="nt">company</span> <span class="na">values</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">In bullet points, explicitly map:
+</span></span><span class="line"><span class="cl"><span class="k">-</span> a <span class="gs">**specific action or decision**</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> to a <span class="gs">**specific value**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Examples of values to map against (use what&#39;s relevant):
+</span></span><span class="line"><span class="cl"><span class="k">-</span> emotional intelligence
+</span></span><span class="line"><span class="cl"><span class="k">-</span> collaboration
+</span></span><span class="line"><span class="cl"><span class="k">-</span> ownership
+</span></span><span class="line"><span class="cl"><span class="k">-</span> integrity
+</span></span><span class="line"><span class="cl"><span class="k">-</span> comfort with ambiguity
+</span></span><span class="line"><span class="cl"><span class="k">-</span> bias for action
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Make the mapping concrete and specific (what I did → which value it shows).
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Reminder
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>The goal is <span class="gs">**clarity and alignment**</span>, not sounding impressive.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The final answer should still feel like something a real person would say
+</span></span><span class="line"><span class="cl">in an interview.</span></span></code></pre></div>
+  <p class="sr-only">markdown code snippet end</p>
+
+  
+</figure>
+<p>I created a Notion database, where each row is a question. Before interviews, I go over each question once and time myself on delivery.</p>
 <h3 id="8-project-deep-dive" class="scroll-mt-8 group">
   8. Project Deep Dive
   
@@ -1441,6 +1676,38 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
                   class="taxonomy"
                   title="Posts and notes on Interview"
                   >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/generative_recommendation/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
+              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/generative-recommendation/"
+                  class="taxonomy"
+                  title="Posts and notes on Generative recommendation"
+                  >Generative recommendation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/large-language-models/"
+                  class="taxonomy"
+                  title="Posts and notes on Large language models"
+                  >Large language models</a
                 >
               </li>
           </ul>

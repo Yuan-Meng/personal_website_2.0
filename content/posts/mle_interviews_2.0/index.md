@@ -244,10 +244,10 @@ As I wrote in a recent {{< backlink "ml_infra_interviews" "post" >}}, there is a
 
 
 Below is how I usually approach ML model design problems: 
-1. **Problem framing**: 5-10 min, understand what to build and how
+1. **Problem framing**: understand what to build and how
    - **Clarify what system to build**: What's the UI and model entry point? How do users engage with recommendations? How do you want them to? What's the corpus size (i.e., how many items to recommend from)? What's the latency target? So on.
      - I never have a fixed list of questions. I just close my eyes for a second and let my intuitions speak about what's important for this system that could also impact the design. I sometimes play with the team or the company's product and imagine how I'd build it as a PM/EM/MLE.
-   - **Understand why build it (business objectives)**: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sells, etc.)? What don't you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.
+   - **Understand why build it (business objectives)**: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sellers, etc.)? What don't you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.
    - **Propose how to build it with ML (ML objectives)**: If you predict one outcome, what would it be? If you build a multi-task model to predict multiple outcomes, what are they?
 2. **High-level design**: lay out key components in your system 
     {{< figure src="https://www.dropbox.com/scl/fi/nuhob7pp2qpdjfk7eoc45/Screenshot-2026-01-14-at-11.30.19-PM.png?rlkey=mg4rjqhqcipuxholtqm3s02z5&st=zdot60a9&raw=1" width="800">}}
@@ -267,8 +267,8 @@ Below is how I usually approach ML model design problems:
         - **Objective**: predict `pAction` and rank items by it
         - **Training data**: impression data (L2 engagements)
         - **Features**: now we can use a rich set of request features (user + context), item features, and cross features; many companies also include expensive but effective features such as user engagement history for sequence models
-        - **Model architectures**: most companies still use DLRM-style models with feature processing (normalization numeric features and pass them through MLP; look up embedding features and project them; pass sequence features to a Transformer module; concatenate outputs), feature interaction (based on MLP/CNN/RNN, attention, explicit cross networks, or a combination of them), and feature transformation layers (e.g., expert sub-networks each processing features in its own way and gating networks leveraging expert outputs for each task)
-        - **Objectives**: most modern L2 ranking models predict multiple `pAction` that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it's easy to calibrate; search often uses listwise loss to optimize for the list order
+        - **Model architectures**: while Generative Recommendation is being hyped everywhere (and I {{< backlink "generative_recommendation" "wrote" >}} about it with great curiosities), most companies still use DLRM-style models with feature processing (normalize numeric features and pass them through an MLP; look up embedding features and project them to desired dimensions; pass sequence features to a Transformer module 👉 concatenate outputs), feature interaction (use MLP/CNN/RNN, attention, explicit cross networks, or throw a kitchen sink at the problem like [DHEN](https://arxiv.org/abs/2203.11014)), and feature transformation layers (e.g., expert sub-networks each process features in its own way and gating networks leverage expert outputs for each task).
+        - **Objectives**: most modern L2 ranking models predict multiple `pAction` that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it's easy to calibrate; search often uses pairwise or listwise loss to optimize for order.
 4. **Deep dives**: discuss glossed-over key details, such as how to scale the system (e.g., vertical scaling, sharding, caching, replication + load balancing), how to handle positional bias, cold start, data drifts, and so on. Usually the interviewer will prompt you.
 
 Above is just a skeleton. I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn't work on RecSys or is inexperienced, the experience can be excruciating --- the interviewer may over-index on structure and question your choices or explanations when they come from actual practice that the interviewer isn't familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I've only run into the former type once or twice; in those cases, I know I won't join the team.
@@ -281,14 +281,14 @@ I've summarized my ML infra interview preparation in this {{< backlink "ml_infra
 
 1. The best way to understand ML infra is to start from the infra teams you collaborate with and learn what they do (e.g., via design docs, [books](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022), and engineering blogs; see [resources](https://www.yuan-meng.com/posts/ml_infra_interviews/#references)) 
    - **Data infra**: e.g., how features are defined, computed, stored, and updated (batch vs. streaming); how engagement events are logged; how training data (features + labels) is generated via forward logging or backfill.
-   - **Training infra**: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout.
-   - **Serving infra**: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; request logging.
+   - **Training infra**: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout/rollback.
+   - **Serving infra**: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; engagement event logging.
 2. Brush up on distributed system knowledge, but don't dwell on it. ML infra is a special case of distributed systems, but you usually don't need to go deep on things like rate limiters or post creation/updates. The focus is the infra around **ML**.
    - **NeetCode**: watch [System Design for Beginners](https://neetcode.io/courses/system-design-for-beginners/0) and checkout sections in [System Design Interview](https://neetcode.io/courses/system-design-interview/9) relevant to ML systems, such as KV stores and distributed message queues. 
    - **Hello Interview**: go through [System Design in a Hurry](https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction) as well as core concepts, patterns, key technologies, and advanced topics like time-series databases (think feature stores).
    - [**DDIA book**](https://dataintensive.net/): skim Chapters 1-11 if you have time.
 3. To practice, design feature stores, training data generation, distributed training, and retrieval & ranking (organic + ads), etc.. Spend 2–3 days per design to think through all details. Below is the table of contents in a toy ads ranking system design I wrote.
-    ```
+    ```markdown
     ## Table of Contents
 
     1. **Problem Framing**
@@ -355,7 +355,196 @@ I've summarized my ML infra interview preparation in this {{< backlink "ml_infra
     ```
 
 ## 7. Behavior Interview
-<!-- Show the list and prep guide. -->
+99% of the time, behavior questions come from the list below:
+
+<details class="fold">
+<summary>79 behavioral question by signal</summary>
+
+<table>
+<thead><tr><th>signal</th><th>question</th></tr></thead>
+<tbody>
+<tr><td>problem solving</td><td>the most challenging / successful project you've delivered</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>how you work with ambiguous requirements</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>a time when you optimized a process within/beyond your team</td></tr>
+<tr><td></td><td>a time when you found an innovative solution to a problem</td></tr>
+<tr><td></td><td>a time when you discovered an overlooked issue on your team</td></tr>
+<tr><td></td><td>tell me about a time when you faced a challenging situation at work</td></tr>
+<tr><td></td><td>a time when you understood and improved a product</td></tr>
+<tr><td></td><td>a time when you had to pivot (proactively or being asked to)</td></tr>
+<tr><td></td><td>a time when you deep dived into data to resolve a problem or made a decision</td></tr>
+
+<tr><td>teamwork</td><td>how you resolve conflicts with teammates or xfn</td></tr>
+<tr><td></td><td>a time when you had to work with people outside of your team</td></tr>
+<tr><td></td><td>a time when you disagreed with your manager and persuaded them</td></tr>
+<tr><td></td><td>a time when your team disagreed with you on your idea</td></tr>
+<tr><td></td><td>a time when you worked with a difficult / non-collaborative teammate</td></tr>
+<tr><td></td><td>how you get buy-in from peers/xfn/leadership</td></tr>
+<tr><td></td><td>how you collaborate + earn trust from with teammates / xfn</td></tr>
+<tr><td></td><td>a time when you escalated to manager/skip</td></tr>
+<tr><td></td><td>a time when you helped an underperforming teammate</td></tr>
+<tr><td></td><td>how you give and share credit</td></tr>
+<tr><td></td><td>what to do if team is not bonding well/td></tr>
+<tr><td></td><td>how do you handle disagreement with majority decision</td></tr>
+
+<tr><td>communication</td><td>how you communicate technical ideas to non-tech audience/td></tr>
+<tr><td></td><td>how you give constructive feedback</td></tr>
+<tr><td></td><td>how you receive constructive feedback</td></tr>
+<tr><td></td><td>how you get visibility for your work</td></tr>
+
+<tr><td>time management</td><td>a time when you met a deadline</td></tr>
+<tr><td></td><td>a time when you missed a deadline</td></tr>
+<tr><td></td><td>a time when you felt overwhelmed / stressed</td></tr>
+<tr><td></td><td>how you deal with conflicting priorities</td></tr>
+<tr><td></td><td>how you balance responsiveness vs. focus time</td></tr>
+<tr><td></td><td>a time when you must deliver an imperfect result</td></tr>
+
+<tr><td>decision making</td><td>the hardest tech/business trade-off you had to make</td></tr>
+<tr><td></td><td>a time when you made a difficult decision to give up on a project</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and succeeded</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and failed</td></tr>
+<tr><td></td><td>a time when you made a wrong decision and learned from it</td></tr>
+<tr><td></td><td>how you define impact and success of a project</td></tr>
+<tr><td></td><td>a time when you made a decision in limited time</td></tr>
+<tr><td></td><td>a time when you made a decision with incomplete information</td></tr>
+<tr><td></td><td>a time when you made a decision with many sources of information</td></tr>
+<tr><td></td><td>a time when you made a decision without consulting your manager</td></tr>
+<tr><td></td><td>a time you refused to compromise your standards</td></tr>
+
+<tr><td>initiative</td><td>a time when you unblocked yourself</td></tr>
+<tr><td></td><td>a time when you unblocked others</td></tr>
+<tr><td></td><td>a project initiated by you</td></tr>
+<tr><td></td><td>a project you had to push hard for</td></tr>
+<tr><td></td><td>a time when you went above and beyond your duty</td></tr>
+<tr><td></td><td>a time when you worked on something before mgr approval</td></tr>
+
+<tr><td>achievement</td><td>a time when you set a goal and achieved it</td></tr>
+<tr><td></td><td>a time when you went above and beyond expectations</td></tr>
+<tr><td></td><td>the biggest accomplishment in your career</td></tr>
+<tr><td></td><td>your biggest strengths</td></tr>
+
+<tr><td>growth</td><td>the biggest regret in your career</td></tr>
+<tr><td></td><td>a time when you had to persevere for several months</td></tr>
+<tr><td></td><td>a project you would do differently</td></tr>
+<tr><td></td><td>a time when you made a big mistake (reflection → do better)</td></tr>
+<tr><td></td><td>your biggest weaknesses</td></tr>
+<tr><td></td><td>a time when you owned a task outside of your expertise</td></tr>
+<tr><td></td><td>how you find mentors and network within/beyond your team</td></tr>
+<tr><td></td><td>a time when you struggled initially and turned it around</td></tr>
+<tr><td></td><td>how you find time to learn at and outside of work</td></tr>
+<tr><td></td><td>career aspirations + motivation to join xyz company</td></tr>
+
+<tr><td>leadership</td><td>how you mentor junior engineers</td></tr>
+<tr><td></td><td>a time when you delegated a project</td></tr>
+<tr><td></td><td>a time you advocated for someone on your team</td></tr>
+<tr><td></td><td>a time when you improved company/team culture</td></tr>
+<tr><td></td><td>a time when you took responsibilities for a failure</td></tr>
+<tr><td></td><td>a time when you set roadmap (for a project or a team)</td></tr>
+<tr><td></td><td>what you value in a leader + what kind of leader you aspire to be</td></tr>
+<tr><td></td><td>a time when you drove alignment</td></tr>
+<tr><td></td><td>a time you made a suggestion to improve the team's outcomes</td></tr>
+<tr><td></td><td>positive leadership style you liked + influenced your work style</td></tr>
+
+<tr><td>adaptability</td><td>a time when you incurred a tech debt to meet deadline</td></tr>
+<tr><td></td><td>a time when you had to change the project scope</td></tr>
+<tr><td></td><td>a time you had to make a last-minute change</td></tr>
+<tr><td></td><td>a time when you delivered under time pressure / lack of resources</td></tr>
+<tr><td></td><td>a time when you received an unreasonable ask or project requirements</td></tr>
+<tr><td></td><td>a time when a project kept getting de-prioritized</td></tr>
+
+</tbody>
+</table>
+
+</details>
+
+
+Then it boils down to how you pick and tell your stories. While companies ask the same questions, they value different qualities in an engineer. For instance, moving fast and breaking things (e.g., incurring a tech to meet a short-term goal) may be a vice at Google, which values doing things "the right way", it's a virtue at companies like DoorDash or startups where scrappiness is the key to survival (your own and that of your company). Friends have told me that studying Amazon's leadership principles is the best way to prepare for behavior interviews, even if you don't interview with Amazon. But for me personally, I'm more at ease with the [Googlyness](https://jeffhsipe.medium.com/understanding-googelyness-4d61a70ada95) interview: instead of being grilled on reciting stories that map to rigid qualities, you're valued for being emotionally intelligent, ethical, kind, and curious.
+
+To quickly prepare for each question, I usually start with a rough story --- just a few sentences I hastily jot down about an experience I'm proud of or learned from, throw in the company values, and prompt GPT to turn it into a SAIL (situation, action, impact, learning) story.
+
+```markdown
+## Behavioral Interview Story Expansion Prompt
+
+### Goal
+Turn a rough, real story (even a few sentences) into a clear, interview-ready
+behavioral answer that is explicitly aligned with a company's values.
+
+---
+
+### Instructions
+
+I'm preparing for behavioral interviews.
+
+I will give you:
+1. a **rough story** (unpolished, informal is fine)
+2. a set of **company values / culture principles** (pasted text or a link)
+
+Please expand the story into a **structured behavioral answer aligned with those values**.
+
+Do **not** invent facts or exaggerate impact.
+Your job is to organize, clarify, and align — not to embellish.
+
+---
+
+### Input 1 — Rough story
+This story is intentionally rough and incomplete:
+[PASTE YOUR STORY HERE]
+
+
+### Input 2 — Company values
+Here are the company's values or culture principles I want the story aligned with:
+[PASTE VALUES HERE OR PROVIDE URL]
+
+---
+
+### Output Requirements
+
+#### 1. Structured behavioral story
+Rewrite the story using the following sections:
+
+- **situation:** brief context; what was happening; responsibility, goal, or challenge I faced
+- **action:** what I actually did  
+  (focus on judgment, communication, trade-offs, and decisions)
+- **impact:** concrete outcome or change  
+  (metrics, behavior shift, decision made, unblocked work, etc.)
+- **learning:** what I learned or how this changed my approach
+
+**Style constraints**
+- first-person
+- natural, spoken tone
+- concise (60–120 seconds spoken)
+- honest and professional
+- avoid buzzwords and filler phrases like "i learned a lot"
+- do **not** add new facts — only clarify and organize what's already there
+
+#### 2. Values alignment
+Add a section titled exactly:
+✅ why this is highly aligned with <company values>
+
+In bullet points, explicitly map:
+- a **specific action or decision**
+- to a **specific value**
+
+Examples of values to map against (use what's relevant):
+- emotional intelligence
+- collaboration
+- ownership
+- integrity
+- comfort with ambiguity
+- bias for action
+
+Make the mapping concrete and specific (what I did → which value it shows).
+---
+
+### Reminder
+The goal is **clarity and alignment**, not sounding impressive.
+
+The final answer should still feel like something a real person would say
+in an interview.
+```
+
+I created a Notion database, where each row is a question. Before interviews, I go over each question once and time myself on delivery.
 
 ## 8. Project Deep Dive
 <!-- Coming soon... -->
