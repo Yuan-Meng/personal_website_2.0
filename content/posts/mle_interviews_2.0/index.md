@@ -1,6 +1,6 @@
 ---
 title: "MLE Interview 2.0: Research Engineering and Scary Rounds"
-date: 2026-01-11
+date: 2026-01-14
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
@@ -12,7 +12,7 @@ toc: true
 
 {{< figure src="https://i.ebayimg.com/00/s/NjAyWDgxOA==/z/irgAAOSwkz1lo2l~/$_57.PNG?set_id=880000500F" width="400">}}
 
-I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value." That's probably the mindset to have when interviewing with companies everybody wants to join today.
+I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value". That's probably the mindset to have when interviewing with companies everybody wants to join today.
 
 For ML engineers, companies like Google, Meta, Pinterest, and LinkedIn have established ranking teams, good compensations, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard MLE interviews in my previous {{< backlink "mle_interviews" "post" >}}. 
 
@@ -21,9 +21,8 @@ For applied/non-research ML or research engineers, only a few places pay more th
 - **ML infra design**: I'm **not** talking about ML system design focusing on modeling, where you can get by with briefly mentioning sharding, caching, etc. to check the "scaling" box. That would be easy by now. I'm talking about ML **infra** design that doesn't focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit. I recently wrote a {{< backlink "ml_infra_interviews" "blogpost" >}} on how to prepare for this rare round.
 - **Multi-level object-oriented programming**: You'll implement a toy system that mimics a real system you see in life, such as a database, a KV store, a game, to name a few. You'll start with basic functionalities and gradually add more or optimize.
 - **LLM coding**: A few years ago, some companies might ask you to implement a simple model (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) from scratch and fit it on toy data. Today, frontier labs will ask you to debug or implement LLM training or inference code --- Transformer encoders/decoders, KV cache, LoRA, or even [autograd](https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html). 
+  - *Why scary*: Even people who use PyTorch daily rarely know low-level details like how computation graphs are built or how autograd works under the hood. When it comes to model architectures, we may know kNN and attention well in isolation, but don't immediately realize how the latter is a softer version of the former. These are just a few examples. Deep down, the real signal is understanding modern deep learning "primitives" inside out. Perhaps the ideal candidate is an ML PhD student who has just passed their qualifying exams. The rest of us can try our best but still miss the mark.
 - **Research presentation**: In traditional project deep dives, you verbally walk through one or two representative projects. Some Research Engineer roles require a job talk style presentation on your past work. You make ~10 slides, go over technical details, and "defend" your body of work like a PhD candidate would.
-
-Even though we use PyTorch every day at work, we rarely know low-level details like how computation graphs are built or how autograd works under the hood. When it comes to model architectures, we may know kNN and attention well in isolation, but don't immediately realize how the latter is a softer version of the former. These are just a few examples. Deep down, the real signal is understanding modern deep learning "primitives" inside out. Perhaps the ideal candidate is an ML PhD student who has just passed their qualifying exams.
 
 If you think these rounds are daunting, so does everyone else. Mayuko explained in an awesome [YouTube video](https://www.youtube.com/watch?v=e2Y-rhTlHHI) that tech interviews once focused on domain knowledge; then Microsoft popularized domain-agnostic data structures and algorithms questions to give raw talents from all backgrounds a fair chance. For a while, SWE candidates found those interviews scarier than domain knowledge --- until LeetCode came along and gave everyone an efficient way to prepare.
 
@@ -33,17 +32,17 @@ Today, new interview formats feel daunting because they don't have a LeetCode-eq
 
 To do well at MLE interviews 2.0, we inevitably lose some productivity at work, so think clearly about why you wanna leave (every recruiter and hiring manager will ask you anyways). And once you start, commit to finishing within 2 months with full determination. Don't drag it out.
 
-Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll 99% find yourself in a worse situation at a new company.
+Under normal circumstances, new hires don't work on high-impact projects immediately, and many don't survive long enough to ever take on one. If you're already in a rare position to lead high-impact projects, you'll 99% find yourself in a worse situation at a new company. Don't leave such a job easily, not without a compelling reason.
 
-I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. So for me to leave, I have thought through my goals: 
+I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. So for me to leave, I thought through my goals: 
 
 <!-- So for me in this moment, only a few {{< sidenote "companies" >}}In truth, Pinterest is one of the best companies in terms of ML talent density and certainly the very best in terms of immigration policies. As such, it's not really companies, but rather only a few teams, that can offer what I want. It's for those teams that I interview this time.{{< /sidenote >}} offer what I want: -->
 
-- **Career development**: I want to advance my career by meaningfully (30%+) bumping my compensation or seniority.
+- **Career development**: I want to advance my career by meaningfully (+~50%) bumping my compensation or seniority.
 - **Scope**: I want to own an area tightly linked to the company's mission and bets, so scopes expand and projects don't dry up. 
-- **Domain**: I want to work on a future-oriented domain.
-  - Type 1: foundation ranking models ("LLM-as-rec", "LLM4rec") at companies that need and can afford to train them
-  - Type 2: applied AI engineering at a frontier lab
+- **Domain**: I want to work on future-oriented domains and stacks.
+  - *Type 1*: foundation ranking models ("LLM-as-rec", "LLM4rec") at companies that need and can afford to train them
+  - *Type 2*: applied AI engineering at a frontier lab
 - **WLB**: I accept some degradation in WLB as our industry's new reality. 55–65 hrs/week is OK, but 80+ hrs/week is too much.
 - **Stability**: Hopefully the company still exists in 3–4 years. That rules out many early-stage startups for me, even if they pay well.
 
@@ -70,15 +69,22 @@ I think of candidate selection as identifying the positive few from a universe o
 
 ## 2.0 vs.1.0: What Has Changed?
 
-One big change is the additional rounds mentioned in the beginning. Even for the same rounds, the bar is higher and the process is longer.
+One big change is the additional rounds mentioned in the beginning. Even for the same rounds, the bar is stranger and the process is longer.
 
-### Higher Bar
+### Stranger (Personalized) Bar
 
-I used to have an accurate "feel" for when an offer was coming. Last year, if I solved all the coding problems (even with minor flaws), presented a complete system design, and had an enjoyable conversation with the hiring manager, an offer would usually come. 
+I used to have an accurate feel for when an offer was coming. Now I don't know anymore. When I last interviewed in mid-2024, I rigorously followed people's (and my own) advice --- solving coding problems cleanly and quickly, organizing ML system design answers in a “perfect” structure (e.g., clarifications 👉 business goals 👉 ML objectives 👉 high-level ranking funnel 👉 blah blah), and telling polished behavioral stories in impeccable [STAR](https://en.wikipedia.org/wiki/Situation,_task,_action,_result) or [SAIL](https://phyllisnjoroge.medium.com/the-sail-framework-for-behavioral-interview-questions-f66e56eee91a) frameworks.
 
-<!-- That reality has changed. Our culture tries to steer clear from the idea of "perfection", seeing it as unattainable or mentally taxing. Sadly, perfection is the new bar at companies that most want to join.  -->
+At the end of 2025, I interviewed with 5 companies and had lots of imperfections here and there (e.g., didn't solve some coding problems, gave long-winded answers in behavioral interviews, focused too much on certain parts of a design and ran out of time). Yet I got offers from 4 of them (the only onsite I failed was for a backend-heavy role).
 
-This year, I got a rejection even when I felt 90% good about my performance. For companies that hire for specific teams, exact experience match is key. For companies that do a general hire first and team matching later, you may need to aim for perfection in all rounds.
+Is the bar getting lower? Definitely not. Interestingly, the only onsite I failed was one where I sort of did perfectly --- I solved 3 hard coding problems, delivered structured ML designs, and told well-rehearsed behavioral stories. But my experience didn't match (I'm an ML engineer with an understanding of backend systems, and they were looking for a backend engineer with ranking knowledge). I doubted if I could do the job, and indeed I didn't get it. I think <span style="background-color: #D9CEFF">the bar is getting personalized</span> --- headcount is so tight in this market that hiring teams must answer this question: <span style="background-color: #D9CEFF">“Why you? Why not anybody else?”</span>
+
+I think my unique strength lies in the fact that I haven't spent a single day since 2022 not thinking about or reading papers on recommender systems. I'm fascinated by every aspect of RecSys. It's what I do and what I love. For instance, how exactly do we build value models? If we use a single label source (e.g., user engagement), we may end up optimizing for just one objective. But if we combine multiple label sources, then the label weights themselves are exactly what we try to tune when combining predictions. And how do we train early-stage rankers when most instances are not impressed and therefore unlabeled? If we distill from a late-stage ranker, is that late-stage ranker itself even good enough to make predictions on unranked examples (i.e., those never returned by the early-stage ranker)? How do we handle such data drift? And so on --- just to name a few. Even when I managed time badly in a design interview, what I did say out loud may still show what I've thought deeply about in my day-to-day job. I don't know how, but the interviewers must have spotted that.
+
+My honest advice: Find a domain you love from the bottom of your heart and apply to roles in that domain. This way, you worry less about "the bar" and focus more on finding a place that shares your passion.
+
+Nevertheless, below is what to aim for if you want to do "perfectly".
+
 
 1. **Coding**: As an MLE/RE candidate, you may go through a funny experience of writing an elaborate [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) API yesterday, implementing a Transformer decoder today, and solving an LC hard tomorrow --- all with the expectation to be impeccable. Some friends complain about such expectations, saying (almost) no one in real life is simultaneously a backend genius, a SOTA model author, and a competitive programmer. I just accept it as reality, swallow the pain, and try my best to get ready for all three.
    - **LC**: If a LC-style interview is 45 minutes, you will solve 1 Easy + 1 Medium or 2 Medium (Meta), or 1 Hard with follow-ups (e.g., Google, Snap, Pinterest, Databricks). In the former case, the ideal outcome is to come up with the solution in 2-3 min, code it up in 5-8 min, and do a dry run on in 1 min. In the latter, the ideal outcome is to write a bug-free solution in 15–20 minutes, write and pass essential test cases, and discuss optimizations. For follow-ups, you're expected to provide extendable solutions in code or words. If no follow-ups, it means you've spent too long on the main problem. 
