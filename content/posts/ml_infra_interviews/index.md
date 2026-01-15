@@ -100,7 +100,7 @@ For me personally, it feels natural to start with the online path by following a
 
 Below is a high-level design of Xiaohongshu Explore Feed (references: Instagram Explore Feed [model](https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/) and [infra](https://engineering.fb.com/2025/05/21/production-engineering/journey-to-1000-models-scaling-instagrams-recommendation-system/) designs).
 
-{{< figure src="https://www.dropbox.com/scl/fi/adw63e6ubvsowmmsepo5j/Screenshot-2025-11-28-at-8.55.12-PM.png?rlkey=1uvtzqjk3p07vfqoxhs9q3av3&st=5jplk53m&raw=1" caption="A boilerplate design for (almost any) large-scale ranking systems." width="1800">}}
+{{< figure src="https://www.dropbox.com/scl/fi/nuhob7pp2qpdjfk7eoc45/Screenshot-2026-01-14-at-11.30.19-PM.png?rlkey=mg4rjqhqcipuxholtqm3s02z5&st=zdot60a9&raw=1" caption="A boilerplate design for (almost any) large-scale ranking systems." width="1800">}}
 
 ### Online Path: Life Cycle of a Feed Request
 

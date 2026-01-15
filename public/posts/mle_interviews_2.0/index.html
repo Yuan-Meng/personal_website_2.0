@@ -22,14 +22,14 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-01-14T00:00:00+00:00">
+    <meta property="article:published_time" content="2026-01-15T00:00:00+00:00">
 
 
   <meta itemprop="name" content="MLE Interview 2.0: Research Engineering and Scary Rounds">
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.">
-  <meta itemprop="datePublished" content="2026-01-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4644">
+  <meta itemprop="datePublished" content="2026-01-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="5827">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -78,7 +78,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2026-01-14",
+  "datePublished": "2026-01-15",
   "description": " Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things\nI have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.",
   "headline": "MLE Interview 2.0: Research Engineering and Scary Rounds",
   "isPartOf": {
@@ -88,9 +88,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT22M",
+  "timeRequired": "PT28M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 4644
+  "wordCount": 5827
 }
 </script>
 
@@ -127,13 +127,13 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
         <article class="main">
     <header>
       <h1 class="!mb-1">MLE Interview 2.0: Research Engineering and Scary Rounds</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2026-01-14T00:00:00&#43;00:00">January 14, 2026</time>
+          <time class="text-sm italic opacity-80" datetime="2026-01-15T00:00:00&#43;00:00">January 15, 2026</time>
         </div>
     </header>
 
     
     
-      Reading time: 22 minutes
+      Reading time: 28 minutes
     
 
     
@@ -809,7 +809,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </ul>
 <p>I need to understand how concepts connect at a deeper level. My philosophy is that every minute I spend on interview prep should make me a better engineer. After all, I&rsquo;m not a professional interviewee; I&rsquo;m a professional ML engineer. Memorizing answers doesn&rsquo;t do that for me.</p>
 <p>I treat ML fundamental prep as an opportunity to revisit the foundations of deep learning and uncover knowledge gaps I didn&rsquo;t know I had. While I like Kevin Murphy&rsquo;s <a href="https://probml.github.io/pml-book/">PML series</a> as always, the clever bits are often scattered across chapters. I&rsquo;ve had frequent epiphanies reading his writing, but it&rsquo;s not always phrased in the &ldquo;standard language&rdquo; you or your interviewers instinctively think in.</p>
-<p>More recently, I like <a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a>. It&rsquo;s less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.</p>
+<p>More recently, I like <a href="https://udlbook.github.io/udlbook/"><em>Understanding Deep Learning</em></a>. It&rsquo;s less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.</p>
 <h3 id="5-ml-model-design" class="scroll-mt-8 group">
   5. ML <strong>Model</strong> Design
   
@@ -835,8 +835,85 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>Show some examples.</p>
-<p>(Note: depth won&rsquo;t be too hard &mdash; once you&rsquo;ve nailed a few common designs, focus on a tight &amp; structured delivery)</p>
+<p>As I wrote in a recent <a href="/posts/ml_infra_interviews/" class="backlink">post</a>
+  
+  , there is a finite space of ML design problems, 95% generated by the following combinations:</p>
+<ul>
+<li><strong>Feed (organic + ads)</strong>: Can you design XXX recommendations? 👉 choose from <code>{content, people, product}</code>
+<ul>
+<li>Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, query suggestions, to name a few</li>
+<li>People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.</li>
+<li>Product could be anything sold by the platform or sellers</li>
+</ul>
+</li>
+<li><strong>Search</strong>: Can you design XXX search? 👉 choose from <code>{consumer vs. enterprise}</code> × <code>{open-domain vs. closed-domain}</code> × <code>{conversational vs. one-off}</code>
+<ul>
+<li>Feed vs. search: Many think the two are alike but their origins and goals are quite different 👉 feed makes educated guesses about what users might like, whereas search is <em>question answering</em> &mdash; the system is strictly required to retrieve <em>relevant</em> documents to satisfy the user&rsquo;s <em>information need</em>.</li>
+<li>Who&rsquo;s asking: Consumer search (e.g., Google, Perplexity, Amazon) handles huge amounts of traffic, whereas enterprise search (e.g., Glean) has to be extra permission-aware</li>
+<li>Asking about what: Web search allows you to search anything (e.g., Google, Perplexity, ChatGPT), whereas e-commerce (e.g., Amazon, DoorDash, Uber Eats) or other specialty websites (e.g., Airbnb, LinkedIn) typically only allow you to search products or entities that exist on that platform</li>
+<li>How to get answers: Traditional search engines returns a list of ranked documents &mdash; if you&rsquo;re not happy, you have to reformulate your query (e.g., typos? too vague? too specific?) and search again; conversational search allows you to have back-and-forth chats with the system to clarify your intent or ask follow-up questions and get a good answer in a few turns</li>
+</ul>
+</li>
+<li><strong>Other common topics</strong>: Trust and safety (e.g., harmful content detection), <code>{user, content, query}</code> understanding, etc.
+<ul>
+<li><code>{user, content, query}</code> understanding: Usually some sort of deep representation learning model trained with some sort of contrastive objectives (see Lilian Weng&rsquo;s amazing <a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/">post</a>) to embed single entities or entity pairs/triads/etc. 👉 from a system perspective, the interesting parts are how to do distributed training (especially if you&rsquo;re fine-tuning an LLM too large to to fit in worker memory), how to index trained embeddings with low storage costs without metric loss, how to version and roll back embeddings, etc. (see <a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Uber post</a>)</li>
+<li>Harmful content detection: Usually some sort of multimodal, multi-task, multi-label classification model trained on a combination of <code>{user, annotator, LLM}</code>-generated labels to predict the probability of each type of harm, based on which we can take automatic or human-reviewed actions</li>
+</ul>
+</li>
+</ul>
+<p>Below is how I usually approach ML model design problems:</p>
+<ol>
+<li><strong>Problem framing</strong>: 5-10 min, understand what to build and how
+<ul>
+<li><strong>Clarify what system to build</strong>: What&rsquo;s the UI and model entry point? How do users engage with recommendations? How do you want them to? What&rsquo;s the corpus size (i.e., how many items to recommend from)? What&rsquo;s the latency target? So on.
+<ul>
+<li>I never have a fixed list of questions. I just close my eyes for a second and let my intuitions speak about what&rsquo;s important for this system that could also impact the design. I sometimes play with the team or the company&rsquo;s product and imagine how I&rsquo;d build it as a PM/EM/MLE.</li>
+</ul>
+</li>
+<li><strong>Understand why build it (business objectives)</strong>: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sells, etc.)? What don&rsquo;t you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.</li>
+<li><strong>Propose how to build it with ML (ML objectives)</strong>: If you predict one outcome, what would it be? If you build a multi-task model to predict multiple outcomes, what are they?</li>
+</ul>
+</li>
+<li><strong>High-level design</strong>: lay out key components in your system
+<figure><img src="https://www.dropbox.com/scl/fi/nuhob7pp2qpdjfk7eoc45/Screenshot-2026-01-14-at-11.30.19-PM.png?rlkey=mg4rjqhqcipuxholtqm3s02z5&amp;st=zdot60a9&amp;raw=1" width="800">
+    </figure>
+
+<ul>
+<li><strong>Online path</strong>: request (e.g., <code>POST /v1/feed:fetch</code>) 👉 API gateway (load balancing, authentication, rate limiting) 👉 retrieval 👉 L1 ranking 👉 L2 ranking 👉 logging &amp; monitoring</li>
+<li><strong>Offline path</strong>: feature engineering (lambda architecture: batch + streaming processing), training data generation, model training, indexing (ANN, inverted index, forward index)</li>
+</ul>
+</li>
+<li><strong>Step-by-step design</strong>: flesh out ML details in each component
+<ul>
+<li><strong>Retrieval</strong>: billions 👉 thousands; optimize Recall
+<ul>
+<li><strong>Model-based</strong>: e.g., embedding-based retrieval (user-to-item, item-to-item), semantic ID match</li>
+<li><strong>Heuristic-based</strong>: e.g., popular/trending (time-decayed counts), content from people/topics you follow, etc.</li>
+</ul>
+</li>
+<li><strong>L1 ranking</strong>: thousands 👉 hundreds; also optimize Recall
+<ul>
+<li><strong>Objective</strong>: select items that will likely end up in L2 top k</li>
+<li><strong>Training data</strong>: impression data (L2 results returned to users + user engagement labels) + early funnel logs (L1 results + synthetic labels from an LLM or an L2 teacher; logs are sampled to keep storage cost reasonable)</li>
+<li><strong>Features</strong>: in theory, we can use all L2 features, including request features (user + context), item features, and cross features; in practice, select essential features and avoid high-cardinality cross features to reduce latency</li>
+<li><strong>Model architectures</strong>: e.g., GBDT, two-tower (no feature interaction), simple DNN (e.g., fully connected)</li>
+<li><strong>Objectives</strong>: depends on the architecture 👉 e.g., if training two-tower, can use contrastive loss (if we use negative sampling) or just binary cross entropy (predict for each actual example); if training a simple DNN with an L2 teacher, use binary cross entropy + distillation loss</li>
+</ul>
+</li>
+<li><strong>L2 ranking</strong>: hundreds 👉 dozens; optimize ranking metrics
+<ul>
+<li><strong>Objective</strong>: predict <code>pAction</code> and rank items by it</li>
+<li><strong>Training data</strong>: impression data (L2 engagements)</li>
+<li><strong>Features</strong>: now we can use a rich set of request features (user + context), item features, and cross features; many companies also include expensive but effective features such as user engagement history for sequence models</li>
+<li><strong>Model architectures</strong>: most companies still use DLRM-style models with feature processing (normalization numeric features and pass them through MLP; look up embedding features and project them; pass sequence features to a Transformer module; concatenate outputs), feature interaction (based on MLP/CNN/RNN, attention, explicit cross networks, or a combination of them), and feature transformation layers (e.g., expert sub-networks each processing features in its own way and gating networks leveraging expert outputs for each task)</li>
+<li><strong>Objectives</strong>: most modern L2 ranking models predict multiple <code>pAction</code> that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it&rsquo;s easy to calibrate; search often uses listwise loss to optimize for the list order</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Deep dives</strong>: discuss glossed-over key details, such as how to scale the system (e.g., vertical scaling, sharding, caching, replication + load balancing), how to handle positional bias, cold start, data drifts, and so on. Usually the interviewer will prompt you.</li>
+</ol>
+<p>Above is just a skeleton. I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn&rsquo;t work on RecSys or is inexperienced, the experience can be excruciating &mdash; the interviewer may over-index on structure and question your choices or explanations when they come from actual practice that the interviewer isn&rsquo;t familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I&rsquo;ve only run into the former type once or twice; in those cases, I know I won&rsquo;t join the team.</p>
 <h3 id="6-ml-infra-design" class="scroll-mt-8 group">
   6. ML <strong>Infra</strong> Design
   
@@ -862,7 +939,10 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>Coming soon&hellip;</p>
+<!-- I have no idea
+
+15+ years before ML was cool 
+students -> hired into Formula One team -> metric movers -->
 <h3 id="7-behavior-interview" class="scroll-mt-8 group">
   7. Behavior Interview
   
@@ -888,7 +968,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>Show the list and prep guide.</p>
+<!-- Show the list and prep guide. -->
 <h3 id="8-project-deep-dive" class="scroll-mt-8 group">
   8. Project Deep Dive
   
@@ -914,7 +994,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>Coming soon&hellip;</p>
+<!-- Coming soon... -->
 
     </div>
   </article>
@@ -1176,6 +1256,46 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
                   class="taxonomy"
                   title="Posts and notes on Large language models"
                   >Large language models</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ml_infra_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Preparing for ML Infra System Design Interviews"
+              >Preparing for ML Infra System Design Interviews</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-infra/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml infra"
+                  >Ml infra</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
                 >
               </li>
           </ul>
