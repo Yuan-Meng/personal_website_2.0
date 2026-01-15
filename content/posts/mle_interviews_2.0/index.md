@@ -36,7 +36,7 @@ Under normal circumstances, new hires don't work on high-impact projects immedia
 
 I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. So for me to leave, I thought through my goals: 
 
-- **Career development**: I want to advance my career by meaningfully (+~50%) bumping my compensation or seniority.
+- **Career development**: I want to advance my career by meaningfully (> 50%) bumping my compensation or seniority.
 - **Scope**: I want to own an area tightly linked to the company's mission and bets, so scopes expand and projects don't dry up. 
 - **Domain**: I want to work on future-oriented domains and stacks.
   - *Type 1*: foundation ranking models ("LLM-as-rec", "LLM4rec") at companies that need and can afford to train them
