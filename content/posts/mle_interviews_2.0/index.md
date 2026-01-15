@@ -274,11 +274,85 @@ Below is how I usually approach ML model design problems:
 Above is just a skeleton. I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn't work on RecSys or is inexperienced, the experience can be excruciating --- the interviewer may over-index on structure and question your choices or explanations when they come from actual practice that the interviewer isn't familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I've only run into the former type once or twice; in those cases, I know I won't join the team.
 
 ## 6. ML **Infra** Design
-<!-- I have no idea
 
-15+ years before ML was cool 
-students -> hired into Formula One team -> metric movers -->
+I have colleagues who are both strong ML engineers and ML infra engineers. They have one thing in common: 15+ years of experience, having started as backend/infra engineers before ML was cool, and then growing into ML leaders. Most of my peers and I, however, started our careers as baby ML engineers trying only to move model metrics, without deep low-level ML infra knowledge. Most of the time, you can avoid ML infra interviews --- but a handful of places (e.g., DoorDash, Reddit, Netflix, Snap) specifically ask MLE candidates to design the *infra* behind ML systems. It's funny that I've interviewed with them all and somehow never managed to escape this round.
 
+I've summarized my ML infra interview preparation in this {{< backlink "ml_infra_interviews" "blogpost" >}}. It's pretty long, so I won't repeat its content here in the interest of space. Do check it out! Below are key lessons I've learned:
+
+1. The best way to understand ML infra is to start from the infra teams you collaborate with and learn what they do (e.g., via design docs, [books](https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022), and engineering blogs; see [resources](https://www.yuan-meng.com/posts/ml_infra_interviews/#references)) 
+   - **Data infra**: e.g., how features are defined, computed, stored, and updated (batch vs. streaming); how engagement events are logged; how training data (features + labels) is generated via forward logging or backfill.
+   - **Training infra**: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout.
+   - **Serving infra**: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; request logging.
+2. Brush up on distributed system knowledge, but don't dwell on it. ML infra is a special case of distributed systems, but you usually don't need to go deep on things like rate limiters or post creation/updates. The focus is the infra around **ML**.
+   - **NeetCode**: watch [System Design for Beginners](https://neetcode.io/courses/system-design-for-beginners/0) and checkout sections in [System Design Interview](https://neetcode.io/courses/system-design-interview/9) relevant to ML systems, such as KV stores and distributed message queues. 
+   - **Hello Interview**: go through [System Design in a Hurry](https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction) as well as core concepts, patterns, key technologies, and advanced topics like time-series databases (think feature stores).
+   - [**DDIA book**](https://dataintensive.net/): skim Chapters 1-11 if you have time.
+3. To practice, design feature stores, training data generation, distributed training, and retrieval & ranking (organic + ads), etc.. Spend 2–3 days per design to think through all details. Below is the table of contents in a toy ads ranking system design I wrote.
+    ```
+    ## Table of Contents
+
+    1. **Problem Framing**
+       - Clarification: What to Build  
+         - Charging Events  
+         - Attribution  
+         - Candidate Size  
+         - Scalability
+       - Business Objectives: Why Build It
+       - ML Objectives: How to Build with ML
+
+    2. **Problem Statement**
+
+    3. **High-Level Design**
+       - Online Path
+       - Offline Path
+
+    4. **Online Path**
+       - Core Entities
+       - API and Data Flow
+         - Ads Serving API
+         - CandidateGenerationService
+         - L1RankingService
+         - L2RankingService
+         - AuctionPolicyService
+         - Logging
+
+    5. **Offline Path**
+       - Feature Engineering
+       - Data Generation
+       - Model Training
+       - Item Indexing
+
+    6. **Step-by-Step Design**
+       - Candidate Generation
+         - Ads Targeting
+         - Budget Checks
+         - Other Checks
+       - L1 Ranking
+         - Objectives
+         - Training Data
+         - Features
+         - Model Architectures
+       - L2 Ranking
+         - Objectives
+         - Training Data
+         - Features
+         - Model Architectures
+
+    7. **Production**
+       - Monitoring
+       - Experimentation
+       - Rollout
+       - Rollback
+
+    8. **Deep Dives**
+       - Delayed Conversions
+       - CVR Calibration
+
+    9. **References**
+       - Posts
+       - CTR Papers
+       - CVR Papers
+    ```
 
 ## 7. Behavior Interview
 <!-- Show the list and prep guide. -->

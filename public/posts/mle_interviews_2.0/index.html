@@ -29,7 +29,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.">
   <meta itemprop="datePublished" content="2026-01-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="5827">
+  <meta itemprop="wordCount" content="6406">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -88,9 +88,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT28M",
+  "timeRequired": "PT31M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 5827
+  "wordCount": 6406
 }
 </script>
 
@@ -133,7 +133,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 
     
     
-      Reading time: 28 minutes
+      Reading time: 31 minutes
     
 
     
@@ -939,10 +939,155 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<!-- I have no idea
+<p>I have colleagues who are both strong ML engineers and ML infra engineers. They have one thing in common: 15+ years of experience, having started as backend/infra engineers before ML was cool, and then growing into ML leaders. Most of my peers and I, however, started our careers as baby ML engineers trying only to move model metrics, without deep low-level ML infra knowledge. Most of the time, you can avoid ML infra interviews &mdash; but a handful of places (e.g., DoorDash, Reddit, Netflix, Snap) specifically ask MLE candidates to design the <em>infra</em> behind ML systems. It&rsquo;s funny that I&rsquo;ve interviewed with them all and somehow never managed to escape this round.</p>
+<p>I&rsquo;ve summarized my ML infra interview preparation in this <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
+  
+  . It&rsquo;s pretty long, so I won&rsquo;t repeat its content here in the interest of space. Do check it out! Below are key lessons I&rsquo;ve learned:</p>
+<ol>
+<li>The best way to understand ML infra is to start from the infra teams you collaborate with and learn what they do (e.g., via design docs, <a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">books</a>, and engineering blogs; see <a href="https://www.yuan-meng.com/posts/ml_infra_interviews/#references">resources</a>)
+<ul>
+<li><strong>Data infra</strong>: e.g., how features are defined, computed, stored, and updated (batch vs. streaming); how engagement events are logged; how training data (features + labels) is generated via forward logging or backfill.</li>
+<li><strong>Training infra</strong>: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout.</li>
+<li><strong>Serving infra</strong>: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; request logging.</li>
+</ul>
+</li>
+<li>Brush up on distributed system knowledge, but don&rsquo;t dwell on it. ML infra is a special case of distributed systems, but you usually don&rsquo;t need to go deep on things like rate limiters or post creation/updates. The focus is the infra around <strong>ML</strong>.
+<ul>
+<li><strong>NeetCode</strong>: watch <a href="https://neetcode.io/courses/system-design-for-beginners/0">System Design for Beginners</a> and checkout sections in <a href="https://neetcode.io/courses/system-design-interview/9">System Design Interview</a> relevant to ML systems, such as KV stores and distributed message queues.</li>
+<li><strong>Hello Interview</strong>: go through <a href="https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction">System Design in a Hurry</a> as well as core concepts, patterns, key technologies, and advanced topics like time-series databases (think feature stores).</li>
+<li><a href="https://dataintensive.net/"><strong>DDIA book</strong></a>: skim Chapters 1-11 if you have time.</li>
+</ul>
+</li>
+<li>To practice, design feature stores, training data generation, distributed training, and retrieval &amp; ranking (organic + ads), etc.. Spend 2–3 days per design to think through all details. Below is the table of contents in a toy ads ranking system design I wrote.
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-02">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative"></span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-02 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
 
-15+ years before ML was cool 
-students -> hired into Formula One team -> metric movers -->
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-02"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only"> code snippet start</p>
+  <pre tabindex="0"><code>## Table of Contents
+
+1. **Problem Framing**
+   - Clarification: What to Build  
+     - Charging Events  
+     - Attribution  
+     - Candidate Size  
+     - Scalability
+   - Business Objectives: Why Build It
+   - ML Objectives: How to Build with ML
+
+2. **Problem Statement**
+
+3. **High-Level Design**
+   - Online Path
+   - Offline Path
+
+4. **Online Path**
+   - Core Entities
+   - API and Data Flow
+     - Ads Serving API
+     - CandidateGenerationService
+     - L1RankingService
+     - L2RankingService
+     - AuctionPolicyService
+     - Logging
+
+5. **Offline Path**
+   - Feature Engineering
+   - Data Generation
+   - Model Training
+   - Item Indexing
+
+6. **Step-by-Step Design**
+   - Candidate Generation
+     - Ads Targeting
+     - Budget Checks
+     - Other Checks
+   - L1 Ranking
+     - Objectives
+     - Training Data
+     - Features
+     - Model Architectures
+   - L2 Ranking
+     - Objectives
+     - Training Data
+     - Features
+     - Model Architectures
+
+7. **Production**
+   - Monitoring
+   - Experimentation
+   - Rollout
+   - Rollback
+
+8. **Deep Dives**
+   - Delayed Conversions
+   - CVR Calibration
+
+9. **References**
+   - Posts
+   - CTR Papers
+   - CVR Papers</code></pre>
+  <p class="sr-only"> code snippet end</p>
+
+  
+</figure>
+</li>
+</ol>
 <h3 id="7-behavior-interview" class="scroll-mt-8 group">
   7. Behavior Interview
   
@@ -1256,6 +1401,46 @@ students -> hired into Formula One team -> metric movers -->
                   class="taxonomy"
                   title="Posts and notes on Large language models"
                   >Large language models</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ml_infra_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Preparing for ML Infra System Design Interviews"
+              >Preparing for ML Infra System Design Interviews</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-infra/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml infra"
+                  >Ml infra</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
                 >
               </li>
           </ul>
