@@ -22,14 +22,14 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2026-01-17T00:00:00+00:00">
+    <meta property="article:published_time" content="2026-01-27T00:00:00+00:00">
 
 
   <meta itemprop="name" content="MLE Interview 2.0: Research Engineering and Scary Rounds">
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.">
-  <meta itemprop="datePublished" content="2026-01-17T00:00:00+00:00">
-  <meta itemprop="wordCount" content="8608">
+  <meta itemprop="datePublished" content="2026-01-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="8656">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -78,7 +78,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     "url": "http://localhost:1313/about/"
   },
   "copyrightNotice": "Yuan Meng",
-  "datePublished": "2026-01-17",
+  "datePublished": "2026-01-27",
   "description": " Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things\nI have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join today.",
   "headline": "MLE Interview 2.0: Research Engineering and Scary Rounds",
   "isPartOf": {
@@ -90,7 +90,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
   "timeRequired": "PT41M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 8608
+  "wordCount": 8656
 }
 </script>
 
@@ -127,7 +127,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
         <article class="main">
     <header>
       <h1 class="!mb-1">MLE Interview 2.0: Research Engineering and Scary Rounds</h1><div class="flex flex-row items-center space-x-4">
-          <time class="text-sm italic opacity-80" datetime="2026-01-17T00:00:00&#43;00:00">January 17, 2026</time>
+          <time class="text-sm italic opacity-80" datetime="2026-01-27T00:00:00&#43;00:00">January 27, 2026</time>
         </div>
     </header>
 
@@ -234,14 +234,33 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </figure>
 
 <p>I have always loved how Dustin from <em>Stranger Things</em> says &ldquo;here goes nothing&rdquo; before executing an impossible plan. According to <a href="https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/">Reddit</a>, this phrase means &ldquo;you have nothing left to lose&rdquo; or that &ldquo;even if it fails, you don&rsquo;t lose anything of value&rdquo;. That&rsquo;s probably the mindset to have when interviewing with companies everybody wants to join today.</p>
-<p>For ML engineers, companies like Google, Meta, Pinterest, and LinkedIn have established ranking teams, good compensations, and standard &ldquo;ML design + LeetCode + behavior&rdquo; interview rounds. I wrote about how to tackle standard MLE interviews in my previous <a href="/posts/mle_interviews/" class="backlink">post</a>
+<p>For ML engineers, companies like Google, <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-02"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-02"
+    for="sidenote-checkbox-02"
+    class="sidenote-mark"
+    >Meta</label
+  >
+  <small id="sidenote-02" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Later, I learned that some organizations at Meta such as Modern Recommendation Systems (MRS) can make offers that match those at OpenAI, Databricks, and Snap. These are the exceptions for those who've worked on SOTA ranking models.<span class="sr-only">)</span>
+  </small>
+</span>
+, Pinterest, and LinkedIn have established ranking teams, good compensations, and standard &ldquo;ML design + LeetCode + behavior&rdquo; interview rounds. I wrote about how to tackle standard MLE interviews in my previous <a href="/posts/mle_interviews/" class="backlink">post</a>
   
   .</p>
-<p>For applied/non-research ML or research engineers, only a few places pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. Most of these companies have interview rounds I find genuinely scary, e.g.,</p>
+<p>For applied/non-research ML or research engineers, only a few places pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. Most of these companies have interview rounds I find genuinely scary &mdash; for instance:</p>
 <ul>
-<li><strong>ML infra design</strong>: I&rsquo;m <strong>not</strong> talking about ML system design focusing on modeling, where you can get by with briefly mentioning sharding, caching, etc. to check the &ldquo;scaling&rdquo; box. That would be easy by now. I&rsquo;m talking about ML <strong>infra</strong> design that doesn&rsquo;t focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, and Reddit. I recently wrote a <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
+<li><strong>ML infra design</strong>: I&rsquo;m <strong>not</strong> talking about ML system design focusing on modeling, where you can briefly mention sharding, caching, etc. to show your &ldquo;scaling&rdquo; awareness. That would be easy by now. I&rsquo;m talking about ML <strong>infra</strong> design that doesn&rsquo;t focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, Reddit, DoorDash, Notion, and so on. I recently wrote a <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
   
-   on how to prepare for this rare round.</li>
+   on how to prepare for this rare but crtical round (rather than giving up).</li>
 <li><strong>Multi-level object-oriented programming</strong>: You&rsquo;ll implement a toy system that mimics a real system you see in life, such as a database, a KV store, a game, to name a few. You&rsquo;ll start with basic functionalities and gradually add more or optimize.</li>
 <li><strong>LLM coding</strong>: A few years ago, some companies might ask you to implement a simple model (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) from scratch and fit it on toy data. Today, frontier labs will ask you to debug or implement LLM training or inference code &mdash; Transformer encoders/decoders, KV cache, LoRA, or even <a href="https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a>.
 <ul>
@@ -427,18 +446,18 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-06"
+    id="sidenote-checkbox-07"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-06"
-    for="sidenote-checkbox-06"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
     class="sidenote-mark"
     >dated</label
   >
-  <small id="sidenote-06" class="sidenote-content">
+  <small id="sidenote-07" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches. Your future career may be limited to designer-driven, pre-IPO companies.<span class="sr-only">)</span>
   </small>
 </span>
@@ -926,7 +945,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
    on sequence modeling.</li>
 <li><strong>Feature interactions</strong>: When DLRM first got traction in RecSys, feature interactions were the major selling point &mdash; while we may need to hand-engineer restricted-order feature crossing for &ldquo;traditional models&rdquo; (e.g., logistic regression), we can let deep learning models automatically learn higher-order feature interactions, either in a bit-wise (each feature dimension is an interaction unit) or a field-wise (each embedding is an interaction unit) fashion. Meta researchers found different interaction mechanisms capture different information and proposed <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which throws a kitchen sink at the feature interaction problem. Read this paper and cited papers to learn different interaction methods (e.g., MLP: <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide</a>; explicit cross networks: <a href="https://arxiv.org/pdf/1708.05123">DCN</a>, <a href="https://arxiv.org/abs/2008.13535">DCNv2</a>; factorization machines: <a href="https://arxiv.org/abs/1703.04247">DeepFM</a>, <a href="https://arxiv.org/abs/1803.05170">xDeepFM</a>, <a href="https://arxiv.org/abs/2403.02545">Wukong</a>; attention: <a href="https://arxiv.org/abs/1810.11921">AutoInt</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>). <a href="https://arxiv.org/abs/2507.15551">RankMixer</a> and <a href="https://arxiv.org/abs/2510.26104">OneTrans</a> are influential new papers on this topic in larger-scale RecSys.</li>
 <li><strong>Feature transformations</strong>: Another selling point of DLRM is its ability to leverage shared feature representations to predict different tasks, such as clicks, conversions, watch time, and other engagement outcomes one cares about. Read the seminal <a href="https://arxiv.org/abs/2311.09580">MMoE</a> paper and its predecessor <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a> on such multi-task learning.</li>
-<li><strong>Practical concerns</strong>: For most RecSys MLEs, unless you work on these problems, you&rsquo;re definitely aware of their existence but may not speak intelligently about solutions &mdash; such as cold start (recommend new items or recommend for new users), positional bias (learn inherit item relevance, debiasing the influence from item positions), diversity (dedupe &amp; re-rank results by topic, creator, or other criteria), or value models (if ranking by multiple objectives, find the &ldquo;best&rdquo; weight of each). Read one or two paper on each topic (e.g., cold start: Kuaishou <a href="https://dl.acm.org/doi/10.1145/3640457.3688098">1</a> &amp; <a href="https://dl.acm.org/doi/10.1145/3701716.3715205">2</a>; positional bias: <a href="https://research.google/pubs/position-bias-estimation-for-unbiased-learning-to-rank-in-personal-search/">Google</a>; diversity: <a href="https://arxiv.org/abs/2206.05020">Kuaishou</a>; value models: <a href="https://arxiv.org/abs/2509.05292">Pinterest</a>), so you can say while you&rsquo;re not an expert, you know some solutions.</li>
+<li><strong>Practical concerns</strong>: For most RecSys MLEs, unless you work on these problems, you&rsquo;re definitely aware of their existence but may not speak intelligently about solutions &mdash; such as cold start (recommend new items or recommend for new users), positional bias (learn inherent item relevance, debiasing the influence from item positions), diversity (dedupe &amp; re-rank results by topic, creator, or other criteria), or value models (if ranking by multiple objectives, find the &ldquo;best&rdquo; weight of each). Read one or two paper on each topic (e.g., cold start: Kuaishou <a href="https://dl.acm.org/doi/10.1145/3640457.3688098">1</a> &amp; <a href="https://dl.acm.org/doi/10.1145/3701716.3715205">2</a>; positional bias: <a href="https://research.google/pubs/position-bias-estimation-for-unbiased-learning-to-rank-in-personal-search/">Google</a>; diversity: <a href="https://arxiv.org/abs/2206.05020">Kuaishou</a>; value models: <a href="https://arxiv.org/abs/2509.05292">Pinterest</a>), so you can say while you&rsquo;re not an expert, you know some solutions.</li>
 </ol>
 <h3 id="6-ml-infra-design" class="scroll-mt-8 group">
   6. ML <strong>Infra</strong> Design

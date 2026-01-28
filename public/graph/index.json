@@ -215,8 +215,8 @@
     "/posts/seq_user_modeling/": {
       "in": [
         "/posts/generative_recommendation/",
-        "/posts/mle_interviews_2.0/",
         "/posts/hardware_aware_transformers/",
+        "/posts/mle_interviews_2.0/",
         "/posts/ml_infra_interviews/"
       ],
       "out": [
