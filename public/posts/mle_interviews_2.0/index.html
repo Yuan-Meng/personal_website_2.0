@@ -29,7 +29,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join.">
   <meta itemprop="datePublished" content="2026-01-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="8967">
+  <meta itemprop="wordCount" content="9470">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -88,9 +88,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   },
   "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0/",
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
-  "timeRequired": "PT43M",
+  "timeRequired": "PT45M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 8967
+  "wordCount": 9470
 }
 </script>
 
@@ -133,7 +133,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 
     
     
-      Reading time: 43 minutes
+      Reading time: 45 minutes
     
 
     
@@ -175,6 +175,13 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
         <li><a href="#7-ml-infra-design">7. ML <strong>Infra</strong> Design</a></li>
         <li><a href="#8-behavior-interview">8. Behavior Interview</a></li>
         <li><a href="#9-project-deep-dive">9. Project Deep Dive</a></li>
+      </ul>
+    </li>
+    <li><a href="#appendices">Appendices</a>
+      <ul>
+        <li><a href="#a-company-selection">A: Company Selection</a></li>
+        <li><a href="#b-prepare-in-a-hurry">B: Prepare in a Hurry</a></li>
+        <li><a href="#c-example-system-designs">C: Example System Designs</a></li>
       </ul>
     </li>
   </ul>
@@ -251,7 +258,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     >Meta</label
   >
   <small id="sidenote-02" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>Later I learned that some (non-MSL) organizations at Meta can match (applied/non-research) offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.<span class="sr-only">)</span>
+    <span class="sr-only"> (sidenote: </span>Later I learned that some non-MSL organizations at Meta can match applied/non-research offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.<span class="sr-only">)</span>
   </small>
 </span>
 , Pinterest, and LinkedIn have established ranking teams, good compensation, and standard &ldquo;ML design + LeetCode + behavior&rdquo; interview rounds. I wrote about how to tackle standard MLE interviews in my previous <a href="/posts/mle_interviews/" class="backlink">post</a>
@@ -626,15 +633,15 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   
 </h4>
 <p>As hard as it may sound, you gotta let go of the idea that <code>solving company tags == solving coding interviews</code> and actually get good at problem solving and coding up the solution you&rsquo;re thinking of.</p>
-<p>LeetCode company tags are added by candidates after seeing these problems in interviews. Some companies rarely update their question bank so their tags cover most of what you&rsquo;ll see in interviews. However, you can&rsquo;t bank on that, since any company updates their questions occasionally. Moreover, companies like Google purposefully avoid asking leaked problems and you simply can&rsquo;t prepare for Apple, Netflix, or the likes, where each team writes their own questions.</p>
-<p>So how do you get good at solving random LC problems?</p>
-<p>First thing first: don&rsquo;t theorize about solving LC problems until you&rsquo;ve solved enough of them. I always recommend taking the <a href="https://neetcode.io/courses/dsa-for-beginners/0">beginner</a> and <a href="https://neetcode.io/courses/advanced-algorithms/0">advanced</a> NeetCode courses first, and practicing the <a href="https://neetcode.io/practice/practice">problems</a> curated by NeetCode. I think <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. There&rsquo;s no shortcut. If you have time, you can participate in LC <a href="https://leetcode.com/contest/">Weekly Contest</a> to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google).</p>
-<p>Then, don&rsquo;t memorize concrete data structures you&rsquo;ve used for a specific problem &mdash; figure things out on the fly. It&rsquo;s hard to verbalize, but after sufficient practice above, whenever I&rsquo;m given a new problem, I stare at the prompt and test cases for about 30 seconds, after which an intuition usually jumps out. I&rsquo;ll quickly jot down my fleeting thought on paper before it escapes me. Then I verbalize my solution step by step to the interviewer. If I don&rsquo;t get that flash of insight, I usually can&rsquo;t solve the problem in an interview and get a &ldquo;strong yes&rdquo;. With prompting, I may stumble toward a solution and get a &ldquo;weak yes&rdquo;. The Reddit <a href="https://www.reddit.com/r/leetcode/comments/1h886z6/most_frequent_google_interview_questions_on/">thread</a> below more or less mirrors my preparation process:</p>
+<p>LeetCode company tags came from candidates who encountered these problems in interviews. Some companies rarely update their question bank so their tags cover most of what you&rsquo;ll see in yours. However, you can&rsquo;t bank on that, since any company updates their questions occasionally. Moreover, companies like Google purposefully avoid asking leaked problems and you simply can&rsquo;t prepare for places like Apple or Netflix where each team writes their own questions.</p>
+<p>So how do you get good at solving (most) random LC problems?</p>
+<p>First thing first: don&rsquo;t theorize about solving LC problems until you&rsquo;ve solved enough of them. I always recommend taking the <a href="https://neetcode.io/courses/dsa-for-beginners/0">beginner</a> and <a href="https://neetcode.io/courses/advanced-algorithms/0">advanced</a> NeetCode courses first, and practicing the <a href="https://neetcode.io/practice/practice">problems</a> curated by NeetCode. I think <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. There&rsquo;s no shortcut. If you have time, you can participate in LC <a href="https://leetcode.com/contest/">Weekly Contest</a> to rehearse the pressure of solving a random Hard problem under time constraints (necessary for Google).</p>
+<p>Then, don&rsquo;t memorize concrete data structures you&rsquo;ve used for a specific problem &mdash; figure things out on the fly. After sufficient practice above, whenever I&rsquo;m given a new problem, I stare at the prompt and test cases for about 30 seconds, after which an intuition about the solution usually jumps out. I jot down my fleeting thought on paper before it escapes me, then verbalize the solution step by step to the interviewer. If I don&rsquo;t get a flash of insight, I never get a &ldquo;strong yes&rdquo;. With prompting, I may stumble toward a solution and get a &ldquo;weak yes&rdquo;. In a tennis analogy, I&rsquo;m good at &ldquo;3-setters&rdquo; but fall short in &ldquo;5-set marathons&rdquo;. You might be better at taking hints, pivoting, and clutching out a solution after a long struggle. Unless you&rsquo;re a competitive programmer, accept that we can&rsquo;t solve all arbitrary coding problems.</p>
+<p>An example of &ldquo;figuring it out on the fly&rdquo;: if you&rsquo;re given some dependencies and asked to find a valid ordering that satisfies them, it&rsquo;s 99% a topological sort problem. At an abstract level, you need to construct an adjacency list and an indegree map for all nodes. That&rsquo;s all you have to remember from past solutions. You don&rsquo;t need to remember, for instance, that LC problems often provide dependencies as edge lists (weighted or unweighted, directed or bidirectional). A new problem may provide dependencies as links or pointers instead. Can you still recognize the problem? Maybe. Can you still construct the adjacency list and indegree map correctly? Maybe not. You might find yourself oscillating between trying to recall old solutions and reasoning about the current problem, only to write bugs and run out of time. The Reddit <a href="https://www.reddit.com/r/leetcode/comments/1h886z6/most_frequent_google_interview_questions_on/">thread</a> below mirrors my preparation process:</p>
 <figure><img src="https://www.dropbox.com/scl/fi/gr3tknplbn96loxapztvg/Screenshot-2026-01-31-at-12.16.10-AM.png?rlkey=ctun8ztfnb027wmxvrwgwvlhc&amp;st=i9pn9th5&amp;raw=1" width="800">
 </figure>
 
-<p>A quick example: if you&rsquo;re given some dependencies and asked to find a valid ordering that satisfies them, it&rsquo;s 99% a topological sort problem. At an abstract level, you need to construct an adjacency list and an indegree map for all nodes. That&rsquo;s all you really need to remember from past solutions. You don&rsquo;t need to rely on, for instance, the fact that LC problems often provide dependencies as edge lists (weighted or unweighted, directed or bidirectional). A new problem might provide dependencies as links or pointers instead. Can you still recognize the problem? Maybe. Can you still construct the adjacency list and indegree map correctly? Maybe not. You might find yourself oscillating between trying to recall old solutions and reasoning about the current problem. You get stuck with bugs and run out of time.</p>
-<p>The implication: when practicing LC, focus on the problem <em>at hand</em>. Given the task (e.g., finding a valid order under dependency constraints), what&rsquo;s a good algorithm? Then use the input and starter code you&rsquo;re given right here, right now to implement that algorithm. Don&rsquo;t try to recall concrete bits from past solutions. If you do write a bug during practice, refrain from asking GPT or looking at the solution right away. Because in a real interview, now is the exact moment that makes or breaks this interview. If you&rsquo;re able to remain calm and debug &mdash; by printing suspicious parts or thinking from first principles &mdash; you send strong signals as a resourceful problem solver. If you panic or can&rsquo;t think of what to look into, it&rsquo;s a strong signal for rejection.</p>
+<p>The implication: when practicing LC, focus on the problem <em>at hand</em>. Given the task (e.g., finding a valid order under dependency constraints), what&rsquo;s a good algorithm? Then use the input and starter code you&rsquo;re given <em>right here, right now</em> to implement that algorithm. Don&rsquo;t try to recall concrete bits from past solutions. If you do write a bug during practice, refrain from asking GPT or looking at the solution right away. Because in a real interview, now is the exact moment that makes or breaks this interview. If you&rsquo;re able to remain calm and debug &mdash; by printing suspicious parts or thinking from first principles &mdash; you send strong signals as a resourceful problem solver. If you panic or can&rsquo;t think of what to look into, it&rsquo;s a strong signal for rejection.</p>
 <p>That said, don&rsquo;t practice randomly. For instance, while you don&rsquo;t need to (and probably never can) go over all Google tags, you can still research what types of problems are most popular at Google (e.g., <a href="https://www.reddit.com/r/leetcode/comments/1izv4ln/how_to_actually_prepare_for_google_via_leetcode/">Reddit</a> says DP, graphs, and &ldquo;fancy string problems&rdquo;) and focus on those. Track which algorithms trip you up the most and practice accordingly. For me, it&rsquo;s definitely advanced graphs, linked lists and trees (I hate pointers), bottom-up DP, greedy, and string evaluation (e.g., Basic Calculator I, II, III). I also accept that as an ML engineer, there are so many other rounds that I can&rsquo;t be perfect at coding. If I run into a red-black tree problem, I&rsquo;ll accept today is not my day.</p>
 <figure><img src="https://www.dropbox.com/scl/fi/d6bchbb2xewuycaynckkv/Screenshot-2026-01-11-at-10.31.08-AM.png?rlkey=a3fi4vfnhqvy55da0t2nf5612&amp;st=hb43kyx4&amp;raw=1"
     alt="My practice plan for Google coding interviews." width="1800"><figcaption>
@@ -667,7 +674,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h4>
-<p>I was reading the classic <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a> paper when it dawned on me that many &mdash; or dare I say, most? &mdash; LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers wrote custom scripts to answer questions like: what are the top k queries? how to build inverted indexes? how do we aggregate unbounded data streams?</p>
+<p>I was reading Google&rsquo;s classic <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a> paper when it dawned on me that many &mdash; or dare I say, most? &mdash; LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers wrote custom scripts to answer questions like: what are the top k queries? how to build inverted indexes? how do we aggregate unbounded data streams?</p>
 <p>Many LC problems answer these exact questions and tap into your ability and intuition to process loads of data efficiently. Examples:</p>
 <ul>
 <li>Streaming data &amp; online aggregation 👉 sliding window, two pointers, monotonic queues (e.g., <a href="https://leetcode.com/problems/sliding-window-maximum/description/">Sliding Window Maximum</a>, <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/description/">Longest Substring Without Repeating Characters</a>)</li>
@@ -703,23 +710,23 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>It&rsquo;s hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible track record of passing object-oriented programming (OOP) interviews, where you need to build a toy version of a real-world system quickly. (The <em>quickly</em> part gets me 💀.) Each time I interviewed, I always got offers from LC places first so I never had to pass OOP interviews for the first offer. But to join companies that don&rsquo;t have clear MLE vs. SWE distinctions &mdash; such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, to name a few &mdash; OOP is what you must nail and pace is key.</p>
-<p>Below are some typical examples of OOP questions:</p>
+<p>It&rsquo;s hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible track record of passing object-oriented programming (OOP) interviews, where you need to build a toy version of a real-world system quickly. Example problems:</p>
 <ul>
 <li>Time-Based Key-Value Store</li>
-<li>In-Memory Database / Data Store</li>
+<li>In-Memory Database</li>
 <li>C-Like Memory Allocator</li>
 <li>Type Inference Engine</li>
-<li>Bank Transaction System</li>
-<li>Employee Management System</li>
-<li>Circuit Breaker Implementation</li>
+<li>Circuit Breaker</li>
 <li>API Gateway with Rate Limiting</li>
 <li>LRU / LFU Cache</li>
 <li>Thread Pool / Task Scheduler</li>
+<li>Transaction / Credit System</li>
+<li>Employee Management System</li>
 <li>&hellip;</li>
 </ul>
-<p>To be honest, I enjoy LC 10x more than OOP. With OOP problems, the algorithms themselves often aren&rsquo;t hard, but you need enough domain knowledge to immediately know what to code. Writing the classes, testing them (sometimes coming up with representative test cases like a sharp QA engineer), and extending the design is a hell lot of work. After you finally finish everything asked by the prompt, the interviewer often asks how you&rsquo;d optimize and scale the system in production. I&rsquo;ve only coded fast enough to even hear those questions twice 😂.</p>
-<p>Would a backend engineer have done it better? Perhaps not. In practice, they rarely need to build a KV store from scratch or implement memory allocation themself &mdash; those low-level details are usually abstracted away. If I were preparing again, I&rsquo;d probably review NeetCode’s tutorials on <a href="https://neetcode.io/courses/ood-interview/0">Object-Oriented Design Interview</a> and  <a href="https://neetcode.io/courses/design-patterns/0">Object-Oriented Design Patterns</a>. Then I&rsquo;d ask GPT to reverse-engineer CodeSignal-style prompts for each of the toy systems above:</p>
+<p>I used to think it&rsquo;s the <em>quickly</em> part that got me. Then, in a recent mock interview with a backend engineer, I finally saw the real issue: my code passes all test cases and looks clean, but my design choices are ridiculous for real-world backend systems &mdash; choices no good backend engineer would make. For example, when designing a checkout cart, should we store price, units, and other attributes directly in an <code>Item</code> data class, or should we use a unique <code>product_id</code> and link it to external metadata when needed? This is just one of many such decisions that I don&rsquo;t even realize I&rsquo;m getting wrong. The key point is that OOP interviews are as much about system design as they are about coding. Even if you finish all CodeSignal levels quickly, you can still fail due to poor design choices. Then after you complete everything the prompt asks for, the interviewer often follows up by asking how you&rsquo;d optimize and scale the system in production. That&rsquo;s another place where non-backend engineers may fail the interview.</p>
+<p>To join companies such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, you have to pass OOP interviews with flying colors. Some folks obsess over collecting past problems, but that doesn&rsquo;t help if you&rsquo;re still making bad design decisions.</p>
+<p>Of course, we&rsquo;re not backend engineers. Without domain knowledge, we&rsquo;re bound to make ridiculous choices. After that enlightening mock interview, I was pointed to this awesome <a href="https://www.coditioning.com/app/learning/courses/tech_interview_prep/4">OOP crash course</a>. Go through it before practicing any problems. Then, ask GPT to reverse-engineer CodeSignal-style prompts for each of common toy systems:</p>
 <figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
   <aside
     class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
@@ -788,13 +795,13 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Time-Based Key-Value Store  
 </span></span><span class="line"><span class="cl"><span class="k">-</span> In-Memory Database  
 </span></span><span class="line"><span class="cl"><span class="k">-</span> C-Like Memory Allocator  
-</span></span><span class="line"><span class="cl"><span class="k">-</span> Type Inference Engine  
-</span></span><span class="line"><span class="cl"><span class="k">-</span> Bank Transaction System  
-</span></span><span class="line"><span class="cl"><span class="k">-</span> Employee Management System  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Type Inference Engine   
 </span></span><span class="line"><span class="cl"><span class="k">-</span> Circuit Breaker  
 </span></span><span class="line"><span class="cl"><span class="k">-</span> API Gateway with Rate Limiting  
 </span></span><span class="line"><span class="cl"><span class="k">-</span> LRU / LFU Cache  
 </span></span><span class="line"><span class="cl"><span class="k">-</span> Thread Pool / Task Scheduler  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Transaction / Credit System  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Employee Management System  
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="gu">### Requirements
 </span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Each system should have <span class="gs">**4 levels**</span>, where:
@@ -846,6 +853,24 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
+<p>Back in 2024, I interviewed with Quora. In a 90-minute coding round, you&rsquo;re given a realistic codebase (adapted from a real Python package repo) plus some unit tests, and you have to debug the codebase by reading error logs, identifying what&rsquo;s broken, and fixing them on your own, without AI. It was the hardest coding interview I&rsquo;ve done.</p>
+<p>Meta&rsquo;s AI-assisted coding round is a tamed version of that. You get a much smaller toy codebase plus unit tests, and you&rsquo;re allowed to use an LLM to debug and complete the implementation. I interviewed with Meta in a hurry and only had time to look at the example question in the candidate portal. It was perhaps the easiest coding interview I&rsquo;ve done, as the problem was quite solvable on the spot.</p>
+<ol>
+<li>Read the instructions to understand the task and constraints.</li>
+<li>Open and skim each file to learn what exists and how things are wired. No need to read them in detail, but note what&rsquo;s implemented vs. missing vs. commented to see what you must do.</li>
+<li>Tell the interviewer your plan (e.g., re-read the instructions, fix unit tests, start with a naive implementation, then optimize).</li>
+<li>Get unit tests passing. You can use AI to help, but you should be able to explain (a) why tests failed or were incomplete, and (b) why the changes better match the intended behavior.</li>
+<li>Implement a naive solution first. The core problem you need to implement usually reduces to a LeetCode Medium problem; explain the algorithm, then use AI to write the code.</li>
+<li>Measure performance. Define a performance metric and run simulations or benchmarks to evaluate the naive solution.</li>
+<li>Optimize. Identify what&rsquo;s inefficient, propose a better algorithm, use AI to implement it, and evaluate the improved solution.</li>
+</ol>
+<p>I don&rsquo;t think my interviewer cared how much code was written by AI vs. me. They cared more about how well I partnered with AI to achieve the end goal. I didn&rsquo;t write much code myself, but I designed the algorithm, broke down the task, and prompted the AI to complete each task &mdash; similar to how I work day to day. Signals that may matter:</p>
+<ul>
+<li>Communicate clear plans to the interviewer and prompt the AI reasonably (tight prompts, explicit constraints, incremental diffs).</li>
+<li>Read error messages carefully and iterate accordingly.</li>
+<li>Explain what the AI is doing and why you accept or reject a suggested change. Don&rsquo;t copy &amp; paste with no explanations.</li>
+<li>Stay in control: you set the plan, and the AI accelerates execution.</li>
+</ul>
 <h3 id="4-ml-coding" class="scroll-mt-8 group">
   4. ML Coding
   
@@ -1496,6 +1521,109 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <p>In phone screens, hiring manager chats, or design interviews, you may be asked to walk through a project you&rsquo;re most proud of. Some companies have a dedicated 45-minute or 1-hour round for project deep dives. If slides are allowed, 10–12 is a good amount.</p>
 <p>There&rsquo;s no skill for this round. If you&rsquo;ve led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you&rsquo;re the right person for this team &mdash; e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.</p>
 <p>To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> for more details.</p>
+<h2 id="appendices" class="scroll-mt-8 group">
+  Appendices
+  
+    <a href="#appendices"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="a-company-selection" class="scroll-mt-8 group">
+  A: Company Selection
+  
+    <a href="#a-company-selection"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>top pay, interesting work, modern stack, willing to offer me senior or plus title</p>
+<h3 id="b-prepare-in-a-hurry" class="scroll-mt-8 group">
+  B: Prepare in a Hurry
+  
+    <a href="#b-prepare-in-a-hurry"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>xx</p>
+<h3 id="c-example-system-designs" class="scroll-mt-8 group">
+  C: Example System Designs
+  
+    <a href="#c-example-system-designs"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>xx</p>
 
     </div>
   </article>

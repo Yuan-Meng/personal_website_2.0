@@ -14,7 +14,7 @@ toc: true
 
 I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value". That's probably the mindset to have when interviewing with companies everybody wants to join.
 
-For ML engineers, companies like Google, {{< sidenote "Meta" >}}Later I learned that some (non-MSL) organizations at Meta can match (applied/non-research) offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.{{< /sidenote >}}, Pinterest, and LinkedIn have established ranking teams, good compensation, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard MLE interviews in my previous {{< backlink "mle_interviews" "post" >}}.
+For ML engineers, companies like Google, {{< sidenote "Meta" >}}Later I learned that some non-MSL organizations at Meta can match applied/non-research offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.{{< /sidenote >}}, Pinterest, and LinkedIn have established ranking teams, good compensation, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard MLE interviews in my previous {{< backlink "mle_interviews" "post" >}}.
 
 For **applied/non-research** ML or research engineers, only a few places can pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. Most of these companies have interview rounds I find genuinely scary --- for instance: 
 
@@ -103,19 +103,19 @@ Most companies have a team match stage. Back in 2024, I either received direct o
 
 As hard as it may sound, you gotta let go of the idea that `solving company tags == solving coding interviews` and actually get good at problem solving and coding up the solution you're thinking of.
 
-LeetCode company tags are added by candidates after seeing these problems in interviews. Some companies rarely update their question bank so their tags cover most of what you'll see in interviews. However, you can't bank on that, since any company updates their questions occasionally. Moreover, companies like Google purposefully avoid asking leaked problems and you simply can't prepare for Apple, Netflix, or the likes, where each team writes their own questions. 
+LeetCode company tags came from candidates who encountered these problems in interviews. Some companies rarely update their question bank so their tags cover most of what you'll see in yours. However, you can't bank on that, since any company updates their questions occasionally. Moreover, companies like Google purposefully avoid asking leaked problems and you simply can't prepare for places like Apple or Netflix where each team writes their own questions. 
 
-So how do you get good at solving random LC problems?
+So how do you get good at solving (most) random LC problems?
 
-First thing first: don't theorize about solving LC problems until you've solved enough of them. I always recommend taking the [beginner](https://neetcode.io/courses/dsa-for-beginners/0) and [advanced](https://neetcode.io/courses/advanced-algorithms/0) NeetCode courses first, and practicing the [problems](https://neetcode.io/practice/practice) curated by NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. There's no shortcut. If you have time, you can participate in LC [Weekly Contest](https://leetcode.com/contest/) to rehearse the pressure of solving a random Hard problem under pressure (kinda necessary for Google). 
+First thing first: don't theorize about solving LC problems until you've solved enough of them. I always recommend taking the [beginner](https://neetcode.io/courses/dsa-for-beginners/0) and [advanced](https://neetcode.io/courses/advanced-algorithms/0) NeetCode courses first, and practicing the [problems](https://neetcode.io/practice/practice) curated by NeetCode. I think [NeetCode 250](https://neetcode.io/practice/practice/neetcode250) strikes a good balance between quality and quantity. There's no shortcut. If you have time, you can participate in LC [Weekly Contest](https://leetcode.com/contest/) to rehearse the pressure of solving a random Hard problem under time constraints (necessary for Google). 
 
-Then, don't memorize concrete data structures you've used for a specific problem --- figure things out on the fly. It's hard to verbalize, but after sufficient practice above, whenever I'm given a new problem, I stare at the prompt and test cases for about 30 seconds, after which an intuition usually jumps out. I'll quickly jot down my fleeting thought on paper before it escapes me. Then I verbalize my solution step by step to the interviewer. If I don't get that flash of insight, I usually can't solve the problem in an interview and get a "strong yes". With prompting, I may stumble toward a solution and get a "weak yes". The Reddit [thread](https://www.reddit.com/r/leetcode/comments/1h886z6/most_frequent_google_interview_questions_on/) below more or less mirrors my preparation process:
+Then, don't memorize concrete data structures you've used for a specific problem --- figure things out on the fly. After sufficient practice above, whenever I'm given a new problem, I stare at the prompt and test cases for about 30 seconds, after which an intuition about the solution usually jumps out. I jot down my fleeting thought on paper before it escapes me, then verbalize the solution step by step to the interviewer. If I don't get a flash of insight, I never get a "strong yes". With prompting, I may stumble toward a solution and get a "weak yes". In a tennis analogy, I'm good at "3-setters" but fall short in "5-set marathons". You might be better at taking hints, pivoting, and clutching out a solution after a long struggle. Unless you're a competitive programmer, accept that we can't solve all arbitrary coding problems. 
+
+An example of "figuring it out on the fly": if you're given some dependencies and asked to find a valid ordering that satisfies them, it's 99% a topological sort problem. At an abstract level, you need to construct an adjacency list and an indegree map for all nodes. That's all you have to remember from past solutions. You don't need to remember, for instance, that LC problems often provide dependencies as edge lists (weighted or unweighted, directed or bidirectional). A new problem may provide dependencies as links or pointers instead. Can you still recognize the problem? Maybe. Can you still construct the adjacency list and indegree map correctly? Maybe not. You might find yourself oscillating between trying to recall old solutions and reasoning about the current problem, only to write bugs and run out of time. The Reddit [thread](https://www.reddit.com/r/leetcode/comments/1h886z6/most_frequent_google_interview_questions_on/) below mirrors my preparation process:
 
 {{< figure src="https://www.dropbox.com/scl/fi/gr3tknplbn96loxapztvg/Screenshot-2026-01-31-at-12.16.10-AM.png?rlkey=ctun8ztfnb027wmxvrwgwvlhc&st=i9pn9th5&raw=1" width="800">}}
 
-A quick example: if you're given some dependencies and asked to find a valid ordering that satisfies them, it's 99% a topological sort problem. At an abstract level, you need to construct an adjacency list and an indegree map for all nodes. That's all you really need to remember from past solutions. You don't need to rely on, for instance, the fact that LC problems often provide dependencies as edge lists (weighted or unweighted, directed or bidirectional). A new problem might provide dependencies as links or pointers instead. Can you still recognize the problem? Maybe. Can you still construct the adjacency list and indegree map correctly? Maybe not. You might find yourself oscillating between trying to recall old solutions and reasoning about the current problem. You get stuck with bugs and run out of time.
-
-The implication: when practicing LC, focus on the problem *at hand*. Given the task (e.g., finding a valid order under dependency constraints), what's a good algorithm? Then use the input and starter code you're given right here, right now to implement that algorithm. Don't try to recall concrete bits from past solutions. If you do write a bug during practice, refrain from asking GPT or looking at the solution right away. Because in a real interview, now is the exact moment that makes or breaks this interview. If you're able to remain calm and debug --- by printing suspicious parts or thinking from first principles --- you send strong signals as a resourceful problem solver. If you panic or can't think of what to look into, it's a strong signal for rejection. 
+The implication: when practicing LC, focus on the problem *at hand*. Given the task (e.g., finding a valid order under dependency constraints), what's a good algorithm? Then use the input and starter code you're given *right here, right now* to implement that algorithm. Don't try to recall concrete bits from past solutions. If you do write a bug during practice, refrain from asking GPT or looking at the solution right away. Because in a real interview, now is the exact moment that makes or breaks this interview. If you're able to remain calm and debug --- by printing suspicious parts or thinking from first principles --- you send strong signals as a resourceful problem solver. If you panic or can't think of what to look into, it's a strong signal for rejection. 
 
 That said, don't practice randomly. For instance, while you don't need to (and probably never can) go over all Google tags, you can still research what types of problems are most popular at Google (e.g., [Reddit](https://www.reddit.com/r/leetcode/comments/1izv4ln/how_to_actually_prepare_for_google_via_leetcode/) says DP, graphs, and "fancy string problems") and focus on those. Track which algorithms trip you up the most and practice accordingly. For me, it's definitely advanced graphs, linked lists and trees (I hate pointers), bottom-up DP, greedy, and string evaluation (e.g., Basic Calculator I, II, III). I also accept that as an ML engineer, there are so many other rounds that I can't be perfect at coding. If I run into a red-black tree problem, I'll accept today is not my day.
 
@@ -123,7 +123,7 @@ That said, don't practice randomly. For instance, while you don't need to (and p
 
 ### Connect LC Problems to Scalable Systems
 
-I was reading the classic [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) paper when it dawned on me that many --- or dare I say, most? --- LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers wrote custom scripts to answer questions like: what are the top k queries? how to build inverted indexes? how do we aggregate unbounded data streams?
+I was reading Google's classic [MapReduce](https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/) paper when it dawned on me that many --- or dare I say, most? --- LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers wrote custom scripts to answer questions like: what are the top k queries? how to build inverted indexes? how do we aggregate unbounded data streams?
 
 Many LC problems answer these exact questions and tap into your ability and intuition to process loads of data efficiently. Examples:
 
@@ -137,24 +137,25 @@ Many LC problems answer these exact questions and tap into your ability and intu
 Many complain that LC problems are detached from real work. But once I see them as toy versions of prod data processing and systems tasks, I solve LC problems faster, with more motivation and interest. 
 
 ## 2. Objective-Oriented Programming
-It's hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible track record of passing object-oriented programming (OOP) interviews, where you need to build a toy version of a real-world system quickly. (The *quickly* part gets me 💀.) Each time I interviewed, I always got offers from LC places first so I never had to pass OOP interviews for the first offer. But to join companies that don't have clear MLE vs. SWE distinctions --- such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, to name a few --- OOP is what you must nail and pace is key.
+It's hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible track record of passing object-oriented programming (OOP) interviews, where you need to build a toy version of a real-world system quickly. Example problems:
 
-Below are some typical examples of OOP questions:
-- Time-Based Key-Value Store
-- In-Memory Database / Data Store
-- C-Like Memory Allocator
-- Type Inference Engine
-- Bank Transaction System
-- Employee Management System
-- Circuit Breaker Implementation
-- API Gateway with Rate Limiting
-- LRU / LFU Cache
-- Thread Pool / Task Scheduler
+- Time-Based Key-Value Store  
+- In-Memory Database  
+- C-Like Memory Allocator  
+- Type Inference Engine   
+- Circuit Breaker  
+- API Gateway with Rate Limiting  
+- LRU / LFU Cache  
+- Thread Pool / Task Scheduler  
+- Transaction / Credit System  
+- Employee Management System 
 - ... 
 
-To be honest, I enjoy LC 10x more than OOP. With OOP problems, the algorithms themselves often aren't hard, but you need enough domain knowledge to immediately know what to code. Writing the classes, testing them (sometimes coming up with representative test cases like a sharp QA engineer), and extending the design is a hell lot of work. After you finally finish everything asked by the prompt, the interviewer often asks how you'd optimize and scale the system in production. I've only coded fast enough to even hear those questions twice 😂.
+I used to think it's the *quickly* part that got me. Then, in a recent mock interview with a backend engineer, I finally saw the real issue: my code passes all test cases and looks clean, but my design choices are ridiculous for real-world backend systems --- choices no good backend engineer would make. For example, when designing a checkout cart, should we store price, units, and other attributes directly in an `Item` data class, or should we use a unique `product_id` and link it to external metadata when needed? This is just one of many such decisions that I don't even realize I'm getting wrong. The key point is that OOP interviews are as much about system design as they are about coding. Even if you finish all CodeSignal levels quickly, you can still fail due to poor design choices. Then after you complete everything the prompt asks for, the interviewer often follows up by asking how you'd optimize and scale the system in production. That's another place where non-backend engineers may fail the interview. 
 
-Would a backend engineer have done it better? Perhaps not. In practice, they rarely need to build a KV store from scratch or implement memory allocation themself --- those low-level details are usually abstracted away. If I were preparing again, I'd probably review NeetCode’s tutorials on [Object-Oriented Design Interview](https://neetcode.io/courses/ood-interview/0) and  [Object-Oriented Design Patterns](https://neetcode.io/courses/design-patterns/0). Then I'd ask GPT to reverse-engineer CodeSignal-style prompts for each of the toy systems above:
+To join companies such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, you have to pass OOP interviews with flying colors. Some folks obsess over collecting past problems, but that doesn't help if you're still making bad design decisions.
+
+Of course, we're not backend engineers. Without domain knowledge, we're bound to make ridiculous choices. After that enlightening mock interview, I was pointed to this awesome [OOP crash course](https://www.coditioning.com/app/learning/courses/tech_interview_prep/4). Go through it before practicing any problems. Then, ask GPT to reverse-engineer CodeSignal-style prompts for each of common toy systems:
 
 ```markdown
 You are an interview question designer.  
@@ -165,13 +166,13 @@ For each system listed below, generate a **CodeSignal-style 4-level coding promp
 - Time-Based Key-Value Store  
 - In-Memory Database  
 - C-Like Memory Allocator  
-- Type Inference Engine  
-- Bank Transaction System  
-- Employee Management System  
+- Type Inference Engine   
 - Circuit Breaker  
 - API Gateway with Rate Limiting  
 - LRU / LFU Cache  
 - Thread Pool / Task Scheduler  
+- Transaction / Credit System  
+- Employee Management System  
 
 ### Requirements
 - Each system should have **4 levels**, where:
@@ -197,6 +198,24 @@ For each system listed below, generate a **CodeSignal-style 4-level coding promp
 ```
 
 ## 3. AI-Assisted Coding
+
+Back in 2024, I interviewed with Quora. In a 90-minute coding round, you're given a realistic codebase (adapted from a real Python package repo) plus some unit tests, and you have to debug the codebase by reading error logs, identifying what's broken, and fixing them on your own, without AI. It was the hardest coding interview I've done.
+
+Meta's AI-assisted coding round is a tamed version of that. You get a much smaller toy codebase plus unit tests, and you're allowed to use an LLM to debug and complete the implementation. I interviewed with Meta in a hurry and only had time to look at the example question in the candidate portal. It was perhaps the easiest coding interview I've done, as the problem was quite solvable on the spot. 
+
+1. Read the instructions to understand the task and constraints.
+2. Open and skim each file to learn what exists and how things are wired. No need to read them in detail, but note what's implemented vs. missing vs. commented to see what you must do.
+3. Tell the interviewer your plan (e.g., re-read the instructions, fix unit tests, start with a naive implementation, then optimize).
+4. Get unit tests passing. You can use AI to help, but you should be able to explain (a) why tests failed or were incomplete, and (b) why the changes better match the intended behavior.
+5. Implement a naive solution first. The core problem you need to implement usually reduces to a LeetCode Medium problem; explain the algorithm, then use AI to write the code.
+6. Measure performance. Define a performance metric and run simulations or benchmarks to evaluate the naive solution.
+7. Optimize. Identify what's inefficient, propose a better algorithm, use AI to implement it, and evaluate the improved solution.
+
+I don't think my interviewer cared how much code was written by AI vs. me. They cared more about how well I partnered with AI to achieve the end goal. I didn't write much code myself, but I designed the algorithm, broke down the task, and prompted the AI to complete each task --- similar to how I work day to day. Signals that may matter:
+- Communicate clear plans to the interviewer and prompt the AI reasonably (tight prompts, explicit constraints, incremental diffs).
+- Read error messages carefully and iterate accordingly.
+- Explain what the AI is doing and why you accept or reject a suggested change. Don't copy & paste with no explanations.
+- Stay in control: you set the plan, and the AI accelerates execution.
 
 ## 4. ML Coding
 
@@ -248,7 +267,6 @@ As I wrote in a recent {{< backlink "ml_infra_interviews" "post" >}}, there is a
 - **Other common topics**: Trust and safety (e.g., harmful content detection), `{user, content, query}` understanding, etc.
   - `{user, content, query}` understanding: Usually some sort of deep representation learning model trained with some sort of contrastive objectives (see Lilian Weng's amazing [post](https://lilianweng.github.io/posts/2021-05-31-contrastive/)) to embed single entities or entity pairs/triads/etc. 👉 from a system perspective, the interesting parts are how to do distributed training (especially if you're fine-tuning an LLM too large to to fit in worker memory), how to index trained embeddings with low storage costs without metric loss, how to version and roll back embeddings, etc. (see [Uber post](https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/))
   - Harmful content detection: Usually some sort of multimodal, multi-task, multi-label classification model trained on a combination of `{user, annotator, LLM}`-generated labels to predict the probability of each type of harm, based on which we can take automatic or human-reviewed actions
-
 
 Below is how I usually approach ML model design problems: 
 1. **Problem framing**: understand what to build and how
@@ -567,3 +585,14 @@ In phone screens, hiring manager chats, or design interviews, you may be asked t
 There's no skill for this round. If you've led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you're the right person for this team --- e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.
 
 To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my [post](https://www.yuan-meng.com/notes/project_complexity/) for more details.
+
+# Appendices
+
+## A: Company Selection
+top pay, interesting work, modern stack, willing to offer me senior or plus title
+
+## B: Prepare in a Hurry
+xx
+
+## C: Example System Designs
+xx
