@@ -423,13 +423,14 @@ I find it deeply unsatisfying to collect a checklist of “common questions” a
 - What is overfitting? How to prevent it?
 - What are vanishing/exploding gradients? How to prevent them?
 - What is a Transformer? How do encoders and decoders differ?
+- Why do we use softmax activation of multiclass classification? What does the temperature parameter do?
 - … and so on.
 
-I need to understand how concepts connect at a deeper level. My philosophy is that every minute I spend on interview prep should make me a better engineer. After all, I'm not a professional interviewee; I'm a professional ML engineer. Memorizing answers doesn't do that for me.
+My philosophy is, every minute spent on interview prep should make me a better engineer. After all, I'm not a professional interviewee; I'm a professional ML engineer. Memorizing answers doesn't do that for me. I treat ML fundamental prep as an opportunity to revisit deep learning foundations and uncover knowledge gaps I didn't know I had. 
 
-I treat ML fundamental prep as an opportunity to revisit the foundations of deep learning and uncover knowledge gaps I didn't know I had. While I like Kevin Murphy's [PML series](https://probml.github.io/pml-book/) as always, the clever bits are often scattered across chapters. I've had frequent epiphanies reading his writing, but it's not always phrased in the "standard language" you or your interviewers instinctively think in.
+As mentioned in the ML coding section, a good way to prepare is to read the [*Understanding Deep Learning*](https://udlbook.github.io/udlbook/) book and check out the notebooks. If you're short on time, read Chapters 1–9, 11, and 12.
 
-More recently, I like [*Understanding Deep Learning*](https://udlbook.github.io/udlbook/). It's less mathy and more straight to the point. At least read Chapters 1–9, 11, and 12.
+While I like Kevin Murphy's [PML books](https://probml.github.io/pml-book/), the clever bits are scattered across chapters. I've had many epiphanies reading his writing, but it's not always phrased in the "standard language" you or your interviewers instinctively think in. They may not be good prep books. 
 
 ## 6. ML **Model** Design
 
