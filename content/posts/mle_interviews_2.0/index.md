@@ -200,7 +200,7 @@ For each system listed below, generate a **CodeSignal-style 4-level coding promp
 
 Back in 2024, I interviewed with Quora. In a 90-minute coding round, you're given a realistic codebase (adapted from a real Python package repo) plus some unit tests, and you have to debug the codebase by reading error logs, identifying what's broken, and fixing them on your own, without AI. It was the hardest coding interview I've passed.
 
-Meta's AI-assisted coding round is a tamed version of that. You get a much smaller toy codebase plus unit tests, and you're allowed to use an LLM to debug and complete the implementation. I interviewed with Meta in a hurry and only had time to look at the example question in the candidate portal. It was perhaps the easiest coding interview I've passed, as the problem was quite solvable on the spot. 
+Meta's AI-assisted coding is a tamed version of that. You get a much smaller toy codebase plus unit tests, and you're allowed to use an LLM to debug and complete the implementation. I interviewed with Meta in a hurry and only had time to play with the example question in the candidate portal. It may be the easiest coding interview I've passed, because the problem could be smoothly solved on the spot:
 
 1. Read the instructions to understand the task and constraints.
 2. Open and skim each file to learn what exists and how things are wired. No need to read them in detail, but note what's implemented vs. missing vs. commented to see what you must do.
@@ -210,8 +210,8 @@ Meta's AI-assisted coding round is a tamed version of that. You get a much small
 6. Measure performance. Define a performance metric and run simulations or benchmarks to evaluate the naive solution.
 7. Optimize. Identify what's inefficient, propose a better algorithm, use AI to implement it, and evaluate the improved solution.
 
-I don't think my interviewer cared how much code was written by AI vs. me. They cared more about how well I partnered with AI to achieve the end goal. I didn't write much code myself, but I designed the algorithm, broke down the task, and prompted the AI to complete each task --- similar to how I work day to day. Signals that may matter:
-- Communicate clear plans to the interviewer and prompt the AI reasonably (tight prompts, explicit constraints, incremental diffs).
+I don't think my interviewer cared how much code was written by AI vs. me. They cared more about how well I partnered with AI to achieve the goal. I didn't write much code myself, but I designed the algorithm, broke down the task, and prompted the AI to complete each subtask --- similar to how I work day to day. Signals that may matter:
+- Communicate clear plans to the interviewer and prompt the AI effectively (tight prompts, explicit constraints, incremental diffs).
 - Read error messages carefully and iterate accordingly.
 - Explain what the AI is doing and why you accept or reject a suggested change. Don't copy & paste with no explanations.
 - Stay in control: you set the plan, and the AI accelerates execution.
@@ -220,16 +220,197 @@ I don't think my interviewer cared how much code was written by AI vs. me. They 
 
 Okay, so ML coding will be right in our alley, right? That'd be the funniest thing I've heard 🤣🤣🤣. I like OOP 10x more over ML coding.
 
-If I ask my ML engineer friends, 9 out 10 will say they love machine learning, but it will scare the hell out of all to write PyTorch code without inheriting from your team's model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you have no time. 
+If I ask my ML engineer friends and colleagues, 9 out of 10 will say they love machine learning, but it will scare the hell out of all to write PyTorch code without inheriting from a family heirloom model class or using Cursor. In ML coding interviews, however, you're expected to write PyTorch as fluently as regular Python. Even if you can Google, you're bound to run out of time if you need to Google much.
 
-First, be really fluent in PyTorch. Read Raschka's [PyTorch in One Hour](https://sebastianraschka.com/teaching/pytorch-1h/) and play with [TensorGym](https://tensorgym.com/) to learn syntax. For a more comprehensive tutorial, go over [Zero to Mastery Learn PyTorch for Deep Learning](https://www.learnpytorch.io/). 
+So how to be well-prepared for ML coding? I wish I knew but doubt if anyone does --- for instance, I bet if you take away the rubrics from your interviewer, they can't code up the solution to their own question without physical pain. So I'll venture my best guesses below. 
 
-Next, be really familiar with Transformer architectures as well as training and inference loops. Read Sebastian Raschka's [Build a Large Language Model](https://github.com/rasbt/LLMs-from-scratch) and reproduce all code on your own. Watch Andrej Karpathy's [GPT-2 video](https://www.youtube.com/watch?v=kCc8FmEb1nY). If you have enough time on your hands, follow along with Karpathy's [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) and read some of his repos (e.g., [nanoGPT](https://github.com/karpathy/nanoGPT), [micrograd](https://github.com/karpathy/micrograd)). Also be familiar with common optimization techniques for training and inference (e.g., [Flash Attention](https://lubits.ch/flash/), [LoRA](https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured), [KV cache](https://huggingface.co/blog/kv-cache)) and how to implement them from scratch. 
+The obvious thing is to get fluent in PyTorch. For starters, read [PyTorch in One Hour](https://sebastianraschka.com/teaching/pytorch-1h/) and play with [TensorGym](https://tensorgym.com/). For a more comprehensive tutorial, go over [Zero to Mastery Learn PyTorch for Deep Learning](https://www.learnpytorch.io/). 
 
-To test your understanding, solve LC-style ML problems on [Deep-ML](https://www.deep-ml.com/problems). You probably have no time to practice everything, but do go over common model architectures (e.g., KNN, K-Means, linear regression, logistic regression, MLP, CNN, RNN, causal self-attention, bidirectional self-attention, etc.), activation functions, optimizers (you may need to implement backpropagation and autograd from scratch instead of doing `loss.backward()`), evaluation metrics (e.g., nDCG, AUC), as well as training + inference techniques such as LoRA, beam search, KV cache, etc.. If you encounter problems outside of this list, maybe today isn't your day. You can also go over the [notebooks](https://udlbook.github.io/udlbook/) accompanying the *Understanding Deep Learning* book to cover all common ML concepts.
+The non-obvious thing is how to cover all ML concepts you might be asked to code up. I'll offer 3 ideas (they may not be good ideas).
+
+The first idea is to implement common model architectures from scratch, such as Transformers (encoder, decoder, encoder–decoder), MLP, CNN, RNN (GRU, LSTM), or "traditional models" like logistic regression, linear regression, KNN, K-Means, decision trees, and so on. Instead of importing modules from `torch.nn`, implement the building blocks yourself: embedding lookups, projection and linear layers, layer norm, batch norm, attention (causal and bidirectional), residual connections, dropout, activations, you name it. This way, you learn not only the "primitives" of deep learning, but also how they're wired together. Below is an example of a vanilla Transformer decoder.
+
+```python
+from dataclasses import dataclass
+import math
+import random
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+@dataclass
+class TrainConfig:
+    block_size: int = 1024
+    vocab_size: int = 64
+    n_layers: int = 4
+    n_head: int = 8
+    n_embd: int = 64
+    dropout: float = 0.2
+    bias: bool = False
+
+
+class LayerNorm(nn.Module):
+    def __init__(self, n_embd: int = 64, bias: bool = False):
+        super().__init__()
+        self.weight = nn.Parameter(torch.ones(n_embd))
+        self.bias = nn.Parameter(torch.ones(n_embd)) if bias else None
+
+    def forward(self, x):
+        return F.layer_norm(x, self.weight.shape, self.weight, self.bias, 1e-5)
+
+
+class CausalSelfAttention(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        assert config.n_embd % config.n_head == 0
+
+        # qkv projection
+        self.c_attn = nn.Linear(config.n_embd, config.n_embd * 3, bias=config.bias)
+
+        # MHA output projection
+        self.c_proj = nn.Linear(config.n_embd, config.n_embd, bias=config.bias)
+
+        # dropouts
+        self.attn_dropout = nn.Dropout(config.dropout)
+        self.resid_dropout = nn.Dropout(config.dropout)
+
+        # save config for convenience
+        self.n_embd = config.n_embd
+        self.n_head = config.n_head
+
+        # create a mask matrix in memory
+        self.register_buffer(
+            "mask",
+            torch.tril(torch.ones(config.block_size, config.block_size))
+                .view(1, 1, config.block_size, config.block_size)
+        )
+
+    def forward(self, x):
+        # get input dimensions
+        B, T, C = x.shape
+
+        # qkv projection: [B, T, 3C] -> split into [B, T, C] each along emb_dim
+        q, k, v = self.c_attn(x).split(self.n_embd, dim=2)
+
+        # split across heads: [B, T, C] -> [B, T, nh, hs] -> [B, nh, T, hs]
+        q = q.view(B, T, self.n_head, self.n_embd // self.n_head).transpose(1, 2)
+        k = k.view(B, T, self.n_head, self.n_embd // self.n_head).transpose(1, 2)
+        v = v.view(B, T, self.n_head, self.n_embd // self.n_head).transpose(1, 2)
+
+        # attention scores: [B, nh, T, hs] @ [B, nh, hs, T] -> [B, nh, T, T]
+        att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1)))
+
+        # order: mask -> row-wise softmax -> attention dropout
+        att = att.masked_fill(self.mask[:, :, :T, :T] == 0, float("-inf"))
+        att = F.softmax(att, dim=-1)
+        att = self.attn_dropout(att)
+
+        # contextual emb: [B, nh, T, T] @ [B, nh, T, hs] -> [B, nh, T, hs]
+        y = att @ v
+
+        # assemble outputs: [B, nh, T, hs] -> [B, T, nh, hs] -> [B, T, C]
+        y = y.transpose(1, 2).contiguous().view(B, T, C)
+
+        # output projection -> residual dropout
+        y = self.resid_dropout(self.c_proj(y))
+        return y
+
+
+class MLP(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+
+        # project up: emb_dim -> emb_dim * 4
+        self.c_fc = nn.Linear(config.n_embd, config.n_embd * 4, bias=config.bias)
+        # non-linear activation
+        self.gelu = nn.GELU()
+        # project back: emb_dim * 4 -> emb_dim
+        self.c_proj = nn.Linear(config.n_embd * 4, config.n_embd, bias=config.bias)
+        # dropout
+        self.dropout = nn.Dropout(config.dropout)
+
+    def forward(self, x):
+        x = self.c_fc(x)
+        x = self.gelu(x)
+        x = self.c_proj(x)
+        x = self.dropout(x)
+        return x
+
+
+class Block(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+
+        # layer norm
+        self.ln_1 = LayerNorm(config.n_embd, bias=config.bias)
+        # attention
+        self.attn = CausalSelfAttention(config)
+        # layer norm
+        self.ln_2 = LayerNorm(config.n_embd, bias=config.bias)
+        # pointwise ffn
+        self.mlp = MLP(config)
+
+    def forward(self, x):
+        x = x + self.attn(self.ln_1(x))
+        x = x + self.mlp(self.ln_2(x))
+        return x
+
+
+class Decoder(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+
+        # embedding tables
+        self.tok_emb_table = nn.Embedding(config.vocab_size, config.n_embd)  # token embed lookup: [vocab_size, emb_size]
+        self.pos_enc_table = nn.Parameter(torch.randn(config.block_size, config.n_embd) * 0.02)  # learnable positional encodings: [block_size, emb_size]
+
+        # transformer blocks
+        self.blocks = nn.ModuleList([Block(config) for _ in range(config.n_layers)])
+
+        # final layer norm
+        self.ln_f = LayerNorm(config.n_embd, bias=config.bias)
+
+        # final dropout
+        self.dropout = nn.Dropout(config.dropout)
+
+        # language modeling head
+        self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=config.bias)
+
+        # optional: save config so we can refer to it in forward()
+        self.config = config
+
+    def forward(self, x_ids):
+        # get input shape
+        B, T = x_ids.shape
+        assert T <= self.config.block_size, f"seq length {T} has exceeded max context window {self.config.block_size}"
+
+        # look up token embs
+        tok_emb = self.tok_emb_table(x_ids)  # [B, T, C]
+        # get first T rows from pos emb
+        pos_emb = self.pos_enc_table[ : T].unsqueeze(0)  # [1, T, C]
+        # add together to get input emb
+        x = tok_emb + pos_emb  # [B, T, C]
+
+        # pass to transformer blocks
+        for block in self.blocks:
+            x = block(x)
+
+        # get ready for outputs
+        x = self.ln_f(x)
+        logits = self.lm_head(x)
+        return logits
+```
+
+To get comfortable with Transformer architectures as well as training and inference loops, read [Build a Large Language Model](https://github.com/rasbt/LLMs-from-scratch) and reproduce the code on your own. Watch Andrej Karpathy's [GPT-2 video](https://www.youtube.com/watch?v=kCc8FmEb1nY). If you have extra time, follow along with Karpathy's [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html) and read some of his repos (e.g., [nanoGPT](https://github.com/karpathy/nanoGPT), [micrograd](https://github.com/karpathy/micrograd)). You should also be familiar with common training and inference optimizations, such as [Flash Attention](https://lubits.ch/flash/), [LoRA](https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured), beam search, [KV cache](https://huggingface.co/blog/kv-cache)), etc., and know how to implement them from scratch. 
+
+The problem is: what if the interviewer asks about something other than architectures? For example, how to implement autograd from scratch instead of calling `loss.backward()`? Or, given scores and labels from a binary classifier, how to compute ranking metrics? 
+
+To maximize Recall, here's a second idea: practice ML coding the same way you practice LC. A great website is [Deep-ML](https://www.deep-ml.com/problems) --- it's like LC, but for ML. You can practice individual problems or work through collections.
+
+If you prefer theory before code, a third idea is to read [Understanding Deep Learning](https://udlbook.github.io/udlbook/) and study the accompanying [notebooks](https://udlbook.github.io/udlbook/). I don't think you need extra preparation for ML fundamentals after this.
 
 Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models or use NumPy to implement from scratch. Don't be caught off the guard --- brush up with Educative's [Scikit-learn cheat sheet](https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods). To practice NumPy itself, go over the [numpy-100](https://github.com/rougier/numpy-100) repo and the [*From Python to Numpy*](https://www.labri.fr/perso/nrougier/from-python-to-numpy/) tutorial.
-
 
 ## 5. ML Fundamentals
 
