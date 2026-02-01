@@ -794,13 +794,13 @@ When friends ask me how to prepare for interviews, I always ask: *"Which compani
 Different companies test very different things. If you interview with OpenAI, you'll see lots of OOP problems, followed by a non-standard behavioral round and a project presentation. Google's coding interviews ask random hard questions. Snap's interviews are hard as well, especially the ML infra design round that most ML engineers are afraid of. Meta's interviews are fairly standard, but you usually need a "yes" in every round to get an offer. So prepare for the interviews you actually have, rather than preparing in some abstract, generic way. Below is the minimal, essential prep for each interview round:
 
 1. Coding
-    - LeetCode: finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250), then practice company tags and weak spots, focusing on problem solving
+    - LeetCode: finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250), then practice company tags, focusing on problem solving rather than memorization
     - OOP: go over the [OOP course](https://www.coditioning.com/app/learning/courses/tech_interview_prep/4) and practice [problems](https://www.yuan-meng.com/posts/mle_interviews_2.0/#2-objective-oriented-programming) 
-    - ML coding: refresh PyTorch/NumPy syntax and [ML coding](https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding)
+    - ML coding: refresh PyTorch/NumPy syntax and [implementations](https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding)
     - AI-assisted coding: practice the problem in the candidate portal and see how you'd approach the problem later
 
 2. Design
-    - ML model design: revisit classic RecSys papers and practice designing common models
+    - ML model design: revisit classic RecSys papers and practice designing common models [here](http://localhost:1313/posts/mle_interviews_2.0/#6-ml-model-design)
     - ML infra design: read my [post](https://www.yuan-meng.com/posts/ml_infra_interviews/) and practice designing above systems with an infra focus
     - Backend system design: I'd probably give up here --- this role likely doesn't match my background
 
@@ -811,7 +811,7 @@ Different companies test very different things. If you interview with OpenAI, yo
     - Read my [post](https://www.yuan-meng.com/notes/project_complexity/) and review your most complex project
     - Review your career story (by yourself and with a trusted mentor) and prep answers to [these questions](https://www.yuan-meng.com/posts/mle_interviews_2.0/#8-behavior-interview)
 
-Two years ago, I over-prepared for each company. I was exhausted and didn't have many competing offers. This year, I was rushed through interviews --- either because teams wanted to close quickly or didn't want me to hit an offer deadline elsewhere. Sometimes I spent just a few days designing the likely ML system for the team and practiced a few dozen LeetCode problems. I still passed. If you have the right experience, don't stress too much about interview prep. If you don’', no amount of prep will fully compensate, especially at higher levels.
+Two years ago, I over-prepared for each company. I was exhausted and didn't have many competing offers. This year, I was rushed through interviews --- either because teams wanted to close quickly or didn't want me to hit an offer deadline elsewhere. Sometimes I spent just a few days designing the likely ML systems for the team and practiced a few dozen company tags. I still passed. If you have the right experience, don't stress too much about interview prep. If you don't, no amount of prep will fully compensate, especially at higher levels.
 
 ## C: Example System Designs
 I'm a straiggt 
