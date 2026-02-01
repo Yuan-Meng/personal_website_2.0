@@ -814,7 +814,7 @@ Different companies test very different things. If you interview with OpenAI, yo
 Two years ago, I over-prepared for each company. I was exhausted and didn't have many competing offers. This year, I was rushed through interviews --- either because teams wanted to close quickly or didn't want me to hit an offer deadline elsewhere. Sometimes I spent just a few days designing the likely ML systems for the team and practiced a few dozen company tags. I still passed. If you have the right experience, don't stress too much about interview prep. If you don't, no amount of prep will fully compensate, especially at higher levels.
 
 ## C: Example System Designs
-I'm a straiggt 
-- Short video recommendations
-- Retrieval-augmented generation
-- Ads conversion modeling:
+Like I [mentioned](https://www.yuan-meng.com/posts/mle_interviews_2.0/#6-ml-model-design), I picked a few problems to flesh out when preparing for ML model/infra designs. See 3 examples below. Please ignore my hastily written bits and take what you need from the raw designs.
+- Short video recommendations: [Google Doc](https://docs.google.com/document/d/1a-TPkOhV7yL3bjo-Sy5YjQVotdQhhq9z-RubuWAn8oY/edit?usp=sharing)
+- Retrieval-augmented generation: [Google Doc](https://docs.google.com/document/d/1qjH-xBHtEUEZI7RuHkuRZ4f4iqYd9gAkXTAztjPWvIQ/edit?usp=sharing)
+- Ads conversion modeling: [Google Doc](https://docs.google.com/document/d/1HehwT0mWcAze97xOGjJMaeHCgcfQaIJwdNNqBJ1FydQ/edit?usp=sharing)
