@@ -773,7 +773,7 @@ To prepare, I take a piece of paper and walk down the memory lane to detail ever
 
 ## A: Company Selection
 
-When considering where to interview, I look for a combination of `top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level`. I only applied to OpenAI, Roblox, Databricks, and Notion; other interviews came through recruiter outreach. Below are the roles I chose to interview for, grouped by domain. I've highlighted top-paying senior+ roles in case you have similar goals (ranges: <span style="background-color: #B3E59A">550-650k</span>; <span style="background-color: #FDB515">650-850k</span>).
+When considering where to interview, I look for a combination of `top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level`. I only applied to OpenAI, Roblox, Databricks, and Notion; other interviews came through recruiter outreach. Below are the roles I chose to interview for, grouped by domain. I've highlighted top-paying senior+ roles in case you have similar goals (ranges: <span style="background-color: #B3E59A">550-649k</span>; <span style="background-color: #FDB515">650-800k</span>).
 
 - **RecSys**: <span style="background-color: #FDB515">Snap ML Engineer</span>, <span style="background-color: #FDB515">Meta ML Engineer (Ads)</span>, <span style="background-color: #FDB515">xAI Member of the Technical Staff</span>, <span style="background-color: #B3E59A">Netflix ML Engineer (Ads)</span>, <span style="background-color: #B3E59A">Roblox ML Engineer (Ads)</span>, Google ML SWE, Apple ML Engineer (Search), Notion Software Engineer (Search), Unity ML Engineer (Ads)
 - **Applied AI** (e.g., RAG, agents, chatbots, embedding models): <span style="background-color: #FDB515">OpenAI Research Engineer</span>, <span style="background-color: #FDB515">DeepMind Applied AI Engineer</span>, <span style="background-color: #FDB515">Databricks AI Engineer</span>, Nvidia ML Engineer, Perplexity AI Engineer, Anysphere (Cursor's company) Research Engineer
@@ -789,18 +789,32 @@ When I joined Pinterest in 2024, I knew it wouldn't be a long stint, but it was 
 You don't need to make the same choices I did (I like to design both life and work intentionally), but it's worth thinking about which "pieces" you need to collect to build a fulfilling and rewarding career.
 
 ## B: Prepare in a Hurry
-TODO
+When friends ask me how to prepare for interviews, I always ask: *"Which companies are you interviewing with?"* I only started preparing after I got phone screens scheduled, since different companies have different interview loops. They inevitably ask: *"But how do you even have the time?"* That's an interesting question, because you control when you start interviewing after you learn what the interview rounds are and what each round entails. Sure, if you start late, a company may run out of headcount. But if a company isn't hiring continuously for at least 2–3 months, why would you want to join them anyway?
 
-ask how 
-which one
-meta standard
-openai not hiring
-snap ml infra
+Different companies test very different things. If you interview with OpenAI, you'll see lots of OOP problems, followed by a non-standard behavioral round and a project presentation. Google's coding interviews ask random hard questions. Snap's interviews are hard as well, especially the ML infra design round that most ML engineers are afraid of. Meta's interviews are fairly standard, but you usually need a "yes" in every round to get an offer. So prepare for the interviews you actually have, rather than preparing in some abstract, generic way. Below is the minimal, essential prep for each interview round:
 
-wasn't prepared at all 
-got 1st offer in two weeks
-do essential
-too late when sceduled -- too much not scdeduled
+1. Coding
+    - LeetCode: finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250), then practice company tags and weak spots, focusing on problem solving
+    - OOP: go over the [OOP course](https://www.coditioning.com/app/learning/courses/tech_interview_prep/4) and practice [problems](https://www.yuan-meng.com/posts/mle_interviews_2.0/#2-objective-oriented-programming) 
+    - ML coding: refresh PyTorch/NumPy syntax and [ML coding](https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding)
+    - AI-assisted coding: practice the problem in the candidate portal and see how you'd approach the problem later
+
+2. Design
+    - ML model design: revisit classic RecSys papers and practice designing common models
+    - ML infra design: read my [post](https://www.yuan-meng.com/posts/ml_infra_interviews/) and practice designing above systems with an infra focus
+    - Backend system design: I'd probably give up here --- this role likely doesn't match my background
+
+3. ML fundamentals
+    - Read the [UDL book](https://udlbook.github.io/udlbook/) and answer [common questions](https://www.yuan-meng.com/posts/mle_interviews_2.0/#5-ml-fundamentals)
+
+4. Behavioral
+    - Read my [post](https://www.yuan-meng.com/notes/project_complexity/) and review your most complex project
+    - Review your career story (by yourself and with a trusted mentor) and prep answers to [these questions](https://www.yuan-meng.com/posts/mle_interviews_2.0/#8-behavior-interview)
+
+Two years ago, I over-prepared for each company. I was exhausted and didn't have many competing offers. This year, I was rushed through interviews --- either because teams wanted to close quickly or didn't want me to hit an offer deadline elsewhere. Sometimes I spent just a few days designing the likely ML system for the team and practiced a few dozen LeetCode problems. I still passed. If you have the right experience, don't stress too much about interview prep. If you don’', no amount of prep will fully compensate, especially at higher levels.
 
 ## C: Example System Designs
-TODO
+I'm a straiggt 
+- Short video recommendations
+- Retrieval-augmented generation
+- Ads conversion modeling:
