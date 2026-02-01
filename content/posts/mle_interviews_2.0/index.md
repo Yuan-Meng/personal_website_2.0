@@ -772,10 +772,24 @@ To prepare, I take a piece of paper and walk down the memory lane to detail ever
 # Appendices
 
 ## A: Company Selection
-top pay, interesting work, modern stack, willing to offer me senior or plus title
+
+At this stage, when evaluating companies, I look for a combination of `top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level`. I didn't submit many applications directly; most interviews came through recruiter outreach. Below are the roles I chose to interview for, grouped by domain. I've highlighted top-paying senior+ roles in case you're aiming for similar targets (<span style="background-color: #FDB515">650-700+k</span>; <span style="background-color: #B3E59A">500-600+k</span>).
+
+- **RecSys**: <span style="background-color: #FDB515">Snap ML Engineer</span>, <span style="background-color: #FDB515">Meta ML Engineer (Ads)</span>, <span style="background-color: #FDB515">xAI Member of the Technical Staff</span>, <span style="background-color: #B3E59A">Netflix ML Engineer (Ads)</span>, <span style="background-color: #B3E59A">Roblox ML Engineer (Ads)</span>, Google ML SWE, Apple ML Engineer (Search), Notion Software Engineer (Search), Unity ML Engineer (Ads)
+- **Applied AI** (e.g., RAG, agents, chatbots, embedding models): <span style="background-color: #FDB515">OpenAI Research Engineer</span>, <span style="background-color: #FDB515">DeepMind Applied AI Engineer</span>, <span style="background-color: #FDB515">Databricks AI Engineer</span>, Nvidia ML Engineer, Perplexity AI Engineer, Anysphere (Cursor's company) Research Engineer
+
+Of course, research roles at frontier labs can pay even more, but getting a job isn't about how you want to get paid, but what you bring to the table. Outside research roles, the <span style="background-color: #FDB515">highlighted</span> ones are perhaps the most applied ML engineers can make using the skills that we have. 
+
+In the weeks leading up to my resignation from DoorDash, my manager, skip, several leaders, and a few XFN partners all tried to convince me to stay. Their arguments could be summarized as follows: (1) DoorDash has strong business fundamentals, which translates into plenty of scope and fast promotions; (2) for ML engineers, model complexity doesn't matter as much as scope and impact, and many strong companies still rely on tree-based models; and (3) if I cared about state-of-the-art models, I could always read papers on my own.
+
+(1) is true. DoorDash's business is doing well, promotions are fast, and individual MLE scope can be super broad. Thanks to stock appreciation, those who joined in 2022 get paid far above the market. (2) and (3), however, couldn't be more wrong. For ML engineers, model complexity matter tremendously --- not on its own, but because of the people it attracts. Working alongside world-class ML practitioners and researchers allows you to witness great minds in action: how they debug, innovate, make trade-offs, and bring challenging models to a launch. You can't never read about such experience in papers. After a few years, these folks tend to move on to frontier places and may recruiter you if you've been a great partner. In another few years , you move with them to even more frontier places. Perhaps this is how one builds the momentum to move upward in the industry continuously.
+
+When I joined Pinterest in 2024, I knew it wouldn't be a long stint, but it was a necessary one given where I was. I already had large scope and impact from my time at DoorDash; what I lacked was hands-on experience with SOTA models. Without the latter, it'd be impossible to get senior+ offers from frontier companies. Piecing together the two opposing experiences, I build a brand of being able to both move fast and dive deep, which maybe a rare quality in industry. Of course, companies are too coarse a unit to evaluate an offer --- what attracted me to Pinterest was the invite to join a strong ranking team to work on SOTA sequence models. Upon hindsight, my decision paid off.
+
+I care about intentional design in work and in life. You don't need to make the same choices I did, but it's worth thinking about which "pieces" you need to collect to build a fulfilling and rewarding career.
 
 ## B: Prepare in a Hurry
-xx
+TODO
 
 ## C: Example System Designs
-xx
+TODO
