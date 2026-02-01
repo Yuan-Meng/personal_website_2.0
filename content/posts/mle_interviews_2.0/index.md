@@ -12,11 +12,12 @@ toc: true
 
 {{< figure src="https://i.ebayimg.com/00/s/NjAyWDgxOA==/z/irgAAOSwkz1lo2l~/$_57.PNG?set_id=880000500F" width="400">}}
 
-I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value". That's probably the mindset to have when interviewing with companies everybody wants to join.
+I have always loved how Dustin from *Stranger Things* says "here goes nothing" before executing an impossible plan. According to [Reddit](https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/), this phrase means "you have nothing left to lose" or that "even if it fails, you don't lose anything of value". That's probably the mindset to have when interviewing with companies everybody wants to join. BTW,  <span style="background-color: #D9CEFF">if you're scared by the reading time, why not jump over to the ["Prepare in a Hurry"](https://www.yuan-meng.com/posts/mle_interviews_2.0/#b-prepare-in-a-hurry) section for a quick overview of interview prep tips 🥵</span>.
+
 
 For ML engineers, companies like Google, {{< sidenote "Meta" >}}Later I learned that some non-MSL organizations at Meta can match applied/non-research offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.{{< /sidenote >}}, Pinterest, and LinkedIn have established ranking teams, good compensation, and standard "ML design + LeetCode + behavior" interview rounds. I wrote about how to tackle standard MLE interviews in my previous {{< backlink "mle_interviews" "post" >}}.
 
-For **applied/non-research** ML or research engineers, only a few places can pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. Most of these companies have interview rounds I find genuinely scary --- for instance: 
+For **applied/non-research** ML or research engineers, only a few places can pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. For more information, check out the ["Company Selection"](https://www.yuan-meng.com/posts/mle_interviews_2.0/#a-company-selection) section in the Appendix. Most of toy payers have interview rounds I find genuinely scary --- for instance: 
 
 - **ML infra design**: I'm **not** talking about ML system design focusing on modeling, where you can briefly mention sharding, caching, etc. to show your "scaling" awareness. That would be easy by now. I'm talking about ML **infra** design that doesn't focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, Reddit, DoorDash, Notion, and so on. I recently wrote a {{< backlink "ml_infra_interviews" "blogpost" >}} on how to prepare for this rare but critical round (rather than giving up).
 - **Multi-level object-oriented programming**: You'll implement a toy system that mimics a real-world backend system, such as a database, a KV store, a chat room, a game, to name a few. You'll start with basic methods and gradually add more or scale up.
@@ -486,7 +487,7 @@ If you're short on time, below is an essential list of papers to read:
 4. **Feature transformations**: Another selling point of DLRM is its ability to leverage shared feature representations to predict different tasks, such as clicks, conversions, watch time, and other engagement outcomes one cares about. Read the seminal [MMoE](https://arxiv.org/abs/2311.09580) paper and its predecessor [PLE](https://dl.acm.org/doi/abs/10.1145/3383313.3412236) on such multi-task learning.
 5. **Practical concerns**: For most RecSys MLEs, unless you work on these problems, you're definitely aware of their existence but may not speak intelligently about solutions --- such as cold start (recommend new items or recommend for new users), positional bias (learn inherent item relevance, debiasing the influence from item positions), diversity (dedupe & re-rank results by topic, creator, or other criteria), or value models (if ranking by multiple objectives, find the "best" weight of each). Read one or two paper on each topic (e.g., cold start: Kuaishou [1](https://dl.acm.org/doi/10.1145/3640457.3688098) & [2](https://dl.acm.org/doi/10.1145/3701716.3715205); positional bias: [Google](https://research.google/pubs/position-bias-estimation-for-unbiased-learning-to-rank-in-personal-search/); diversity: [Kuaishou](https://arxiv.org/abs/2206.05020); value models: [Pinterest](https://arxiv.org/abs/2509.05292)), so you can say while you're not an expert, you know some solutions.
 
-When preparing for design interviews, I pick a handful of common problems (e.g., short video recommendations, place recommendations, friend recommendations, CTR/CVR ads ranking, harmful content detection, retrieval-augmented generation) and write full designs for each. I start by sketching the high-level system from first principles, then read industry blogs, papers, and my company's practices to fill in the details. Once everything is on paper, I practice delivery under time constraints (typically 45 minutes to 1 hour) and move extra material into "deep dives". Sometimes I spend 3+ days on a single design and end up with a 40+ page document. In reality, no interviewer goes into that much detail. For a ranking design, for example, covering the standard multi-stage ranking funnel and adding one or two interesting insights from work or papers is 100% enough for a "strong yes".
+When preparing for design interviews, I pick a handful of common problems (e.g., short video recommendations, place recommendations, friend recommendations, CTR/CVR ads ranking, harmful content detection, retrieval-augmented generation) and write full designs for each. You can find 3 examples in the ["Example System Designs"](https://www.yuan-meng.com/posts/mle_interviews_2.0/#c-example-system-designs) section. I start by sketching the high-level system from first principles, then read industry blogs, papers, and my company's practices to fill in the details. Once everything is on paper, I practice delivery under time constraints (typically 45 minutes to 1 hour) and move extra material into "deep dives". Sometimes I spend 3+ days on a single design and end up with a 40+ page document. In reality, no interviewer goes into that much detail. For a ranking design, for example, covering the standard multi-stage ranking funnel and adding one or two interesting insights from work or papers is 100% enough for a "strong yes".
 
 ## 7. ML **Infra** Design
 
@@ -573,7 +574,7 @@ I've summarized my ML infra interview preparation in this {{< backlink "ml_infra
 99% of the time, behavior questions come from the list below:
 
 <details class="fold">
-<summary>79 behavioral question by signal</summary>
+<summary>79 behavior question by signal</summary>
 
 <table>
 <thead><tr><th>signal</th><th>question</th></tr></thead>
@@ -679,23 +680,23 @@ Then it boils down to how you pick and tell your stories. While companies ask th
 To quickly prepare for each question, I usually start with a rough story --- just a few sentences I hastily jot down about an experience I'm proud of or learned from, throw in the company values, and prompt GPT to turn it into a SAIL (situation, action, impact, learning) story.
 
 ```markdown
-## Behavioral Interview Story Expansion Prompt
+## BehaviorInterview Story Expansion Prompt
 
 ### Goal
 Turn a rough, real story (even a few sentences) into a clear, interview-ready
-behavioral answer that is explicitly aligned with a company's values.
+behavior answer that is explicitly aligned with a company's values.
 
 ---
 
 ### Instructions
 
-I'm preparing for behavioral interviews.
+I'm preparing for behavior interviews.
 
 I will give you:
 1. a **rough story** (unpolished, informal is fine)
 2. a set of **company values / culture principles** (pasted text or a link)
 
-Please expand the story into a **structured behavioral answer aligned with those values**.
+Please expand the story into a **structured behavior answer aligned with those values**.
 
 Do **not** invent facts or exaggerate impact.
 Your job is to organize, clarify, and align — not to embellish.
@@ -715,7 +716,7 @@ Here are the company's values or culture principles I want the story aligned wit
 
 ### Output Requirements
 
-#### 1. Structured behavioral story
+#### 1. Structured behavior story
 Rewrite the story using the following sections:
 
 - **situation:** brief context; what was happening; responsibility, goal, or challenge I faced
@@ -795,7 +796,7 @@ When friends ask me how to prepare for interviews, I always ask: *"Which compani
 
 They inevitably ask: *"But isn't it too late? How do I have time to prepare after interviews are scheduled?"* That's an interesting question, since you control when you start interviewing after the recruiter call. Sure, if you start late, a company may run out of headcount. But if a company isn't hiring for at least 2–3 months, why would you want to join them?
 
-Different companies test very different things. If you interview with OpenAI, you'll see lots of OOP problems, followed by a non-standard behavioral round and a project presentation. Google's coding interviews ask random Hard LC questions --- lots of graph, string, and DP problems. By contrast, Meta's coding interviews don't ask especially challenging questions, but you have to be really fast at solving classic problems; their behavioral and design rounds are also fairly standard, but you usually need a "yes" in every round to get an offer. Snap's interviews are difficult and unique --- the coding problems are hard to wrap your head around, and the ML infra design round scares most ML engineers to death. So ask your recruiters what the rounds are and what the passing criteria look like, come back to this blog post to review tips for each round, and prepare for the interviews you actually have, rather than preparing in some abstract, generic way. Below is the minimal, essential prep for each interview round:
+Different companies test very different things. If you interview with OpenAI, you'll see lots of OOP problems, followed by a non-standard behavior round and a project presentation. Google's coding interviews ask random Hard LC questions --- lots of graph, string, and DP problems. By contrast, Meta's coding interviews don't ask especially challenging questions, but you have to be really fast at solving classic problems; their behavior and design rounds are also fairly standard, but you usually need a "yes" in every round to get an offer. Snap's interviews are difficult and unique --- the coding problems are hard to wrap your head around, and the ML infra design round scares most ML engineers to death. So ask your recruiters what the rounds are and what the passing criteria look like, come back to this blog post to review tips for each round, and prepare for the interviews you actually have, rather than preparing in some abstract, generic way. Below is the minimal, essential prep for each interview round:
 
 1. Coding
     - LeetCode: finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250), then practice company tags, focusing on problem solving rather than memorization
@@ -811,16 +812,16 @@ Different companies test very different things. If you interview with OpenAI, yo
 3. ML fundamentals
     - Read the [UDL book](https://udlbook.github.io/udlbook/) and answer [common questions](https://www.yuan-meng.com/posts/mle_interviews_2.0/#5-ml-fundamentals)
 
-4. Behavioral
+4. Behavior
     - Read my [post](https://www.yuan-meng.com/notes/project_complexity/) and review your most complex project
     - Review your career story (by yourself and with a trusted mentor) and prep answers to [these questions](https://www.yuan-meng.com/posts/mle_interviews_2.0/#8-behavior-interview)
 
 Two years ago, I over-prepared for each company. I was exhausted and didn't have many competing offers. This year, I was rushed through interviews --- either because teams wanted to close quickly or didn't want me to hit an offer deadline elsewhere. In two cases toward the end of my interview cycle, I only had 3–5 days to finish the entire interview loop, so I only had time to design one or two ML systems the team likely built and practice a couple dozen company tags.
 
-I still passed, because while different companies have different rounds, problem-solving instincts do generalize (I'd already done several full loops before then). If you have the right experience for the hiring team, just try your best to show that. If you don't, no amount of preparation will compensate for a lack of fit, especially at higher levels.
+I somehow passed. Perhaps while companies have different rounds, problem-solving instincts do generalize (I'd already done several full loops before the last two). If you have the right experience for the hiring team, just try your best to show that. If you don't, no amount of preparation compensates for a lack of fit, especially at higher levels.
 
 ## C: Example System Designs
 Like I [mentioned](https://www.yuan-meng.com/posts/mle_interviews_2.0/#6-ml-model-design), I picked a few problems to flesh out when preparing for ML model/infra designs. See 3 examples below. Please ignore my hastily written bits and take what you need from the raw designs.
 - Short video recommendations: [Google Doc](https://docs.google.com/document/d/1a-TPkOhV7yL3bjo-Sy5YjQVotdQhhq9z-RubuWAn8oY/edit?usp=sharing)
-- Retrieval-augmented generation: [Google Doc](https://docs.google.com/document/d/1qjH-xBHtEUEZI7RuHkuRZ4f4iqYd9gAkXTAztjPWvIQ/edit?usp=sharing)
 - Ads conversion modeling: [Google Doc](https://docs.google.com/document/d/1HehwT0mWcAze97xOGjJMaeHCgcfQaIJwdNNqBJ1FydQ/edit?usp=sharing)
+- Retrieval-augmented generation: [Google Doc](https://docs.google.com/document/d/1qjH-xBHtEUEZI7RuHkuRZ4f4iqYd9gAkXTAztjPWvIQ/edit?usp=sharing)
