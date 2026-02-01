@@ -1,6 +1,6 @@
 ---
 title: "MLE Interview 2.0: Research Engineering and Scary Rounds"
-date: 2026-01-31
+date: 2026-02-01
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
@@ -773,9 +773,12 @@ To prepare, I take a piece of paper and walk down the memory lane to detail ever
 
 ## A: Company Selection
 
-When considering where to interview, I look for a combination of `top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level`. I only applied to OpenAI, Roblox, Databricks, and Notion; other interviews came through recruiter outreach. Below are the roles I chose to interview for, grouped by domain. I've highlighted top-paying senior+ roles in case you have similar goals (ranges: <span style="background-color: #B3E59A">550-649k</span>; <span style="background-color: #FDB515">650-800k</span>).
+When considering where to interview, I look for a combination of `top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level`. I applied to OpenAI, Roblox, Databricks, and Notion on my own; other interviews came through recruiter outreach. I didn't ask for referrals before applying, because if your profile is strong, recruiters will proceed anyway; if your profile doesn't fit the role, a referral usually just leads to a faster review and rejection.
 
-- **RecSys**: <span style="background-color: #FDB515">Snap ML Engineer</span>, <span style="background-color: #FDB515">Meta ML Engineer (Ads)</span>, <span style="background-color: #FDB515">xAI Member of the Technical Staff</span>, <span style="background-color: #B3E59A">Netflix ML Engineer (Ads)</span>, <span style="background-color: #B3E59A">Roblox ML Engineer (Ads)</span>, Google ML SWE, Apple ML Engineer (Search), Notion Software Engineer (Search), Unity ML Engineer (Ads)
+Below are roles I interviewed for, grouped by domain. I specified the team in parentheses for team-based hires. I've highlighted top-paying senior+ roles in case you have similar goals (<span style="background-color: #B3E59A">550–649k</span>; <span style="background-color: #FDB515">650–800+k</span>).
+
+
+- **RecSys**: <span style="background-color: #FDB515">Snap ML Engineer</span>, <span style="background-color: #FDB515">Meta ML Engineer (Ads)</span>, <span style="background-color: #FDB515">xAI Member of the Technical Staff</span>, <span style="background-color: #B3E59A">Netflix ML Engineer (Ads)</span>, <span style="background-color: #B3E59A">Roblox ML Engineer (Ads)</span>, Google ML SWE, Apple ML Engineer (Search), Notion SWE (Search), Unity ML Engineer (Ads), Shopify AI Engineer (Recommendation), Uber ML Engineer (Search)
 - **Applied AI** (e.g., RAG, agents, chatbots, embedding models): <span style="background-color: #FDB515">OpenAI Research Engineer</span>, <span style="background-color: #FDB515">DeepMind Applied AI Engineer</span>, <span style="background-color: #FDB515">Databricks AI Engineer</span>, Nvidia ML Engineer, Perplexity AI Engineer, Anysphere (Cursor's company) Research Engineer
 
 Of course, research roles at frontier labs pay much more, but getting a job isn't about how you want to get paid, but what you bring to the table. Outside research roles, the <span style="background-color: #FDB515">highlighted</span> ones above are perhaps the most RecSys ML engineers can make using the skills we have. 
