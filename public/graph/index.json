@@ -48,6 +48,10 @@
       "in": [],
       "out": []
     },
+    "/notes/niw_cogsci/": {
+      "in": [],
+      "out": []
+    },
     "/notes/nothingness/": {
       "in": [],
       "out": []
@@ -289,6 +293,11 @@
       "permalink": "/notes/new_year_wish_2026/",
       "section": "notes",
       "title": "New Year Wishes 2026"
+    },
+    "/notes/niw_cogsci/": {
+      "permalink": "/notes/niw_cogsci/",
+      "section": "notes",
+      "title": "The National Importance of Cognitive Science in the AI Era"
     },
     "/notes/nothingness/": {
       "permalink": "/notes/nothingness/",
