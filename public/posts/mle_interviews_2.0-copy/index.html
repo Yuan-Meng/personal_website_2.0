@@ -1,0 +1,2494 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+<link rel="stylesheet" href="http://localhost:1313/css/styles.min.b9043231ddc756d7f5562ab1d7340f4281ad35df8c158a62ccfd66848c674e5e.css">
+<meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    MLE Interview 2.0: Research Engineering and Scary Rounds | Yuan Meng
+</title>
+  <meta name="description" content=" Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
+I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵." />
+<meta property="og:url" content="http://localhost:1313/posts/mle_interviews_2.0-copy/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="MLE Interview 2.0: Research Engineering and Scary Rounds">
+  <meta property="og:description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
+I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-02-01T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="MLE Interview 2.0: Research Engineering and Scary Rounds">
+  <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
+I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵.">
+  <meta itemprop="datePublished" content="2026-02-01T00:00:00+00:00">
+  <meta itemprop="wordCount" content="11972">
+  <meta itemprop="keywords" content="Career,Machine learning,Interview">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MLE Interview 2.0: Research Engineering and Scary Rounds">
+  <meta name="twitter:description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
+I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵.">
+
+<link rel="canonical" href="http://localhost:1313/posts/mle_interviews_2.0-copy/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/stranger.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/mle_interviews_2.0-copy/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Career",
+    "Machine learning",
+    "Interview"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng",
+    "url": "http://localhost:1313/about/"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2026-02-01",
+  "description": " Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things\nI have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵.",
+  "headline": "MLE Interview 2.0: Research Engineering and Scary Rounds",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/mle_interviews_2.0-copy/",
+  "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
+  "timeRequired": "PT57M",
+  "url": "http://localhost:1313/posts/mle_interviews_2.0-copy/",
+  "wordCount": 11972
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a href="/about/">About</a
+      >
+    </li>
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">MLE Interview 2.0: Research Engineering and Scary Rounds</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2026-02-01T00:00:00&#43;00:00">February 1, 2026</time>
+        </div>
+    </header>
+
+    
+    
+      Reading time: 57 minutes
+    
+
+    
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#scary-new-rounds">Scary New Rounds</a></li>
+    <li><a href="#why-do-you-wanna-leave">Why Do You Wanna Leave?</a></li>
+    <li><a href="#up-the-ante-on-interview-prep">Up the Ante on Interview Prep</a>
+      <ul>
+        <li><a href="#mle-interview-10-recap">MLE Interview 1.0 Recap</a></li>
+        <li><a href="#20-vs10-what-has-changed">2.0 vs.1.0: What Has Changed?</a>
+          <ul>
+            <li><a href="#match-oriented-bar">Match-Oriented Bar</a></li>
+            <li><a href="#longer-process">Longer Process</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#preparing-for-each-round">Preparing for Each Round</a>
+      <ul>
+        <li><a href="#1-lc-style-coding">1. LC-Style Coding</a>
+          <ul>
+            <li><a href="#dont-be-obsessed-with-company-tags">Don&rsquo;t Be Obsessed with Company Tags</a></li>
+            <li><a href="#connect-lc-problems-to-scalable-systems">Connect LC Problems to Scalable Systems</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-objective-oriented-programming">2. Objective-Oriented Programming</a></li>
+        <li><a href="#3-ai-assisted-coding">3. AI-Assisted Coding</a></li>
+        <li><a href="#4-ml-coding">4. ML Coding</a></li>
+        <li><a href="#5-ml-fundamentals">5. ML Fundamentals</a></li>
+        <li><a href="#6-ml-model-design">6. ML <strong>Model</strong> Design</a></li>
+        <li><a href="#7-ml-infra-design">7. ML <strong>Infra</strong> Design</a></li>
+        <li><a href="#8-behavior-interview">8. Behavior Interview</a></li>
+        <li><a href="#9-project-deep-dive">9. Project Deep Dive</a></li>
+      </ul>
+    </li>
+    <li><a href="#appendices">Appendices</a>
+      <ul>
+        <li><a href="#a-company-selection">A: Company Selection</a></li>
+        <li><a href="#b-prepare-in-a-hurry">B: Prepare in a Hurry</a></li>
+        <li><a href="#c-example-system-designs">C: Example System Designs</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
+
+    
+    <div class="content">
+      <h2 id="scary-new-rounds" class="scroll-mt-8 group">
+  Scary New Rounds
+  
+    <a href="#scary-new-rounds"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<blockquote>
+<p>&ldquo;Here goes nothing.&rdquo; &mdash; Dustin Henderson, <em>Stranger Things</em></p>
+</blockquote>
+<figure><img src="https://i.ebayimg.com/00/s/NjAyWDgxOA==/z/irgAAOSwkz1lo2l~/$_57.PNG?set_id=880000500F" width="400">
+</figure>
+
+<p>I have always loved how Dustin from <em>Stranger Things</em> says &ldquo;here goes nothing&rdquo; before executing an impossible plan. According to <a href="https://www.reddit.com/r/etymology/comments/3iwni1/here_goes_nothing/">Reddit</a>, this phrase means &ldquo;you have nothing left to lose&rdquo; or that &ldquo;even if it fails, you don&rsquo;t lose anything of value&rdquo;. That&rsquo;s probably the mindset to have when interviewing with companies everybody wants to join. BTW,  <span style="background-color: #D9CEFF">if you&rsquo;re scared by the reading time, why not jump over to the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#b-prepare-in-a-hurry">&ldquo;Prepare in a Hurry&rdquo;</a> section for a quick overview of interview prep tips 🥵</span>.</p>
+<p>For ML engineers, companies like Google, <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-02"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-02"
+    for="sidenote-checkbox-02"
+    class="sidenote-mark"
+    >Meta</label
+  >
+  <small id="sidenote-02" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Later I learned that some non-MSL organizations at Meta can match applied/non-research offers from OpenAI, Databricks, and Snap, so this list is just a rough reference.<span class="sr-only">)</span>
+  </small>
+</span>
+, Pinterest, and LinkedIn have established ranking teams, good compensation, and standard &ldquo;ML design + LeetCode + behavior&rdquo; interview rounds. I wrote about how to tackle standard MLE interviews in my previous <a href="/posts/mle_interviews/" class="backlink">post</a>
+  
+  .</p>
+<p>For <strong>applied/non-research</strong> ML or research engineers, only a few places can pay more than the above at the same level: research engineers at {xAI, OpenAI, Anthropic, Google DeepMind, Microsoft AI} and ML engineers at {Snap, Databricks, Netflix, Roblox}. For more information, check out the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#a-company-selection">&ldquo;Company Selection&rdquo;</a> section in the Appendix. Most of toy payers have interview rounds I find genuinely scary &mdash; for instance:</p>
+<ul>
+<li><strong>ML infra design</strong>: I&rsquo;m <strong>not</strong> talking about ML system design focusing on modeling, where you can briefly mention sharding, caching, etc. to show your &ldquo;scaling&rdquo; awareness. That would be easy by now. I&rsquo;m talking about ML <strong>infra</strong> design that doesn&rsquo;t focus on modeling at all, but instead asks in great detail about the infra around ML systems, such as feature stores, distributed training, and online serving. Such interviews are rare, but they happen to be a required round at companies like Netflix, Snap, Reddit, DoorDash, Notion, and so on. I recently wrote a <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
+  
+   on how to prepare for this rare but critical round (rather than giving up).</li>
+<li><strong>Multi-level object-oriented programming</strong>: You&rsquo;ll implement a toy system that mimics a real-world backend system, such as a database, a KV store, a chat room, a game, to name a few. You&rsquo;ll start with basic methods and gradually add more or scale up.</li>
+<li><strong>LLM coding</strong>: A few years ago, many companies liked to ask candidates to implement a simple model (e.g., KNN, K-means, decision trees, logistic regression, linear regression, MLP) from scratch or load a scikit-learn model and fit it on toy data. Today, frontier labs might ask you to debug or implement language model training or inference code &mdash; e.g., Transformer encoders/decoders, KV cache, LoRA, or even <a href="https://docs.pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html">autograd</a>.
+<ul>
+<li><em>Why scary</em>: Even people who use PyTorch daily rarely know low-level details like how computation graphs are built or how autograd works under the hood. When it comes to model architectures, we may know KNN and attention well in isolation, but don&rsquo;t immediately realize how the latter is a softer version of the former. These are just a few examples. Deep down, the real signal is understanding modern deep learning &ldquo;primitives&rdquo; inside out. Perhaps the ideal candidate is an ML PhD student who has just passed their qualifying exams. The rest of us can try our best but still miss the mark.</li>
+</ul>
+</li>
+<li><strong>Research presentation</strong>: In traditional project deep dives, you verbally walk through one or two representative projects. Some Research Engineer roles require a job talk style presentation on your past work. You make ~10 slides, go over technical details, and &ldquo;defend&rdquo; your body of work like a PhD candidate would.</li>
+</ul>
+<p>If you think these rounds are daunting, so does everyone else. Mayuko explained in an awesome <a href="https://www.youtube.com/watch?v=e2Y-rhTlHHI">YouTube video</a> that tech interviews once focused on domain knowledge; then Microsoft popularized domain-agnostic data structures and algorithms problems to give raw talents from all backgrounds a fair chance. For a while, SWE candidates found those interviews scarier than domain knowledge &mdash; until LeetCode came along and gave everyone an efficient way to prepare.</p>
+<p>Today, new interview formats feel daunting because they don&rsquo;t have a LeetCode-equivalent yet. We&rsquo;re the pioneers. When doing &ldquo;standard&rdquo; ML interviews back in 2024, my goal was converting every onsite interview into an offer. For research engineering roles with scarier rounds, I&rsquo;ve come to realize that we may not get what we want on the first try, but it&rsquo;s worth learning what we need to there next time :)</p>
+<h2 id="why-do-you-wanna-leave" class="scroll-mt-8 group">
+  Why Do You Wanna Leave?
+  
+    <a href="#why-do-you-wanna-leave"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>To do well at MLE interviews 2.0, we inevitably lose some productivity at work, so think clearly about why you wanna leave (every recruiter and hiring manager will ask you anyways). Once you start, commit to finishing in 2 months with full determination. Dragging it out hurts your sleep and work performance. You&rsquo;re more ready than you think.</p>
+<p>Under normal circumstances, new hires don&rsquo;t work on high-impact projects right away, and many don&rsquo;t survive long enough to ever take on one. If you&rsquo;re already in a rare position to lead high-impact projects continuously, you&rsquo;ll find yourself in a worse situation at 99% new companies. Don&rsquo;t leave such a job without a compelling reason.</p>
+<p>I was lucky to take on high-visibility, top-down projects shortly after joining Pinterest. So for me to leave, I <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-05"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-05"
+    for="sidenote-checkbox-05"
+    class="sidenote-mark"
+    >thought through</label
+  >
+  <small id="sidenote-05" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>I started writing this blogpost towards the end of last year, back when leaving Pinterest required a strong upside. Now I feel 懂的都懂 😂. No need to think through anything now to see it's high time to leave.<span class="sr-only">)</span>
+  </small>
+</span>
+ my goals:</p>
+<ul>
+<li><strong>Career development</strong>: I want to advance my career by meaningfully bumping my compensation (2x) or seniority.</li>
+<li><strong>Scope</strong>: I want to own an area tightly linked to the company&rsquo;s mission and bets, so scopes expand and projects don&rsquo;t dry up.</li>
+<li><strong>Domain</strong>: I want to work on future-oriented domains and stacks.
+<ul>
+<li><em>Type 1</em>: foundation ranking models (&ldquo;LLM-as-rec&rdquo;, &ldquo;LLM4rec&rdquo;) at companies that need and can afford to train them</li>
+<li><em>Type 2</em>: applied AI engineering at a frontier lab</li>
+</ul>
+</li>
+<li><strong>WLB</strong>: I accept some degradation in WLB as our industry&rsquo;s new reality. 55–65 hrs/week is OK, but 80+ hrs/week is too much.</li>
+<li><strong>Stability</strong>: Hopefully the company still exists in 3–4 years. That rules out many <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-06"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-06"
+    for="sidenote-checkbox-06"
+    class="sidenote-mark"
+    >early-stage</label
+  >
+  <small id="sidenote-06" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Or can OpenAI or Perplexity? There's no way to know.<span class="sr-only">)</span>
+  </small>
+</span>
+ startups for me, even if they pay well.</li>
+</ul>
+<p>If you don&rsquo;t have compelling reasons, staying put may be the safest.</p>
+<h2 id="up-the-ante-on-interview-prep" class="scroll-mt-8 group">
+  Up the Ante on Interview Prep
+  
+    <a href="#up-the-ante-on-interview-prep"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="mle-interview-10-recap" class="scroll-mt-8 group">
+  MLE Interview 1.0 Recap
+  
+    <a href="#mle-interview-10-recap"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Most companies still have &ldquo;standard&rdquo; MLE interview rounds, typically coding, ML system design, ML fundamentals, and behavior. Some companies have made slight changes. For instance, Meta added an AI-assisted coding round. Companies like <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-07"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
+    class="sidenote-mark"
+    >Google</label
+  >
+  <small id="sidenote-07" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>I think the policy changes quite often. At the end of 2025, Google was doing in-person onsite interviews but as of early 2026, it might have gone back to virtual onsites.<span class="sr-only">)</span>
+  </small>
+</span>
+, LinkedIn, and many startups (e.g., xAI, Perplexity) now conduct in-person onsites.</p>
+<p>For standard MLE interviews, check out my <a href="/posts/mle_interviews/" class="backlink">old post</a>
+  
+  . Below is a recap.</p>
+<ol>
+<li><strong>Coding</strong>: Medium–to-Hard LC problems, object-oriented programming (multi-level CodeSignal exercises), and ML coding (e.g., debug or build a PyTorch/NumPy model 👉 train it)</li>
+<li><strong>ML system design</strong>: design a {recommendation, search, trust &amp; safety, content understanding, user understanding, NLP, CV} ML system, focusing on data, features, labels, and architectures</li>
+<li><strong>Project deep dive</strong>: walk through a project you&rsquo;re most proud of</li>
+<li><strong>ML fundamentals</strong>: rapid-fire questions on machine learning foundations, such as common network architectures, optimization routines, loss functions, activation functions, regularization, etc.</li>
+<li><strong>Behavior and leadership</strong>: a time when you demonstrated problem solving, team work, conflict resolution, time management, leadership, adaptability, growth, etc. beyond your level</li>
+<li><strong>Domain knowledge</strong>: woven into all rounds, explaining how you ship projects and tackle problems using your domain expertise</li>
+</ol>
+<h3 id="20-vs10-what-has-changed" class="scroll-mt-8 group">
+  2.0 vs.1.0: What Has Changed?
+  
+    <a href="#20-vs10-what-has-changed"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>One big change is the additional rounds mentioned in the beginning. Even for the same rounds, the bar is stranger and the process is longer.</p>
+<h4 id="match-oriented-bar" class="scroll-mt-8 group">
+  Match-Oriented Bar
+  
+    <a href="#match-oriented-bar"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I used to have an accurate hunch for when an offer was coming. Now I don&rsquo;t know anymore. When I last interviewed in mid-2024, I rigorously followed people&rsquo;s (and my own) advice &mdash; solving coding problems cleanly and quickly, organizing ML system design answers in a &ldquo;perfect&rdquo; structure (e.g., clarifications 👉 business goals 👉 ML objectives 👉 high-level ranking funnel 👉 blah blah), and telling polished behavior stories in impeccable <a href="https://en.wikipedia.org/wiki/Situation,_task,_action,_result">STAR</a> or <a href="https://phyllisnjoroge.medium.com/the-sail-framework-for-behavioral-interview-questions-f66e56eee91a">SAIL</a> frameworks.</p>
+<p>At the end of 2025 and the start of 2026, I did onsite interviews with $N \in [5, 10)$ companies and had imperfections here and there (e.g., bombed some coding questions, gave long-winded answers in behavior interviews, focused too much on certain parts of a design and ran out of time). Yet I received offers from $(N-1)$ of them. The only onsite I failed was for a backend role (shouldn&rsquo;t have got that far).</p>
+<p>Is the bar getting lower? Definitely not. The only onsite I failed was one where I sort of did &ldquo;perfectly&rdquo; &mdash; I solved all hard coding problems, delivered structured system designs, and told well-rehearsed behavior stories. But my experience didn&rsquo;t match &mdash; I&rsquo;m an ML engineer with an understanding of backend systems, and the team were looking for a backend engineer with ranking knowledge. I doubted if I could do the job, and indeed I didn&rsquo;t get the job. I think <span style="background-color: #D9CEFF">the bar is getting more based on match</span> &mdash; headcount is so tight in this market that hiring teams must answer this question: <span style="background-color: #D9CEFF"><em>&ldquo;Why you? Why not anyone else?&rdquo;</em></span></p>
+<p>I think my strength lies in the fact that I haven&rsquo;t spent a single day since 2022 not thinking about or reading papers on recommender systems. I&rsquo;m fascinated by every aspect of RecSys. It&rsquo;s what I do and what I love. For instance, how do we build value models? If we use a single label source (e.g., user engagement), we may end up optimizing for that one objective. But if we combine multiple label sources, then label weights themselves are exactly what we try to tune when combining predictions. And how do we train early-stage rankers when most responses are not impressed and therefore unlabeled? If we distill from a late-stage ranker, is that late-stage ranker itself good enough to make predictions for unranked examples (i.e., those never returned by the early-stage ranker)? How do we handle such data drifts? Just to name a few. Even when I managed time badly in a design interview (i.e., not finishing up the ranking funnel), what I did say might&rsquo;ve still shown what I&rsquo;ve thought deeply about in my day-to-day job. I don&rsquo;t know how, but interviewers must have spotted that.</p>
+<p>My honest advice: Find a domain you love from the bottom of your heart and apply to roles in that domain. This way, you worry less about &ldquo;the bar&rdquo; and focus more on finding a place that shares your passion.</p>
+<p>Nevertheless, below is what to aim for if you want to do &ldquo;perfectly&rdquo;.</p>
+<ol>
+<li><strong>Coding</strong>: As an MLE/RE candidate, you may get a funny experience of writing a toy backend API yesterday, implementing a Transformer decoder today, and solving an LC hard tomorrow &mdash; all with the expectation to be fast, optimal, and thoughtful. Some friends complain about such expectations, saying (almost) no one in real life is at once a backend genius, a SOTA model creator, and a competitive programmer. I just accept these requirements as reality, swallow the pain, and try my best to prepare and perform.
+<ul>
+<li><strong>LC</strong>: If an LC-style interview is 45 minutes, you will likely solve 1 Easy + 1 Medium or 2 Medium problems in a Meta interview, or 1 Hard problem with multiple follow-ups in a Google/Snap/Pinterest/Databricks/etc. interview. In the Meta case, the ideal outcome is to instantly think of the solution upon seeing the prompt, explain the solution in 2-3 min, code it up in 5-8 min, and do a dry run in 1-2 min. In the latter cases, the ideal outcome is to write a working solution within 20 minutes, create and pass sharp test cases, and discuss optimizations. For follow-ups, you&rsquo;re expected to provide extendable solutions in code or words. If no follow-ups, it means you&rsquo;ve spent too long on the main problem.</li>
+<li><strong>OOP</strong>: In a 1-hour OOP-style interview, you&rsquo;ll implement a toy API to play a game, manage a database or a process, etc.. Problems are typically organized by levels. The first level is a warmup. Then you gradually expand the API in subsequent levels. The ideal candidate not just has a good pace to finish all levels, but also make reasonable design choices for a real-world backend system. It&rsquo;s good to leave some time in the end to discuss how to scale this toy system in production.</li>
+<li><strong>ML</strong>: In a 1-hour ML coding interview, you&rsquo;re given some model code (e.g., model classes, training and inference loops) and asked to debug bad performance, or you implement a model from scratch using NumPy/PyTorch and overfit it on toy samples. Many candidates spend too long reading the code provided or Googling NumPy/PyTorch syntax. An ideal candidate is fluent in PyTorch or NumPy and can code up common architectures (e.g., MLP, CNN, RNN, Transformer encoders/decoders) and building blocks (e.g., linear layers, projections, residual connections, layer norm, batch norm, causal self-attention, bidirectional self-attention, activation functions, optimizers) from memory. Excessive Googling leaves you no time to debug or implement the model.</li>
+</ul>
+</li>
+<li><strong>ML system design</strong>: By now, everyone knows how to sketch a multi-stage ranking pipeline &mdash; L0 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value model, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps Kuaishou&rsquo;s &ldquo;One&rdquo; series or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
+  
+   in general). That said, only bring up a solution if it solves a real problem (e.g., scaling up, cold start), not because you know it.</li>
+<li><strong>Project deep dive</strong>: I&rsquo;ve got one offer because the team needed someone to work on X, and I happened to have worked on X. In this case, my first interviewer was so interested in X that they skipped the coding question and interviewers in the next few rounds ditched the agenda to ask me more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-10"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-10"
+    for="sidenote-checkbox-10"
+    class="sidenote-mark"
+    >dated</label
+  >
+  <small id="sidenote-10" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches. Your future career may be limited to designer-driven, pre-IPO companies.<span class="sr-only">)</span>
+  </small>
+</span>
+ ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for the rest of your career. Otherwise, you&rsquo;re cashing out too early and losing your edge in 2-3 years. That said, you can still fail if you talk about a complex project in a trivial manner. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to do complex projects justice in deep dives.</li>
+<li><strong>ML fundamentals</strong>: Most of the time, you&rsquo;ll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they&rsquo;ve solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge.</li>
+<li><strong>Behavior and leadership</strong>: It&rsquo;s hard to reflect on your career while you&rsquo;re still living it. If you claim to know perfectly well how to expand scope, manage priorities, collaborate with difficult teammates, and right all the wrongs, you&rsquo;re essentially saying &ldquo;everyone is drunk while I alone am sober&rdquo; (众人皆醉我独醒). That can&rsquo;t be true. You need repeated, honest conversations with friends and mentors to see where you can grow. Beyond that, you need to be that mentor and friend &mdash; support junior engineers &amp; peers and lead teams through difficult moments &mdash; to show leadership across the board. Just like internal promotions, getting a Senior+ offer often requires showing Staff-level qualities.</li>
+</ol>
+<h4 id="longer-process" class="scroll-mt-8 group">
+  Longer Process
+  
+    <a href="#longer-process"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>More companies now ask for 2–3 references from recent managers, teammates, or internal referrals. I remember this was already the case when I was interviewing for my first job in grad school &mdash; companies like Figma, Notion, Roblox, and Databricks have long required pre-offer reference checks. Nowadays, all frontier AI labs ask for them. So, it&rsquo;s important to be a kind and competent engineer while on a team and keep in touch with former colleagues and managers afterward.</p>
+<p>Most companies have a team match stage. Back in 2024, I either received direct offers from hiring managers I met during onsites or a list of 5+ teams with openings. Finding a good fit was quick. This year, I don&rsquo;t know if it&rsquo;s due to leveling (&gt;= senior) or the market, most companies I interviewed with only had a couple of openings. If you just want to get matched to <em>a</em> team, the process can still move fast. But if you want to find a high-visibility, high-technical-complexity team that aligns well with your experience, you may need to wait for candidates ahead of you to turn down offers, or for another such team to open a headcount (this can take weeks). If there is a good team, dozens of candidates who have cleared the interview may want to speak with the hiring manager. Your years of experience, project complexity, and interview performance are evaluated all over again.</p>
+<h2 id="preparing-for-each-round" class="scroll-mt-8 group">
+  Preparing for Each Round
+  
+    <a href="#preparing-for-each-round"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="1-lc-style-coding" class="scroll-mt-8 group">
+  1. LC-Style Coding
+  
+    <a href="#1-lc-style-coding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="dont-be-obsessed-with-company-tags" class="scroll-mt-8 group">
+  Don&rsquo;t Be Obsessed with Company Tags
+  
+    <a href="#dont-be-obsessed-with-company-tags"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>As hard as it may sound, you gotta let go of the idea that <code>solving company tags == passing coding interviews</code> and actually get good at problem solving and coding up the solution you&rsquo;re thinking of.</p>
+<p>LeetCode company tags came from candidates who encountered these problems in interviews. Some companies rarely update their question bank so their tags cover most of what you&rsquo;ll see in yours. However, you can&rsquo;t bank on that, since any company updates their questions occasionally. Moreover, companies like Google purposefully avoid asking leaked problems and you simply can&rsquo;t prepare for places like Apple or Netflix where each team writes their own questions.</p>
+<p>So how do you get good at solving (most) random LC problems?</p>
+<p>First thing first: don&rsquo;t theorize about solving LC problems until you&rsquo;ve solved enough of them. I always recommend taking the <a href="https://neetcode.io/courses/dsa-for-beginners/0">beginner</a> and <a href="https://neetcode.io/courses/advanced-algorithms/0">advanced</a> NeetCode courses first, and then practicing the <a href="https://neetcode.io/practice/practice">problems</a> curated by NeetCode. <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a> strikes a good balance between quality and quantity. There&rsquo;s no shortcut &mdash; you either put in the hard work now and do what I mentioned, or did competitive programming as a kid; no other way to be great at LC. If you have time, I recommend participating in LC <a href="https://leetcode.com/contest/">Weekly Contest</a> to rehearse solving random Hard problems under time constraints (kinda necessary for Google).</p>
+<p>Then, don&rsquo;t memorize concrete data structures you&rsquo;ve used for a specific problem &mdash; try figuring things out on the fly. After sufficient practice above, whenever I&rsquo;m given a new problem, I stare at the prompt and test cases for about 30 seconds, after which an intuition about the solution usually springs to mind. I then hastily jot down my fleeting thought on paper before it escapes me, then verbalize the solution step by step to the interviewer. My weakness is that if I don&rsquo;t get a flash of insight, I never get a &ldquo;strong yes&rdquo;. With prompting, I may stumble toward a solution and get a &ldquo;weak yes&rdquo;. In a tennis analogy, I&rsquo;m good at &ldquo;3-setters&rdquo; but fall short in &ldquo;5-set marathons&rdquo;. I guess some candidates may not have quick intuitions but are way better than me at taking hints, pivoting, and clutching out a solution after a long struggle. Maybe it&rsquo;s freeing to accept that we all have strengths and weaknesses and can solve some but not all arbitrary coding problems.</p>
+<p>An example of &ldquo;figuring it out on the fly&rdquo;: if you&rsquo;re given some dependencies and asked to find a valid ordering that satisfies them, it&rsquo;s 99% a topological sort problem. At an abstract level, you need to construct an adjacency list and an indegree map for all nodes. That&rsquo;s all you have to remember from past solutions. You don&rsquo;t need to remember, for instance, that LC problems often provide dependencies as edge lists (weighted or unweighted, directed or bidirectional). A new problem may provide dependencies as links or pointers instead. Can you still recognize the problem? Maybe. Can you still construct the adjacency list and indegree map correctly? Maybe not. You might find yourself oscillating between trying to recall old solutions and reasoning about the current problem, only to write bugs and run out of time. The Reddit <a href="https://www.reddit.com/r/leetcode/comments/1h886z6/most_frequent_google_interview_questions_on/">thread</a> below mirrors my preparation process:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/gr3tknplbn96loxapztvg/Screenshot-2026-01-31-at-12.16.10-AM.png?rlkey=ctun8ztfnb027wmxvrwgwvlhc&amp;st=i9pn9th5&amp;raw=1" width="800">
+</figure>
+
+<p>The implication: when practicing LC, focus on the problem <em>at hand</em>. Given the task (e.g., finding a valid order under dependency constraints), what&rsquo;s a good algorithm? Then use the input and starter code you&rsquo;re given <em>right here, right now</em> to implement that algorithm. Don&rsquo;t try to recall concrete bits from past solutions. If you do write a bug during practice, refrain from asking GPT or looking at the solution right away. Because in a real interview, now is the exact moment that makes or breaks this interview. If you&rsquo;re able to remain calm and debug &mdash; by printing suspicious parts or thinking from first principles &mdash; you send strong signals as a resourceful problem solver. If you panic or can&rsquo;t think of what to look into, it&rsquo;s a strong signal for rejection.</p>
+<p>That said, don&rsquo;t practice randomly. For instance, while you don&rsquo;t need to (and probably never can) go over all Google tags, you can still research what types of problems are most popular at Google (e.g., <a href="https://www.reddit.com/r/leetcode/comments/1izv4ln/how_to_actually_prepare_for_google_via_leetcode/">Reddit</a> says DP, graphs, and &ldquo;fancy string problems&rdquo;) and focus on those. Track which algorithms trip you up the most and practice accordingly. For me, it&rsquo;s definitely advanced graphs, linked lists and trees (I hate pointers), bottom-up DP, greedy, and string evaluation (e.g., Basic Calculator I, II, III). I also accept that as an ML engineer, there are so many other rounds that I can&rsquo;t be perfect at coding. If I run into a red-black tree problem, I just move on (&ldquo;人固有一死&rdquo; 😂).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/d6bchbb2xewuycaynckkv/Screenshot-2026-01-11-at-10.31.08-AM.png?rlkey=a3fi4vfnhqvy55da0t2nf5612&amp;st=hb43kyx4&amp;raw=1"
+    alt="My practice plan for Google coding interviews." width="1800"><figcaption>
+      <p>My practice plan for Google coding interviews.</p>
+    </figcaption>
+</figure>
+
+<h4 id="connect-lc-problems-to-scalable-systems" class="scroll-mt-8 group">
+  Connect LC Problems to Scalable Systems
+  
+    <a href="#connect-lc-problems-to-scalable-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>I was reading Google&rsquo;s classic <a href="https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/">MapReduce</a> paper when it dawned on me that many &mdash; or dare I say, most? &mdash; LC problems stem from web-scale data processing. Google had massive amounts of web search event logs before it had MapReduce; engineers wrote custom scripts to answer questions like: what are the top k queries? how to build inverted indexes? how do we aggregate unbounded data streams?</p>
+<p>Many LC problems answer these exact questions and tap into your ability and intuition to process loads of data efficiently. Examples:</p>
+<ul>
+<li>Streaming data &amp; online aggregation 👉 sliding window, two pointers, monotonic queues (e.g., <a href="https://leetcode.com/problems/sliding-window-maximum/description/">Sliding Window Maximum</a>, <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/description/">Longest Substring Without Repeating Characters</a>)</li>
+<li>Counting, frequency, and heavy hitters 👉 hash maps, heaps, bucket sort (e.g., <a href="https://leetcode.com/problems/top-k-frequent-elements/description/">Top K Frequent Elements</a>, <a href="https://leetcode.com/problems/majority-element/description/">Majority Element</a>)</li>
+<li>Inverted indices &amp; lookup tables 👉 hash maps, tries (e.g., <a href="https://leetcode.com/problems/word-pattern/description/">Word Pattern</a>, <a href="https://leetcode.com/problems/implement-trie-prefix-tree/description/">Implement Trie</a>, <a href="https://leetcode.com/problems/design-search-autocomplete-system/description/">Design Search Autocomplete System</a>)</li>
+<li>Event scanning and interval logic 👉 prefix sums, line sweep, sorting (e.g., <a href="https://leetcode.com/problems/meeting-rooms-ii/description/">Meeting Rooms II</a>, <a href="https://leetcode.com/problems/car-pooling/">Car Pooling</a>, <a href="https://leetcode.com/problems/the-skyline-problem/description/">The Skyline Problem</a>)</li>
+<li>Scheduling and resource allocation 👉 greedy + heap (e.g., <a href="https://leetcode.com/problems/single-threaded-cpu/description/">Single-Threaded CPU</a>, <a href="https://leetcode.com/problems/maximum-profit-in-job-scheduling/description/">Maximum Profit in Job Scheduling</a>)</li>
+<li>Data compaction and normalization 👉 union find, graph traversal (e.g., <a href="https://leetcode.com/problems/accounts-merge/description/">Accounts Merge</a>, Sentence Similarity <a href="https://leetcode.com/problems/sentence-similarity/description/">I</a> &amp; <a href="https://leetcode.com/problems/sentence-similarity-ii/description/">II</a>)</li>
+</ul>
+<p>Many complain that LC problems are detached from real work. But once I see them as toy versions of prod data processing and systems tasks, I solve LC problems faster, with more motivation and interest.</p>
+<h3 id="2-objective-oriented-programming" class="scroll-mt-8 group">
+  2. Objective-Oriented Programming
+  
+    <a href="#2-objective-oriented-programming"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>It&rsquo;s hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-13"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-13"
+    for="sidenote-checkbox-13"
+    class="sidenote-mark"
+    >track record</label
+  >
+  <small id="sidenote-13" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>I said I have a high onsite conversion rate. That's because I don't often move to onsite after encountering OOP phone screens 😂.<span class="sr-only">)</span>
+  </small>
+</span>
+ of passing object-oriented programming (OOP) interviews, where you need to build a toy version of a real-world system quickly. Example problems:</p>
+<ul>
+<li>Time-Based Key-Value Store</li>
+<li>In-Memory Database</li>
+<li>C-Like Memory Allocator</li>
+<li>Type Inference Engine</li>
+<li>Circuit Breaker</li>
+<li>API Gateway with Rate Limiting</li>
+<li>LRU / LFU Cache</li>
+<li>Thread Pool / Task Scheduler</li>
+<li>Transaction / Credit System</li>
+<li>Employee Management System</li>
+<li>&hellip;</li>
+</ul>
+<p>I used to think it&rsquo;s the <em>quickly</em> part that got me. Then, in a recent mock interview with a backend engineer, I came to see the real issue: my code passes test cases and looks clean, but my design choices are ridiculous for real-world backend systems &mdash; I make choices no good backend engineer would make. For example, when designing a cart, I chose to store price, units, and other attributes directly in an <code>Item</code> data class, whereas a backend engineer may use a unique <code>product_id</code> and link it to external metadata when needed. This is one of many decisions that I don&rsquo;t even realize I&rsquo;m getting wrong. The key point is that OOP interviews are as much about <em>system design</em> as they are about coding. Even if you finish all CodeSignal levels quickly, you can still fail due to poor design choices. Then, after you complete everything the prompt asks for, the interviewer often asks how you&rsquo;d optimize and scale this system in production. That&rsquo;s another place where non-backend engineers may fail a seemingly smooth interview.</p>
+<p>To join companies such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, you have to pass OOP interviews with flying colors. Some folks obsess over collecting problems other candidates have seen in interviews, but that doesn&rsquo;t help if you make bad design decisions when solving these problems. If you can make good decisions, you don&rsquo;t need to see the problem beforehand.</p>
+<p>Without domain knowledge, we make ridiculous choices. However, we probably don&rsquo;t have time to work as a backend engineer before an interview. We can still fill in the gap a bit before attempting problems blindly. After that enlightening mock interview, I was pointed to an awesome <a href="https://www.coditioning.com/app/learning/courses/tech_interview_prep/4">OOP crash course</a>. Go through it first. Then, ask GPT to reverse-engineer CodeSignal-style prompts for each common system:</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">markdown</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-01 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-01"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">markdown code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">You are an interview question designer.  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">For each system listed below, generate a <span class="gs">**CodeSignal-style 4-level coding prompt**</span> that incrementally builds an object-oriented system.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Systems
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Time-Based Key-Value Store  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> In-Memory Database  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> C-Like Memory Allocator  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Type Inference Engine   
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Circuit Breaker  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> API Gateway with Rate Limiting  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> LRU / LFU Cache  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Thread Pool / Task Scheduler  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Transaction / Credit System  
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Employee Management System  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Requirements
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Each system should have <span class="gs">**4 levels**</span>, where:
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> **Level 1**: Basic functionality and core classes (single-threaded, minimal features)
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> **Level 2**: Adds constraints, edge cases, or additional APIs
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> **Level 3**: Introduces concurrency, performance constraints, or correctness guarantees
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> **Level 4**: Extensibility or production-like requirements (pluggability, configuration, failure handling)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Each level should include:
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> A clear problem statement  
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> Required public methods and their signatures  
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> Explicit constraints and assumptions  
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> Example inputs/outputs or representative test cases  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Keep the scope realistic for a <span class="gs">**45–60 minute interview**</span> per system.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Focus on <span class="gs">**class design, APIs, and invariants**</span>, not UI or persistence.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Do <span class="gs">**not**</span> include the solution—only the prompt.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Output Format
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span><span class="k">-</span> Use clear section headers for each system.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Clearly label <span class="gs">**Level 1–4**</span> for each system.
+</span></span><span class="line"><span class="cl">- Keep descriptions concise and interview-realistic.</span></span></code></pre></div>
+  <p class="sr-only">markdown code snippet end</p>
+
+  
+</figure>
+<h3 id="3-ai-assisted-coding" class="scroll-mt-8 group">
+  3. AI-Assisted Coding
+  
+    <a href="#3-ai-assisted-coding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Back in 2024, I interviewed with Quora. In a 90-minute coding round, you&rsquo;re given a realistic codebase (adapted from a real Python package repo) plus some unit tests, and you have to debug the codebase by reading error logs, identifying what&rsquo;s broken, and fixing them on your own, without AI. It was the hardest coding interview I&rsquo;ve passed.</p>
+<p>Meta&rsquo;s AI-assisted coding is a tamed version of that. You get a much smaller toy codebase plus unit tests, and you&rsquo;re allowed to use an LLM to debug and complete the implementation. I interviewed with Meta in a hurry and only had time to play with the example question in the candidate portal. It may be the easiest coding interview I&rsquo;ve passed, because the problem could be smoothly solved on the spot:</p>
+<ol>
+<li>Read the instructions to understand the task and constraints.</li>
+<li>Open and skim each file to learn what exists and how things are wired. No need to read them in detail, but note what&rsquo;s implemented vs. missing vs. commented to see what you must do.</li>
+<li>Tell the interviewer your plan (e.g., re-read the instructions, fix unit tests, start with a naive implementation, then optimize).</li>
+<li>Get unit tests passing. You can use AI to help, but you should be able to explain (a) why tests failed or were incomplete, and (b) why the changes better match the intended behavior.</li>
+<li>Implement a naive solution first. The core problem you need to implement usually reduces to a LeetCode Medium problem; explain the algorithm, then use AI to write the code.</li>
+<li>Measure performance. Define a performance metric and run simulations or benchmarks to evaluate the naive solution.</li>
+<li>Optimize. Identify what&rsquo;s inefficient, propose a better algorithm, use AI to implement it, and evaluate the improved solution.</li>
+</ol>
+<p>I don&rsquo;t think my interviewer cared how much code was written by AI vs. me. They cared more about how well I partnered with AI to achieve the goal. I didn&rsquo;t write much code myself, but I designed the algorithm, broke down the task, and prompted the AI to complete each subtask &mdash; similar to how I work day to day. Signals that may matter:</p>
+<ul>
+<li>Communicate clear plans to the interviewer and prompt the AI effectively (tight prompts, explicit constraints, incremental diffs).</li>
+<li>Read error messages carefully and iterate accordingly.</li>
+<li>Explain what the AI is doing and why you accept or reject a suggested change. Don&rsquo;t copy &amp; paste with no explanations.</li>
+<li>Stay in control: you set the plan, and the AI accelerates execution.</li>
+</ul>
+<h3 id="4-ml-coding" class="scroll-mt-8 group">
+  4. ML Coding
+  
+    <a href="#4-ml-coding"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Okay, so ML coding will be right in our alley, right? That&rsquo;d be the funniest thing I&rsquo;ve heard 🤣🤣🤣. I like OOP 10x more over ML coding.</p>
+<p>If I ask my ML engineer friends and colleagues, 9 out of 10 will say they love machine learning, but it will scare the hell out of all to write PyTorch code without inheriting from a family heirloom model class or using Cursor. In ML coding interviews, however, you&rsquo;re expected to write PyTorch as fluently as regular Python. Even if you can Google, you&rsquo;re bound to run out of time if you need to Google much.</p>
+<p>So how to be well-prepared for ML coding? I wish I knew but doubt if anyone does &mdash; for instance, I bet if you take away the rubrics from your interviewer, they can&rsquo;t code up the solution to their own question without physical pain. So I&rsquo;ll venture my best guesses below.</p>
+<p>The obvious thing is to get fluent in PyTorch. For starters, read <a href="https://sebastianraschka.com/teaching/pytorch-1h/">PyTorch in One Hour</a> and play with <a href="https://tensorgym.com/">TensorGym</a>. For a more comprehensive tutorial, go over <a href="https://www.learnpytorch.io/">Zero to Mastery Learn PyTorch for Deep Learning</a>.</p>
+<p>The non-obvious thing is how to cover all ML concepts you might be asked to code up. I&rsquo;ll offer 3 ideas (they may not be good ideas).</p>
+<p>The first idea is to implement common model architectures from scratch, such as Transformers (encoder, decoder, encoder–decoder), MLP, CNN, RNN (GRU, LSTM), or &ldquo;traditional models&rdquo; like logistic regression, linear regression, KNN, K-Means, decision trees, and so on. Instead of importing modules from <code>torch.nn</code>, implement the building blocks yourself: embedding lookups, projection and linear layers, layer norm, batch norm, attention (causal and bidirectional), residual connections, dropout, activations, you name it. This way, you learn not only the &ldquo;primitives&rdquo; of deep learning, but also how they&rsquo;re wired together. Below is an example of a vanilla Transformer decoder.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-02">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">python</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-02 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-02"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">python code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@dataclass</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">TrainConfig</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vocab_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_layers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_head</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_embd</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
+</span></span><span class="line"><span class="cl">    <span class="n">dropout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">LayerNorm</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_embd</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span><span class="p">,</span> <span class="n">bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_embd</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_embd</span><span class="p">))</span> <span class="k">if</span> <span class="n">bias</span> <span class="k">else</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">layer_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="mf">1e-5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CausalSelfAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">n_head</span> <span class="o">==</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># qkv projection</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">c_attn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># MHA output projection</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">c_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># dropouts</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn_dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dropout</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">resid_dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dropout</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># save config for convenience</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">n_head</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># create a mask matrix in memory</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">register_buffer</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;mask&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">torch</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">                <span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># get input dimensions</span>
+</span></span><span class="line"><span class="cl">        <span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># qkv projection: [B, T, 3C] -&gt; split into [B, T, C] each along emb_dim</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_attn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># split across heads: [B, T, C] -&gt; [B, T, nh, hs] -&gt; [B, nh, T, hs]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># attention scores: [B, nh, T, hs] @ [B, nh, hs, T] -&gt; [B, nh, T, T]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">att</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">@</span> <span class="n">k</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># order: mask -&gt; row-wise softmax -&gt; attention dropout</span>
+</span></span><span class="line"><span class="cl">        <span class="n">att</span> <span class="o">=</span> <span class="n">att</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="n">T</span><span class="p">,</span> <span class="p">:</span><span class="n">T</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&#34;-inf&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">att</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">att</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">att</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn_dropout</span><span class="p">(</span><span class="n">att</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># contextual emb: [B, nh, T, T] @ [B, nh, T, hs] -&gt; [B, nh, T, hs]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y</span> <span class="o">=</span> <span class="n">att</span> <span class="o">@</span> <span class="n">v</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># assemble outputs: [B, nh, T, hs] -&gt; [B, T, nh, hs] -&gt; [B, T, C]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># output projection -&gt; residual dropout</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resid_dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_proj</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># project up: emb_dim -&gt; emb_dim * 4</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">c_fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># non-linear activation</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">gelu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GELU</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># project back: emb_dim * 4 -&gt; emb_dim</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">c_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># dropout</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dropout</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_proj</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Block</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># layer norm</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ln_1</span> <span class="o">=</span> <span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># attention</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">attn</span> <span class="o">=</span> <span class="n">CausalSelfAttention</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># layer norm</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ln_2</span> <span class="o">=</span> <span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># pointwise ffn</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ln_1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ln_2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">x</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Decoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># embedding tables</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">tok_emb_table</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">)</span>  <span class="c1"># token embed lookup: [vocab_size, emb_size]</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">pos_enc_table</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.02</span><span class="p">)</span>  <span class="c1"># learnable positional encodings: [block_size, emb_size]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># transformer blocks</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleList</span><span class="p">([</span><span class="n">Block</span><span class="p">(</span><span class="n">config</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_layers</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># final layer norm</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">ln_f</span> <span class="o">=</span> <span class="n">LayerNorm</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># final dropout</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dropout</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># language modeling head</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">lm_head</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">n_embd</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># optional: save config so we can refer to it in forward()</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_ids</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># get input shape</span>
+</span></span><span class="line"><span class="cl">        <span class="n">B</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="n">x_ids</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl">        <span class="k">assert</span> <span class="n">T</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&#34;seq length </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2"> has exceeded max context window </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">block_size</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># look up token embs</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tok_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tok_emb_table</span><span class="p">(</span><span class="n">x_ids</span><span class="p">)</span>  <span class="c1"># [B, T, C]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># get first T rows from pos emb</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pos_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_enc_table</span><span class="p">[</span> <span class="p">:</span> <span class="n">T</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># [1, T, C]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># add together to get input emb</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="n">tok_emb</span> <span class="o">+</span> <span class="n">pos_emb</span>  <span class="c1"># [B, T, C]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># pass to transformer blocks</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">x</span> <span class="o">=</span> <span class="n">block</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># get ready for outputs</span>
+</span></span><span class="line"><span class="cl">        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ln_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lm_head</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">logits</span></span></span></code></pre></div>
+  <p class="sr-only">python code snippet end</p>
+
+  
+</figure>
+<p>To get comfortable with Transformer architectures as well as training and inference loops, read <a href="https://github.com/rasbt/LLMs-from-scratch">Build a Large Language Model</a> and reproduce the code on your own. Watch Andrej Karpathy&rsquo;s <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">GPT-2 video</a>. If you have extra time, follow along with Karpathy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a> and read some of his repos (e.g., <a href="https://github.com/karpathy/nanoGPT">nanoGPT</a>, <a href="https://github.com/karpathy/micrograd">micrograd</a>). You should also be familiar with common training and inference optimizations, such as <a href="https://lubits.ch/flash/">Flash Attention</a>, <a href="https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured">LoRA</a>, beam search, <a href="https://huggingface.co/blog/kv-cache">KV cache</a>), etc., and know how to implement them from scratch.</p>
+<p>The problem is: what if the interviewer asks about something other than architectures? For example, how to implement autograd from scratch instead of calling <code>loss.backward()</code>? Or, given scores and labels from a binary classifier, how to compute ranking metrics?</p>
+<p>To maximize Recall, here&rsquo;s a second idea: practice ML coding the same way you practice LC. A great website is <a href="https://www.deep-ml.com/problems">Deep-ML</a> &mdash; it&rsquo;s like LC, but for ML. You can practice individual problems or work through collections.</p>
+<p>If you prefer theory before code, a third idea is to read <a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a> and study the accompanying <a href="https://udlbook.github.io/udlbook/">notebooks</a>. I don&rsquo;t think you need extra preparation for ML fundamentals after this.</p>
+<p>Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models or use NumPy to implement from scratch. Don&rsquo;t be caught off the guard &mdash; brush up with Educative&rsquo;s <a href="https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods">Scikit-learn cheat sheet</a>. To practice NumPy itself, go over the <a href="https://github.com/rougier/numpy-100">numpy-100</a> repo and the <a href="https://www.labri.fr/perso/nrougier/from-python-to-numpy/"><em>From Python to Numpy</em></a> tutorial.</p>
+<h3 id="5-ml-fundamentals" class="scroll-mt-8 group">
+  5. ML Fundamentals
+  
+    <a href="#5-ml-fundamentals"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>I find it deeply unsatisfying to collect a checklist of “common questions” and prepare only for those. For example:</p>
+<ul>
+<li>What are common optimizers?</li>
+<li>What are common activation functions?</li>
+<li>What are common loss functions?</li>
+<li>What are common learning rate schedules?</li>
+<li>What to do if the loss doesn&rsquo;t converge?</li>
+<li>What is overfitting? How to prevent it?</li>
+<li>What are vanishing/exploding gradients? How to prevent them?</li>
+<li>What is a Transformer? How do encoders and decoders differ?</li>
+<li>Why do we use softmax activation of multiclass classification? What does the temperature parameter do?</li>
+<li>… and so on.</li>
+</ul>
+<p>My philosophy is, every minute I spend on interview prep should make me a better engineer. After all, I&rsquo;m not a professional interviewee; I&rsquo;m a professional ML engineer. Memorizing answers doesn&rsquo;t do that for me. I treat ML fundamental prep as an opportunity to revisit deep learning foundations and uncover knowledge gaps I didn&rsquo;t know I had.</p>
+<p>As mentioned in the ML coding section, a good way to prepare is to read the <a href="https://udlbook.github.io/udlbook/"><em>Understanding Deep Learning</em></a> book and check out the notebooks. If you&rsquo;re short on time, read Chapters 1–9, 11, and 12.</p>
+<p>While I like Kevin Murphy&rsquo;s <a href="https://probml.github.io/pml-book/">PML books</a>, the clever bits are scattered across chapters. I&rsquo;ve had many epiphanies reading his writing, but it&rsquo;s not always phrased in the &ldquo;standard language&rdquo; you or your interviewers instinctively think in. They may not be good prep books.</p>
+<h3 id="6-ml-model-design" class="scroll-mt-8 group">
+  6. ML <strong>Model</strong> Design
+  
+    <a href="#6-ml-model-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>As I wrote in a recent <a href="/posts/ml_infra_interviews/" class="backlink">post</a>
+  
+  , there is a finite space of ML design problems, <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-15"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-15"
+    for="sidenote-checkbox-15"
+    class="sidenote-mark"
+    >95%</label
+  >
+  <small id="sidenote-15" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>I did encounter one design question outside the list below and failed miserably. I've never failed any other design interviews. Two things I learned: if your other rounds are all "strong hire", you might get a follow-up interview; and at the end of the day, you can only accept one offer to join one company, so failing on rare occasions doesn't matter.<span class="sr-only">)</span>
+  </small>
+</span>
+ generated by the following combinations:</p>
+<ul>
+<li><strong>Feed (organic + ads)</strong>: Can you design XXX recommendations? 👉 choose from <code>{content, people, product}</code>
+<ul>
+<li>Content could be long videos (think YouTube), short videos (TikTok), posts (LinkedIn), music (Spotify), restaurants (Uber Eats), places (Google Maps), ads (CTR, CVR), notifications, promotions, query suggestions, to name a few</li>
+<li>People could be people you may know (think LinkedIn or Facebook), artists (Spotify), colleagues (Glean), etc.</li>
+<li>Product could be anything sold by the platform or sellers</li>
+</ul>
+</li>
+<li><strong>Search</strong>: Can you design XXX search? 👉 choose from <code>{consumer vs. enterprise}</code> × <code>{open-domain vs. closed-domain}</code> × <code>{conversational vs. one-off}</code>
+<ul>
+<li>Feed vs. search: Many think the two are alike but their origins and goals are quite different 👉 feed makes educated guesses about what users might like, whereas search is <em>question answering</em> &mdash; the system is strictly required to retrieve <em>relevant</em> documents to satisfy the user&rsquo;s <em>information need</em>.</li>
+<li>Who&rsquo;s asking: Consumer search (e.g., Google, Perplexity, Amazon) handles huge amounts of traffic, whereas enterprise search (e.g., Glean) has to be extra permission-aware</li>
+<li>Asking about what: Web search allows you to search anything (e.g., Google, Perplexity, ChatGPT), whereas e-commerce (e.g., Amazon, DoorDash, Uber Eats) or other specialty websites (e.g., Airbnb, LinkedIn) typically only allow you to search products or entities that exist on that platform</li>
+<li>How to get answers: Traditional search engines returns a list of ranked documents &mdash; if you&rsquo;re not happy, you have to reformulate your query (e.g., typos? too vague? too specific?) and search again; conversational search allows you to have back-and-forth chats with the system to clarify your intent or ask follow-up questions and get a good answer in a few turns</li>
+</ul>
+</li>
+<li><strong>Other common topics</strong>: Trust and safety (e.g., harmful content detection), <code>{user, content, query}</code> understanding, etc.
+<ul>
+<li><code>{user, content, query}</code> understanding: Usually some sort of deep representation learning model trained with some sort of contrastive objectives (see Lilian Weng&rsquo;s amazing <a href="https://lilianweng.github.io/posts/2021-05-31-contrastive/">post</a>) to embed single entities or entity pairs/triads/etc. 👉 from a system perspective, the interesting parts are how to do distributed training (especially if you&rsquo;re fine-tuning an LLM too large to to fit in worker memory), how to index trained embeddings with low storage costs without metric loss, how to version and roll back embeddings, etc. (see <a href="https://www.uber.com/blog/evolution-and-scale-of-ubers-delivery-search-platform/">Uber post</a>)</li>
+<li>Harmful content detection: Usually some sort of multimodal, multi-task, multi-label classification model trained on a combination of <code>{user, annotator, LLM}</code>-generated labels to predict the probability of each type of harm, based on which we can take automatic or human-reviewed actions</li>
+</ul>
+</li>
+</ul>
+<p>Below is how I usually approach ML model design problems:</p>
+<ol>
+<li><strong>Problem framing</strong>: understand what to build and how
+<ul>
+<li><strong>Clarify what system to build</strong>: What&rsquo;s the UI and the model entry point? How do users engage with recommendations? How do you want them to engage? What&rsquo;s the scale to build for (e.g., corpus size, avg + peak QPS, latency budget)?
+<ul>
+<li>I never have a fixed list of questions. I just close my eyes for a second and let my intuitions speak about what&rsquo;s important for this system that could also impact the design. I sometimes play with the team or the company&rsquo;s product and imagine how I&rsquo;d build it as a PM/EM/MLE.</li>
+</ul>
+</li>
+<li><strong>Understand why build it (business objectives)</strong>: What are the desired actions you want your users to take immediately? What long term benefits do you want to bring to all parties in the system (e.g., users, the platform, and perhaps creators, advertisers, sellers, etc.)? What don&rsquo;t you wanna see? These tell us the {short-term vs. long-term, positive vs. negative} metrics you can use to measure the success of your system.</li>
+<li><strong>Propose how to build it with ML (ML objectives)</strong>: If you predict one outcome, what would it be? If you build a multi-task model to predict multiple outcomes, what are they?</li>
+</ul>
+</li>
+<li><strong>High-level design</strong>: lay out key components in your system
+<figure><img src="https://www.dropbox.com/scl/fi/nuhob7pp2qpdjfk7eoc45/Screenshot-2026-01-14-at-11.30.19-PM.png?rlkey=mg4rjqhqcipuxholtqm3s02z5&amp;st=zdot60a9&amp;raw=1" width="800">
+    </figure>
+
+<ul>
+<li><strong>Online path</strong>: request (e.g., <code>POST /v1/feed:fetch</code>) 👉 API gateway (load balancing, authentication, rate limiting) 👉 retrieval 👉 L1 ranking 👉 L2 ranking 👉 logging &amp; monitoring</li>
+<li><strong>Offline path</strong>: feature engineering (lambda architecture: batch + streaming processing), training data generation, model training, indexing (ANN, inverted index, forward index)</li>
+</ul>
+</li>
+<li><strong>Step-by-step design</strong>: flesh out ML details in each component
+<ul>
+<li><strong>Retrieval</strong>: billions 👉 thousands; optimize Recall
+<ul>
+<li><strong>Model-based</strong>: e.g., embedding-based retrieval (user-to-item, item-to-item, user-to-user), semantic ID match</li>
+<li><strong>Heuristic-based</strong>: e.g., popular/trending (time-decayed counts), content from people/topics you follow, etc.</li>
+</ul>
+</li>
+<li><strong>L1 ranking</strong>: thousands 👉 hundreds; also optimize Recall
+<ul>
+<li><strong>Objective</strong>: select items that will likely end up in L2 top k</li>
+<li><strong>Training data</strong>: impression data (L2 results returned to users + user engagement labels) + early funnel logs (L1 results + synthetic labels from an LLM or an L2 teacher; logs are sampled to keep storage cost reasonable)</li>
+<li><strong>Features</strong>: in theory, we can use all L2 features, including request features (user + context), item features, and cross features; in practice, select essential features and avoid high-cardinality cross features to reduce latency</li>
+<li><strong>Model architectures</strong>: e.g., GBDT, two-tower (no feature interaction), simple DNN (e.g., fully connected)</li>
+<li><strong>Objectives</strong>: depends on the architecture 👉 e.g., if training two-tower, can use contrastive loss (if we use negative sampling) or just binary cross entropy (predict for each actual example); if training a simple DNN with an L2 teacher, use binary cross entropy + distillation loss</li>
+</ul>
+</li>
+<li><strong>L2 ranking</strong>: hundreds 👉 dozens; optimize ranking metrics
+<ul>
+<li><strong>Objective</strong>: predict <code>pAction</code> and rank items by it; alternatively, prediction multiple <code>pAction</code> and rank by the core <code>pAction</code> or a weight sum (I never say this because I don&rsquo;t know how to do tune weights <em>properly</em> and I really, really don&rsquo;t like building <a href="https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/">Value Models</a>)</li>
+<li><strong>Training data</strong>: impression data (L2 engagements)</li>
+<li><strong>Features</strong>: now we can use a rich set of request features (user + context), item features, and cross features; many companies also include expensive but effective features such as user engagement history for sequence models</li>
+<li><strong>Model architectures</strong>: while Generative Recommendation is being hyped everywhere (and I <a href="/posts/generative_recommendation/" class="backlink">wrote</a>
+  
+   about it with great curiosities), most companies still use DLRM-style models with feature processing (normalize numeric features and pass them through an MLP; look up embedding features and project them to desired dimensions; pass sequence features to a Transformer module 👉 concatenate outputs), feature interaction (use MLP/CNN/RNN, attention, explicit cross networks, or throw a kitchen sink at the problem like <a href="https://arxiv.org/abs/2203.11014">DHEN</a>), and feature transformation layers (e.g., expert sub-networks each process features in its own way and gating networks leverage expert outputs for each task).</li>
+<li><strong>Objectives</strong>: most modern L2 ranking models predict multiple <code>pAction</code> that matter to the system; for each prediction, we can use pointwise loss, pairwise loss, or listwise loss for training 👉 for ads ranking, pointwise loss is most common since it&rsquo;s easy to calibrate; search often uses pairwise or listwise loss to optimize for order.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Deep dives</strong>: discuss glossed-over key details, such as scaling the system (e.g., vertical/horizontal scaling, sharding, caching, replication + load balancing), handling positional bias, cold start, data drifts, and so on. Usually the interviewer will prompt you.</li>
+</ol>
+<p>Above is just a skeleton. I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn&rsquo;t work on RecSys or is inexperienced, the experience can be excruciating &mdash; the interviewer may over-index on structure and question your choices or explanations when they come from actual practices that the interviewer isn&rsquo;t familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I&rsquo;ve only run into the former type once or twice; in those cases, I know I won&rsquo;t join the team.</p>
+<p>If you&rsquo;re short on time, below is an essential list of papers to read:</p>
+<ol>
+<li><strong>DLRM vs. Generative Recommendation paradigms</strong>: <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> 👉 like HSTU or not, this is the best paper to understand the general components in any deep learning recommendation models (DLRM) and how they differ from language models or so-called &ldquo;generative recommenders&rdquo; (GR). I also wrote a <a href="/posts/generative_recommendation/" class="backlink">blogpost</a>
+  
+   on this topic. Feel free to check it out.</li>
+<li><strong>Feature extractions</strong>: Maybe it&rsquo;s because of what I wrote on my resume, I find most of my interviewers were not super interested in how &ldquo;normal&rdquo; features are processed (e.g., normalizing numeric features and passing outputs to an MLP, looking up embeddings for categorical or ID features and projecting outputs, looking up and them pooling embeddings for an array of categorical or ID features), but instead rushed me through those features so I could elaborate on how user sequences are processed by a Transformer encoder or decoder. See my <a href="/posts/seq_user_modeling/" class="backlink">blogpost</a>
+  
+   on sequence modeling.</li>
+<li><strong>Feature interactions</strong>: When DLRM first got traction in RecSys, feature interactions were the major selling point &mdash; while we may need to hand-engineer restricted-order feature crossing for &ldquo;traditional models&rdquo; (e.g., logistic regression), we can let deep learning models automatically learn higher-order feature interactions, either in a bit-wise (each feature dimension is an interaction unit) or a field-wise (each embedding is an interaction unit) fashion. Meta researchers found different interaction mechanisms capture different information and proposed <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which throws a kitchen sink at the feature interaction problem. Read this paper and cited papers to learn different interaction methods (e.g., MLP: <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide</a>; explicit cross networks: <a href="https://arxiv.org/pdf/1708.05123">DCN</a>, <a href="https://arxiv.org/abs/2008.13535">DCNv2</a>; factorization machines: <a href="https://arxiv.org/abs/1703.04247">DeepFM</a>, <a href="https://arxiv.org/abs/1803.05170">xDeepFM</a>, <a href="https://arxiv.org/abs/2403.02545">Wukong</a>; attention: <a href="https://arxiv.org/abs/1810.11921">AutoInt</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>). <a href="https://arxiv.org/abs/2507.15551">RankMixer</a> and <a href="https://arxiv.org/abs/2510.26104">OneTrans</a> are influential new papers on this topic in larger-scale RecSys.</li>
+<li><strong>Feature transformations</strong>: Another selling point of DLRM is its ability to leverage shared feature representations to predict different tasks, such as clicks, conversions, watch time, and other engagement outcomes one cares about. Read the seminal <a href="https://arxiv.org/abs/2311.09580">MMoE</a> paper and its predecessor <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a> on such multi-task learning.</li>
+<li><strong>Practical concerns</strong>: For most RecSys MLEs, unless you work on these problems, you&rsquo;re definitely aware of their existence but may not speak intelligently about solutions &mdash; such as cold start (recommend new items or recommend for new users), positional bias (learn inherent item relevance, debiasing the influence from item positions), diversity (dedupe &amp; re-rank results by topic, creator, or other criteria), or value models (if ranking by multiple objectives, find the &ldquo;best&rdquo; weight of each). Read one or two paper on each topic (e.g., cold start: Kuaishou <a href="https://dl.acm.org/doi/10.1145/3640457.3688098">1</a> &amp; <a href="https://dl.acm.org/doi/10.1145/3701716.3715205">2</a>; positional bias: <a href="https://research.google/pubs/position-bias-estimation-for-unbiased-learning-to-rank-in-personal-search/">Google</a>; diversity: <a href="https://arxiv.org/abs/2206.05020">Kuaishou</a>; value models: <a href="https://arxiv.org/abs/2509.05292">Pinterest</a>), so you can say while you&rsquo;re not an expert, you know some solutions.</li>
+</ol>
+<p>When preparing for design interviews, I pick a handful of common problems (e.g., short video recommendations, place recommendations, friend recommendations, CTR/CVR ads ranking, harmful content detection, retrieval-augmented generation) and write full designs for each. You can find 3 examples in the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#c-example-system-designs">&ldquo;Example System Designs&rdquo;</a> section. I start by sketching the high-level system from first principles, then read industry blogs, papers, and my company&rsquo;s practices to fill in the details. Once everything is on paper, I practice delivery under time constraints (typically 45 minutes to 1 hour) and move extra material into &ldquo;deep dives&rdquo;. Sometimes I spend 3+ days on a single design and end up with a 40+ page document. In reality, no interviewer goes into that much detail. For a ranking design, for example, covering the standard multi-stage ranking funnel and adding one or two interesting insights from work or papers is 100% enough for a &ldquo;strong yes&rdquo;.</p>
+<h3 id="7-ml-infra-design" class="scroll-mt-8 group">
+  7. ML <strong>Infra</strong> Design
+  
+    <a href="#7-ml-infra-design"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>I have colleagues who are both strong ML engineers and ML infra engineers. They have one thing in common: 15+ years of experience, having started as backend/infra engineers before ML was cool, and then growing into ML leaders. Most of my peers and I, however, started our careers as baby ML engineers trying only to move model metrics, without deep low-level ML infra knowledge. Most of the time, you can avoid ML infra interviews &mdash; but a handful of places (e.g., DoorDash, Reddit, Netflix, Snap) specifically ask MLE candidates to design the <em>infra</em> behind ML systems. It&rsquo;s funny that I&rsquo;ve interviewed with them all and somehow never managed to escape this round.</p>
+<p>I&rsquo;ve summarized my ML infra interview preparation in this <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
+  
+  . It&rsquo;s pretty long, so I won&rsquo;t repeat its content here in the interest of space. Do check it out! Below are key lessons I&rsquo;ve learned:</p>
+<ol>
+<li>The best way to understand ML infra is to start from the infra teams you collaborate with and learn what they do (e.g., via design docs, <a href="https://www.amazon.com/Distributed-Machine-Learning-Patterns-Yuan/dp/1617299022">books</a>, and engineering blogs; see <a href="https://www.yuan-meng.com/posts/ml_infra_interviews/#references">resources</a>)
+<ul>
+<li><strong>Data infra</strong>: e.g., how features are defined, computed, stored, and updated (batch vs. streaming); how engagement events are logged; how training data (features + labels) is generated via forward logging or backfill.</li>
+<li><strong>Training infra</strong>: e.g., how training is distributed across GPUs; checkpointing; failure recovery; continuous retraining + validation; model publishing and rollout/rollback.</li>
+<li><strong>Serving infra</strong>: e.g., how to fetch request (user + context) vs. document vs. cross features; when and how to batch requests; reducing end-to-end latency (caching, sharding, load balancing); real-time feature updates; pagination for large responses; engagement event logging.</li>
+</ul>
+</li>
+<li>Brush up on distributed system knowledge, but don&rsquo;t dwell on it. ML infra is a special case of distributed systems, but you usually don&rsquo;t need to go deep on things like rate limiters or post creation/updates. The focus is the infra around <strong>ML</strong>.
+<ul>
+<li><strong>NeetCode</strong>: watch <a href="https://neetcode.io/courses/system-design-for-beginners/0">System Design for Beginners</a> and checkout sections in <a href="https://neetcode.io/courses/system-design-interview/9">System Design Interview</a> relevant to ML systems, such as KV stores and distributed message queues.</li>
+<li><strong>Hello Interview</strong>: go through <a href="https://www.hellointerview.com/learn/system-design/in-a-hurry/introduction">System Design in a Hurry</a> as well as core concepts, patterns, key technologies, and advanced topics like time-series databases (think feature stores).</li>
+<li><a href="https://dataintensive.net/"><strong>DDIA book</strong></a>: skim Chapters 1-11 if you have time.</li>
+</ul>
+</li>
+<li>To practice, design feature stores, training data generation, distributed training, and retrieval &amp; ranking (organic + ads), etc.. Spend 2–3 days per design to think through all details. Below is the table of contents in a toy ads ranking system design I wrote.
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-03">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">markdown</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-03 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-03"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">markdown code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gu">## Table of Contents
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Problem Framing**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Clarification: What to Build  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Charging Events  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Attribution  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Candidate Size  
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Scalability
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Business Objectives: Why Build It
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> ML Objectives: How to Build with ML
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Problem Statement**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**High-Level Design**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Online Path
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Offline Path
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> <span class="gs">**Online Path**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Core Entities
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> API and Data Flow
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Ads Serving API
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> CandidateGenerationService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> L1RankingService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> L2RankingService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> AuctionPolicyService
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Logging
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">5.</span> <span class="gs">**Offline Path**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Feature Engineering
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Data Generation
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Model Training
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Item Indexing
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">6.</span> <span class="gs">**Step-by-Step Design**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Candidate Generation
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Ads Targeting
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Budget Checks
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Other Checks
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> L1 Ranking
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Objectives
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Training Data
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Features
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Model Architectures
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> L2 Ranking
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Objectives
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Training Data
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Features
+</span></span><span class="line"><span class="cl">     <span class="k">-</span> Model Architectures
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">7.</span> <span class="gs">**Production**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Monitoring
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Experimentation
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Rollout
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Rollback
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">8.</span> <span class="gs">**Deep Dives**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Delayed Conversions
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> CVR Calibration
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">9.</span> <span class="gs">**References**</span>
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> Posts
+</span></span><span class="line"><span class="cl">   <span class="k">-</span> CTR Papers
+</span></span><span class="line"><span class="cl">   - CVR Papers</span></span></code></pre></div>
+  <p class="sr-only">markdown code snippet end</p>
+
+  
+</figure>
+</li>
+</ol>
+<h3 id="8-behavior-interview" class="scroll-mt-8 group">
+  8. Behavior Interview
+  
+    <a href="#8-behavior-interview"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>99% of the time, behavior questions come from the list below:</p>
+<details class="fold">
+<summary>79 behavior question by signal</summary>
+<table>
+<thead><tr><th>signal</th><th>question</th></tr></thead>
+<tbody>
+<tr><td>problem solving</td><td>the most challenging / successful project you've delivered</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>how you work with ambiguous requirements</td></tr>
+<tr><td></td><td>how you iterated on a model (in a single or multiple launches)</td></tr>
+<tr><td></td><td>a time when you optimized a process within/beyond your team</td></tr>
+<tr><td></td><td>a time when you found an innovative solution to a problem</td></tr>
+<tr><td></td><td>a time when you discovered an overlooked issue on your team</td></tr>
+<tr><td></td><td>tell me about a time when you faced a challenging situation at work</td></tr>
+<tr><td></td><td>a time when you understood and improved a product</td></tr>
+<tr><td></td><td>a time when you had to pivot (proactively or being asked to)</td></tr>
+<tr><td></td><td>a time when you deep dived into data to resolve a problem or made a decision</td></tr>
+<tr><td>teamwork</td><td>how you resolve conflicts with teammates or xfn</td></tr>
+<tr><td></td><td>a time when you had to work with people outside of your team</td></tr>
+<tr><td></td><td>a time when you disagreed with your manager and persuaded them</td></tr>
+<tr><td></td><td>a time when your team disagreed with you on your idea</td></tr>
+<tr><td></td><td>a time when you worked with a difficult / non-collaborative teammate</td></tr>
+<tr><td></td><td>how you get buy-in from peers/xfn/leadership</td></tr>
+<tr><td></td><td>how you collaborate + earn trust from with teammates / xfn</td></tr>
+<tr><td></td><td>a time when you escalated to manager/skip</td></tr>
+<tr><td></td><td>a time when you helped an underperforming teammate</td></tr>
+<tr><td></td><td>how you give and share credit</td></tr>
+<tr><td></td><td>what to do if team is not bonding well/td></tr>
+<tr><td></td><td>how do you handle disagreement with majority decision</td></tr>
+<tr><td>communication</td><td>how you communicate technical ideas to non-tech audience/td></tr>
+<tr><td></td><td>how you give constructive feedback</td></tr>
+<tr><td></td><td>how you receive constructive feedback</td></tr>
+<tr><td></td><td>how you get visibility for your work</td></tr>
+<tr><td>time management</td><td>a time when you met a deadline</td></tr>
+<tr><td></td><td>a time when you missed a deadline</td></tr>
+<tr><td></td><td>a time when you felt overwhelmed / stressed</td></tr>
+<tr><td></td><td>how you deal with conflicting priorities</td></tr>
+<tr><td></td><td>how you balance responsiveness vs. focus time</td></tr>
+<tr><td></td><td>a time when you must deliver an imperfect result</td></tr>
+<tr><td>decision making</td><td>the hardest tech/business trade-off you had to make</td></tr>
+<tr><td></td><td>a time when you made a difficult decision to give up on a project</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and succeeded</td></tr>
+<tr><td></td><td>a time when you took a (calculated) risk and failed</td></tr>
+<tr><td></td><td>a time when you made a wrong decision and learned from it</td></tr>
+<tr><td></td><td>how you define impact and success of a project</td></tr>
+<tr><td></td><td>a time when you made a decision in limited time</td></tr>
+<tr><td></td><td>a time when you made a decision with incomplete information</td></tr>
+<tr><td></td><td>a time when you made a decision with many sources of information</td></tr>
+<tr><td></td><td>a time when you made a decision without consulting your manager</td></tr>
+<tr><td></td><td>a time you refused to compromise your standards</td></tr>
+<tr><td>initiative</td><td>a time when you unblocked yourself</td></tr>
+<tr><td></td><td>a time when you unblocked others</td></tr>
+<tr><td></td><td>a project initiated by you</td></tr>
+<tr><td></td><td>a project you had to push hard for</td></tr>
+<tr><td></td><td>a time when you went above and beyond your duty</td></tr>
+<tr><td></td><td>a time when you worked on something before mgr approval</td></tr>
+<tr><td>achievement</td><td>a time when you set a goal and achieved it</td></tr>
+<tr><td></td><td>a time when you went above and beyond expectations</td></tr>
+<tr><td></td><td>the biggest accomplishment in your career</td></tr>
+<tr><td></td><td>your biggest strengths</td></tr>
+<tr><td>growth</td><td>the biggest regret in your career</td></tr>
+<tr><td></td><td>a time when you had to persevere for several months</td></tr>
+<tr><td></td><td>a project you would do differently</td></tr>
+<tr><td></td><td>a time when you made a big mistake (reflection → do better)</td></tr>
+<tr><td></td><td>your biggest weaknesses</td></tr>
+<tr><td></td><td>a time when you owned a task outside of your expertise</td></tr>
+<tr><td></td><td>how you find mentors and network within/beyond your team</td></tr>
+<tr><td></td><td>a time when you struggled initially and turned it around</td></tr>
+<tr><td></td><td>how you find time to learn at and outside of work</td></tr>
+<tr><td></td><td>career aspirations + motivation to join xyz company</td></tr>
+<tr><td>leadership</td><td>how you mentor junior engineers</td></tr>
+<tr><td></td><td>a time when you delegated a project</td></tr>
+<tr><td></td><td>a time you advocated for someone on your team</td></tr>
+<tr><td></td><td>a time when you improved company/team culture</td></tr>
+<tr><td></td><td>a time when you took responsibilities for a failure</td></tr>
+<tr><td></td><td>a time when you set roadmap (for a project or a team)</td></tr>
+<tr><td></td><td>what you value in a leader + what kind of leader you aspire to be</td></tr>
+<tr><td></td><td>a time when you drove alignment</td></tr>
+<tr><td></td><td>a time you made a suggestion to improve the team's outcomes</td></tr>
+<tr><td></td><td>positive leadership style you liked + influenced your work style</td></tr>
+<tr><td>adaptability</td><td>a time when you incurred a tech debt to meet deadline</td></tr>
+<tr><td></td><td>a time when you had to change the project scope</td></tr>
+<tr><td></td><td>a time you had to make a last-minute change</td></tr>
+<tr><td></td><td>a time when you delivered under time pressure / lack of resources</td></tr>
+<tr><td></td><td>a time when you received an unreasonable ask or project requirements</td></tr>
+<tr><td></td><td>a time when a project kept getting de-prioritized</td></tr>
+</tbody>
+</table>
+</details>
+<p>Then it boils down to how you pick and tell your stories. While companies ask the same questions, they value different qualities in an engineer. For instance, moving fast and breaking things (e.g., incurring a tech to meet a short-term goal) may be a vice at Google, which values doing things &ldquo;the right way&rdquo;, it&rsquo;s a virtue at companies like DoorDash or startups where scrappiness is the key to survival (your own and that of your company). Friends have told me that studying Amazon&rsquo;s leadership principles is the best way to prepare for behavior interviews, even if you don&rsquo;t interview with Amazon. But for me personally, I&rsquo;m more at ease with the <a href="https://jeffhsipe.medium.com/understanding-googelyness-4d61a70ada95">Googlyness</a> interview: instead of being grilled on reciting stories that map to rigid qualities, you&rsquo;re valued for being emotionally intelligent, ethical, kind, and curious.</p>
+<p>To quickly prepare for each question, I usually start with a rough story &mdash; just a few sentences I hastily jot down about an experience I&rsquo;m proud of or learned from, throw in the company values, and prompt GPT to turn it into a SAIL (situation, action, impact, learning) story.</p>
+<figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-04">
+  <aside
+    class="absolute right-0 top-0 hidden rounded-bl-sm rounded-tr-sm bg-white/10 px-2 py-1 text-white/70 transition-opacity md:inline-block"
+  >
+    <div class="codeblock-meta flex max-w-xs flex-row items-center space-x-3">
+      <div class="small-caps shrink cursor-default truncate font-mono text-xs" aria-hidden="true">
+        <span class="relative">markdown</span>
+      </div>
+      <div>
+        <clipboard-copy
+          type="button"
+          aria-label="Copy code to clipboard"
+          title="Copy code to clipboard"
+          class="block cursor-pointer transition-colors hover:text-sky-400"
+          target="#codeblock-04 code"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="lucide lucide-clipboard h-4 w-4"
+  viewBox="0 0 24 24"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+</svg>
+
+        </clipboard-copy>
+      </div>
+      <div>
+        <a
+          href="#codeblock-04"
+          class="block"
+          aria-label="Link to this code block"
+          title="Link to this code block"
+        >
+          <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+        </a>
+      </div>
+    </div>
+  </aside>
+  <p class="sr-only">markdown code snippet start</p>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gu">## BehaviorInterview Story Expansion Prompt
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">### Goal
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Turn a rough, real story (even a few sentences) into a clear, interview-ready
+</span></span><span class="line"><span class="cl">behavior answer that is explicitly aligned with a company&#39;s values.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Instructions
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl">I&#39;m preparing for behavior interviews.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">I will give you:
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> a <span class="gs">**rough story**</span> (unpolished, informal is fine)
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> a set of <span class="gs">**company values / culture principles**</span> (pasted text or a link)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Please expand the story into a <span class="gs">**structured behavior answer aligned with those values**</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Do <span class="gs">**not**</span> invent facts or exaggerate impact.
+</span></span><span class="line"><span class="cl">Your job is to organize, clarify, and align — not to embellish.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Input 1 — Rough story
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>This story is intentionally rough and incomplete:
+</span></span><span class="line"><span class="cl">[PASTE YOUR STORY HERE]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Input 2 — Company values
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Here are the company&#39;s values or culture principles I want the story aligned with:
+</span></span><span class="line"><span class="cl">[PASTE VALUES HERE OR PROVIDE URL]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Output Requirements
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>
+</span></span><span class="line"><span class="cl"><span class="gu">#### 1. Structured behavior story
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Rewrite the story using the following sections:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **situation:** brief context; what was happening; responsibility, goal, or challenge I faced
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **action:** what I actually did  
+</span></span><span class="line"><span class="cl">  (focus on judgment, communication, trade-offs, and decisions)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **impact:** concrete outcome or change  
+</span></span><span class="line"><span class="cl">  (metrics, behavior shift, decision made, unblocked work, etc.)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **learning:** what I learned or how this changed my approach
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Style constraints**</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> first-person
+</span></span><span class="line"><span class="cl"><span class="k">-</span> natural, spoken tone
+</span></span><span class="line"><span class="cl"><span class="k">-</span> concise (60–120 seconds spoken)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> honest and professional
+</span></span><span class="line"><span class="cl"><span class="k">-</span> avoid buzzwords and filler phrases like &#34;i learned a lot&#34;
+</span></span><span class="line"><span class="cl"><span class="k">-</span> do <span class="gs">**not**</span> add new facts — only clarify and organize what&#39;s already there
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">#### 2. Values alignment
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>Add a section titled exactly:
+</span></span><span class="line"><span class="cl">✅ why this is highly aligned with <span class="p">&lt;</span><span class="nt">company</span> <span class="na">values</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">In bullet points, explicitly map:
+</span></span><span class="line"><span class="cl"><span class="k">-</span> a <span class="gs">**specific action or decision**</span>
+</span></span><span class="line"><span class="cl"><span class="k">-</span> to a <span class="gs">**specific value**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Examples of values to map against (use what&#39;s relevant):
+</span></span><span class="line"><span class="cl"><span class="k">-</span> emotional intelligence
+</span></span><span class="line"><span class="cl"><span class="k">-</span> collaboration
+</span></span><span class="line"><span class="cl"><span class="k">-</span> ownership
+</span></span><span class="line"><span class="cl"><span class="k">-</span> integrity
+</span></span><span class="line"><span class="cl"><span class="k">-</span> comfort with ambiguity
+</span></span><span class="line"><span class="cl"><span class="k">-</span> bias for action
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Make the mapping concrete and specific (what I did → which value it shows).
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### Reminder
+</span></span></span><span class="line"><span class="cl"><span class="gu"></span>The goal is <span class="gs">**clarity and alignment**</span>, not sounding impressive.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The final answer should still feel like something a real person would say
+</span></span><span class="line"><span class="cl">in an interview.</span></span></code></pre></div>
+  <p class="sr-only">markdown code snippet end</p>
+
+  
+</figure>
+<p>I created a Notion database, where each row is a question. Before interviews, I go over each question once and time myself on delivery.</p>
+<h3 id="9-project-deep-dive" class="scroll-mt-8 group">
+  9. Project Deep Dive
+  
+    <a href="#9-project-deep-dive"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>In phone screens, hiring manager chats, or design interviews, you may be asked to walk through a project you&rsquo;re most proud of. Some companies have a dedicated 45-minute or 1-hour round for project deep dives. If slides are allowed, 10–12 is a good amount.</p>
+<p>There&rsquo;s no skill for this round. If you&rsquo;ve led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you&rsquo;re the right person for this team &mdash; e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.</p>
+<p>To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> for more details.</p>
+<h2 id="appendices" class="scroll-mt-8 group">
+  Appendices
+  
+    <a href="#appendices"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="a-company-selection" class="scroll-mt-8 group">
+  A: Company Selection
+  
+    <a href="#a-company-selection"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>When considering where to interview, I look for a combination of <code>top pay + modern ML stacks + interesting work + willingness to hire me at a senior-or-above level</code>. I applied to OpenAI, Roblox, Databricks, and Notion; other interviews came from recruiter outreach. I didn&rsquo;t ask for referrals before applying because they are time-consuming and rarely help &mdash; if your profile is strong, recruiters will proceed anyway; if your profile doesn&rsquo;t fit the role, a referral will lead to a review and a rejection, only faster.</p>
+<p>Below are roles I interviewed for, grouped by domain. I specified the team in parentheses for team-based hires. I&rsquo;ve highlighted top-paying senior+ roles in case you have similar goals (<span style="background-color: #B3E59A">550–649k</span>; <span style="background-color: #FDB515">650–800+k</span>).</p>
+<ul>
+<li><strong>RecSys</strong>: <span style="background-color: #FDB515">Snap ML Engineer</span>, <span style="background-color: #FDB515">Meta ML Engineer (Ads)</span>, <span style="background-color: #FDB515">xAI Member of the Technical Staff</span>, <span style="background-color: #B3E59A">Netflix ML Engineer (Ads)</span>, <span style="background-color: #B3E59A">Roblox ML Engineer (Ads)</span>, Google ML SWE, Apple ML Engineer (Search), Notion SWE (Search), Unity ML Engineer (Ads), Shopify AI Engineer (Recommendation), Uber ML Engineer (Search)</li>
+<li><strong>Applied AI</strong> (e.g., RAG, agents, chatbots, embedding models): <span style="background-color: #FDB515">OpenAI Research Engineer</span>, <span style="background-color: #FDB515">DeepMind Applied AI Engineer</span>, <span style="background-color: #FDB515">Databricks AI Engineer</span>, Nvidia ML Engineer, Perplexity AI Engineer, Anysphere (Cursor&rsquo;s company) Research Engineer</li>
+</ul>
+<p>Of course, research roles at frontier labs pay much more, but getting a job isn&rsquo;t about how you want to get paid, but what you bring to the table. Outside research roles, the <span style="background-color: #FDB515">highlighted</span> ones above are perhaps the most RecSys ML engineers can make using the skills we have.</p>
+<p>In the weeks leading up to my resignation from DoorDash, my manager, skip, several leaders, and a few XFN partners tried to convince me to stay. They didn&rsquo;t understand why I wanted to leave only because I wanted to work on more SOTA models, when both the DoorDash business and myself were doing well. To summarize their arguments: (1) DoorDash has strong business fundamentals, which translates into plenty of scope and fast promotions; (2) for ML engineers, model complexity doesn&rsquo;t matter as much as scope and impact, and many strong companies still rely on tree-based models; and (3) if I cared about SOTA models, I could read papers on my own.</p>
+<p>(1) is true. DoorDash&rsquo;s business is doing well, promotions are fast, and individual MLE scope can be super broad. Moreover, thanks to stock appreciation, those who joined in 2022 get paid far above the market. (2) and (3), however, couldn&rsquo;t be more wrong. For ML engineers, model complexity absolutely matters &mdash; not on its own, but because of the people it attracts. Working alongside world-class ML practitioners and researchers allows you to witness great minds in action: how they debug, innovate, make trade-offs, and bring challenging models to a launch. You can never read about such experiences in papers. After a few years, these folks tend to move on to more frontier places and may recruit you if you&rsquo;ve been a solid MLE. In another few years, you move with them to even more frontier places. Perhaps this is how we build the momentum to continuously move upward in the industry.</p>
+<p>When I joined Pinterest in 2024, I knew it wouldn&rsquo;t be a long stint, but it was a necessary one given where I was. I already had large scope and impact from my time at DoorDash; what I lacked was hands-on experience with SOTA models. Without the latter, I knew it&rsquo;d be impossible to get senior+ offers from top payers. Piecing together the two opposing experiences, I could build a brand of being able to both move fast and dive deep, which is a rare quality to hire for. Of course, companies are too coarse a unit to evaluate a career move &mdash; what attracted me to Pinterest was the invite to join a strong ranking team and work on sequence models. Upon hindsight, my reasoning paid off.</p>
+<p>You don&rsquo;t need to make the same choices I did (I like to design both life and work intentionally 🤣), but it&rsquo;s worth thinking about which &ldquo;pieces&rdquo; you need to collect to build a fulfilling and rewarding career.</p>
+<h3 id="b-prepare-in-a-hurry" class="scroll-mt-8 group">
+  B: Prepare in a Hurry
+  
+    <a href="#b-prepare-in-a-hurry"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>When friends ask me how to prepare for interviews, I always ask: <em>&ldquo;Which companies are you interviewing with?&rdquo;</em> I only start preparing after having several phone screens lined up, since different companies have different interview loops &mdash; I  don&rsquo;t know how to start before recruiters explain what the interview rounds are and what each round entails.</p>
+<p>They inevitably ask: <em>&ldquo;But isn&rsquo;t it too late? How do I have time to prepare after interviews are scheduled?&rdquo;</em> That&rsquo;s an interesting question, since you control when you start interviewing after the recruiter call. Sure, if you start late, a company may run out of headcount. But if a company isn&rsquo;t hiring for at least 2–3 months, why would you want to join them?</p>
+<p>Different companies test very different things. If you interview with OpenAI, you&rsquo;ll see lots of OOP problems, followed by a non-standard behavior round and a project presentation. Google&rsquo;s coding interviews ask random Hard LC questions &mdash; lots of graph, string, and DP problems. By contrast, Meta&rsquo;s coding interviews don&rsquo;t ask especially challenging questions, but you have to be really fast at solving classic problems; their behavior and design rounds are also fairly standard, but you usually need a &ldquo;yes&rdquo; in every round to get an offer. Snap&rsquo;s interviews are difficult and unique &mdash; the coding problems are hard to wrap your head around, and the ML infra design round scares most ML engineers to death. So ask your recruiters what the rounds are and what the passing criteria look like, come back to this blog post to review tips for each round, and prepare for the interviews you actually have, rather than preparing in some abstract, generic way. Below is the minimal, essential prep for each interview round:</p>
+<ol>
+<li>
+<p>Coding</p>
+<ul>
+<li>LeetCode: finish <a href="https://neetcode.io/practice/practice/neetcode250">NeetCode 250</a>, then practice company tags, focusing on problem solving rather than memorization</li>
+<li>OOP: go over the <a href="https://www.coditioning.com/app/learning/courses/tech_interview_prep/4">OOP course</a> and practice <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#2-objective-oriented-programming">problems</a></li>
+<li>ML coding: refresh PyTorch/NumPy syntax and pick one of the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding">3 approaches</a> to practice ML implementations</li>
+<li>AI-assisted coding: practice the problem in the candidate portal and think about how you&rsquo;d approach the problem later</li>
+</ul>
+</li>
+<li>
+<p>Design</p>
+<ul>
+<li>ML model design: revisit classic RecSys papers and practice designing common ML systems summarized <a href="http://localhost:1313/posts/mle_interviews_2.0/#6-ml-model-design">here</a></li>
+<li>ML infra design: read my ML infra design <a href="https://www.yuan-meng.com/posts/ml_infra_interviews/">post</a> and practice designing above systems, but with an infra focus</li>
+<li><a href="https://www.amazon.com/Designing-Data-Intensive-Applications-Reliable-Maintainable/dp/1449373321">DDIA</a>-style backend system design: I&rsquo;d probably give up here &mdash; this role likely doesn&rsquo;t match our backgrounds</li>
+</ul>
+</li>
+<li>
+<p>ML fundamentals</p>
+<ul>
+<li>Read the <a href="https://udlbook.github.io/udlbook/">UDL book</a> and answer <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#5-ml-fundamentals">common questions</a></li>
+</ul>
+</li>
+<li>
+<p>Behavior</p>
+<ul>
+<li>Read my <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> and review your most complex project</li>
+<li>Review your career story (by yourself and with a trusted mentor) and prep answers to <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#8-behavior-interview">these questions</a></li>
+</ul>
+</li>
+</ol>
+<p>Two years ago, I over-prepared for each company. I was exhausted and didn&rsquo;t have many competing offers. This year, I was rushed through interviews &mdash; either because teams wanted to close quickly or didn&rsquo;t want me to hit an offer deadline elsewhere. In two cases toward the end of my interview cycle, I only had 3–5 days to finish the entire interview loop, so I only had time to design one or two ML systems the team likely built and practice a couple dozen company tags.</p>
+<p>I somehow passed. Perhaps while companies have different rounds, problem-solving instincts do generalize (I&rsquo;d already done several full loops before the last two). If you have the right experience for the hiring team, just try your best to show that. If you don&rsquo;t, no amount of preparation compensates for a lack of fit, especially at higher levels.</p>
+<h3 id="c-example-system-designs" class="scroll-mt-8 group">
+  C: Example System Designs
+  
+    <a href="#c-example-system-designs"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Like I <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#6-ml-model-design">mentioned</a>, I picked a few problems to flesh out when preparing for ML model/infra designs. See 3 examples below. Please ignore my hastily written bits and take what you need from the raw designs.</p>
+<ul>
+<li>Short video recommendations: <a href="https://docs.google.com/document/d/1a-TPkOhV7yL3bjo-Sy5YjQVotdQhhq9z-RubuWAn8oY/edit?usp=sharing">Google Doc</a></li>
+<li>Ads conversion modeling: <a href="https://docs.google.com/document/d/1HehwT0mWcAze97xOGjJMaeHCgcfQaIJwdNNqBJ1FydQ/edit?usp=sharing">Google Doc</a></li>
+<li>Retrieval-augmented generation: <a href="https://docs.google.com/document/d/1qjH-xBHtEUEZI7RuHkuRZ4f4iqYd9gAkXTAztjPWvIQ/edit?usp=sharing">Google Doc</a></li>
+</ul>
+
+    </div>
+  </article>
+
+  
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/career/" class="taxonomy category">career</a>
+          </li>
+          <li>
+            <a href="/categories/machine-learning/" class="taxonomy category">machine learning</a>
+          </li>
+          <li>
+            <a href="/categories/interview/" class="taxonomy category">interview</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/mle_interviews_2.0-copy/"
+></content-network-graph>
+
+    </section>
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-newspaper h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5"
+  />
+  <path d="M10 6h8v4h-8V6Z" />
+</svg>
+
+        <span>Posts</span>
+      </h2>
+        <section class="flex flex-col space-y-1">
+          <h3 class="flex flex-row items-center space-x-2 text-sm font-semibold">
+            <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-arrow-up-from-dot h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path d="m5 9 7-7 7 7M12 16V2" />
+  <circle cx="12" cy="21" r="1" />
+</svg>
+
+            <span>Outgoing</span>
+          </h3>
+
+          <ol class="not-prose ml-6">
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/mle_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="(Opinionated) Guide to ML Engineer Job Hunting"
+              >(Opinionated) Guide to ML Engineer Job Hunting</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ml_infra_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Preparing for ML Infra System Design Interviews"
+              >Preparing for ML Infra System Design Interviews</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-infra/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml infra"
+                  >Ml infra</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/mle_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="(Opinionated) Guide to ML Engineer Job Hunting"
+              >(Opinionated) Guide to ML Engineer Job Hunting</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/generative_recommendation/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
+              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/generative-recommendation/"
+                  class="taxonomy"
+                  title="Posts and notes on Generative recommendation"
+                  >Generative recommendation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/large-language-models/"
+                  class="taxonomy"
+                  title="Posts and notes on Large language models"
+                  >Large language models</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ml_infra_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Preparing for ML Infra System Design Interviews"
+              >Preparing for ML Infra System Design Interviews</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-infra/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml infra"
+                  >Ml infra</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/generative_recommendation/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
+              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/generative-recommendation/"
+                  class="taxonomy"
+                  title="Posts and notes on Generative recommendation"
+                  >Generative recommendation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/large-language-models/"
+                  class="taxonomy"
+                  title="Posts and notes on Large language models"
+                  >Large language models</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/generative_recommendation/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
+              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/generative-recommendation/"
+                  class="taxonomy"
+                  title="Posts and notes on Generative recommendation"
+                  >Generative recommendation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/large-language-models/"
+                  class="taxonomy"
+                  title="Posts and notes on Large language models"
+                  >Large language models</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/seq_user_modeling/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Down the Rabbit Hole: Sequential User Modeling"
+              >Down the Rabbit Hole: Sequential User Modeling</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/recommender-systems/"
+                  class="taxonomy"
+                  title="Posts and notes on Recommender systems"
+                  >Recommender systems</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ml_infra_interviews/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Preparing for ML Infra System Design Interviews"
+              >Preparing for ML Infra System Design Interviews</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/career/"
+                  class="taxonomy"
+                  title="Posts and notes on Career"
+                  >Career</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-infra/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml infra"
+                  >Ml infra</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/interview/"
+                  class="taxonomy"
+                  title="Posts and notes on Interview"
+                  >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+</ol>
+
+        </section>
+    </section>
+</aside>
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        
+<section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2026, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+
+    
+    <button id="back-to-top" title="Go to top">☝️</button>
+
+
+    
+    
+
+    
+    <script src="/js/back-to-top.js"></script>
+
+     
+    <script src="/js/cat-cursor.js" defer></script>
+  </body>
+</html>
