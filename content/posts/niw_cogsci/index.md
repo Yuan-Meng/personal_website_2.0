@@ -33,43 +33,43 @@ Fast forward to today, the tide has completely turned. After skimming new papers
 A central question in CogSci is: *how can humans (infants + children + adults) learn so much from so little, so quickly?*
 
 Since the early 2000s, a view popularized by Josh Tenenbaum, Tom Griffiths, and colleagues is that:
-(1) humans don't consider all possible hypotheses (e.g., we don't search the ceiling for our glasses) --- instead, we rely on rich prior knowledge to narrow the hypothesis space (e.g., desk, sofa, under the bed); and (2) once new data is observed, it percolates through hierarchical Bayesian models to update more abstract beliefs (e.g., search first where we last used the object).
+(1) humans don't consider all possible hypotheses during reasoning (e.g., we don't search the ceiling for our glasses) --- rather, we rely on rich prior knowledge to narrow the hypothesis space (e.g., desk, sofa, under the bed); and (2) new data we observe percolates via hierarchical Bayesian models to update more abstract beliefs (e.g., search first where we last used the object).
 
 Papers expressing the above view are too many to name. For a quick overview, read [*How to Grow a Mind*](https://cocosci.princeton.edu/tom/papers/LabPublications/GrowMind.pdf). For a comprehensive treatment, read the finally published [*Bayesian Models of Cognition*](https://mitpress.mit.edu/9780262049412/bayesian-models-of-cognition/) by the OGs. Norvig and Russell's [*Artificial Intelligence: A Modern Approach*](https://aima.cs.berkeley.edu/) is not a CogSci book but it mirrors domains traditionally studied in CogSci.
 
-My crude take is this: much of CogSci studies what looks like "post-training" and "prompt engineering" in AI. The human mind is pretrained, by evolution and development, and therefore comes with strong priors. That's why we can learn quickly from so little data --- nothing magical, but because most of the knowledge is already there. What we call "learning" in CogSci experiments either exposes or updates prior knowledge rather than redoing pretraining from scratch.
+My crude take is this: <span style="background-color: #D9CEFF">much of CogSci studies what looks like "post-training" and "prompt engineering" in AI</span>. The human mind is pretrained, by evolution and development, and therefore comes with strong priors. That's why we can learn quickly from so little data --- nothing magical, but because most of the knowledge is already there. What we call "learning" in CogSci experiments either exposes or updates prior knowledge rather than redoing pretraining from scratch.
 
-If this view holds, where CogSci can contribute the most to AI is post-training and prompting. By identifying the priors humans rely on in different domains, we can design post-training or prompting strategies that compensate for gaps in current models --- especially where AI still struggles but humans learn effortlessly. Below are some examples.
+If this view holds, where CogSci can contribute the most to AI is post-training and prompting. <span style="background-color: #D9CEFF">By identifying the priors humans rely on in different domains, we can design post-training or prompting strategies that compensate for gaps in current models</span> --- especially where AI still struggles but humans learn effortlessly. Below are some examples.
 
 ### AI that Reasons to Act
 
-When I was preparing for OpenAI interviews, I made a list of must-read papers for applied AI. [ReAct](https://arxiv.org/abs/2210.03629) was the second paper I read (after the [RAG](https://arxiv.org/abs/2005.11401) paper). It sets the foundations for modern language agents and reasoning models. This work instantly pulled me back to grad school memories, especially years spent on studying explanation (e.g., [Wilkenfeld & Lombrozo, 2015](https://cognition.princeton.edu/publications/inference-best-explanation-ibe-versus-explaining-best-inference-ebi)), information seeking (e.g., [Rothe, Lake, & Gureckis, 2018](https://www.cs.princeton.edu/~bl8144/papers/RotheEtAl2018CompBrainBehavior.pdf)), and how explanation and information seeking reinforce one another (e.g., [Lampinen et al., 2022](https://proceedings.mlr.press/v162/lampinen22a/lampinen22a.pdf) and [my dissertation](https://www.proquest.com/openview/9886c692bc27fcb566ef80fd54820735/1?pq-origsite=gscholar&cbl=18750&diss=y)).
+[Shunyu Yao](https://ysymyth.github.io/) (not to be confused with [Shunyu Yao](https://www.linkedin.com/in/shunyu-yao-204158285/)) wrote that [the second half](https://ysymyth.github.io/The-Second-Half/) of AI began when "RL finally works". Karpathy went further to [say](https://www.youtube.com/watch?v=BlVnGXEzFow) that 2025 was not the year of agents, since we're living in the "decade of agents", where autonomous agents will be an integral part of human life, but their cognitive skills will take years to develop.
+
+For language agents, Yao's [ReAct](https://arxiv.org/abs/2210.03629) remains one of the most influential papers. The core idea appeared in his earlier work, [CALM](https://ysymyth.github.io/papers/Dissertation-finalized.pdf), where language agents were trained to play [Zork](https://en.wikipedia.org/wiki/Zork)-like text games. The agent issues actions in natural language and receives text observations. 
+
+{{< figure src="https://www.dropbox.com/scl/fi/g3a8yhv30clzencw8lz8e/Screenshot-2026-02-16-at-2.40.19-PM.png?rlkey=fsg8sk6wb6cntj9lspieoh9px&st=6lepxd0k&raw=1" caption="An example text puzzle from the game Zork." width="1800" align="center">}}
+
+Above is an example from CALM. Unlike games with finite action spaces such as chess, Atari, or [Cluedo](https://en.wikipedia.org/wiki/Cluedo), text games have infinite action spaces. The agent can say anything, whether or not anyone has said it before. Traditional approaches restrict the action space (allowing only a small set of actions at each state) or provide ground-truth actions as supervision. Agents trained this way generalize poorly to new games. 
+
+The key shift was to use pretrained language models with rich prior knowledge as agents. Humans don't consider all possible actions --- our prior knowledge ("inductive biases") help us focus on the plausible few. For instance, since a door is nailed shut, we should search within the room. Since the rug can hide things, we check under it. A strong pretrained model shares many such priors. Even GPT-2 outperformed traditional baselines by a large margin. If the pretrained model were much weaker, it'd be like casting pearls before swine ("对牛弹琴").
+
+Back in grad school, when I told non-CogSci friends that people learn faster than machines because they have inductive biases that narrow the hypothesis space, they found it incredibly boring. To them, the "interesting part", be it pretraining or evolution, was already done. Sometimes I felt the way about CogSci. Sometimes I read the same sentiment about Agentic AI ("it's nothing but prompting a pretrained model"). But thinking again, figuring out how to elicit knowledge from a pretrained intelligence, so it can do things it was never explicitly trained to do, is deeply fascinating, useful, and still mysterious.
+
+Later, ReAct interleaves reasoning and action in a more structured way, and by then pretrained models (e.g., GPT-3) were much stronger. Given a task with many possible outcomes (e.g., where a pepper shaker might be) --- some more likely than others --- a language agent can reason about plans (places to search), execute actions, observe results, update beliefs, and revise plans. This loop of reasoning and acting is what human adults and children implicitly do in everyday life. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/2px3uq6t19uj2tn28xhtr/Screenshot-2026-02-09-at-8.49.48-PM.png?rlkey=ahxp5hywwqrkd7visrgg2l5pu&st=hted00yq&raw=1" caption="A [ReAct](https://arxiv.org/abs/2210.03629) agent interleaves reasoning and acting to get to correct answers fact." width="1800">}}
 
-Given a task with many possible outcomes (e.g., locations of a pepper shaker), some better than others (finding the shaker than not finding it), a language agent can reason about plans (likely places to search) or observations (e.g., findings from a search), and execute actions, reason about new observations, and revise plans accordingly. These are what humans --- including adults and children --- in everyday life. 
-
-Like CogSci papers, ReAct first reads incredibly interesting because it makes so much intuitive sense, and then the aftertaste comes incredibly boring because both LLMs and humans are pretrained --- it feels like the fun is at the pretraining party. Thinking yet again, however, how to elicit knowledge from a pretrained intelligence so it can do what it never was able to do is amazing, useful, if not a bit mysterious. If I wanted to study how a mind becomes to be, I'd probably study evolution instead of CogSci in the first place. 
+Reading ReAct brought me back to memories of grad school, especially my years spent on studying explanation (e.g., [Wilkenfeld & Lombrozo, 2015](https://cognition.princeton.edu/publications/inference-best-explanation-ibe-versus-explaining-best-inference-ebi)), information seeking (e.g., [Rothe, Lake, & Gureckis, 2018](https://www.cs.princeton.edu/~bl8144/papers/RotheEtAl2018CompBrainBehavior.pdf)), and how explanation and information seeking reinforce each other (e.g., [Lampinen et al., 2022](https://proceedings.mlr.press/v162/lampinen22a/lampinen22a.pdf) and [my dissertation](https://www.proquest.com/openview/9886c692bc27fcb566ef80fd54820735/1?pq-origsite=gscholar&cbl=18750&diss=y)). It's interesting to see many recent reasoning papers (2024–2026) only citing CogSci ideas from decades ago (e.g., working memory, System 1 vs. System 2, etc.). I feel modern CogSci has much to contribute to modern AI.
 
 how cogsci contributes
-- ask for causal explanations?
+- teach causal explanations? fails at causal reasoning
+- teach agents to reason better, so in term, they can use better reasoning to act better 
+- read lampien + lombrozo papers
 
-- recsys as environment for language agents to reason and act -- webshop benchmark
-- web-scale recommender systems as the playground for agents with human priors
-- frame recsys as web interaction
-
-what i can contribute:
-more realistic benchmarks based on real recsys
-teach agents to reason better, so in term, they can use better reasoning to act better 
 
 https://peiyang-song.github.io/
+
 https://github.com/google/BIG-bench
-
-
-<!-- shunyu said second half of LLM is rl
-andrej said 2025 was the year of agent that never was
-clue game
- -->
 
 ### AI That is Fair & Unbiased
 
@@ -80,6 +80,12 @@ world models
 ## Contributions by Methodology
 
 ### Benchmarks for Human + Machine Learners
+
+more realistic benchmarks based on real recsys
+- recsys as environment for language agents to reason and act -- webshop benchmark
+- web-scale recommender systems as the playground for agents with human priors
+- frame recsys as web interaction
+
 
 SOTA model paired by old cognitive tasks
 cite Baddley 
