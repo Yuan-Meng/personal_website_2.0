@@ -6,13 +6,13 @@
   </url><url>
     <loc>http://localhost:1313/categories/cognitive-science/</loc>
   </url><url>
+    <loc>http://localhost:1313/posts/niw_cogsci/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/niw/</loc>
   </url><url>
-    <loc>http://localhost:1313/notes/</loc>
+    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/niw_cogsci/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/career/</loc>
   </url><url>
@@ -22,9 +22,9 @@
   </url><url>
     <loc>http://localhost:1313/posts/mle_interviews_2.0/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-  </url><url>
     <loc>http://localhost:1313/notes/stranger_things/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>

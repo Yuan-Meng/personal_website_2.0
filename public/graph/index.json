@@ -48,10 +48,6 @@
       "in": [],
       "out": []
     },
-    "/notes/niw_cogsci/": {
-      "in": [],
-      "out": []
-    },
     "/notes/nothingness/": {
       "in": [],
       "out": []
@@ -212,6 +208,10 @@
       "in": [],
       "out": []
     },
+    "/posts/niw_cogsci/": {
+      "in": [],
+      "out": []
+    },
     "/posts/perceptron/": {
       "in": [],
       "out": []
@@ -293,11 +293,6 @@
       "permalink": "/notes/new_year_wish_2026/",
       "section": "notes",
       "title": "New Year Wishes 2026"
-    },
-    "/notes/niw_cogsci/": {
-      "permalink": "/notes/niw_cogsci/",
-      "section": "notes",
-      "title": "The National Importance of Cognitive Science in the AI Era"
     },
     "/notes/nothingness/": {
       "permalink": "/notes/nothingness/",
@@ -423,6 +418,11 @@
       "permalink": "/posts/newgrads/",
       "section": "posts",
       "title": "(Quirky) Roadmap for New Grad Data Scientists"
+    },
+    "/posts/niw_cogsci/": {
+      "permalink": "/posts/niw_cogsci/",
+      "section": "posts",
+      "title": "Making a Case for Cognitively Inspired AI's National Importance"
     },
     "/posts/perceptron/": {
       "permalink": "/posts/perceptron/",
