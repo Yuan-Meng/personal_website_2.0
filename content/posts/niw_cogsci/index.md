@@ -30,7 +30,7 @@ Fast forward to today, the tide has completely turned. After skimming new papers
 
 ## Contributions by Domain
 
-A central question in CogSci is: *how can humans (infants + children + adults) learn so much from so little, so quickly?*
+A central question in CogSci is: <span style="background-color: #FFE88D">*how can humans (infants + children + adults) learn so much from so little, so quickly?*</span>
 
 Since the early 2000s, a view popularized by Josh Tenenbaum, Tom Griffiths, and colleagues is that:
 (1) humans don't consider all possible hypotheses during reasoning (e.g., we don't search the ceiling for our glasses) --- rather, we rely on rich prior knowledge to narrow the hypothesis space (e.g., desk, sofa, under the bed); and (2) new data we observe percolates via hierarchical Bayesian models to update more abstract beliefs (e.g., search first where we last used the object).
@@ -43,7 +43,7 @@ If this view holds, where CogSci can contribute the most to AI is post-training 
 
 ### AI that Reasons to Act
 
-[Shunyu Yao](https://ysymyth.github.io/) (not to be confused with [Shunyu Yao](https://www.linkedin.com/in/shunyu-yao-204158285/)) wrote that [the second half](https://ysymyth.github.io/The-Second-Half/) of AI began when "RL finally works". Karpathy went further to [say](https://www.youtube.com/watch?v=BlVnGXEzFow) that 2025 was not the year of agents, since we're living in the "decade of agents", where autonomous agents will be an integral part of human life, but their cognitive skills will take years to develop.
+[Shunyu Yao](https://ysymyth.github.io/) (not to be confused with [Shunyu Yao](https://www.linkedin.com/in/shunyu-yao-204158285/)) wrote [the second half](https://ysymyth.github.io/The-Second-Half/) of AI began when "RL finally works". Karpathy went further to [say](https://www.youtube.com/watch?v=BlVnGXEzFow) that 2025 was not the year of agents, but rather we're living in the "decade of agents", where autonomous agents will be an integral part of human life, but their cognitive skills will take a decade to develop.
 
 For language agents, Yao's [ReAct](https://arxiv.org/abs/2210.03629) remains one of the most influential papers. The core idea appeared in his earlier work, [CALM](https://ysymyth.github.io/papers/Dissertation-finalized.pdf), where language agents were trained to play [Zork](https://en.wikipedia.org/wiki/Zork)-like text games. The agent issues actions in natural language and receives text observations. 
 
@@ -51,25 +51,30 @@ For language agents, Yao's [ReAct](https://arxiv.org/abs/2210.03629) remains one
 
 Above is an example from CALM. Unlike games with finite action spaces such as chess, Atari, or [Cluedo](https://en.wikipedia.org/wiki/Cluedo), text games have infinite action spaces. The agent can say anything, whether or not anyone has said it before. Traditional approaches restrict the action space (allowing only a small set of actions at each state) or provide ground-truth actions as supervision. Agents trained this way generalize poorly to new games. 
 
-The key shift was to use pretrained language models with rich prior knowledge as agents. Humans don't consider all possible actions --- our prior knowledge ("inductive biases") help us focus on the plausible few. For instance, since a door is nailed shut, we should search within the room. Since the rug can hide things, we check under it. A strong pretrained model shares many such priors. Even GPT-2 outperformed traditional baselines by a large margin. If the pretrained model were much weaker, it'd be like casting pearls before swine ("对牛弹琴").
+The key shift was to use pretrained language models with rich prior knowledge as agents. Humans don't consider all possible actions --- our prior knowledge ("inductive biases") help us focus on the plausible few. For instance, since a door is nailed shut, we should search within the room. Since the rug often hides things, let's check under it. Strong pretrained models share many such priors. Even GPT-2 outperformed traditional baselines by a large margin. If the pretrained model were much weaker, it'd be like casting pearls before swine ("对牛弹琴").
 
-Back in grad school, when I told non-CogSci friends that people learn faster than machines because they have inductive biases that narrow the hypothesis space, they found it incredibly boring. To them, the "interesting part", be it pretraining or evolution, was already done. Sometimes I felt the way about CogSci. Sometimes I read the same sentiment about Agentic AI ("it's nothing but prompting a pretrained model"). But thinking again, figuring out how to elicit knowledge from a pretrained intelligence, so it can do things it was never explicitly trained to do, is deeply fascinating, useful, and still mysterious.
+Back in grad school, when I told non-CogSci friends that people learn faster than machines because they have inductive biases that narrow the hypothesis space, they found it incredibly boring 😂. To them, the "interesting part", be it pretraining or evolution, was already done. Sometimes, I felt the way about CogSci. Sometimes, I read the same sentiment about Agentic AI ("it's nothing special but prompting a pretrained model"). But thinking again, figuring out how to elicit knowledge from a pretrained intelligence, so it can do things it was never explicitly trained to do, is fascinating, useful, and mysterious.
 
 Later, ReAct interleaves reasoning and action in a more structured way, and by then pretrained models (e.g., GPT-3) were much stronger. Given a task with many possible outcomes (e.g., where a pepper shaker might be) --- some more likely than others --- a language agent can reason about plans (places to search), execute actions, observe results, update beliefs, and revise plans. This loop of reasoning and acting is what human adults and children implicitly do in everyday life. 
 
 {{< figure src="https://www.dropbox.com/scl/fi/2px3uq6t19uj2tn28xhtr/Screenshot-2026-02-09-at-8.49.48-PM.png?rlkey=ahxp5hywwqrkd7visrgg2l5pu&st=hted00yq&raw=1" caption="A [ReAct](https://arxiv.org/abs/2210.03629) agent interleaves reasoning and acting to get to correct answers fact." width="1800">}}
 
-Reading ReAct brought me back to memories of grad school, especially my years spent on studying explanation (e.g., [Wilkenfeld & Lombrozo, 2015](https://cognition.princeton.edu/publications/inference-best-explanation-ibe-versus-explaining-best-inference-ebi)), information seeking (e.g., [Rothe, Lake, & Gureckis, 2018](https://www.cs.princeton.edu/~bl8144/papers/RotheEtAl2018CompBrainBehavior.pdf)), and how explanation and information seeking reinforce each other (e.g., [Lampinen et al., 2022](https://proceedings.mlr.press/v162/lampinen22a/lampinen22a.pdf) and [my dissertation](https://www.proquest.com/openview/9886c692bc27fcb566ef80fd54820735/1?pq-origsite=gscholar&cbl=18750&diss=y)). It's interesting to see many recent reasoning papers (2024–2026) only citing CogSci ideas from decades ago (e.g., working memory, System 1 vs. System 2, etc.). I feel modern CogSci has much to contribute to modern AI.
+Reading ReAct brought back to memories of grad school, especially my years spent on studying explanation (e.g., [Wilkenfeld & Lombrozo, 2015](https://cognition.princeton.edu/publications/inference-best-explanation-ibe-versus-explaining-best-inference-ebi)), information seeking (e.g., [Rothe, Lake, & Gureckis, 2018](https://www.cs.princeton.edu/~bl8144/papers/RotheEtAl2018CompBrainBehavior.pdf)), and how explanation and information seeking reinforce each other (e.g., [Lampinen et al., 2022](https://proceedings.mlr.press/v162/lampinen22a/lampinen22a.pdf) and [my dissertation](https://www.proquest.com/openview/9886c692bc27fcb566ef80fd54820735/1?pq-origsite=gscholar&cbl=18750&diss=y)). It's interesting to see many recent reasoning papers (2024–2026) only citing CogSci ideas from decades ago (e.g., working memory, System 1 vs. System 2, etc.). I feel modern CogSci has much to contribute to the "decade of agents".
 
-how cogsci contributes
-- teach causal explanations? fails at causal reasoning
-- teach agents to reason better, so in term, they can use better reasoning to act better 
-- read lampien + lombrozo papers
+Here's one idea --- <span style="background-color: #D9CEFF">leveraging the latest works on human causal reasoning to improve causal reasoning accuracy and efficiency of language agents</span>. [BIG-bench](https://github.com/google/BIG-bench) introduces tasks designed to be hard for language models. In the original [*Beyond the Imitation Game*](https://arxiv.org/abs/2206.04615) (BIG) paper, one such task was causal reasoning. In this 2023 paper, even the larger models struggled to judge *"The driver turned the wipers (A) on because it started raining (B)"* as more plausible than *"It started raining (B) because the driver turned the wipers on (A)"*, while humans instantly know A (raining) causes B (turning on wipers), but not the reverse.
 
+Causal inference matters because it tells us which interventions change outcomes. If you want rain, turning on the wipers won't help. If you want to see clearly in the rain, turning on the wipers will. As more people turn to ChatGPT or Gemini for life decisions, giving causally grounded advice is important to help them get what they ask for.
 
-https://peiyang-song.github.io/
+To improve the causal reasoning of language models, we can borrow scaffolding from human learning. For example, we can prompt counterfactual thinking: without rain, would the driver turn on the wipers? Probably not. So intervening on rain changes the driver's action, making rain a plausible cause. But if the driver turns off the wipers during rain, would that stop the rain? No. So intervening on the wipers doesn't change the weather, making it an unlikely cause.
 
-https://github.com/google/BIG-bench
+Real-world causal reasoning is often more complex than one-to-one links. Sometimes the effect is only observed after we act. For instance, in my dissertation, I recounted a night when the lights in my apartment went out. In one moment, I formed 3 hypotheses: a PG&E outage, a tripped circuit breaker, or a burned-out bulb. I ran two "experiments" in quick succession. If it were a PG&E outage, my neighbor's lights would be off --- experiment 1: I checked their lights and they were on. If the breaker had tripped, the switch would be down --- experiment 2: I opened the fuse box and found the switch was down. I flipped the switch and turned the light back on. Humans like myself perform countless experiments daily to gather data and infer causality. The process is so instinctual and efficient that we don't even realize we're doing it. If one day we lose this ability, we'll definitely notice --- I'd be sitting in the dark helplessly, or flipping the wall switch aimlessly.
+
+Unlike adults, my former colleagues and I ([Meng, Bramley, and Xu, 2018](https://escholarship.org/uc/item/0p40378v)) found that 5-to-7-year-olds struggle when they must choose interventions to rule out wrong hypotheses in as few attempts as possible. But when we explicitly teach young children to think through how each possible intervention eliminates specific hypotheses, they explain their intervention choices better (e.g., *"I do X because different things will happen under different hypotheses."*) and also select better interventions (i.e., actions that bring larger information gain).
+
+Similarly for agents, it may not be enough to just reason and act. The lesson from CogSci is that we can teach agents how to reason --- for example, by encouraging systematic hypothesis generation and intervention planning --- so they can act more efficiently to gather informative data, and in turn use that data to reason more accurately.
+
+Above is one idea among many. More generally, each of us (former) CogSci researchers has studied areas where human children or even adults do seemingly irrational or ineffective things. We often design ways to improve reasoning for certain age groups or under certain circumstances. The same mitigation strategies may or may not apply to language agents. This kind of research we've done in the past gives us a good starting point to help language agents reason better today.
+
 
 ### AI That is Fair & Unbiased
 
@@ -145,7 +150,4 @@ https://www.xiaohongshu.com/discovery/item/696e3c0d000000001a023a81?source=websh
   - STEM education: [NSF #2400757](https://ecrhub.org/ecr-projects?id=2400757), [NSF #1640816](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1640816)
 
 
-<!-- continuing impact
-- blogpost
-- read my papers
 - thank you emails & linkedin messages -->
