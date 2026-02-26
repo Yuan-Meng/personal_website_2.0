@@ -1,8 +1,8 @@
 ---
-title: "National Importance of Cognitive Science in the AGI Era"
-date: 2026-02-25
+title: "What Does Cognitive Science Have to Say in the Era of AGI?"
+date: 2026-02-26
 math: true
-categories: ["cognitive science", "agi", "niw"]
+categories: ["cognitive science", "agi"]
 toc: true
 ---
 
@@ -18,13 +18,15 @@ For many of us, "national importance" is not an afterthought we're scrambling to
 
 <!-- There are many great NIW examples in the natural sciences --- check out chemist Andrey Solovyev's informative [I-140 website](https://andreychemist.github.io/)! As far as I know, this post may be the first related to CogSci NIW petitions. This is a WIP --- I'll update it as I think of more ways CogSci informs AGI. -->
 
+# April Fool's Joke
+
+On April Fool's Day in 2019, when I was a Cognitive Science PhD student at UC Berkeley, I put together a fake news article claiming "AI has achieved the intelligence of a 4-year-old" and shared it the [*Possible Minds*](https://www.edge.org/conversation/alison_gopnik-possible-minds-25-ways-of-looking-at-ai) seminar led by  [Alison Gopnik](https://www.alisongopnik.com/), who often [spoke](https://neuroscience.stanford.edu/mbct/events/what-four-year-olds-can-do-ai-can-t-yet-alison-gopnik) about things that were a piece of cake for 4-year-olds but incredibly challenging for AI. A split second of shock turned into five seconds of laughter.
+
+This joke landed because even the best "AGI" at the time felt wildly unhuman-like. [GPT-2](https://en.wikipedia.org/wiki/GPT-2) that had just come out two months earlier felt like the "peak LLM" --- we were so amazed how it could generate 3 pages of somewhat coherent text, even though the content was often nonsensical. It was hard to imagine how any AI could ever resemble any 5-year-old's creativity and learning abilities in any shape or form. 
+
 # What CogSci Has to Say About AI
 
 > "An important feature of a learning machine is that its teacher will often be very largely ignorant of quite what is going on inside, although he may still be able to some extent to predict his pupil's behavior." --- Alan Turing, [Computing Machinery and Intelligence](https://courses.cs.umbc.edu/471/papers/turing.pdf) (1950)
-
-On April Fool's Day in 2019, when I was in grad school, I put together a fake newspaper article claiming "AI has achieved the intelligence of a 5-year-old" and shared it in Prof. [Alison Gopnik](https://www.alisongopnik.com/)'s [*Possible Minds*](https://www.edge.org/conversation/alison_gopnik-possible-minds-25-ways-of-looking-at-ai) seminar. A split second of shock turned into five seconds of laughter.
-
-My practical joke landed because even the best "AGI" felt wildly unhuman-like at the time. [GPT-2](https://en.wikipedia.org/wiki/GPT-2) had just come out two months earlier, and we were already amazed how it could generate 3 pages of somewhat coherent text, even though the content was often nonsensical. It was hard to imagine how any AI could ever resemble any 5-year-old's creativity and learning abilities in any shape or form. 
 
 Fast forward to today, the tide has completely turned. After skimming new papers by cognitive scientists and AI researchers with deep CogSci roots (e.g., [*Large Language Model Reasoning Failures*](https://www.arxiv.org/abs/2602.06176)), it feels like many researchers now afford large language models the same respect they give human children and adults. LLMs are treated as yet another (black-box) intelligence. Researchers probe their reasoning and ethical failures the way they study humans, and try to mitigate those failures by steering behavior with small amounts of data (e.g., prompting, SFT, RLHF, RLVR), rather than going through pretraining/evolution again. 
 
@@ -141,7 +143,7 @@ nowadays rare
 - https://runzhe-yang.science/2023-05-05-socratic/
 
 
-## Writing Guide for National Importance
+<!-- ## Writing Guide for National Importance
 - Reddit posts: [*Substantial Merit vs National Importance of your EB-2 NIW Proposed Endeavor*](https://www.reddit.com/r/EB2_NIW/comments/1oygx31/substantial_merit_vs_national_importance_of_your/)
 - Xiaohongshu posts on NIW writing tips: examples [1]( https://www.xiaohongshu.com/discovery/item/696f38fb000000000a02b8ea?source=webshare&xhsshare=pc_web&xsec_token=ABlkwa_GCrUBYzvCNgrH81ExLJiQLrld6J8Uu--uJQ9_M=&xsec_source=pc_share
 ), [2](https://www.xiaohongshu.com/discovery/item/6966946c000000000e00d8b1?source=webshare&xhsshare=pc_web&xsec_token=ABxzZX4CErOzETZ99sJ5szWXnlhqJwZUXLBMyIly__K3U=&xsec_source=pc_share), [3](https://www.xiaohongshu.com/discovery/item/6966946c000000000e00d8b1?source=webshare&xhsshare=pc_web&xsec_token=ABxzZX4CErOzETZ99sJ5szWXnlhqJwZUXLBMyIly__K3U=&xsec_source=pc_share), [4](
@@ -150,4 +152,4 @@ https://www.xiaohongshu.com/discovery/item/696e3c0d000000001a023a81?source=websh
   - STEM education: [NSF #2400757](https://ecrhub.org/ecr-projects?id=2400757), [NSF #1640816](https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1640816)
 
 
-- thank you emails & linkedin messages -->
+- thank you emails & linkedin messages --> -->

@@ -106,6 +106,10 @@
       "in": [],
       "out": []
     },
+    "/posts/cogsci_ai/": {
+      "in": [],
+      "out": []
+    },
     "/posts/ebr/": {
       "in": [
         "/posts/generative_recommendation/",
@@ -205,10 +209,6 @@
       "out": []
     },
     "/posts/newgrads/": {
-      "in": [],
-      "out": []
-    },
-    "/posts/niw_cogsci/": {
       "in": [],
       "out": []
     },
@@ -354,6 +354,11 @@
       "section": "posts",
       "title": "Causal Inference in Data Science"
     },
+    "/posts/cogsci_ai/": {
+      "permalink": "/posts/cogsci_ai/",
+      "section": "posts",
+      "title": "National Importance of Cognitive Science in the AGI Era"
+    },
     "/posts/ebr/": {
       "permalink": "/posts/ebr/",
       "section": "posts",
@@ -418,11 +423,6 @@
       "permalink": "/posts/newgrads/",
       "section": "posts",
       "title": "(Quirky) Roadmap for New Grad Data Scientists"
-    },
-    "/posts/niw_cogsci/": {
-      "permalink": "/posts/niw_cogsci/",
-      "section": "posts",
-      "title": "National Importance of Cognitive Science in the AGI Era"
     },
     "/posts/perceptron/": {
       "permalink": "/posts/perceptron/",
