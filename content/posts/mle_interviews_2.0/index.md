@@ -1,6 +1,6 @@
 ---
 title: "MLE Interview 2.0: Research Engineering and Scary Rounds"
-date: 2026-02-25
+date: 2026-02-01
 math: true
 categories: ["career", "machine learning", "interview"]
 toc: true
