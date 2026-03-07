@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Multithreading and Concurrency 101">
   <meta itemprop="description" content="How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
   <meta itemprop="datePublished" content="2026-03-06T00:00:00+00:00">
-  <meta itemprop="wordCount" content="656">
+  <meta itemprop="wordCount" content="875">
   <meta itemprop="keywords" content="Coding,Distributed systems">
 
   <meta name="twitter:card" content="summary">
@@ -42,7 +42,21 @@
       <script src="/js/main.js" defer></script>
   
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
 
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
@@ -69,9 +83,9 @@
   },
   "mainEntityOfPage": "http://localhost:1313/notes/concurrency_101/",
   "name": "Multithreading and Concurrency 101",
-  "timeRequired": "PT4M",
+  "timeRequired": "PT5M",
   "url": "http://localhost:1313/notes/concurrency_101/",
-  "wordCount": 656
+  "wordCount": 875
 }
 </script>
 
@@ -114,10 +128,45 @@
 
     
     
-      Reading time: 4 minutes
+      Reading time: 5 minutes
     
 
     
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#how-to-prepare-a-chinese-new-year-feast-in-two-hours">How to Prepare a Chinese New Year Feast in Two Hours</a></li>
+    <li><a href="#key-concepts">Key Concepts</a></li>
+    <li><a href="#practice-problems">Practice Problems</a></li>
+    <li><a href="#read-more">Read More</a></li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
     
 
     
@@ -178,61 +227,68 @@
 </h2>
 <ul>
 <li>
-<p><strong>Concurrency</strong> is a program&rsquo;s ability to do multiple things at once.</p>
+<p><strong>Concurrency vs. Parallelism</strong>: To <a href="https://go.dev/blog/waza-talk">quote</a> Rob Pike, one of Go&rsquo;s creators &mdash; &ldquo;Concurrency is about <em>dealing</em> with lots of things at once. Parallelism is about <em>doing</em> lots of things at once.&rdquo;</p>
 <ul>
-<li>More formally, concurrency is the ability of a program to make progress on multiple tasks during overlapping time periods rather than strictly sequentially.</li>
-<li>The goal is to improve CPU utilization and responsiveness.</li>
-<li>Different from <strong>parallelism</strong>, where multiple tasks execute on different CPU cores.</li>
-</ul>
+<li>
+<p><strong>Concurrency</strong>: We can cleverly structure a task into independent subtasks that can be paused, switched between, and run in <em>overlapping</em> time periods. It improves the program&rsquo;s CPU utilization, throughput, and responsiveness.</p>
 </li>
 <li>
-<p>Below are names of things the program works on simultaneously:</p>
-<ul>
-<li><strong>Process</strong>: An executing instance of a program with its own memory space and system resources.</li>
-<li><strong>Thread</strong>: The smallest unit of execution within a process; multiple threads share the same memory and resources.
-<ul>
-<li><strong>Shared Memory</strong>: Threads within a process share memory, allowing efficient communication. The risk is, multiple threads can access the same data concurrently.</li>
-</ul>
-</li>
-<li><strong>Task</strong>: A unit of work scheduled for execution (e.g., a function, coroutine, or job). Tasks may run on threads or processes depending on the concurrency model.</li>
-</ul>
+<p><strong>Parallelism</strong>: On different physical CPU cores, we can, of course, execute different tasks at <em>exactly the same</em> time.</p>
 </li>
 <li>
-<p>Below are common ways to do several things simultaneously:</p>
+<p><strong>Our cooking analogy</strong> 🍳</p>
 <ul>
-<li><strong>Multithreading</strong>: Concurrency allows a single process to run multiple threads concurrently; tasks share memory and execute in overlapping time periods.</li>
-<li><strong>Multiprocessing</strong>: Parallelism allows multiple processes to run concurrently on CPU cores with their own memory spaces.</li>
-<li><strong>Asynchronous</strong>: Tasks cooperatively yield control (e.g., <code>async</code> / <code>await</code>) so other tasks can run while waiting for I/O, typically managed by an event loop.</li>
-</ul>
-</li>
-<li>
-<p>Concurrency often introduces nondeterminism:</p>
-<ul>
-<li>&ldquo;Symptom&rdquo;: The same program changes results across runs.</li>
-<li><strong>Thread Scheduling</strong> is one possible cause: The operating system decides which thread runs and when &mdash; the execution order of concurrent programs is not guaranteed.</li>
-</ul>
-</li>
-<li>
-<p><strong>Synchronization</strong> coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism.</p>
-<ul>
-<li><strong>Atomic Operations</strong>: We should rely on operations that execute as a single, indivisible step, preventing other threads from observing intermediate states. Common tools include:
-<ul>
-<li><strong>Locks / Mutexes</strong> — ensure only one thread enters a critical section at a time.</li>
-<li><strong>Semaphores / Monitors</strong> — coordinate access among multiple threads and manage limited resources.</li>
+<li><strong>Concurrency:</strong> As the sole chef, I put water on to boil and chop meat while waiting. I only have one pair of hands (one core), but can interleave subtasks to cook faster.</li>
+<li><strong>Parallelism:</strong> When cooking the New Year dinner, I chop meat while my aunt stir-fry vegetables. We&rsquo;re separate chefs (two cores) doing tasks at the exact same time.</li>
+<li><strong>Shared Memory:</strong> We are both adding different ingredients to the exact same stew pot at the same time.</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>
-<p>Below are common problems in multithreading systems:</p>
+<p>Below are names of things that a program (i.e., an executable file like <code>train.py</code>) can work on simultaneously:</p>
 <ul>
-<li><strong>Race Conditions</strong>: Multiple threads access or modify shared data without proper synchronization, producing unpredictable results depending on execution order.
+<li><strong>Process</strong>: An executing instance of a program (a training job) with its own isolated memory space and system resources.</li>
+<li><strong>Thread</strong>: The smallest unit of execution within a process.
 <ul>
-<li><strong>Critical Sections</strong>: Code that access shared resources and must be executed by only one thread at a time.</li>
+<li><strong>Shared Memory</strong>: Multiple threads within a single process share the same memory space, allowing incredibly fast communication. The risk is that multiple threads can access and modify the same data concurrently. The result may be incorrect.</li>
 </ul>
 </li>
-<li><strong>Deadlock</strong>: Two or more threads wait indefinitely for resources held by each other.</li>
-<li><strong>Starvation</strong>: A thread never obtains the resources it needs because other threads continually acquire them first.</li>
+<li><strong>Task</strong>: A conceptual unit of work scheduled for execution (e.g., a function, coroutine, or data-loading job). Tasks may run on threads or processes depending on the architecture.</li>
+</ul>
+</li>
+<li>
+<p>Below are execution models to do things simultaneously:</p>
+<ul>
+<li><strong>Multithreading</strong>: A single process runs multiple threads concurrently. Tasks share memory and execute in overlapping time periods. Languages like Java allow tasks to run in parallel if spread across multiple cores, but languages like Python are limited by the <a href="https://en.wikipedia.org/wiki/Global_interpreter_lock">Global Interpreter Lock</a> (GIL).</li>
+<li><strong>Multiprocessing</strong>: Spawns multiple entirely separate processes, each with its own memory space. This achieves true parallelism across CPU cores and avoids shared-memory risks, but communication between processes is slower.</li>
+<li><strong>Asynchronous (Async/Await)</strong>: A cooperative, usually single-threaded model where tasks explicitly yield control back to an event loop when waiting for I/O (like network requests), so other tasks can run in the meantime.</li>
+</ul>
+</li>
+<li>
+<p>Multithreading using shared memory introduces <strong>nondeterminism</strong>:</p>
+<ul>
+<li><strong>Thread Scheduling</strong>: The operating system dictates which thread runs and when. The execution order is never guaranteed, which means the exact same program might execute in a slightly different order across runs.</li>
+</ul>
+</li>
+<li>
+<p>This nondeterminism leads to common <strong>multithreading problems</strong>:</p>
+<ul>
+<li><strong>Race Conditions</strong>: Multiple threads access or modify shared data simultaneously without coordination. The final outcome becomes a &ldquo;race&rdquo; and yields unpredictable, buggy results.
+<ul>
+<li><strong>Critical Sections</strong>: The specific blocks of code that access these shared resources. If multiple threads enter a critical section at once, race conditions occur.</li>
+</ul>
+</li>
+<li><strong>Deadlock</strong>: Two or more threads wait indefinitely for resources held by each other (e.g., you waiting for the only knife and me waiting for the only cutting board).</li>
+<li><strong>Starvation</strong>: A thread never obtains the resources it needs to proceed because other threads continually acquire them first.</li>
+</ul>
+</li>
+<li>
+<p><strong>Synchronization</strong> coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism:</p>
+<ul>
+<li><strong>Atomic Operations</strong>: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.</li>
+<li><strong>Locks / Mutexes</strong>: Enforce mutual exclusion. They ensure only <em>one</em> thread can enter a critical section at a time.</li>
+<li><strong>Semaphores / Monitors</strong>: A signaling mechanism used to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).</li>
 </ul>
 </li>
 </ul>

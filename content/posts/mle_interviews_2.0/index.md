@@ -195,6 +195,8 @@ For each system listed below, generate a **CodeSignal-style 4-level coding promp
 - Keep descriptions concise and interview-realistic.
 ```
 
+TODO: add [concurrency](https://www.yuan-meng.com/notes/concurrency_101/)
+
 ## 3. AI-Assisted Coding
 
 Back in 2024, I interviewed with Quora. In a 90-minute coding round, you're given a realistic codebase (adapted from a real Python package repo) plus some unit tests, and you have to debug the codebase by reading error logs, identifying what's broken, and fixing them on your own, without AI. It was the hardest coding interview I've passed.
@@ -767,6 +769,10 @@ In phone screens, hiring manager chats, or design interviews, you may be asked t
 There's no skill for this round. If you've led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you're the right person for this team --- e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.
 
 To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my [post](https://www.yuan-meng.com/notes/project_complexity/) for more details.
+
+10. Team Match
+
+Coming soon...
 
 # Appendices
 

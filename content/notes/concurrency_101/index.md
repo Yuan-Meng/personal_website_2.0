@@ -2,6 +2,8 @@
 title: "Multithreading and Concurrency 101"
 date: 2026-03-06
 categories: ["coding", "distributed systems"]
+toc: true
+math: true
 ---
 
 # How to Prepare a Chinese New Year Feast in Two Hours
@@ -16,36 +18,41 @@ Things can go horribly wrong in this process. What if two chefs tasted the soup 
 
 # Key Concepts
 
-- **Concurrency** is a program's ability to do multiple things at once.
-  - More formally, concurrency is the ability of a program to make progress on multiple tasks during overlapping time periods rather than strictly sequentially.
-  - The goal is to improve CPU utilization and responsiveness.
-  - Different from **parallelism**, where multiple tasks execute on different CPU cores.
+- **Concurrency vs. Parallelism**: To [quote](https://go.dev/blog/waza-talk) Rob Pike, one of Go's creators --- "Concurrency is about *dealing* with lots of things at once. Parallelism is about *doing* lots of things at once."
 
-- Below are names of things the program works on simultaneously:
-  - **Process**: An executing instance of a program with its own memory space and system resources.
-  - **Thread**: The smallest unit of execution within a process; multiple threads share the same memory and resources.
-    - **Shared Memory**: Threads within a process share memory, allowing efficient communication. The risk is, multiple threads can access the same data concurrently.
-  - **Task**: A unit of work scheduled for execution (e.g., a function, coroutine, or job). Tasks may run on threads or processes depending on the concurrency model.
-
-- Below are common ways to do several things simultaneously:
-  - **Multithreading**: Concurrency allows a single process to run multiple threads concurrently; tasks share memory and execute in overlapping time periods.
-  - **Multiprocessing**: Parallelism allows multiple processes to run concurrently on CPU cores with their own memory spaces.
-  - **Asynchronous**: Tasks cooperatively yield control (e.g., `async` / `await`) so other tasks can run while waiting for I/O, typically managed by an event loop.
-
- - Concurrency often introduces nondeterminism:
- 	- "Symptom": The same program changes results across runs.
- 	- **Thread Scheduling** is one possible cause: The operating system decides which thread runs and when --- the execution order of concurrent programs is not guaranteed.
+  - **Concurrency**: We can cleverly structure a task into independent subtasks that can be paused, switched between, and run in *overlapping* time periods. It improves the program's CPU utilization, throughput, and responsiveness.
+  - **Parallelism**: On different physical CPU cores, we can, of course, execute different tasks at *exactly the same* time.
  
-- **Synchronization** coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism.
-  - **Atomic Operations**: We should rely on operations that execute as a single, indivisible step, preventing other threads from observing intermediate states. Common tools include:
-    - **Locks / Mutexes** — ensure only one thread enters a critical section at a time.
-    - **Semaphores / Monitors** — coordinate access among multiple threads and manage limited resources.
+  - **Our cooking analogy** 🍳
+    - **Concurrency:** As the sole chef, I put water on to boil and chop meat while waiting. I only have one pair of hands (one core), but can interleave subtasks to cook faster.
+    - **Parallelism:** When cooking the New Year dinner, I chop meat while my aunt stir-fry vegetables. We're separate chefs (two cores) doing tasks at the exact same time.
+    - **Shared Memory:** We are both adding different ingredients to the exact same stew pot at the same time.
 
-- Below are common problems in multithreading systems:
-  - **Race Conditions**: Multiple threads access or modify shared data without proper synchronization, producing unpredictable results depending on execution order.
-    - **Critical Sections**: Code that access shared resources and must be executed by only one thread at a time.
-  - **Deadlock**: Two or more threads wait indefinitely for resources held by each other.
-  - **Starvation**: A thread never obtains the resources it needs because other threads continually acquire them first.
+- Below are names of things that a program (i.e., an executable file like `train.py`) can work on simultaneously:
+  - **Process**: An executing instance of a program (a training job) with its own isolated memory space and system resources.
+  - **Thread**: The smallest unit of execution within a process.
+    - **Shared Memory**: Multiple threads within a single process share the same memory space, allowing incredibly fast communication. The risk is that multiple threads can access and modify the same data concurrently. The result may be incorrect.
+  - **Task**: A conceptual unit of work scheduled for execution (e.g., a function, coroutine, or data-loading job). Tasks may run on threads or processes depending on the architecture.
+  
+
+- Below are execution models to do things simultaneously:
+  - **Multithreading**: A single process runs multiple threads concurrently. Tasks share memory and execute in overlapping time periods. Languages like Java allow tasks to run in parallel if spread across multiple cores, but languages like Python are limited by the [Global Interpreter Lock](https://en.wikipedia.org/wiki/Global_interpreter_lock) (GIL).
+  - **Multiprocessing**: Spawns multiple entirely separate processes, each with its own memory space. This achieves true parallelism across CPU cores and avoids shared-memory risks, but communication between processes is slower.
+  - **Asynchronous (Async/Await)**: A cooperative, usually single-threaded model where tasks explicitly yield control back to an event loop when waiting for I/O (like network requests), so other tasks can run in the meantime.
+
+- Multithreading using shared memory introduces **nondeterminism**:
+  - **Thread Scheduling**: The operating system dictates which thread runs and when. The execution order is never guaranteed, which means the exact same program might execute in a slightly different order across runs.
+  
+- This nondeterminism leads to common **multithreading problems**:
+  - **Race Conditions**: Multiple threads access or modify shared data simultaneously without coordination. The final outcome becomes a "race" and yields unpredictable, buggy results.
+    - **Critical Sections**: The specific blocks of code that access these shared resources. If multiple threads enter a critical section at once, race conditions occur.
+  - **Deadlock**: Two or more threads wait indefinitely for resources held by each other (e.g., you waiting for the only knife and me waiting for the only cutting board).
+  - **Starvation**: A thread never obtains the resources it needs to proceed because other threads continually acquire them first.
+
+- **Synchronization** coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism:
+  - **Atomic Operations**: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.
+  - **Locks / Mutexes**: Enforce mutual exclusion. They ensure only *one* thread can enter a critical section at a time.
+  - **Semaphores / Monitors**: A signaling mechanism used to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).
 
 # Practice Problems
 
