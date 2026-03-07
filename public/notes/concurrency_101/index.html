@@ -26,7 +26,7 @@
   <meta itemprop="name" content="Multithreading and Concurrency 101">
   <meta itemprop="description" content="How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
   <meta itemprop="datePublished" content="2026-03-06T00:00:00+00:00">
-  <meta itemprop="wordCount" content="875">
+  <meta itemprop="wordCount" content="921">
   <meta itemprop="keywords" content="Coding,Distributed systems">
 
   <meta name="twitter:card" content="summary">
@@ -85,7 +85,7 @@
   "name": "Multithreading and Concurrency 101",
   "timeRequired": "PT5M",
   "url": "http://localhost:1313/notes/concurrency_101/",
-  "wordCount": 875
+  "wordCount": 921
 }
 </script>
 
@@ -142,8 +142,13 @@
           <nav id="TableOfContents">
   <ul>
     <li><a href="#how-to-prepare-a-chinese-new-year-feast-in-two-hours">How to Prepare a Chinese New Year Feast in Two Hours</a></li>
-    <li><a href="#key-concepts">Key Concepts</a></li>
-    <li><a href="#practice-problems">Practice Problems</a></li>
+    <li><a href="#key-concepts-in-concurrency">Key Concepts in Concurrency</a></li>
+    <li><a href="#practice-concurrency-problems">Practice Concurrency Problems</a>
+      <ul>
+        <li><a href="#synchronization">Synchronization</a></li>
+        <li><a href="#thread-communication">Thread Communication</a></li>
+      </ul>
+    </li>
     <li><a href="#read-more">Read More</a></li>
   </ul>
 </nav>
@@ -200,10 +205,10 @@
 <p>Turns out I&rsquo;m a single-threaded CPU working on one task at a time (wash ingredients 👉 chop them 👉 boil water 👉 put in chopped ingredients), whereas my dad and aunties mastered multithreading. One would boil water, another chop ingredients, someone else would prepare the dipping sauces, while another handled stir frying.</p>
 <p>To speed things up, modern CPUs similarly tend to work on multiple tasks (&ldquo;threads&rdquo;) concurrently, often across multiple cores (like my dad and aunties). For example, when you load a complex web app, one thread may be busy fetching data from a database over the network while another simultaneously renders the UI on the screen.</p>
 <p>Things can go horribly wrong in this process. What if two chefs tasted the soup around the same time and both decided to add more salt? Your soup quickly turns into sea water. What if one person grabbed the only knife and another grabbed the only cutting board? They form a deadlock. It takes skill to prevent such disasters, and such skills are what companies like OpenAI, Anthropic, xAI, and Netflix hire for &mdash; whether you&rsquo;re a Software Engineer or a Research/ML Engineer.</p>
-<h2 id="key-concepts" class="scroll-mt-8 group">
-  Key Concepts
+<h2 id="key-concepts-in-concurrency" class="scroll-mt-8 group">
+  Key Concepts in Concurrency
   
-    <a href="#key-concepts"
+    <a href="#key-concepts-in-concurrency"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -284,18 +289,18 @@
 </ul>
 </li>
 <li>
-<p><strong>Synchronization</strong> coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism:</p>
+<p><strong>Synchronization</strong> coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism. In other words, it ensures <strong>thread safety</strong>, under which different threads can access shared resources without nondeterminism.</p>
 <ul>
 <li><strong>Atomic Operations</strong>: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.</li>
 <li><strong>Locks / Mutexes</strong>: Enforce mutual exclusion. They ensure only <em>one</em> thread can enter a critical section at a time.</li>
-<li><strong>Semaphores / Monitors</strong>: A signaling mechanism used to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).</li>
+<li><strong>Semaphores / Monitors</strong>: A signaling mechanism to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).</li>
 </ul>
 </li>
 </ul>
-<h2 id="practice-problems" class="scroll-mt-8 group">
-  Practice Problems
+<h2 id="practice-concurrency-problems" class="scroll-mt-8 group">
+  Practice Concurrency Problems
   
-    <a href="#practice-problems"
+    <a href="#practice-concurrency-problems"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -317,6 +322,60 @@
     </a>
   
 </h2>
+<h3 id="synchronization" class="scroll-mt-8 group">
+  Synchronization
+  
+    <a href="#synchronization"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p><a href="https://leetcode.com/problems/print-in-order/?envType=problem-list-v2&amp;envId=concurrency">1114. Print in Order</a></p>
+<p><a href="https://leetcode.com/problems/print-foobar-alternately/?envType=problem-list-v2&amp;envId=concurrency">1115. Print FooBar Alternately</a></p>
+<p><a href="https://leetcode.com/problems/design-bounded-blocking-queue/?envType=problem-list-v2&amp;envId=concurrency">1188. Design Bounded Blocking Queue</a></p>
+<h3 id="thread-communication" class="scroll-mt-8 group">
+  Thread Communication
+  
+    <a href="#thread-communication"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p><a href="https://leetcode.com/problems/building-h2o/description/?envType=problem-list-v2&amp;envId=concurrency">1117. Building H2O</a></p>
 <h2 id="read-more" class="scroll-mt-8 group">
   Read More
   
@@ -347,6 +406,7 @@
 <li>MIT 6.031: <a href="https://web.mit.edu/6.031/www/fa17/classes/19-concurrency/">Reading 19: Concurrency</a></li>
 <li>Real Python: <a href="https://realpython.com/python-concurrency/#exploring-concurrency-in-python">Speed Up Your Python Program With Concurrency</a></li>
 <li>LeetCode: <a href="https://leetcode.com/problem-list/concurrency/">Concurrency Collection</a></li>
+<li>LeetCode Discussions: <a href="https://leetcode.com/discuss/post/7605788/surgical-strike-on-concurrency-and-multi-nghz/">Surgical Strike on Concurrency and Multithreading</a></li>
 </ul>
 
     </div>

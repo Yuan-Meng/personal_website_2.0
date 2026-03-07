@@ -16,7 +16,7 @@ To speed things up, modern CPUs similarly tend to work on multiple tasks ("threa
 
 Things can go horribly wrong in this process. What if two chefs tasted the soup around the same time and both decided to add more salt? Your soup quickly turns into sea water. What if one person grabbed the only knife and another grabbed the only cutting board? They form a deadlock. It takes skill to prevent such disasters, and such skills are what companies like OpenAI, Anthropic, xAI, and Netflix hire for --- whether you're a Software Engineer or a Research/ML Engineer.
 
-# Key Concepts
+# Key Concepts in Concurrency
 
 - **Concurrency vs. Parallelism**: To [quote](https://go.dev/blog/waza-talk) Rob Pike, one of Go's creators --- "Concurrency is about *dealing* with lots of things at once. Parallelism is about *doing* lots of things at once."
 
@@ -49,15 +49,32 @@ Things can go horribly wrong in this process. What if two chefs tasted the soup 
   - **Deadlock**: Two or more threads wait indefinitely for resources held by each other (e.g., you waiting for the only knife and me waiting for the only cutting board).
   - **Starvation**: A thread never obtains the resources it needs to proceed because other threads continually acquire them first.
 
-- **Synchronization** coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism:
+- **Synchronization** coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism. In other words, it ensures **thread safety**, under which different threads can access shared resources without nondeterminism.
   - **Atomic Operations**: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.
   - **Locks / Mutexes**: Enforce mutual exclusion. They ensure only *one* thread can enter a critical section at a time.
-  - **Semaphores / Monitors**: A signaling mechanism used to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).
+  - **Semaphores / Monitors**: A signaling mechanism to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).
 
-# Practice Problems
+# Practice Concurrency Problems
+
+
+## Synchronization
+
+[1114. Print in Order](https://leetcode.com/problems/print-in-order/?envType=problem-list-v2&envId=concurrency)
+
+[1115. Print FooBar Alternately](https://leetcode.com/problems/print-foobar-alternately/?envType=problem-list-v2&envId=concurrency)
+
+[1188. Design Bounded Blocking Queue](https://leetcode.com/problems/design-bounded-blocking-queue/?envType=problem-list-v2&envId=concurrency)
+
+## Thread Communication
+
+[1117. Building H2O](https://leetcode.com/problems/building-h2o/description/?envType=problem-list-v2&envId=concurrency)
+
+
+
 
 # Read More
 - Educative: [Multithreading and Concurrency Fundamentals](https://www.educative.io/blog/multithreading-and-concurrency-fundamentals)
 - MIT 6.031: [Reading 19: Concurrency](https://web.mit.edu/6.031/www/fa17/classes/19-concurrency/)
 - Real Python: [Speed Up Your Python Program With Concurrency](https://realpython.com/python-concurrency/#exploring-concurrency-in-python)
 - LeetCode: [Concurrency Collection](https://leetcode.com/problem-list/concurrency/)
+- LeetCode Discussions: [Surgical Strike on Concurrency and Multithreading](https://leetcode.com/discuss/post/7605788/surgical-strike-on-concurrency-and-multi-nghz/)
