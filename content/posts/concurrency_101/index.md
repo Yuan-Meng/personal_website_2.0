@@ -41,7 +41,7 @@ Things can go horribly wrong in this process. What if two chefs tasted the soup 
   - **Asynchronous (async/await)**: A cooperative, usually single-threaded model where tasks explicitly yield control back to an event loop when waiting for I/O (like network requests), so other tasks can run in the meantime.
 
 - Multithreading using shared memory introduces **nondeterminism**:
-  - **Thread Scheduling**: The operating system dictates which thread runs and when. The execution order is never guaranteed, which means the exact same program might execute in a slightly different order across runs.
+  - **Thread scheduling**: The operating system dictates which thread runs and when. The execution order is never guaranteed, which means the exact same program might execute in a slightly different order across runs.
   
 - This nondeterminism leads to common **multithreading problems**:
   - **Race conditions**: Multiple threads access or modify shared data simultaneously without coordination. The final outcome becomes a "race" and yields unpredictable, buggy results.
@@ -59,7 +59,7 @@ Things can go horribly wrong in this process. What if two chefs tasted the soup 
 
 Knowing the basic concepts above is far from enough. I can't speak for other ML engineers, but for me personally, concurrency problems incredibly hard because I'm familiar with neither the design patterns nor the syntax in the `threading` package. Just when I have solved one problem cleanly, thinking I've got it, the next one requires a completely, or even worse, slightly different approach. 
 
-I heard that even junior backend engineers find concurrency intimidating. Still, getting some practice is way better than flying blind into OOP interviews that tap into thread-safety and concurrency. We can solve toy problems on LeetCode and a few real-world problems.
+I heard that even backend engineers find concurrency intimidating. Still, getting some practice is way better than flying blind into OOP interviews that tap into thread-safety and concurrency. We can solve toy problems on LeetCode and a few real-world problems.
 
 # Practice Toy Problems
 

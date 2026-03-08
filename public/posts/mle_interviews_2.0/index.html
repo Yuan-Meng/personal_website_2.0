@@ -29,7 +29,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <meta itemprop="description" content="Scary New Rounds “Here goes nothing.” — Dustin Henderson, Stranger Things
 I have always loved how Dustin from Stranger Things says “here goes nothing” before executing an impossible plan. According to Reddit, this phrase means “you have nothing left to lose” or that “even if it fails, you don’t lose anything of value”. That’s probably the mindset to have when interviewing with companies everybody wants to join. BTW, if you’re scared by the reading time, why not jump over to the “Prepare in a Hurry” section for a quick overview of interview prep tips 🥵.">
   <meta itemprop="datePublished" content="2026-02-01T00:00:00+00:00">
-  <meta itemprop="wordCount" content="12036">
+  <meta itemprop="wordCount" content="12021">
   <meta itemprop="keywords" content="Career,Machine learning,Interview">
 
   <meta name="twitter:card" content="summary">
@@ -90,7 +90,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   "name": "MLE Interview 2.0: Research Engineering and Scary Rounds",
   "timeRequired": "PT57M",
   "url": "http://localhost:1313/posts/mle_interviews_2.0/",
-  "wordCount": 12036
+  "wordCount": 12021
 }
 </script>
 
@@ -175,6 +175,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
         <li><a href="#7-ml-infra-design">7. ML <strong>Infra</strong> Design</a></li>
         <li><a href="#8-behavior-interview">8. Behavior Interview</a></li>
         <li><a href="#9-project-deep-dive">9. Project Deep Dive</a></li>
+        <li><a href="#10-team-match">10. Team Match</a></li>
       </ul>
     </li>
     <li><a href="#appendices">Appendices</a>
@@ -495,41 +496,6 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <p>Is the bar getting lower? Definitely not. The only onsite I failed was one where I sort of did &ldquo;perfectly&rdquo; &mdash; I solved all hard coding problems, delivered structured system designs, and told well-rehearsed behavior stories. But my experience didn&rsquo;t match &mdash; I&rsquo;m an ML engineer with an understanding of backend systems, and the team were looking for a backend engineer with ranking knowledge. I doubted if I could do the job, and indeed I didn&rsquo;t get the job. I think <span style="background-color: #D9CEFF">the bar is getting more based on exact fit</span> &mdash; headcount is so tight in this market that hiring teams must answer this question: <span style="background-color: #D9CEFF"><em>&ldquo;Why you? Why not anyone else?&rdquo;</em></span></p>
 <p>I think my strength lies in the fact that I haven&rsquo;t spent a single day since 2022 not thinking about or reading papers on recommender systems. I&rsquo;m fascinated by every aspect of RecSys. It&rsquo;s what I do and what I love. For instance, how do we build value models? If we use a single label source (e.g., user engagement), we may end up optimizing for that one objective. But if we combine multiple label sources, then label weights themselves are exactly what we try to tune when combining predictions. And how do we train early-stage rankers when most responses are not impressed and therefore unlabeled? If we distill from a late-stage ranker, is that late-stage ranker itself good enough to make predictions for unranked examples (i.e., those never returned by the early-stage ranker)? How do we handle such data drifts? Just to name a few. Even when I managed time badly in a design interview (i.e., not finishing up the ranking funnel), what I did say might&rsquo;ve still shown what I&rsquo;ve thought deeply about in my day-to-day job. I don&rsquo;t know how, but interviewers must have spotted that.</p>
 <p>My honest advice: Find a domain you love from the bottom of your heart and apply to roles in that domain. This way, you worry less about &ldquo;the bar&rdquo; and focus more on finding a place that shares your passion.</p>
-<p>Nevertheless, below is what to aim for if you want to do &ldquo;perfectly&rdquo;.</p>
-<ol>
-<li><strong>Coding</strong>: As an MLE/RE candidate, you may get a funny experience of writing a toy backend API yesterday, implementing a Transformer decoder today, and solving an LC hard tomorrow &mdash; all with the expectation to be fast, optimal, and thoughtful. Some friends complain about such expectations, saying (almost) no one in real life is at once a backend genius, a SOTA model creator, and a competitive programmer. I just accept these requirements as reality, swallow the pain, and try my best to prepare and perform.
-<ul>
-<li><strong>LC</strong>: If an LC-style interview is 45 minutes, you will likely solve 1 Easy + 1 Medium or 2 Medium problems in a Meta interview, or 1 Hard problem with multiple follow-ups in a Google/Snap/Pinterest/Databricks/etc. interview. In the Meta case, the ideal outcome is to instantly think of the solution upon seeing the prompt, explain the solution in 2-3 min, code it up in 5-8 min, and do a dry run in 1-2 min. In the latter cases, the ideal outcome is to write a working solution within 20 minutes, create and pass sharp test cases, and discuss optimizations. For follow-ups, you&rsquo;re expected to provide extendable solutions in code or words. If no follow-ups, it means you&rsquo;ve spent too long on the main problem.</li>
-<li><strong>OOP</strong>: In a 1-hour OOP-style interview, you&rsquo;ll implement a toy API to play a game, manage a database or a process, etc.. Problems are typically organized by levels. The first level is a warmup. Then you gradually expand the API in subsequent levels. The ideal candidate not just has a good pace to finish all levels, but also make reasonable design choices for a real-world backend system. It&rsquo;s good to leave some time in the end to discuss how to scale this toy system in production.</li>
-<li><strong>ML</strong>: In a 1-hour ML coding interview, you&rsquo;re given some model code (e.g., model classes, training and inference loops) and asked to debug bad performance, or you implement a model from scratch using NumPy/PyTorch and overfit it on toy samples. Many candidates spend too long reading the code provided or Googling NumPy/PyTorch syntax. An ideal candidate is fluent in PyTorch or NumPy and can code up common architectures (e.g., MLP, CNN, RNN, Transformer encoders/decoders) and building blocks (e.g., linear layers, projections, residual connections, layer norm, batch norm, causal self-attention, bidirectional self-attention, activation functions, optimizers) from memory. Excessive Googling leaves you no time to debug or implement the model.</li>
-</ul>
-</li>
-<li><strong>ML system design</strong>: By now, everyone knows how to sketch a multi-stage ranking pipeline &mdash; L0 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value model, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps Kuaishou&rsquo;s &ldquo;One&rdquo; series or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
-  
-   in general). That said, only bring up a solution if it solves a real problem (e.g., scaling up, cold start), not because you know it.</li>
-<li><strong>Project deep dive</strong>: I&rsquo;ve got one offer because the team needed someone to work on X, and I happened to have worked on X. In this case, my first interviewer was so interested in X that they skipped the coding question and interviewers in the next few rounds ditched the agenda to ask me more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. I think this is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
-  <input
-    aria-label="Show sidenote"
-    type="checkbox"
-    id="sidenote-checkbox-10"
-    class="sidenote-checkbox hidden"
-  />
-  <label
-    tabindex="0"
-    role="mark"
-    aria-details="sidenote-10"
-    for="sidenote-checkbox-10"
-    class="sidenote-mark"
-    >dated</label
-  >
-  <small id="sidenote-10" class="sidenote-content">
-    <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches.<span class="sr-only">)</span>
-  </small>
-</span>
- ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for the rest of your career. Otherwise, you&rsquo;re cashing out too early and losing your edge in 2-3 years. That said, you can still fail if you talk about a complex project in a trivial manner. I wrote a <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> on how to do complex projects justice in deep dives.</li>
-<li><strong>ML fundamentals</strong>: Most of the time, you&rsquo;ll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they&rsquo;ve solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge.</li>
-<li><strong>Behavior and leadership</strong>: It&rsquo;s hard to reflect on your career while you&rsquo;re still living it. If you claim to know perfectly well how to expand scope, manage priorities, collaborate with difficult teammates, and right all the wrongs, you&rsquo;re essentially saying &ldquo;everyone is drunk while I alone am sober&rdquo; (众人皆醉我独醒). That can&rsquo;t be true. You need repeated, honest conversations with friends and mentors to see where you can grow. Beyond that, you need to be that mentor and friend &mdash; support junior engineers &amp; peers and lead teams through difficult moments &mdash; to show leadership across the board. Just like internal promotions, getting a Senior+ offer often requires showing Staff-level qualities.</li>
-</ol>
 <h4 id="longer-process" class="scroll-mt-8 group">
   Longer Process
   
@@ -582,6 +548,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h2>
+<p>As an MLE/RE candidate, you may get a funny experience of writing a toy backend API yesterday, implementing a Transformer decoder today, and solving an LC hard tomorrow &mdash; all with the expectation to be fast, optimal, and thoughtful. Some friends complain about such expectations, saying (almost) no one in real life is at once a backend genius, a SOTA model creator, and a competitive programmer. I just accept these requirements as reality, swallow the pain, and try my best to prepare and perform.</p>
 <h3 id="1-lc-style-coding" class="scroll-mt-8 group">
   1. LC-Style Coding
   
@@ -607,6 +574,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
+<p>In an LC-style interview of ~45 minutes, you will likely solve 1 Easy + 1 Medium or 2 Medium problems in a Meta interview, or 1 Hard problem with multiple follow-ups in a Google/Snap/Pinterest/Databricks/etc. interview. In the Meta case, the ideal outcome is to instantly think of the solution upon seeing the prompt, explain the solution in 2-3 min, code it up in 5-8 min, and do a dry run in 1-2 min. In the latter cases, the ideal outcome is to write a working solution within 20 minutes, create and pass sharp test cases, and discuss optimizations. For follow-ups, you&rsquo;re expected to provide extendable solutions in code or words. If no follow-ups, it means you&rsquo;ve spent too long on the main problem.</p>
 <h4 id="dont-be-obsessed-with-company-tags" class="scroll-mt-8 group">
   Don&rsquo;t Be Obsessed with Company Tags
   
@@ -710,22 +678,23 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
+<p>In a 1-hour OOP-style interview, you&rsquo;ll implement a toy API to play a game, manage a database or a process, etc.. Problems are typically organized by levels. The first level is a warmup. Then you gradually expand the API in subsequent levels. The ideal candidate not just has a good pace to finish all levels, but also makes reasonable design choices for a real-world backend system. It&rsquo;s good to leave some time in the end to discuss how to scale this toy system in production.</p>
 <p>It&rsquo;s hypocritical of me to say that I like connecting coding interviews to real-world systems when I have a terrible <span class="sidenote">
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-13"
+    id="sidenote-checkbox-11"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-13"
-    for="sidenote-checkbox-13"
+    aria-details="sidenote-11"
+    for="sidenote-checkbox-11"
     class="sidenote-mark"
     >track record</label
   >
-  <small id="sidenote-13" class="sidenote-content">
+  <small id="sidenote-11" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>I said I have a high onsite conversion rate. That's because I don't often move to onsite after encountering OOP phone screens 😂.<span class="sr-only">)</span>
   </small>
 </span>
@@ -743,7 +712,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <li>Employee Management System</li>
 <li>&hellip;</li>
 </ul>
-<p>I used to think it&rsquo;s the <em>quickly</em> part that got me. Then, in a mock interview with a backend engineer, I came to see the real issue: my code passes test cases and looks clean, but I make ridiculous design choices no good backend engineer would make. For example, when designing a cart, I chose to store price, units, and other attributes directly in an <code>Item</code> data class, whereas a backend engineer may use a unique <code>product_id</code> and link it to external metadata when needed. This is one of many decisions I don&rsquo;t even realize I&rsquo;m getting wrong. The key point is that OOP interviews are as much about <em>system design</em> as they are about coding. Even if you finish all levels quickly, you may still fail due to poor design choices. Then, after you complete everything the prompt asks for, the interviewer might ask how you&rsquo;d optimize and scale this system in production. That&rsquo;s another place where non-backend engineers may fail a seemingly smooth interview.</p>
+<p>I used to think it&rsquo;s the <em>quickly</em> part that got me. Then, in a mock interview with a backend engineer, I came to see the real issue: my code passes test cases and looks clean, but I make ridiculous design choices no good backend engineer would make. For example, when designing a cart, I chose to store price, units, and other attributes directly in an <code>Item</code> data class, whereas a backend engineer may use a unique <code>product_id</code> and link it to external metadata when needed. In other problems, you may be asked to write code for a distributed system and need to ensure thread safety &mdash; i.e., if one thread writes a new key-value pair to a KV store and another tries to read the value of the same key, you may get inconsistent results. You will need to handle concurrency properly. Feel free to check out my recent <a href="/posts/concurrency_101/" class="backlink">blogpost</a>
+  
+   on concurrency interview preparation. These are just two examples among many to show why OOP interviews are challenging. They are as much about <em>system design</em> as they are about coding. Even if you finish all levels quickly, you may still fail due to poor design choices or a lack of understanding of distributed systems. After you complete everything asked by the prompt, the interviewer may ask how you&rsquo;d optimize and scale this system in production. That&rsquo;s another place where non-backend engineers fail a seemingly smooth interview.</p>
 <p>To join companies such as OpenAI, Anthropic, Databricks, Netflix, Roblox, Notion, and Reddit, you must pass OOP interviews with flying colors. Some folks obsess over collecting problems other candidates have seen in interviews &mdash; this is really tiring and risky. What if you have interviews with OpenAI, Anthropic, and Databricks at once? Do you collect and prepare for ~50 OOP problems? What if you see a new problem and new variants of an old problem? You panic and fail.</p>
 <p>A more effective approach is to learn high-level principles behind good objective-oriented designs. After that enlightening mock interview, I was pointed to an awesome <a href="https://www.coditioning.com/app/learning/courses/tech_interview_prep/4">OOP crash course</a>. Go through it. If you have time, it&rsquo;s also good to take the <a href="https://neetcode.io/courses/design-patterns/10">Object-Oriented Design Patterns</a> NeetCode course. These crash courses can help make up for some backend knowledge gaps, but know that a backend engineer with years of practical experience will do better than you, just like you&rsquo;ll do better at ML system design than a backend engineer who perhaps has memorized some of your designs. There&rsquo;s no end to what kind systems you may be asked to design. One way to practice is to ask GPT to reverse-engineer CodeSignal-style prompts for common systems:</p>
 <figure class="codeblock not-prose relative scroll-mt-8" id="codeblock-01">
@@ -846,7 +817,6 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 
   
 </figure>
-<p>TODO: add <a href="https://www.yuan-meng.com/notes/concurrency_101/">concurrency</a></p>
 <h3 id="3-ai-assisted-coding" class="scroll-mt-8 group">
   3. AI-Assisted Coding
   
@@ -917,6 +887,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </h3>
 <p>Okay, so ML coding will be right in our alley, right? That&rsquo;d be the funniest thing I&rsquo;ve heard 🤣🤣🤣. I like OOP 10x more over ML coding.</p>
 <p>If I ask my ML engineer friends and colleagues, 9 out of 10 will say they love machine learning, but it will scare the hell out of all to write PyTorch code without inheriting from a family heirloom model class or using Cursor. In ML coding interviews, however, you&rsquo;re expected to write PyTorch as fluently as regular Python. Even if you can Google, you&rsquo;re bound to run out of time if you need to Google much.</p>
+<p>In a 1-hour ML coding interview, you&rsquo;re given some model code (e.g., model classes, training and inference loops) and asked to debug bad performance, or you implement a model from scratch using NumPy/PyTorch and overfit it on toy samples. An ideal candidate is fluent in PyTorch or NumPy and can code up common architectures (e.g., MLP, CNN, RNN, Transformer encoders/decoders) and building blocks (e.g., linear layers, projections, residual connections, layer norm, batch norm, causal self-attention, bidirectional self-attention, activation functions, optimizers) from memory. Excessive Googling leaves you no time to debug or implement the model.</p>
 <p>So how to be well-prepared for ML coding? I wish I knew but doubt if anyone does &mdash; for instance, I bet if you take away the rubrics from your interviewer, they can&rsquo;t code up the solution to their own question without physical pain. So I&rsquo;ll venture my best guesses below.</p>
 <p>The obvious thing is to get fluent in PyTorch. For starters, read <a href="https://sebastianraschka.com/teaching/pytorch-1h/">PyTorch in One Hour</a> and play with <a href="https://tensorgym.com/">TensorGym</a>. For a more comprehensive tutorial, go over <a href="https://www.learnpytorch.io/">Zero to Mastery Learn PyTorch for Deep Learning</a>.</p>
 <p>The non-obvious thing is how to cover all ML concepts you might be asked to code up. I&rsquo;ll offer 3 ideas (they may not be good ideas).</p>
@@ -1157,7 +1128,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <p>To get comfortable with Transformer architectures as well as training and inference loops, read <a href="https://github.com/rasbt/LLMs-from-scratch">Build a Large Language Model</a> and reproduce the code on your own. Watch Andrej Karpathy&rsquo;s <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">GPT-2 video</a>. If you have extra time, follow along with Karpathy&rsquo;s <a href="https://karpathy.ai/zero-to-hero.html">Neural Networks: Zero to Hero</a> and read some of his repos (e.g., <a href="https://github.com/karpathy/nanoGPT">nanoGPT</a>, <a href="https://github.com/karpathy/micrograd">micrograd</a>). You should also be familiar with common training and inference optimizations, such as <a href="https://lubits.ch/flash/">Flash Attention</a>, <a href="https://lightning.ai/lightning-ai/environments/code-lora-from-scratch?section=featured">LoRA</a>, beam search, <a href="https://huggingface.co/blog/kv-cache">KV cache</a>), etc., and know how to implement them from scratch.</p>
 <p>The problem is: what if the interviewer asks about something other than architectures? For example, how to implement autograd from scratch instead of calling <code>loss.backward()</code>? Or, given scores and labels from a binary classifier, how to compute ranking metrics?</p>
 <p>To maximize Recall, here&rsquo;s a second idea: practice ML coding the same way you practice LC. A great website is <a href="https://www.deep-ml.com/problems">Deep-ML</a> &mdash; it&rsquo;s like LC, but for ML. You can practice individual problems or work through collections.</p>
-<p>If you prefer theory before code, a third idea is to read <a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a> and study the accompanying <a href="https://udlbook.github.io/udlbook/">notebooks</a>. I don&rsquo;t think you need extra preparation for ML fundamentals after this.</p>
+<p>If you prefer theory before code, a third idea is to read <a href="https://udlbook.github.io/udlbook/">Understanding Deep Learning</a> and study the accompanying <a href="https://udlbook.github.io/udlbook/">notebooks</a>. This also doubles as excellent preparation for ML fundamentals (see <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#5-ml-fundamentals">Section 5</a>).</p>
 <p>Last but not least, not all companies ask you to write PyTorch models. Some ask you to fit classical Scikit-learn models or use NumPy to implement from scratch. Don&rsquo;t be caught off the guard &mdash; brush up with Educative&rsquo;s <a href="https://www.educative.io/blog/scikit-learn-cheat-sheet-classification-regression-methods">Scikit-learn cheat sheet</a>. To practice NumPy itself, go over the <a href="https://github.com/rougier/numpy-100">numpy-100</a> repo and the <a href="https://www.labri.fr/perso/nrougier/from-python-to-numpy/"><em>From Python to Numpy</em></a> tutorial.</p>
 <h3 id="5-ml-fundamentals" class="scroll-mt-8 group">
   5. ML Fundamentals
@@ -1184,7 +1155,8 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>I find it deeply unsatisfying to collect a checklist of “common questions” and prepare only for those. For example:</p>
+<p>Most of the time, you&rsquo;ll get 3–5 rapid-fire ML fundamentals questions in a phone screen, often before coding. Many candidates are confused when they fail, remembering they&rsquo;ve solved the coding question perfectly, only to forget that they made fundamental mistakes on ML fundamentals. One or two wrong answers can be enough for rejection. And if those 5 minutes already feels exposing, know that some companies have one or two 45-minute onsite rounds that keep asking ML fundamentals to test the limit of your deep learning knowledge.</p>
+<p>I find it deeply unsatisfying to collect a checklist of &ldquo;common questions&rdquo; and prepare only for those. For example:</p>
 <ul>
 <li>What are common optimizers?</li>
 <li>What are common activation functions?</li>
@@ -1198,7 +1170,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <li>… and so on.</li>
 </ul>
 <p>My philosophy is, every minute I spend on interview prep should make me a better engineer. After all, I&rsquo;m not a professional interviewee; I&rsquo;m a professional ML engineer. Memorizing answers doesn&rsquo;t do that for me. I treat ML fundamental prep as an opportunity to revisit deep learning foundations and uncover knowledge gaps I didn&rsquo;t know I had.</p>
-<p>As mentioned in the ML coding section, a good way to prepare is to read the <a href="https://udlbook.github.io/udlbook/"><em>Understanding Deep Learning</em></a> book and check out the notebooks. If you&rsquo;re short on time, read Chapters 1–9, 11, and 12.</p>
+<p>As mentioned in the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding">ML coding section</a>, the <a href="https://udlbook.github.io/udlbook/"><em>Understanding Deep Learning</em></a> book and its notebooks are ideal preparation for both coding and fundamentals. If you&rsquo;re short on time, read Chapters 1–9, 11, and 12.</p>
 <p>While I like Kevin Murphy&rsquo;s <a href="https://probml.github.io/pml-book/">PML books</a>, the clever bits are scattered across chapters. I&rsquo;ve had many epiphanies reading his writing, but it&rsquo;s not always phrased in the &ldquo;standard language&rdquo; you or your interviewers instinctively think in. They may not be good prep books.</p>
 <h3 id="6-ml-model-design" class="scroll-mt-8 group">
   6. ML <strong>Model</strong> Design
@@ -1231,18 +1203,18 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
   <input
     aria-label="Show sidenote"
     type="checkbox"
-    id="sidenote-checkbox-15"
+    id="sidenote-checkbox-14"
     class="sidenote-checkbox hidden"
   />
   <label
     tabindex="0"
     role="mark"
-    aria-details="sidenote-15"
-    for="sidenote-checkbox-15"
+    aria-details="sidenote-14"
+    for="sidenote-checkbox-14"
     class="sidenote-mark"
     >95%</label
   >
-  <small id="sidenote-15" class="sidenote-content">
+  <small id="sidenote-14" class="sidenote-content">
     <span class="sr-only"> (sidenote: </span>I did encounter one design question outside the list below and failed miserably. I've never failed any other design interviews. Two things I learned: if your other rounds are all "strong hire", you might get a follow-up interview; and at the end of the day, you can only accept one offer to join one company, so failing on rare occasions doesn't matter.<span class="sr-only">)</span>
   </small>
 </span>
@@ -1270,6 +1242,9 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </ul>
 </li>
 </ul>
+<p>By now, everyone knows how to sketch a multi-stage ranking pipeline &mdash; L0 (candidate generation) 👉 L1 (first-stage ranking) 👉 L2 (second-stage ranking) 👉 L3 (call it re-ranking, value model, or &ldquo;special effects&rdquo;). If you sound like everyone else, that won&rsquo;t cut it anymore. You need full control of the conversation: use the ranking funnel as scaffolding, but show insights that only a RecSys expert would have. Bring ideas and solutions from your work (e.g., you&rsquo;ve worked on lifelong sequence models and they are actually a good choice here) and industry frontiers (e.g., this year&rsquo;s standouts are perhaps Kuaishou&rsquo;s &ldquo;One&rdquo; series or <a href="/posts/generative_recommendation/" class="backlink">generative recommendation</a>
+  
+   in general). That said, only bring up a solution if it solves a real problem (e.g., scaling up, cold start), not because you know it.</p>
 <p>Below is how I usually approach ML model design problems:</p>
 <ol>
 <li><strong>Problem framing</strong>: understand what to build and how
@@ -1324,7 +1299,8 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </li>
 <li><strong>Deep dives</strong>: discuss glossed-over key details, such as scaling the system (e.g., vertical/horizontal scaling, sharding, caching, replication + load balancing), handling positional bias, cold start, data drifts, and so on. Usually the interviewer will prompt you.</li>
 </ol>
-<p>Above is just a skeleton. I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn&rsquo;t work on RecSys or is inexperienced, the experience can be excruciating &mdash; the interviewer may over-index on structure and question your choices or explanations when they come from actual practices that the interviewer isn&rsquo;t familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I&rsquo;ve only run into the former type once or twice; in those cases, I know I won&rsquo;t join the team.</p>
+<p>I find ML model design interview outcomes to be highly dependent on the interviewer. If the interviewer doesn&rsquo;t work on RecSys or is inexperienced, the experience can be excruciating &mdash; the interviewer may over-index on structure and question your choices or explanations when they come from actual practices that the interviewer isn&rsquo;t familiar with. An experienced interviewer, by contrast, will let you skip unimportant parts and dive into the interesting components, asking how you handle tricky situations in day-to-day work or how the industry typically approaches them. Those conversations are lovely. I&rsquo;ve only run into the former type once or twice; in those cases, I know I won&rsquo;t join the team.</p>
+<p>When preparing, I pick a handful of common problems (e.g., short video recommendations, place recommendations, friend recommendations, CTR/CVR ads ranking, harmful content detection, retrieval-augmented generation) and write full designs for each. You can find 3 examples in the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#c-example-system-designs">&ldquo;Example System Designs&rdquo;</a> section. I start by sketching the high-level system from first principles, then read industry blogs, papers, and my company&rsquo;s practices to fill in the details. Once everything is on paper, I practice delivery under time constraints (typically 45 minutes to 1 hour) and move extra material into &ldquo;deep dives&rdquo;. Sometimes I spend 3+ days on a single design and end up with a 40+ page document. In reality, no interviewer goes into that much detail. For a ranking design, for example, covering the standard multi-stage ranking funnel and adding one or two interesting insights from work or papers is 100% enough for a &ldquo;strong yes&rdquo;.</p>
 <p>If you&rsquo;re short on time, below is an essential list of papers to read:</p>
 <ol>
 <li><strong>DLRM vs. Generative Recommendation paradigms</strong>: <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> 👉 like HSTU or not, this is the best paper to understand the general components in any deep learning recommendation models (DLRM) and how they differ from language models or so-called &ldquo;generative recommenders&rdquo; (GR). I also wrote a <a href="/posts/generative_recommendation/" class="backlink">blogpost</a>
@@ -1337,7 +1313,6 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 <li><strong>Feature transformations</strong>: Another selling point of DLRM is its ability to leverage shared feature representations to predict different tasks, such as clicks, conversions, watch time, and other engagement outcomes one cares about. Read the seminal <a href="https://arxiv.org/abs/2311.09580">MMoE</a> paper and its predecessor <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a> on such multi-task learning.</li>
 <li><strong>Practical concerns</strong>: For most RecSys MLEs, unless you work on these problems, you&rsquo;re definitely aware of their existence but may not speak intelligently about solutions &mdash; such as cold start (recommend new items or recommend for new users), positional bias (learn inherent item relevance, debiasing the influence from item positions), diversity (dedupe &amp; re-rank results by topic, creator, or other criteria), or value models (if ranking by multiple objectives, find the &ldquo;best&rdquo; weight of each). Read one or two paper on each topic (e.g., cold start: Kuaishou <a href="https://dl.acm.org/doi/10.1145/3640457.3688098">1</a> &amp; <a href="https://dl.acm.org/doi/10.1145/3701716.3715205">2</a>; positional bias: <a href="https://research.google/pubs/position-bias-estimation-for-unbiased-learning-to-rank-in-personal-search/">Google</a>; diversity: <a href="https://arxiv.org/abs/2206.05020">Kuaishou</a>; value models: <a href="https://arxiv.org/abs/2509.05292">Pinterest</a>), so you can say while you&rsquo;re not an expert, you know some solutions.</li>
 </ol>
-<p>When preparing for design interviews, I pick a handful of common problems (e.g., short video recommendations, place recommendations, friend recommendations, CTR/CVR ads ranking, harmful content detection, retrieval-augmented generation) and write full designs for each. You can find 3 examples in the <a href="https://www.yuan-meng.com/posts/mle_interviews_2.0/#c-example-system-designs">&ldquo;Example System Designs&rdquo;</a> section. I start by sketching the high-level system from first principles, then read industry blogs, papers, and my company&rsquo;s practices to fill in the details. Once everything is on paper, I practice delivery under time constraints (typically 45 minutes to 1 hour) and move extra material into &ldquo;deep dives&rdquo;. Sometimes I spend 3+ days on a single design and end up with a 40+ page document. In reality, no interviewer goes into that much detail. For a ranking design, for example, covering the standard multi-stage ranking funnel and adding one or two interesting insights from work or papers is 100% enough for a &ldquo;strong yes&rdquo;.</p>
 <h3 id="7-ml-infra-design" class="scroll-mt-8 group">
   7. ML <strong>Infra</strong> Design
   
@@ -1363,7 +1338,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
-<p>I have colleagues who are both strong ML engineers and ML infra engineers. They have one thing in common: 15+ years of experience, having started as backend/infra engineers before ML was cool, and then growing into ML leaders. Most of my peers and I, however, started our careers as baby ML engineers trying only to move model metrics, without deep low-level ML infra knowledge. Most of the time, you can avoid ML infra interviews &mdash; but a handful of places (e.g., DoorDash, Reddit, Netflix, Snap) specifically ask MLE candidates to design the <em>infra</em> behind ML systems. It&rsquo;s funny that I&rsquo;ve interviewed with them all and somehow never managed to escape this round.</p>
+<p>I have colleagues who are both strong ML engineers and ML infra engineers. They have one thing in common: 15+ years of experience, having started as backend/infra engineers before ML was cool, and then growing into ML leaders. Most of my peers and I, however, started our careers as baby ML engineers trying only to move model metrics, without deep low-level ML infra knowledge. Most of the time, you can avoid ML infra interviews &mdash; but a handful of places (e.g., DoorDash, Reddit, Netflix, Snap) specifically ask MLE candidates to design the <em>infra</em> behind ML systems.</p>
 <p>I&rsquo;ve summarized my ML infra interview preparation in this <a href="/posts/ml_infra_interviews/" class="backlink">blogpost</a>
   
   . It&rsquo;s pretty long, so I won&rsquo;t repeat its content here in the interest of space. Do check it out! Below are key lessons I&rsquo;ve learned:</p>
@@ -1537,6 +1512,7 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
     </a>
   
 </h3>
+<p>It&rsquo;s hard to reflect on your career while you&rsquo;re still living it. If you claim to know perfectly well how to expand scope, manage priorities, collaborate with difficult teammates, and right all the wrongs, you&rsquo;re essentially saying &ldquo;everyone is drunk while I alone am sober&rdquo; (众人皆醉我独醒). That can&rsquo;t be true. You need repeated, honest conversations with friends and mentors to see where you can grow. Beyond that, you need to be that mentor and friend &mdash; support junior engineers &amp; peers and lead teams through difficult moments &mdash; to show leadership across the board. Just like internal promotions, getting a Senior+ offer often requires showing Staff-level qualities.</p>
 <p>99% of the time, behavior questions come from the list below:</p>
 <details class="fold">
 <summary>79 behavior question by signal</summary>
@@ -1798,10 +1774,52 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
 </h3>
 <p>In phone screens, hiring manager chats, or design interviews, you may be asked to walk through a project you&rsquo;re most proud of. Some companies have a dedicated 45-minute or 1-hour round for project deep dives. If slides are allowed, 10–12 is a good amount.</p>
 <p>There&rsquo;s no skill for this round. If you&rsquo;ve led a project with great technical challenges (e.g., SOTA models, label scarcity, serving challenges) or cross-functional complexity (e.g., many stakeholders with divided opinions, hard trade-offs), this is your chance to shine. I find this round to be the deciding factor for hiring decisions. Coding interviews weed out weak candidates, but exactly no one gets hired because they did well on coding. Design interviews test your first-principles thinking, but you might never have had success in this domain yet. Project deep dives, by contrast, show exactly why you&rsquo;re the right person for this team &mdash; e.g., because you bring the exact technical expertise the team needs and your leadership and decision-making style gets things done on this team or in this organization.</p>
-<p>To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> for more details.</p>
-<ol start="10">
-<li>Team Match</li>
-</ol>
+<p>I&rsquo;ve got one offer because the team needed someone to work on X, and I happened to have worked on X. In this case, my first interviewer was so interested in X that they skipped the coding question and interviewers in the next few rounds ditched the agenda to ask me more about X. If you work on models with broad industry applications and your team is ahead of the industry, you have a natural advantage over very well-prepared candidates who don&rsquo;t have such experience. This is why you need to choose your current projects or next moves carefully &mdash; as an ML engineer, try to choose a company that has the same or a more advanced ML stack as your current one; only move to a company with a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-21"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-21"
+    for="sidenote-checkbox-21"
+    class="sidenote-mark"
+    >dated</label
+  >
+  <small id="sidenote-21" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It doesn't matter at all, for instance, if a ranking team currently uses DCNv2, RankMixer, or some other architectures for feature interaction, because details can change in a few projects, including yours. However, if a company doesn't use DL, has no plan to support DL, and won't benefit from DL, then think twice before joining, however much you like their product. In a few years when you interview again, perhaps for a frontier AI lab or a more mature company, you can speak to scope but won't capture sufficient interests in deep dives, research presentations, or team matches.<span class="sr-only">)</span>
+  </small>
+</span>
+ ML stack if you get a once-in-a-lifetime level bump (e.g., +2) or a package that keeps you happy for the rest of your career. Otherwise, you&rsquo;re cashing out too early and losing your edge in 2-3 years.</p>
+<p>That said, you can still fail if you talk about a complex project in a trivial manner. To prepare, I take a piece of paper and walk down the memory lane to detail everything that happened in the project. I then organize those pieces by collaboration complexity, ambiguity, and technical complexity, and tell my story in chapters: design, development, launch, learnings, and next steps. Check out my <a href="https://www.yuan-meng.com/notes/project_complexity/">post</a> for more details.</p>
+<h3 id="10-team-match" class="scroll-mt-8 group">
+  10. Team Match
+  
+    <a href="#10-team-match"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
 <p>Coming soon&hellip;</p>
 <h2 id="appendices" class="scroll-mt-8 group">
   Appendices
@@ -2196,28 +2214,28 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
         <header class="grow">
           <h3>
             <a
-              href="/posts/generative_recommendation/"
+              href="/posts/concurrency_101/"
               class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
-              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
-              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+              title="Multithreading and Concurrency 101 for ML Engineers"
+              >Multithreading and Concurrency 101 for ML Engineers</a
             >
           </h3>
         </header>
           <ul class="flex flex-row items-center justify-end space-x-2">
               <li>
                 <a
-                  href="/categories/generative-recommendation/"
+                  href="/categories/coding/"
                   class="taxonomy"
-                  title="Posts and notes on Generative recommendation"
-                  >Generative recommendation</a
+                  title="Posts and notes on Coding"
+                  >Coding</a
                 >
               </li>
               <li>
                 <a
-                  href="/categories/large-language-models/"
+                  href="/categories/distributed-systems/"
                   class="taxonomy"
-                  title="Posts and notes on Large language models"
-                  >Large language models</a
+                  title="Posts and notes on Distributed systems"
+                  >Distributed systems</a
                 >
               </li>
           </ul>
@@ -2258,6 +2276,38 @@ I have always loved how Dustin from Stranger Things says “here goes nothing”
                   class="taxonomy"
                   title="Posts and notes on Interview"
                   >Interview</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/generative_recommendation/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Is Generative Recommendation the ChatGPT Moment of RecSys?"
+              >Is Generative Recommendation the ChatGPT Moment of RecSys?</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/generative-recommendation/"
+                  class="taxonomy"
+                  title="Posts and notes on Generative recommendation"
+                  >Generative recommendation</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/large-language-models/"
+                  class="taxonomy"
+                  title="Posts and notes on Large language models"
+                  >Large language models</a
                 >
               </li>
           </ul>
