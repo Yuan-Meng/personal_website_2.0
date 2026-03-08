@@ -111,7 +111,9 @@
       "out": []
     },
     "/posts/concurrency_101/": {
-      "in": [],
+      "in": [
+        "/posts/mle_interviews_2.0/"
+      ],
       "out": []
     },
     "/posts/ebr/": {
@@ -193,6 +195,7 @@
         "/posts/ml_infra_interviews/",
         "/posts/mle_interviews/",
         "/posts/generative_recommendation/",
+        "/posts/concurrency_101/",
         "/posts/ml_infra_interviews/",
         "/posts/generative_recommendation/",
         "/posts/generative_recommendation/",
