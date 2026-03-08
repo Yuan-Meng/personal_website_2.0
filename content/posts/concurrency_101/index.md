@@ -1,5 +1,5 @@
 ---
-title: "Multithreading and Concurrency 101"
+title: "Preparing for Multithreading and Concurrency Interviews"
 date: 2026-03-07
 categories: ["coding", "distributed systems"]
 toc: true
