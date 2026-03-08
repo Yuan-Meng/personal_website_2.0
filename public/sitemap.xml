@@ -8,9 +8,9 @@
   </url><url>
     <loc>http://localhost:1313/categories/distributed-systems/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
-  </url><url>
     <loc>http://localhost:1313/posts/concurrency_101/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>

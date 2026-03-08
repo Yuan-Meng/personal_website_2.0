@@ -10,28 +10,28 @@
 <meta name="language" content="en" />
 <meta name="viewport" content="width=device-width" />
 <title>
-    Preparing for Multithreading and Concurrency Interviews | Yuan Meng
+    Multithreading and Concurrency 101 for ML Engineers | Yuan Meng
 </title>
-  <meta name="description" content=" How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time." />
+  <meta name="description" content=" How to Get a Chinese New Year Feast Ready in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time." />
 <meta property="og:url" content="http://localhost:1313/posts/concurrency_101/">
   <meta property="og:site_name" content="Yuan Meng">
-  <meta property="og:title" content="Preparing for Multithreading and Concurrency Interviews">
-  <meta property="og:description" content="How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
+  <meta property="og:title" content="Multithreading and Concurrency 101 for ML Engineers">
+  <meta property="og:description" content="How to Get a Chinese New Year Feast Ready in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-03-07T00:00:00+00:00">
 
 
-  <meta itemprop="name" content="Preparing for Multithreading and Concurrency Interviews">
-  <meta itemprop="description" content="How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
+  <meta itemprop="name" content="Multithreading and Concurrency 101 for ML Engineers">
+  <meta itemprop="description" content="How to Get a Chinese New Year Feast Ready in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
   <meta itemprop="datePublished" content="2026-03-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4748">
+  <meta itemprop="wordCount" content="4749">
   <meta itemprop="keywords" content="Coding,Distributed systems">
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Preparing for Multithreading and Concurrency Interviews">
-  <meta name="twitter:description" content="How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
+  <meta name="twitter:title" content="Multithreading and Concurrency 101 for ML Engineers">
+  <meta name="twitter:description" content="How to Get a Chinese New Year Feast Ready in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.">
 
 <link rel="canonical" href="http://localhost:1313/posts/concurrency_101/" />
 
@@ -74,18 +74,18 @@
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2026-03-07",
-  "description": " How to Prepare a Chinese New Year Feast in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.",
-  "headline": "Preparing for Multithreading and Concurrency Interviews",
+  "description": " How to Get a Chinese New Year Feast Ready in Two Hours I don’t like cooking much since it takes me two hours to prepare two dishes. I always wondered how my family managed to prepare a dozen dishes for the Chinese New Year feast in the same amount of time.",
+  "headline": "Multithreading and Concurrency 101 for ML Engineers",
   "isPartOf": {
     "@id": "http://localhost:1313/posts/",
     "@type": "Blog",
     "name": "Posts"
   },
   "mainEntityOfPage": "http://localhost:1313/posts/concurrency_101/",
-  "name": "Preparing for Multithreading and Concurrency Interviews",
+  "name": "Multithreading and Concurrency 101 for ML Engineers",
   "timeRequired": "PT23M",
   "url": "http://localhost:1313/posts/concurrency_101/",
-  "wordCount": 4748
+  "wordCount": 4749
 }
 </script>
 
@@ -121,7 +121,7 @@
       <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
         <article class="main">
     <header>
-      <h1 class="!mb-1">Preparing for Multithreading and Concurrency Interviews</h1><div class="flex flex-row items-center space-x-4">
+      <h1 class="!mb-1">Multithreading and Concurrency 101 for ML Engineers</h1><div class="flex flex-row items-center space-x-4">
           <time class="text-sm italic opacity-80" datetime="2026-03-07T00:00:00&#43;00:00">March 7, 2026</time>
         </div>
     </header>
@@ -141,7 +141,7 @@
         <nav id="TableOfContents" class="toc-content">
           <nav id="TableOfContents">
   <ul>
-    <li><a href="#how-to-prepare-a-chinese-new-year-feast-in-two-hours">How to Prepare a Chinese New Year Feast in Two Hours</a></li>
+    <li><a href="#how-to-get-a-chinese-new-year-feast-ready-in-two-hours">How to Get a Chinese New Year Feast Ready in Two Hours</a></li>
     <li><a href="#key-concepts-in-concurrency">Key Concepts in Concurrency</a></li>
     <li><a href="#some-practice-is-better-than-none">Some Practice is Better than None</a></li>
     <li><a href="#practice-toy-problems">Practice Toy Problems</a>
@@ -215,10 +215,10 @@
 
     
     <div class="content">
-      <h2 id="how-to-prepare-a-chinese-new-year-feast-in-two-hours" class="scroll-mt-8 group">
-  How to Prepare a Chinese New Year Feast in Two Hours
+      <h2 id="how-to-get-a-chinese-new-year-feast-ready-in-two-hours" class="scroll-mt-8 group">
+  How to Get a Chinese New Year Feast Ready in Two Hours
   
-    <a href="#how-to-prepare-a-chinese-new-year-feast-in-two-hours"
+    <a href="#how-to-get-a-chinese-new-year-feast-ready-in-two-hours"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -271,7 +271,7 @@
 </h2>
 <ul>
 <li>
-<p><strong>Concurrency vs. Parallelism</strong>: To <a href="https://go.dev/blog/waza-talk">quote</a> Rob Pike, one of Go&rsquo;s creators &mdash; &ldquo;Concurrency is about <em>dealing</em> with lots of things at once. Parallelism is about <em>doing</em> lots of things at once.&rdquo;</p>
+<p><strong>Concurrency vs. parallelism</strong>: To <a href="https://go.dev/blog/waza-talk">quote</a> Rob Pike, one of Go&rsquo;s creators &mdash; &ldquo;Concurrency is about <em>dealing</em> with lots of things at once. Parallelism is about <em>doing</em> lots of things at once.&rdquo;</p>
 <ul>
 <li>
 <p><strong>Concurrency</strong>: We can cleverly structure a task into independent subtasks that can be paused, switched between, and run in <em>overlapping</em> time periods. It improves the program&rsquo;s CPU utilization, throughput, and responsiveness.</p>
@@ -284,7 +284,7 @@
 <ul>
 <li><strong>Concurrency:</strong> As the sole chef, I put water on to boil and chop meat while waiting. I only have one set of hands (one core), but can interleave subtasks to cook faster.</li>
 <li><strong>Parallelism:</strong> While cooking the New Year dinner, I chop meat while my aunt stir fries vegetables. We&rsquo;re separate chefs (two cores) doing tasks at the exact same time.</li>
-<li><strong>Shared Memory:</strong> My dad and aunt both add different ingredients to the exact same stew pot at the same time.</li>
+<li><strong>Shared memory:</strong> My dad and aunt both add different ingredients to the exact same stew pot at the same time.</li>
 </ul>
 </li>
 </ul>
@@ -295,7 +295,7 @@
 <li><strong>Process</strong>: An executing instance of a program (a training job) with its own isolated memory space and system resources.</li>
 <li><strong>Thread</strong>: The smallest unit of execution within a process.
 <ul>
-<li><strong>Shared Memory</strong>: Multiple threads within a single process share the same memory space, allowing incredibly fast communication. The risk is that multiple threads can access and modify the same data concurrently. The result may be incorrect.</li>
+<li><strong>Shared memory</strong>: Multiple threads within a single process share the same memory space, allowing incredibly fast communication. The risk is that multiple threads can access and modify the same data concurrently. The result may be incorrect.</li>
 </ul>
 </li>
 <li><strong>Task</strong>: A conceptual unit of work scheduled for execution (e.g., a function, coroutine, or data-loading job). Tasks may run on threads or processes depending on the architecture.</li>
@@ -306,7 +306,7 @@
 <ul>
 <li><strong>Multithreading</strong>: A single process runs multiple threads concurrently. Tasks share memory and execute in overlapping time periods. Languages like Java allow tasks to run in parallel if spread across multiple cores, but languages like Python are limited by the <a href="https://en.wikipedia.org/wiki/Global_interpreter_lock">Global Interpreter Lock</a> (GIL).</li>
 <li><strong>Multiprocessing</strong>: Spawns multiple entirely separate processes, each with its own memory space. This achieves true parallelism across CPU cores and avoids shared-memory risks, but communication between processes is slower.</li>
-<li><strong>Asynchronous (Async/Await)</strong>: A cooperative, usually single-threaded model where tasks explicitly yield control back to an event loop when waiting for I/O (like network requests), so other tasks can run in the meantime.</li>
+<li><strong>Asynchronous (async/await)</strong>: A cooperative, usually single-threaded model where tasks explicitly yield control back to an event loop when waiting for I/O (like network requests), so other tasks can run in the meantime.</li>
 </ul>
 </li>
 <li>
@@ -318,9 +318,9 @@
 <li>
 <p>This nondeterminism leads to common <strong>multithreading problems</strong>:</p>
 <ul>
-<li><strong>Race Conditions</strong>: Multiple threads access or modify shared data simultaneously without coordination. The final outcome becomes a &ldquo;race&rdquo; and yields unpredictable, buggy results.
+<li><strong>Race conditions</strong>: Multiple threads access or modify shared data simultaneously without coordination. The final outcome becomes a &ldquo;race&rdquo; and yields unpredictable, buggy results.
 <ul>
-<li><strong>Critical Sections</strong>: The specific blocks of code that access these shared resources. If multiple threads enter a critical section at once, race conditions occur.</li>
+<li><strong>Critical sections</strong>: The specific blocks of code that access these shared resources. If multiple threads enter a critical section at once, race conditions occur.</li>
 </ul>
 </li>
 <li><strong>Deadlock</strong>: Two or more threads wait indefinitely for resources held by each other (e.g., you waiting for the only knife and me waiting for the only cutting board).</li>
@@ -330,9 +330,9 @@
 <li>
 <p><strong>Synchronization</strong> coordinates access to shared resources so concurrent programs behave correctly despite nondeterminism. In other words, it ensures <strong>thread safety</strong>, under which different threads can access shared resources without nondeterminism.</p>
 <ul>
-<li><strong>Atomic Operations</strong>: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.</li>
-<li><strong>Locks / Mutexes</strong>: Enforce mutual exclusion. They ensure only <em>one</em> thread can enter a critical section at a time.</li>
-<li><strong>Semaphores / Monitors</strong>: A signaling mechanism to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).</li>
+<li><strong>Atomic operations</strong>: Operations that execute as a single, indivisible step from the perspective of other threads. No other thread can observe an intermediate state.</li>
+<li><strong>Locks / mutexes</strong>: Enforce mutual exclusion. They ensure only <em>one</em> thread can enter a critical section at a time.</li>
+<li><strong>Semaphores / monitors</strong>: A signaling mechanism to coordinate access among multiple threads and manage a limited pool of resources (allowing $N$ threads to access a resource instead of just $1$).</li>
 </ul>
 </li>
 </ul>
