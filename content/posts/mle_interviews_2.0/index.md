@@ -777,7 +777,7 @@ Below are some of my go-to questions and their purposes. Concrete questions and 
 1. **Org structure & team boundaries**: Where does this team sit in the broader org and how are scopes distributed across sister teams?
    - *Why ask*: To see if the team has clear end-to-end ownership or may be in constant negotiations for scopes or adoption.
    - *Green flags*: A good manager can draw a clear picture of what their team owns end-to-end and how they collaborate (e.g., "we own X modeling and Y signals, and we collaborate with team Z on integration") with minimal hand-waving.
-   - *Red flags*: It's normal for companies with bottom-up cultures to have teams with overlapping scopes, but it would be strange, for instance, if several managers you speak with give vague or contradictory descriptions (e.g., sister teams each claim they own model A and pipeline B end-to-end and the other teams use their stack to build application B).
+   - *Red flags*: It's normal for companies with bottom-up cultures to have teams with overlapping scopes, but it would be strange, for instance, if several managers you speak with give vague or contradictory descriptions (e.g., sister teams each claim they own model A and pipeline B end-to-end and the other teams use their stack to build application C).
 
 2. **Team focus & what you'd work on**: Which area(s) is the team hiring for? What to accomplish in the first 6–12 months?
    - *Why ask*: A team usually has several focus areas and the area you're interested in may already have enough hands on deck. If the manager is willing to share, it's good to confirm that (1) you will have a concrete scope and (2) there are clear business needs and deliverables that require your expertise.
