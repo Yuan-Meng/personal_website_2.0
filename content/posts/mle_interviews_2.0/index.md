@@ -846,7 +846,7 @@ Different companies test very different things. If you interview with OpenAI, yo
 
 1. Coding
     - LeetCode: finish [NeetCode 250](https://neetcode.io/practice/practice/neetcode250), then practice company tags, focusing on problem solving rather than memorization
-    - OOP: go over the [OOP course](https://www.coditioning.com/app/learning/courses/tech_interview_prep/4) and practice [problems](https://www.yuan-meng.com/posts/mle_interviews_2.0/#2-objective-oriented-programming) 
+    - OOP: go over the [OOP crash course](https://www.coditioning.com/app/learning/courses/tech_interview_prep/4), read my blogpost on [concurrency](https://www.yuan-meng.com/posts/concurrency_101/), and practice some [example problems](https://www.yuan-meng.com/posts/mle_interviews_2.0/#2-objective-oriented-programming) 
     - ML coding: refresh PyTorch/NumPy syntax and pick one of the [3 approaches](https://www.yuan-meng.com/posts/mle_interviews_2.0/#4-ml-coding) to practice ML implementations
     - AI-assisted coding: practice the problem in the candidate portal and think about how you'd approach the problem later
 
