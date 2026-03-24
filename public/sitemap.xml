@@ -2,7 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/notes/recsys_papers_2026/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/literature-review/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/</loc>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/coding/</loc>
   </url><url>
@@ -11,8 +19,6 @@
     <loc>http://localhost:1313/posts/concurrency_101/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/agi/</loc>
   </url><url>
@@ -29,8 +35,6 @@
     <loc>http://localhost:1313/posts/mle_interviews_2.0/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/stranger_things/</loc>
-  </url><url>
-    <loc>http://localhost:1313/notes/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
@@ -91,8 +95,6 @@
     <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/literature-review/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/writing/</loc>
   </url><url>

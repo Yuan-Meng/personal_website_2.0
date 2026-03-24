@@ -76,6 +76,10 @@
         "/posts/ltr/"
       ]
     },
+    "/notes/recsys_papers_2026/": {
+      "in": [],
+      "out": []
+    },
     "/notes/resolutions-2022/": {
       "in": [],
       "out": []
@@ -86,8 +90,8 @@
     },
     "/posts/attention_as_dict/": {
       "in": [
-        "/posts/hardware_aware_transformers/",
         "/posts/generative_recommendation/",
+        "/posts/hardware_aware_transformers/",
         "/posts/seq_user_modeling/"
       ],
       "out": []
@@ -226,6 +230,7 @@
     "/posts/seq_user_modeling/": {
       "in": [
         "/posts/generative_recommendation/",
+        "/posts/hardware_aware_transformers/",
         "/posts/ml_infra_interviews/",
         "/posts/mle_interviews_2.0/"
       ],
@@ -329,6 +334,11 @@
       "permalink": "/notes/rag/",
       "section": "notes",
       "title": "Fundamentals of Retrieval Augmented Generation (RAG)"
+    },
+    "/notes/recsys_papers_2026/": {
+      "permalink": "/notes/recsys_papers_2026/",
+      "section": "notes",
+      "title": "40 RecSys + LLM Papers / Blogs to Catch Up On (March 2026)"
     },
     "/notes/resolutions-2022/": {
       "permalink": "/notes/resolutions-2022/",

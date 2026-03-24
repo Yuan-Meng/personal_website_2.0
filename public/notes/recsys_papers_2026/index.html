@@ -13,12 +13,12 @@
     40 RecSys &#43; LLM Papers / Blogs to Catch Up On (March 2026) | Yuan Meng
 </title>
   <meta name="description" content="March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.
-Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes." />
+Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes." />
 <meta property="og:url" content="http://localhost:1313/notes/recsys_papers_2026/">
   <meta property="og:site_name" content="Yuan Meng">
   <meta property="og:title" content="40 RecSys &#43; LLM Papers / Blogs to Catch Up On (March 2026)">
   <meta property="og:description" content="March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.
-Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
+Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="notes">
@@ -27,15 +27,15 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 
   <meta itemprop="name" content="40 RecSys &#43; LLM Papers / Blogs to Catch Up On (March 2026)">
   <meta itemprop="description" content="March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.
-Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
+Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
   <meta itemprop="datePublished" content="2026-03-23T00:00:00+00:00">
-  <meta itemprop="wordCount" content="728">
+  <meta itemprop="wordCount" content="799">
   <meta itemprop="keywords" content="Literature review">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="40 RecSys &#43; LLM Papers / Blogs to Catch Up On (March 2026)">
   <meta name="twitter:description" content="March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.
-Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
+Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.">
 
 <link rel="canonical" href="http://localhost:1313/notes/recsys_papers_2026/" />
 
@@ -77,7 +77,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
   },
   "copyrightNotice": "Yuan Meng",
   "datePublished": "2026-03-23",
-  "description": "March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.\nRecommender Systems Theory + Scaling Laws Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.",
+  "description": "March has been such a blur that I haven’t read as many papers as I’d love to. Below are a few cool ones I hope to catch up on before April.\nRecommender Systems Theory + Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor’s new clothes.",
   "headline": "40 RecSys + LLM Papers / Blogs to Catch Up On (March 2026)",
   "isPartOf": {
     "@id": "http://localhost:1313/notes/",
@@ -88,7 +88,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
   "name": "40 RecSys + LLM Papers / Blogs to Catch Up On (March 2026)",
   "timeRequired": "PT4M",
   "url": "http://localhost:1313/notes/recsys_papers_2026/",
-  "wordCount": 728
+  "wordCount": 799
 }
 </script>
 
@@ -150,7 +150,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
         <li><a href="#sequence--non-sequence-unification">Sequence + Non-Sequence Unification</a></li>
         <li><a href="#reasoning--agentic-models">Reasoning &amp; Agentic Models</a></li>
         <li><a href="#pre-ranking">Pre-Ranking</a></li>
-        <li><a href="#engineering-optimizations">Engineering Optimizations</a></li>
+        <li><a href="#inference-optimizations">Inference Optimizations</a></li>
         <li><a href="#practical-lessons">Practical Lessons</a></li>
       </ul>
     </li>
@@ -238,21 +238,21 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
     </a>
   
 </h3>
-<p>Every company on Earth is now perusing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor&rsquo;s new clothes.</p>
+<p>Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor&rsquo;s new clothes.</p>
 <ol>
-<li><a href="https://arxiv.org/html/2603.19809v1">How Well Does Generative Recommendation Generalize?</a>
+<li>Meta Ads Ranking AI (formerly CoreML): <a href="https://arxiv.org/html/2603.19809v1">How Well Does Generative Recommendation Generalize?</a>
 <ul>
 <li>A theoretical paper from Meta Ads Ranking AI, devising a new measurement of ranking model generalizability, finding models using Semantic IDs generalize better than those using atomic/arbitrary IDs, at some expense of memorization.</li>
 </ul>
 </li>
-<li><a href="https://arxiv.org/html/2602.16986v1">Bending the Scaling Law Curve in Large-Scale Recommendation Systems</a>
+<li>Meta Recommendation (formerly MRS): <a href="https://arxiv.org/html/2602.16986v1">Bending the Scaling Law Curve in Large-Scale Recommendation Systems</a>
 <ul>
 <li>The so-called ULTRA-HSTU or &ldquo;HSTU 2.0&rdquo; paper leverages sparse attention to optimize HSTU.</li>
 </ul>
 </li>
-<li><a href="https://arxiv.org/html/2601.22694v1">Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens</a></li>
-<li><a href="https://arxiv.org/abs/2601.10639">STEM: Scaling Transformers with Embedding Modules</a></li>
-<li><a href="https://arxiv.org/abs/2602.05062">Scaling Laws for Embedding Dimension in Information Retrieval</a></li>
+<li>ByteDance: <a href="https://arxiv.org/html/2601.22694v1">Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens</a></li>
+<li>Meta AI: <a href="https://arxiv.org/abs/2601.10639">STEM: Scaling Transformers with Embedding Modules</a></li>
+<li>Academia (UMass Amherst): <a href="https://arxiv.org/abs/2602.05062">Scaling Laws for Embedding Dimension in Information Retrieval</a></li>
 </ol>
 <h3 id="sequence--non-sequence-unification" class="scroll-mt-8 group">
   Sequence + Non-Sequence Unification
@@ -279,18 +279,18 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
     </a>
   
 </h3>
-<p>Models like OneRec and HSTU aim to achieve on-par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and look to unify sequence and non-sequence features in ways to that still enjoy scaling laws.</p>
+<p>Models like OneRec and HSTU aim to achieve on par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and look to unify sequence and non-sequence features in ways that still enjoy scaling laws.</p>
 <ol start="6">
-<li><a href="https://www.preprints.org/manuscript/202601.1559">A Survey of User Lifelong Behavior Modeling: Perspectives on Efficiency and Effectiveness</a></li>
-<li><a href="https://arxiv.org/abs/2601.12681">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a></li>
-<li><a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a></li>
-<li><a href="https://arxiv.org/abs/2602.14110">MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders</a></li>
-<li><a href="https://arxiv.org/abs/2510.26104">OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender</a></li>
-<li><a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a></li>
-<li><a href="https://arxiv.org/abs/2602.10811">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a></li>
-<li><a href="https://arxiv.org/abs/2602.06563">TokenMixer-Large: Scaling Up Large Ranking Models in Industrial Recommenders</a></li>
-<li><a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a></li>
-<li><a href="https://arxiv.org/abs/2602.20676">PRECTR-V2: Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a></li>
+<li>Kuaishou: <a href="https://www.preprints.org/manuscript/202601.1559">A Survey of User Lifelong Behavior Modeling: Perspectives on Efficiency and Effectiveness</a></li>
+<li>ByteDance: <a href="https://arxiv.org/abs/2601.12681">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a></li>
+<li>ByteDance: <a href="https://arxiv.org/abs/2602.14110">MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders</a></li>
+<li>ByteDance: <a href="https://arxiv.org/abs/2510.26104">OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender</a></li>
+<li>ByteDance: <a href="https://arxiv.org/abs/2602.06563">TokenMixer-Large: Scaling Up Large Ranking Models in Industrial Recommenders</a></li>
+<li>Meta AI: <a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a></li>
+<li>Meta Ads Ranking AI: <a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.10811">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.20676">PRECTR-V2: Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a></li>
 </ol>
 <h3 id="reasoning--agentic-models" class="scroll-mt-8 group">
   Reasoning &amp; Agentic Models
@@ -319,10 +319,10 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 </h3>
 <p>Everything hot and new in LLMs is bound to be applied to RecSys, like reasoning models or agents. Scaling these models is challenging.</p>
 <ol start="16">
-<li><a href="https://arxiv.org/html/2509.10397v1">RecoWorld: Building Simulated Environments for Agentic Recommender Systems</a></li>
-<li><a href="https://arxiv.org/abs/2602.10226">Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization With LLM Agents</a></li>
-<li><a href="https://arxiv.org/abs/2601.18664">$S^2GR$: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation</a></li>
-<li><a href="https://arxiv.org/html/2602.08559v1">QARM V2: Quantitative Alignment Multi-Modal Recommendation for Reasoning User Sequence Modeling</a></li>
+<li>Meta Recommendation: <a href="https://arxiv.org/html/2509.10397v1">RecoWorld: Building Simulated Environments for Agentic Recommender Systems</a></li>
+<li>Google DeepMind: <a href="https://arxiv.org/abs/2602.10226">Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization With LLM Agents</a></li>
+<li>Kuaishou: <a href="https://arxiv.org/abs/2601.18664">$S^2GR$: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation</a></li>
+<li>Kuaishou: <a href="https://arxiv.org/html/2602.08559v1">QARM V2: Quantitative Alignment Multi-Modal Recommendation for Reasoning User Sequence Modeling</a></li>
 </ol>
 <h3 id="pre-ranking" class="scroll-mt-8 group">
   Pre-Ranking
@@ -351,13 +351,13 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 </h3>
 <p>I used to work on L1 ranking (or &ldquo;pre-ranking&rdquo;), which feels like a shot in the dark compared to L2 ranking with clear engagement labels. Below are two cool new papers on this mysterious stage.</p>
 <ol start="20">
-<li><a href="https://arxiv.org/abs/2602.20995">Generative Pseudo-Labeling for Pre-Ranking with LLMs</a></li>
-<li><a href="https://arxiv.org/abs/2603.03770">Not All Candidates are Created Equal: A Heterogeneity-Aware Approach to Pre-Ranking in Recommender Systems</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.20995">Generative Pseudo-Labeling for Pre-Ranking with LLMs</a></li>
+<li>ByteDance: <a href="https://arxiv.org/abs/2603.03770">Not All Candidates are Created Equal: A Heterogeneity-Aware Approach to Pre-Ranking in Recommender Systems</a></li>
 </ol>
-<h3 id="engineering-optimizations" class="scroll-mt-8 group">
-  Engineering Optimizations
+<h3 id="inference-optimizations" class="scroll-mt-8 group">
+  Inference Optimizations
   
-    <a href="#engineering-optimizations"
+    <a href="#inference-optimizations"
         class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
         aria-hidden="true" title="Link to this heading" tabindex="-1">
         <svg
@@ -379,16 +379,16 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
     </a>
   
 </h3>
-<p>Papers below contain ingenious idea to optimize GR or LLM inference.</p>
+<p>Papers below have ingenious ideas to optimize GR / LLM inference.</p>
 <ol start="22">
-<li><a href="https://huggingface.co/papers/2602.22647">Vectorizing the Trie: Efficient Constrained Decoding for LLM-based Generative Retrieval on Accelerators</a>
+<li>Google DeepMind + YouTube: <a href="https://huggingface.co/papers/2602.22647">Vectorizing the Trie: Efficient Constrained Decoding for LLM-based Generative Retrieval on Accelerators</a>
 <ul>
-<li>An engineering paper from Goolgle DeepMind on using vectorized tries to accelerate generative retrieval.</li>
+<li>An engineering paper from Google DeepMind on using vectorized tries to accelerate generative retrieval.</li>
 </ul>
 </li>
-<li><a href="https://arxiv.org/abs/2602.21677">Trie-Aware Transformers for Generative Recommendation</a></li>
-<li><a href="https://pytorch.org/blog/generalized-dot-product-attention-tackling-real-world-challenges-in-gpu-training-kernels/">Generalized Dot-Product Attention: Tackling Real-World Challenges in GPU Training Kernels</a></li>
-<li><a href="https://arxiv.org/abs/2602.19938">A Replicate-and-Quantize Strategy for Plug-and-Play Load Balancing of Sparse Mixture-of-Experts LLMs</a></li>
+<li>Ant Group: <a href="https://arxiv.org/abs/2602.21677">Trie-Aware Transformers for Generative Recommendation</a></li>
+<li>PyTorch: <a href="https://pytorch.org/blog/generalized-dot-product-attention-tackling-real-world-challenges-in-gpu-training-kernels/">Generalized Dot-Product Attention: Tackling Real-World Challenges in GPU Training Kernels</a></li>
+<li>Meta AI: <a href="https://arxiv.org/abs/2602.19938">A Replicate-and-Quantize Strategy for Plug-and-Play Load Balancing of Sparse Mixture-of-Experts LLMs</a></li>
 </ol>
 <h3 id="practical-lessons" class="scroll-mt-8 group">
   Practical Lessons
@@ -417,12 +417,12 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 </h3>
 <p>Please don&rsquo;t kill me &mdash; papers below are not necessarily SOTA, but carry practical lessons on how companies adopt now-classic GR ideas.</p>
 <ol start="26">
-<li><a href="https://arxiv.org/abs/2602.12354">An Industrial-Scale Sequential Recommender for LinkedIn Feed Ranking</a></li>
-<li><a href="https://www.uber.com/en-EG/blog/transforming-ads-personalization/">Transforming Ads Personalization with Sequential Modeling and Hetero-MMoE at Uber</a></li>
-<li><a href="https://arxiv.org/abs/2602.07309">Semantic Search At LinkedIn</a></li>
-<li><a href="https://www.coinbase.com/blog/scaling-personalization-with-user-foundation-models">Scaling Personalization with User Foundation Models</a></li>
-<li><a href="https://arxiv.org/abs/2601.06873">Applying Embedding-Based Retrieval to Airbnb Search</a></li>
-<li><a href="https://netflixtechblog.com/mediafm-the-multimodal-ai-foundation-for-media-understanding-at-netflix-e8c28df82e2d">MediaFM: The Multimodal AI Foundation for Media Understanding at Netflix</a></li>
+<li>LinkedIn: <a href="https://arxiv.org/abs/2602.12354">An Industrial-Scale Sequential Recommender for LinkedIn Feed Ranking</a></li>
+<li>LinkedIn: <a href="https://arxiv.org/abs/2602.07309">Semantic Search At LinkedIn</a></li>
+<li>Uber: <a href="https://www.uber.com/en-EG/blog/transforming-ads-personalization/">Transforming Ads Personalization with Sequential Modeling and Hetero-MMoE at Uber</a></li>
+<li>Coinbase: <a href="https://www.coinbase.com/blog/scaling-personalization-with-user-foundation-models">Scaling Personalization with User Foundation Models</a></li>
+<li>Airbnb: <a href="https://arxiv.org/abs/2601.06873">Applying Embedding-Based Retrieval to Airbnb Search</a></li>
+<li>Netflix: <a href="https://netflixtechblog.com/mediafm-the-multimodal-ai-foundation-for-media-understanding-at-netflix-e8c28df82e2d">MediaFM: The Multimodal AI Foundation for Media Understanding at Netflix</a></li>
 </ol>
 <h2 id="large-language-models" class="scroll-mt-8 group">
   Large Language Models
@@ -476,7 +476,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 </h3>
 <p>A fundamentally new attention mechanism devised by the Kimi team.</p>
 <ol start="32">
-<li><a href="https://arxiv.org/abs/2603.15031">Attention Residuals</a></li>
+<li>Moonshot AI: <a href="https://arxiv.org/abs/2603.15031">Attention Residuals</a></li>
 </ol>
 <h3 id="reasoning--agentic-models-1" class="scroll-mt-8 group">
   Reasoning &amp; Agentic Models
@@ -503,12 +503,12 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
     </a>
   
 </h3>
-<p>OpenAI coined a new term &ldquo;harness engineering&rdquo; that aims to replace prompt engineering as the fundamental role AI practitioner play. The next three are papers / posts on new trends in agent research.</p>
+<p>OpenAI coined a new term &ldquo;harness engineering&rdquo; that aims to replace prompt engineering as the fundamental role AI practitioners play. The next three are papers / posts on new trends in agent research.</p>
 <ol start="33">
-<li><a href="https://openai.com/index/harness-engineering/">Harness Engineering: Leveraging Codex in an Agent-First World</a></li>
-<li><a href="https://zhoutongfu.github.io/zhoutong-ai-blog/posts/static_llm_memory/">The Rise of Static Memory in LLMs</a></li>
-<li><a href="https://arxiv.org/abs/2603.18743">Memento-Skills: Let Agents Design Agents</a></li>
-<li><a href="https://arxiv.org/abs/2603.05706">Reasoning Models Struggle to Control their Chains of Thought</a></li>
+<li>OpenAI: <a href="https://openai.com/index/harness-engineering/">Harness Engineering: Leveraging Codex in an Agent-First World</a></li>
+<li>OpenAI: <a href="https://arxiv.org/abs/2603.05706">Reasoning Models Struggle to Control their Chains of Thought</a></li>
+<li>Personal Blog (<a href="https://zhoutongfu.github.io/zhoutong-ai-blog/">Zhoutong Fu</a>) <a href="https://zhoutongfu.github.io/zhoutong-ai-blog/posts/static_llm_memory/">The Rise of Static Memory in LLMs</a></li>
+<li>Memento Team: <a href="https://arxiv.org/abs/2603.18743">Memento-Skills: Let Agents Design Agents</a></li>
 </ol>
 <h3 id="cognitive-science" class="scroll-mt-8 group">
   Cognitive Science
@@ -537,10 +537,10 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now peru
 </h3>
 <p>Finally, some CogSci papers on human-agent interactions.</p>
 <ol start="37">
-<li><a href="https://arxiv.org/html/2602.10473v1">Why Human Guidance Matters in Collaborative Vibe Coding</a></li>
-<li><a href="https://openreview.net/forum?id=kioO6a0oHM">Ads in ChatGPT? An Analysis of How Large Language Models Navigate Conflicts of Interest</a></li>
-<li><a href="https://arxiv.org/abs/2603.03414">Cognitive Dark Matter: Measuring What AI Misses</a></li>
-<li><a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought Can Reduce Performance on Tasks Where Thinking Makes Humans Worse</a></li>
+<li>Academia (Princeton): <a href="https://arxiv.org/html/2602.10473v1">Why Human Guidance Matters in Collaborative Vibe Coding</a></li>
+<li>Academia (Princeton): <a href="https://openreview.net/forum?id=kioO6a0oHM">Ads in ChatGPT? An Analysis of How Large Language Models Navigate Conflicts of Interest</a></li>
+<li>Academia (Princeton): <a href="https://arxiv.org/abs/2603.03414">Cognitive Dark Matter: Measuring What AI Misses</a></li>
+<li>Academia (Princeton): <a href="https://arxiv.org/abs/2410.21333">Mind Your Step (by Step): Chain-of-Thought Can Reduce Performance on Tasks Where Thinking Makes Humans Worse</a></li>
 </ol>
 
     </div>
