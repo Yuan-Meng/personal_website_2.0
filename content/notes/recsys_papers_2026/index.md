@@ -18,8 +18,8 @@ Every company on Earth is now pursuing Generative Recommendation (GR), but the e
     - A theoretical paper from Meta Ads Ranking AI, devising a new measurement of ranking model generalizability, finding models using Semantic IDs generalize better than those using atomic/arbitrary IDs, at some expense of memorization. 
 2. Meta Recommendation (formerly MRS): [Bending the Scaling Law Curve in Large-Scale Recommendation Systems](https://arxiv.org/html/2602.16986v1)
    - The so-called ULTRA-HSTU or "HSTU 2.0" paper leverages sparse attention to optimize HSTU.
-3. ByteDance: [Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens](https://arxiv.org/html/2601.22694v1)
-4. Meta AI: [STEM: Scaling Transformers with Embedding Modules](https://arxiv.org/abs/2601.10639)
+3. Meta AI (Yuandong Tian is on the author list): [STEM: Scaling Transformers with Embedding odules](https://arxiv.org/abs/2601.10639)
+4. ByteDance: [Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens](https://arxiv.org/html/2601.22694v1)
 5. Academia (UMass Amherst): [Scaling Laws for Embedding Dimension in Information Retrieval](https://arxiv.org/abs/2602.05062)
 
 ## Sequence + Non-Sequence Unification
