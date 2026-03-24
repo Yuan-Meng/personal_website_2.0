@@ -1,12 +1,13 @@
 ---
-title: "40 RecSys + LLM Papers / Blogs to Catch Up On (March 2026)"
+title: "TL;DR: 40 RecSys + LLM Papers and Blogs to Catch Up On"
 date: "2026-03-24"
 categories: ["literature review"]
 toc: true
 math: true
 --- 
 
-March has been such a blur that I have a ton of papers saved on Xiaohongshu and LinkedIn but didn't get the chance to read many of them. Below are the cool ones I hope to catch up on before April. 
+March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn't get the chance to read many of them. Maybe one day I'll write an assistant to automatically dump my online collections into a post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
+
 
 # Recommender Systems
 
@@ -15,10 +16,10 @@ March has been such a blur that I have a ton of papers saved on Xiaohongshu and 
 Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. Papers below provide theoretical support on why GR is perhaps not the emperor's new clothes. 
 
 1. Meta Ads Ranking AI (formerly CoreML): [How Well Does Generative Recommendation Generalize?](https://arxiv.org/html/2603.19809v1)
-    - A theoretical paper from Meta Ads Ranking AI, devising a new measurement of ranking model generalizability, finding models using Semantic IDs generalize better than those using atomic/arbitrary IDs, at some expense of memorization. 
-2. Meta Recommendation (formerly MRS): [Bending the Scaling Law Curve in Large-Scale Recommendation Systems](https://arxiv.org/html/2602.16986v1)
-   - The so-called ULTRA-HSTU or "HSTU 2.0" paper leverages sparse attention to optimize HSTU.
-3. Meta AI (Yuandong Tian is on the author list): [STEM: Scaling Transformers with Embedding odules](https://arxiv.org/abs/2601.10639)
+    - **TL;DR**: The two contributions in this theory paper are (1) defining criteria to categorize test examples into memorization (exact 1-hop transitions exist in training data) vs. generalization (transitions can be inferred from training data via symmetry, transitivity, or higher-order connections) and (2) theorizing why semantic ID-based GR models outperform item ID-based models on generalization. The theory is that <span style="background-color: #74A12E66">"item-level generalization can often be interpreted as token-level memorization within the semantic ID space"</span> --- i.e., while a specific item-to-item transition in the test data has never appeared in the training before, the exact token n-gram prefix-to-prefix transition may have appeared and been memorized by semantic ID-based models.
+2. Meta Recommendation Systems (formerly MRS): [Bending the Scaling Law Curve in Large-Scale Recommendation Systems](https://arxiv.org/html/2602.16986v1)
+   - **TL;DR**: ULTRA-HSTU ("HSTU 2.0") is claimed to have been deployed widely to production, when the less efficient vanilla HSTU wasn't. The main improvements are (1) using a single token to represent an item and the action on it, rather than two ("action encoding"), (2) replacing the $O(L^2)$ full causal self-attention with the $O(L \cdot (K_1 + K_2))$ semi-local attention (SLA), (3) applying mixed-precision training and inference, (4) only using full user sequences in early HSTU layers but a selected segment in later layers ("Attention Truncation"), and (5) processing subsequences using separate HSTU modules ("Mixture of Transducers"). All these tricks led to 5.3x training and 21.4x inference efficiency improvements.
+3. Meta AI (former FAIR's Yuandong Tian is on the author list): [STEM: Scaling Transformers with Embedding odules](https://arxiv.org/abs/2601.10639)
 4. ByteDance: [Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens](https://arxiv.org/html/2601.22694v1)
 5. Academia (UMass Amherst): [Scaling Laws for Embedding Dimension in Information Retrieval](https://arxiv.org/abs/2602.05062)
 
