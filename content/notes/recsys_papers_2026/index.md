@@ -1,12 +1,12 @@
 ---
 title: "40 RecSys + LLM Papers / Blogs to Catch Up On (March 2026)"
-date: "2026-03-23"
+date: "2026-03-24"
 categories: ["literature review"]
 toc: true
 math: true
 --- 
 
-March has been such a blur that I haven't read as many papers as I'd love to. Below are a few cool ones I hope to catch up on before April. 
+March has been such a blur that I have a ton of papers saved on Xiaohongshu and LinkedIn but didn't get the chance to read many of them. Below are the cool ones I hope to catch up on before April. 
 
 # Recommender Systems
 
