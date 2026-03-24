@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Papers on Yuan Meng</title>
+    <link>http://localhost:1313/categories/papers/</link>
+    <description>Recent content in Papers on Yuan Meng</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <managingEditor>mycaptainmy@gmail.com (Yuan Meng)</managingEditor>
+    <webMaster>mycaptainmy@gmail.com (Yuan Meng)</webMaster>
+    <copyright>Yuan Meng</copyright>
+    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/papers/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Irreversibility of Life</title>
+      <link>http://localhost:1313/notes/recsys_papers_2026/</link>
+      <pubDate>Mon, 23 Mar 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/recsys_papers_2026/</guid>
+      <description>&lt;p&gt;The summer of 2016 when &lt;em&gt;Stranger Things&lt;/em&gt; Season 1 came out, I was a month away from leaving home to start my PhD in the States. I had just parted from my college classmates and professors, some of whom I really liked, and returned to my childhood home that felt so lonely and empty. Yet I was hopeful about what the future might hold, about the possibility of being accepted for who I am in a faraway land.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
