@@ -250,7 +250,6 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 <li><strong>TL;DR</strong>: ULTRA-HSTU (&ldquo;HSTU 2.0&rdquo;) is claimed to have been deployed widely to production, when the less efficient vanilla HSTU wasn&rsquo;t. The main improvements are (1) using a single token to represent an item and the action on it, rather than two (&ldquo;action encoding&rdquo;), (2) replacing the $O(L^2)$ full causal self-attention with the $O(L \cdot (K_1 + K_2))$ semi-local attention (SLA), (3) applying mixed-precision training and inference, (4) only using full user sequences in early HSTU layers but a selected segment in later layers (&ldquo;Attention Truncation&rdquo;), and (5) processing subsequences using separate HSTU modules (&ldquo;Mixture of Transducers&rdquo;). All these tricks led to 5.3x training and 21.4x inference efficiency improvements.</li>
 </ul>
 </li>
-<li>Meta AI (former FAIR&rsquo;s Yuandong Tian is on the author list): <a href="https://arxiv.org/abs/2601.10639">STEM: Scaling Transformers with Embedding odules</a></li>
 <li>ByteDance: <a href="https://arxiv.org/html/2601.22694v1">Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens</a></li>
 <li>Academia (UMass Amherst): <a href="https://arxiv.org/abs/2602.05062">Scaling Laws for Embedding Dimension in Information Retrieval</a></li>
 </ol>
@@ -280,7 +279,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>Models like OneRec and HSTU aim to achieve on par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and look to unify sequence and non-sequence features in ways that still enjoy scaling laws.</p>
-<ol start="6">
+<ol start="5">
 <li>Kuaishou: <a href="https://www.preprints.org/manuscript/202601.1559">A Survey of User Lifelong Behavior Modeling: Perspectives on Efficiency and Effectiveness</a></li>
 <li>ByteDance: <a href="https://arxiv.org/abs/2601.12681">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a></li>
 <li>ByteDance: <a href="https://arxiv.org/abs/2602.14110">MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders</a></li>
@@ -318,7 +317,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>Everything hot and new in LLMs is bound to be applied to RecSys, like reasoning models or agents. Scaling these models is challenging.</p>
-<ol start="16">
+<ol start="15">
 <li>Meta Recommendation: <a href="https://arxiv.org/html/2509.10397v1">RecoWorld: Building Simulated Environments for Agentic Recommender Systems</a></li>
 <li>Google DeepMind: <a href="https://arxiv.org/abs/2602.10226">Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization With LLM Agents</a></li>
 <li>Kuaishou: <a href="https://arxiv.org/abs/2601.18664">$S^2GR$: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation</a></li>
@@ -350,7 +349,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>I used to work on L1 ranking (or &ldquo;pre-ranking&rdquo;), which feels like a shot in the dark compared to L2 ranking with clear engagement labels. Below are two cool new papers on this mysterious stage.</p>
-<ol start="20">
+<ol start="19">
 <li>Alibaba: <a href="https://arxiv.org/abs/2602.20995">Generative Pseudo-Labeling for Pre-Ranking with LLMs</a></li>
 <li>ByteDance: <a href="https://arxiv.org/abs/2603.03770">Not All Candidates are Created Equal: A Heterogeneity-Aware Approach to Pre-Ranking in Recommender Systems</a></li>
 </ol>
@@ -380,7 +379,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>Papers below have ingenious ideas to optimize GR / LLM inference.</p>
-<ol start="22">
+<ol start="21">
 <li>Google DeepMind + YouTube: <a href="https://huggingface.co/papers/2602.22647">Vectorizing the Trie: Efficient Constrained Decoding for LLM-based Generative Retrieval on Accelerators</a>
 <ul>
 <li>An engineering paper from Google DeepMind on using vectorized tries to accelerate generative retrieval.</li>
@@ -416,7 +415,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>Please don&rsquo;t kill me &mdash; papers below are not necessarily SOTA, but carry practical lessons on how companies adopt now-classic GR ideas.</p>
-<ol start="26">
+<ol start="25">
 <li>LinkedIn: <a href="https://arxiv.org/abs/2602.12354">An Industrial-Scale Sequential Recommender for LinkedIn Feed Ranking</a></li>
 <li>LinkedIn: <a href="https://arxiv.org/abs/2602.07309">Semantic Search At LinkedIn</a></li>
 <li>Uber: <a href="https://www.uber.com/en-EG/blog/transforming-ads-personalization/">Transforming Ads Personalization with Sequential Modeling and Hetero-MMoE at Uber</a></li>
@@ -475,7 +474,8 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   
 </h3>
 <p>A fundamentally new attention mechanism devised by the Kimi team.</p>
-<ol start="32">
+<ol start="31">
+<li>Meta AI (former FAIR&rsquo;s Yuandong Tian is on the author list): <a href="https://arxiv.org/abs/2601.10639">STEM: Scaling Transformers with Embedding odules</a></li>
 <li>Moonshot AI: <a href="https://arxiv.org/abs/2603.15031">Attention Residuals</a></li>
 </ol>
 <h3 id="reasoning--agentic-models-1" class="scroll-mt-8 group">
