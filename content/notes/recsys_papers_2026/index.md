@@ -1,12 +1,12 @@
 ---
-title: "TL;DR: 41 RecSys + LLM Papers and Blogs to Catch Up On"
+title: "42 RecSys + LLM Papers and Blogs to Catch Up On"
 date: "2026-03-24"
 categories: ["literature review"]
 toc: true
 math: true
 --- 
 
-March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn't get the chance to read many of them. Maybe one day I'll write an assistant to automatically dump my online collections into a post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
+This March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn't get the chance to read many of them. Perhaps one day I shall build an agent to automatically dump my online collections into a TL;DR post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
 
 
 # Recommender Systems
@@ -20,16 +20,19 @@ Every company on Earth is now pursuing Generative Recommendation (GR), but the e
 2. Meta Recommendation Systems (formerly MRS): [Bending the Scaling Law Curve in Large-Scale Recommendation Systems](https://arxiv.org/html/2602.16986v1)
    - **TL;DR**: ULTRA-HSTU ("HSTU 2.0") is claimed to have been deployed widely to production, when the less efficient vanilla HSTU wasn't. The main improvements are (1) using a single token to represent an item and the action on it, rather than two ("action encoding"), (2) replacing the $O(L^2)$ full causal self-attention with the $O(L \cdot (K_1 + K_2))$ semi-local attention (SLA), (3) applying mixed-precision training and inference, (4) only using full user sequences in early HSTU layers but a selected segment in later layers ("Attention Truncation"), and (5) processing subsequences using separate HSTU modules ("Mixture of Transducers"). All these tricks led to 5.3x training and 21.4x inference efficiency improvements.
 3. ByteDance: [Farewell to Item IDs: Unlocking the Scaling Potential of Large Ranking Models via Semantic Tokens](https://arxiv.org/html/2601.22694v1)
-4. Academia (UMass Amherst): [Scaling Laws for Embedding Dimension in Information Retrieval](https://arxiv.org/abs/2602.05062)
+    - **TL;DR**: Naively replacing item IDs with semantic IDs degrades model performance, because (1) semantic IDs by default encode content but not collaborative (i.e., user-item interactions) information and (2) generalization often comes at a price of memorization, as discussed in the first paper. As an antidote, the token-based recommendation model (TRM) (1) learns collaborative-filtering-aware embeddings based on positive query-item and item-item pairs from user engagements and in-batch negatives and (2) uses RQ-Kmeans to learn semantic tokens (original tokens for generalization + BPE tokens for memorization). TRM is trained with both the generative next-token-prediction loss and the discriminative BCE loss (i.e., whether or not the user had a positive engagement with the given item). We can plug TRM into models like RankMixer to bend the scaling laws. 
+4. Kuaishou: [A Survey of User Lifelong Behavior Modeling: Perspectives on Efficiency and Effectiveness](https://github.com/Kuaishou-RecModel/Survey-of-ULBM?tab=readme-ov-file)
+    - **TL;DR**: Lit review on ultra-long sequence modeling, which boils down to search-based methods, compression-based methods, or a hybrid of both. Amazingly, its [repo](https://github.com/Kuaishou-RecModel/Survey-of-ULBM?tab=readme-ov-file) might just have links to all long sequence papers under the sun!
+<!-- 4. Academia (UMass Amherst): [Scaling Laws for Embedding Dimension in Information Retrieval](https://arxiv.org/abs/2602.05062) -->
 
 ## Sequence + Non-Sequence Unification
 
 Models like OneRec and HSTU aim to achieve on par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and look to unify sequence and non-sequence features in ways that still enjoy scaling laws. 
 
-5. Kuaishou: [A Survey of User Lifelong Behavior Modeling: Perspectives on Efficiency and Effectiveness](https://www.preprints.org/manuscript/202601.1559)
-6. ByteDance: [HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction](https://arxiv.org/abs/2601.12681)
-7. ByteDance: [MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders](https://arxiv.org/abs/2602.14110)
-8. ByteDance: [OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender](https://arxiv.org/abs/2510.26104)
+5. ByteDance: [RankMixer: Scaling Up Ranking Models in Industrial Recommenders](https://arxiv.org/abs/2507.15551)
+6. ByteDance: [OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender](https://arxiv.org/abs/2510.26104)
+7. ByteDance: [HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction](https://arxiv.org/abs/2601.12681)
+8. ByteDance: [MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders](https://arxiv.org/abs/2602.14110)
 9. ByteDance: [TokenMixer-Large: Scaling Up Large Ranking Models in Industrial Recommenders](https://arxiv.org/abs/2602.06563)
 10. Meta AI: [InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction](https://arxiv.org/abs/2411.09852)
 11. Meta Ads Ranking AI: [Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design](https://arxiv.org/abs/2602.10016)
@@ -42,7 +45,7 @@ Models like OneRec and HSTU aim to achieve on par performance with DLRM using se
 Everything hot and new in LLMs is bound to be applied to RecSys, like reasoning models or agents. Scaling these models is challenging.
 
 15. Meta Ads Ranking AI: [Generative Reasoning Re-Ranker](https://arxiv.org/abs/2602.07774)
-16. Meta Recommendation: [RecoWorld: Building Simulated Environments for Agentic Recommender Systems](https://arxiv.org/html/2509.10397v1)
+16. Meta Recommendation Systems: [RecoWorld: Building Simulated Environments for Agentic Recommender Systems](https://arxiv.org/html/2509.10397v1)
 17. Google DeepMind: [Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization With LLM Agents](https://arxiv.org/abs/2602.10226)
 18. Kuaishou: [$S^2GR$: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation](https://arxiv.org/abs/2601.18664)
 19. Kuaishou: [QARM V2: Quantitative Alignment Multi-Modal Recommendation for Reasoning User Sequence Modeling](https://arxiv.org/html/2602.08559v1)
@@ -66,7 +69,7 @@ Papers below have ingenious ideas to optimize GR / LLM inference.
 
 ## Practical Lessons
 
-Please don't kill me --- papers below are not necessarily SOTA, but carry practical lessons on how companies adopt now-classic GR ideas.  
+Not necessarily SOTA, but practical lessons on adopting classic GR.  
 
 26. LinkedIn: [An Industrial-Scale Sequential Recommender for LinkedIn Feed Ranking](https://arxiv.org/abs/2602.12354)
 27. LinkedIn: [Semantic Search At LinkedIn](https://arxiv.org/abs/2602.07309)
@@ -74,6 +77,7 @@ Please don't kill me --- papers below are not necessarily SOTA, but carry practi
 29. Coinbase: [Scaling Personalization with User Foundation Models](https://www.coinbase.com/blog/scaling-personalization-with-user-foundation-models)
 30. Airbnb: [Applying Embedding-Based Retrieval to Airbnb Search](https://arxiv.org/abs/2601.06873)
 31. Netflix: [MediaFM: The Multimodal AI Foundation for Media Understanding at Netflix](https://netflixtechblog.com/mediafm-the-multimodal-ai-foundation-for-media-understanding-at-netflix-e8c28df82e2d)
+32. Google: [One Model, Two Markets: Bid-Aware Generative Recommendation](https://arxiv.org/pdf/2603.22231)
 
 # Large Language Models
 
@@ -81,24 +85,24 @@ Please don't kill me --- papers below are not necessarily SOTA, but carry practi
 
 A fundamentally new attention mechanism devised by the Kimi team. 
 
-32. Meta AI (former FAIR's Yuandong Tian is on the author list): [STEM: Scaling Transformers with Embedding odules](https://arxiv.org/abs/2601.10639)
-33. Moonshot AI: [Attention Residuals](https://arxiv.org/abs/2603.15031)
+33. Meta AI (former FAIR's Yuandong Tian is on the author list): [STEM: Scaling Transformers with Embedding Modules](https://arxiv.org/abs/2601.10639)
+34. Moonshot AI: [Attention Residuals](https://arxiv.org/abs/2603.15031)
 
 ## Reasoning & Agentic Models
 
 OpenAI coined a new term "harness engineering" that aims to replace prompt engineering as the fundamental role AI practitioners play. The next three are papers / posts on new trends in agent research. 
 
-34. OpenAI: [Harness Engineering: Leveraging Codex in an Agent-First World](https://openai.com/index/harness-engineering/)
-35. OpenAI: [Reasoning Models Struggle to Control their Chains of Thought](https://arxiv.org/abs/2603.05706)
-36. Personal Blog ([Zhoutong Fu](https://zhoutongfu.github.io/zhoutong-ai-blog/)) [The Rise of Static Memory in LLMs](https://zhoutongfu.github.io/zhoutong-ai-blog/posts/static_llm_memory/)
-37. Memento Team: [Memento-Skills: Let Agents Design Agents](https://arxiv.org/abs/2603.18743)
+35. OpenAI: [Harness Engineering: Leveraging Codex in an Agent-First World](https://openai.com/index/harness-engineering/)
+36. OpenAI: [Reasoning Models Struggle to Control their Chains of Thought](https://arxiv.org/abs/2603.05706)
+37. Personal Blog ([Zhoutong Fu](https://zhoutongfu.github.io/zhoutong-ai-blog/)) [The Rise of Static Memory in LLMs](https://zhoutongfu.github.io/zhoutong-ai-blog/posts/static_llm_memory/)
+38. Memento Team: [Memento-Skills: Let Agents Design Agents](https://arxiv.org/abs/2603.18743)
 
 
 ## Cognitive Science
 
 Finally, some CogSci papers on human-agent interactions. 
 
-38. Academia (Princeton): [Why Human Guidance Matters in Collaborative Vibe Coding](https://arxiv.org/html/2602.10473v1)
-39. Academia (Princeton): [Ads in ChatGPT? An Analysis of How Large Language Models Navigate Conflicts of Interest](https://openreview.net/forum?id=kioO6a0oHM)
-40. Academia (Princeton): [Cognitive Dark Matter: Measuring What AI Misses](https://arxiv.org/abs/2603.03414)
-41. Academia (Princeton): [Mind Your Step (by Step): Chain-of-Thought Can Reduce Performance on Tasks Where Thinking Makes Humans Worse](https://arxiv.org/abs/2410.21333)
+39. Academia (Princeton): [Why Human Guidance Matters in Collaborative Vibe Coding](https://arxiv.org/html/2602.10473v1)
+40. Academia (Princeton): [Ads in ChatGPT? An Analysis of How Large Language Models Navigate Conflicts of Interest](https://openreview.net/forum?id=kioO6a0oHM)
+41. Academia (Princeton): [Cognitive Dark Matter: Measuring What AI Misses](https://arxiv.org/abs/2603.03414)
+42. Academia (Princeton): [Mind Your Step (by Step): Chain-of-Thought Can Reduce Performance on Tasks Where Thinking Makes Humans Worse](https://arxiv.org/abs/2410.21333)
