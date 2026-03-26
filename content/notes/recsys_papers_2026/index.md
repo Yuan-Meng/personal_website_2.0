@@ -60,7 +60,7 @@ Everything hot and new in LLMs is bound to be applied to RecSys, like reasoning 
 
 ## Pre-Ranking
 
-I used to work on L1 ranking (or "pre-ranking"), which feels like a shot in the dark compared to L2 ranking with clear engagement labels. Below are two cool new papers on this mysterious stage.
+I used to work on L1 ranking (or "pre-ranking"), which feels like a shot in the dark compared to L2 ranking that has direct engagement labels. Below are two cool new papers on this mysterious stage.
 
 18. Alibaba: [Generative Pseudo-Labeling for Pre-Ranking with LLMs](https://arxiv.org/abs/2602.20995)
 19. ByteDance: [Not All Candidates are Created Equal: A Heterogeneity-Aware Approach to Pre-Ranking in Recommender Systems](https://arxiv.org/abs/2603.03770)
