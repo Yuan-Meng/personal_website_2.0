@@ -27,7 +27,7 @@ Every company on Earth is now pursuing Generative Recommendation (GR), but the e
 
 ## Sequence + Non-Sequence Unification
 
-So-called "end-to-end" models like OneRec (v1 and v2) and HSTU aim to achieve on-par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and looking to unify sequence and non-sequence features in ways that could still benefit from scaling laws.
+Sequence-only models such as Kuaishou's One series and Meta's HSTU aim to achieve on-par performance with DLRM without non-sequence features. They have questionable success in production. Many companies are backpedaling on this aggressive approach and looking to unify sequence and non-sequence features in ways that still benefit from scaling laws. On this new path, Kuaishou is pretty quiet, whereas ByteDance, Meta, and Alibaba dominate the "leaderboard". 
 
 5. ByteDance: [OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender](https://arxiv.org/abs/2510.26104)
    - **TL;DR**: <span style="background-color: #FFC31B">OneTrans $\approx$ [RankMixer](https://arxiv.org/abs/2507.15551) (feature interaction modules) + [LONGER](https://arxiv.org/abs/2505.04421) (user sequence modules)</span>. Instead of encoding user sequences, concatenating the static, compressed sequence representation with non-sequence features, and passing the concatenated features to feature interaction layers ("encode-then-interaction"), OneTrans uses a unified tokenizer to convert sequence (S) and non-sequence (NS) features into a single token sequence, which is then passed to a *pyramid* (each layer selecting a shorter sequence) of causal OneTrans Transformer blocks. S tokens share the same QKV projections and go through a shared FFN since they are homogeneous, and each S token can only attend to earlier S tokens. Instead of dedicating a separate NS token to each NS feature, we can group NS features based on conceptual understanding or perform an automatic splitting after projection --- the latter leads to smaller kernel launch overhead. By contrast, heterogeneous NS tokens each have their own QKV projections and FFN and can attend to all S tokens at once. We can enable KV cache for S tokens since they remain the same during each user request, whereas NS tokens might change with every candidate. OneTrans scales better than conventional *encode-then-interaction* baselines.
@@ -67,7 +67,7 @@ I used to work on L1 ranking (or "pre-ranking"), which feels like a shot in the 
 
 ## Inference Optimizations
 
-The papers below have ingenious ideas for optimizing GR / LLM inference.
+The papers below have ingenious ideas for optimizing inference.
 
 20. Google DeepMind + YouTube: [Vectorizing the Trie: Efficient Constrained Decoding for LLM-based Generative Retrieval on Accelerators](https://huggingface.co/papers/2602.22647)
     - An engineering paper from Google DeepMind on using vectorized tries to accelerate generative retrieval.
