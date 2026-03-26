@@ -29,7 +29,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   <meta itemprop="description" content="This March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn’t get the chance to read many of them. Perhaps one day I shall build an agent to automatically dump my online collections into a TL;DR post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
 Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. The papers below provide theoretical support for why GR may not be the emperor’s new clothes.">
   <meta itemprop="datePublished" content="2026-03-24T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1797">
+  <meta itemprop="wordCount" content="1964">
   <meta itemprop="keywords" content="Literature review">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   },
   "mainEntityOfPage": "http://localhost:1313/notes/recsys_papers_2026/",
   "name": "41 RecSys + LLM Papers and Blogs to Catch Up On",
-  "timeRequired": "PT9M",
+  "timeRequired": "PT10M",
   "url": "http://localhost:1313/notes/recsys_papers_2026/",
-  "wordCount": 1797
+  "wordCount": 1964
 }
 </script>
 
@@ -131,7 +131,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 
     
     
-      Reading time: 9 minutes
+      Reading time: 10 minutes
     
 
     
@@ -289,20 +289,17 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 </h3>
 <p>So-called &ldquo;end-to-end&rdquo; models like OneRec (v1 and v2) and HSTU aim to achieve on-par performance with DLRM using sequence-only features. Many companies are backpedaling on this aggressive approach and looking to unify sequence and non-sequence features in ways that could still benefit from scaling laws.</p>
 <ol start="5">
-<li>
-<p>ByteDance: <a href="https://arxiv.org/abs/2510.26104">OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender</a></p>
+<li>ByteDance: <a href="https://arxiv.org/abs/2510.26104">OneTrans: Unified Feature Interaction and Sequence Modeling with One Transformer in Industrial Recommender</a>
 <ul>
 <li><strong>TL;DR</strong>: <span style="background-color: #74A12E66">OneTrans $\approx$ <a href="https://arxiv.org/abs/2507.15551">RankMixer</a> (feature interaction modules) + <a href="https://arxiv.org/abs/2505.04421">LONGER</a> (user sequence modules)</span>. Instead of encoding user sequences, concatenating the static, compressed sequence representation with non-sequence features, and passing the concatenated features to feature interaction layers (&ldquo;encode-then-interaction&rdquo;), OneTrans uses a unified tokenizer to convert sequence (S) and non-sequence (NS) features into a single token sequence, which is then passed to a <em>pyramid</em> (each layer selecting a shorter sequence) of causal OneTrans Transformer blocks. S tokens share the same QKV projections and go through a shared FFN since they are homogeneous, and each S token can only attend to earlier S tokens. Instead of dedicating a separate NS token to each NS feature, we can group NS features based on conceptual understanding or perform an automatic splitting after projection &mdash; the latter leads to smaller kernel launch overhead. By contrast, heterogeneous NS tokens each have their own QKV projections and FFN and can attend to all S tokens at once. We can enable KV cache for S tokens since they remain the same during each user request, whereas NS tokens might change with every candidate. OneTrans scales better than conventional <em>encode-then-interaction</em> baselines.</li>
 </ul>
 </li>
-<li>
-<p>ByteDance: <a href="https://arxiv.org/abs/2601.12681">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a></p>
+<li>ByteDance: <a href="https://arxiv.org/abs/2601.12681">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a>
 <ul>
-<li><strong>TL;DR</strong>: HyFormer, also from ByteDance, aims to achieve the same goal as OneTrans &mdash; unifying sequence modeling and feature interaction into a single backbone. It was published later than OneTrans with better results. HyFormer&rsquo;s core critique of OneTrans is that merging multiple heterogeneous sequences into a single stream via <code>[SEP]</code> tokens hurts model performance. Instead, HyFormer processes each sequence independently via two alternating steps per layer. First, NS features (concatenated with a pooled sequence summary) are projected through lightweight MLPs into &ldquo;Global Tokens.&rdquo; The <strong>Query Decoding</strong> step then performs cross-attention between Global Tokens (Q) and the KV representations of each S sequence independently, so Global Tokens absorb sequence information. The <strong>Query Boosting</strong> step concatenates Global Tokens with NS tokens into a $T \times D$ matrix and mixes them <em>laterally</em> via <code>HeadMixing</code>: each token is partitioned into $T$ chunks along the feature dimension; $\tilde{q}_h$ concatenates chunk $h$ across all $T$ token positions to have a slice of information on all tokens. This allows Global Tokens to absorb NS feature information. These two steps alternate across layers, producing progressively richer Global Tokens for task-specific heads.</li>
+<li><strong>TL;DR</strong>: HyFormer, also from ByteDance, aims to achieve the same goal as OneTrans &mdash; unifying sequence modeling and feature interaction into a single backbone. It was published later than OneTrans with better results. HyFormer&rsquo;s core critique of OneTrans is that merging multiple heterogeneous sequences into a single stream via <code>[SEP]</code> tokens hurts model performance. Instead, HyFormer processes each sequence independently via two alternating steps per layer. First, NS features (concatenated with a pooled sequence summary) are projected through lightweight MLPs into &ldquo;Global Tokens.&rdquo; The <strong>Query Decoding</strong> step then performs cross-attention between Global Tokens (Q) and the KV representations of each S sequence independently, so Global Tokens absorb sequence information. The <strong>Query Boosting</strong> step concatenates Global Tokens with NS tokens into a $T \times D$ matrix and mixes them via <code>HeadMixing</code> introduced in RankMixer &mdash; each input token is partitioned into $H$ heads along the feature dimension; the $h$-th output token $\tilde{q}_h$ concatenates the $h$-th head across all $T$ token positions to get a slice of information on all tokens. This &ldquo;transpose-and-reshape&rdquo; token mixer allows every output token to see every input token, without any learned parameters. Query Boosting allows Global  Tokens to absorb NS feature information. These two steps alternate across layers, producing progressively richer Global Tokens for task-specific heads.</li>
 </ul>
 </li>
-<li>
-<p>ByteDance: <a href="https://arxiv.org/abs/2602.14110">MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders</a></p>
+<li>ByteDance: <a href="https://arxiv.org/abs/2602.14110">MixFormer: Co-Scaling Up Dense and Sequence in Industrial Recommenders</a>
 <ul>
 <li><strong>TL;DR</strong>: Yet another something-something <code>Former</code> from <span class="sidenote">
   <input
@@ -326,27 +323,16 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
  aimed at unifying feature interaction and sequence modeling. MixFormer&rsquo;s core critique of OneTrans is that sequence and non-sequence modules don&rsquo;t <em>co-scale</em>. First, OneTrans concatenates S and NS tokens along the sequence length dimension, so attention cost is completely dominated by S tokens. Second, S and NS tokens use separate parameters, so they compete for capacity under a fixed budget. MixFormer addresses both issues. To address compute asymmetry, it adopts a decoder-style cross-attention where NS features serve as Qs ($N$ heads, typically ~16) and S features serve as KVs &mdash; scaling either component contributes proportionally to total compute. To address parameter competition, each MixFormer block uses per-head FFNs in both the <strong>Query Mixer</strong> (feature interaction among NS heads via <code>HeadMixing</code> + per-head FFN like HyFormer) and <strong>Output Fusion</strong> (per-head FFN after cross-attention), where each head uses shared parameters to represent NS query and S sequence information together. MixFormer also introduces <strong>User-Item Decoupling</strong>: NS heads are partitioned into user-side and item-side subsets via a mask in <code>HeadMixing</code> &mdash; user-side computations (including S KVs) can be shared across all candidates in each request via Request Level Batching (RLB), achieving ~36% serving FLOPs reduction.</li>
 </ul>
 </li>
-<li>
-<p>ByteDance: <a href="https://arxiv.org/abs/2602.06563">TokenMixer-Large: Scaling Up Large Ranking Models in Industrial Recommenders</a></p>
+<li>ByteDance: <a href="https://arxiv.org/abs/2602.06563">TokenMixer-Large: Scaling Up Large Ranking Models in Industrial Recommenders</a>
 <ul>
-<li><strong>TL;DR</strong>: This is a follow-up to RankMixer.</li>
+<li><strong>TL;DR</strong>: This paper fixes issues that prevent RankMixer from scaling beyond 1B parameters. The first issue is that <code>HeadMixing</code> causes semantic alignment in residual connections &mdash; each output token no longer represents a user action, but a mixture of everyone&rsquo;s $h$-th head. The residual $F(x&rsquo;) + x$ makes no sense since each input token in $x$ still represents a user action. TokenMixer-Large restores the mixed token dimension back to $T \times D$, so each output token can be construed as a user action for meaningful residuals. To further scale up, TokenMixer-Large (1) adds inter-layer residuals every 2-3 layers (except for the final layer), (2) removes fragmented operators such as DCNv2, and (3) endorses a &ldquo;sparse training and sparse serving&rdquo; strategy, splitting each expert into multiple sub-experts based on the per-token SwiGLU and activating them sparsely. As a result, TokenMixer-Large can scale to 7B online and 15B offline.</li>
 </ul>
 </li>
-<li>
-<p>Meta AI: <a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a></p>
-</li>
-<li>
-<p>Meta Ads Ranking AI: <a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a></p>
-</li>
-<li>
-<p>Alibaba: <a href="https://arxiv.org/abs/2602.10811">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a></p>
-</li>
-<li>
-<p>Alibaba: <a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a></p>
-</li>
-<li>
-<p>Alibaba: <a href="https://arxiv.org/abs/2602.20676">PRECTR-V2: Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a></p>
-</li>
+<li>Meta AI: <a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a></li>
+<li>Meta Ads Ranking AI: <a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.10811">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a></li>
+<li>Alibaba: <a href="https://arxiv.org/abs/2602.20676">PRECTR-V2: Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a></li>
 </ol>
 <h3 id="reasoning--agentic-models" class="scroll-mt-8 group">
   Reasoning &amp; Agentic Models
