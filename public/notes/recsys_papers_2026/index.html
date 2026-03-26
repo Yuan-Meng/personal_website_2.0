@@ -29,7 +29,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   <meta itemprop="description" content="This March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn’t get the chance to read many of them. Perhaps one day I shall build an agent to automatically dump my online collections into a TL;DR post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
 Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. The papers below provide theoretical support for why GR may not be the emperor’s new clothes.">
   <meta itemprop="datePublished" content="2026-03-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2340">
+  <meta itemprop="wordCount" content="2342">
   <meta itemprop="keywords" content="Literature review">
 
   <meta name="twitter:card" content="summary">
@@ -88,7 +88,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   "name": "40 RecSys + LLM Papers and Blogs to Catch Up On",
   "timeRequired": "PT11M",
   "url": "http://localhost:1313/notes/recsys_papers_2026/",
-  "wordCount": 2340
+  "wordCount": 2342
 }
 </script>
 
@@ -364,7 +364,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 </li>
 <li>Alibaba: <a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a>
 <ul>
-<li><strong>TL;DR</strong>: This paper is an independent effort from TokenMixer-Large to improve RankMixer. First, RankMixer splits NS features without respecting semantic boundaries; in this paper,  HeMix performs bit-wise feature interaction before splitting (&ldquo;interact-then-split&rdquo;). Second, RankMixer treats global (lifelong) and real-time (same-day) sequences the same way, whereas HeMix splits NS tokens into two groups, each attending to one sequence, and augments them with learnable query tokens (inspired by BLIP-2&rsquo;s Q-Former) to capture candidate-invariant patterns. Lastly, <code>HeadMixing</code> in RankMixer is a parameter-free reshape that can&rsquo;t capture nonlinear dependencies, whereas <code>HeteroMixer</code> in this paper processes each mixed token with a dedicated low-rank MLP (&ldquo;fuse → low-rank MLP interaction → reconstruct&rdquo;).</li>
+<li><strong>TL;DR</strong>: This paper is an independent effort from TokenMixer-Large to improve RankMixer. First, RankMixer splits NS features without respecting semantic boundaries; in this paper,  <code>HeMix</code> performs bit-wise feature interaction before splitting (&ldquo;interact-then-split&rdquo;). Second, RankMixer treats global (lifelong) and real-time (same-day) sequences the same way, whereas HeMix splits NS tokens into two groups, each attending to one sequence, and augments them with learnable query tokens (inspired by BLIP-2&rsquo;s Q-Former) to capture candidate-invariant patterns. Lastly, <code>HeadMixing</code> in RankMixer is a parameter-free reshape that can&rsquo;t capture nonlinear dependencies, whereas <code>HeteroMixer</code> in this paper processes each mixed token with a dedicated low-rank MLP (&ldquo;fuse → low-rank MLP interaction → reconstruct&rdquo;).</li>
 </ul>
 </li>
 </ol>
@@ -466,7 +466,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 </li>
 <li>Ant Group: <a href="https://arxiv.org/abs/2602.21677">Trie-Aware Transformers for Generative Recommendation</a></li>
 <li>PyTorch: <a href="https://pytorch.org/blog/generalized-dot-product-attention-tackling-real-world-challenges-in-gpu-training-kernels/">Generalized Dot-Product Attention: Tackling Real-World Challenges in GPU Training Kernels</a></li>
-<li>Meta AI: <a href="https://arxiv.org/abs/2602.19938">A Replicate-and-Quantize Strategy for Plug-and-Play Load Balancing of Sparse Mixture-of-Experts LLMs</a></li>
+<li>Meta Monetization Ranking AI: <a href="https://arxiv.org/abs/2602.19938">A Replicate-and-Quantize Strategy for Plug-and-Play Load Balancing of Sparse Mixture-of-Experts LLMs</a></li>
 </ol>
 <h3 id="practical-lessons" class="scroll-mt-8 group">
   Practical Lessons
