@@ -29,7 +29,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   <meta itemprop="description" content="This March has been such a blur that I saved a ton of papers on Xiaohongshu and LinkedIn but didn’t get the chance to read many of them. Perhaps one day I shall build an agent to automatically dump my online collections into a TL;DR post like this. Until then, below are the cool ones that I handpicked and hope to catch up on before April.
 Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. The papers below provide theoretical support for why GR may not be the emperor’s new clothes.">
   <meta itemprop="datePublished" content="2026-03-25T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2037">
+  <meta itemprop="wordCount" content="2154">
   <meta itemprop="keywords" content="Literature review">
 
   <meta name="twitter:card" content="summary">
@@ -86,9 +86,9 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
   },
   "mainEntityOfPage": "http://localhost:1313/notes/recsys_papers_2026/",
   "name": "41 RecSys + LLM Papers and Blogs to Catch Up On",
-  "timeRequired": "PT10M",
+  "timeRequired": "PT11M",
   "url": "http://localhost:1313/notes/recsys_papers_2026/",
-  "wordCount": 2037
+  "wordCount": 2154
 }
 </script>
 
@@ -131,7 +131,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 
     
     
-      Reading time: 10 minutes
+      Reading time: 11 minutes
     
 
     
@@ -240,7 +240,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 </h3>
 <p>Every company on Earth is now pursuing Generative Recommendation (GR), but the exact mechanisms that make GR more generalizable and scalable than the traditional Deep Learning Recommendation Model (DLRM) are not fully understood. The papers below provide theoretical support for why GR may not be the emperor&rsquo;s new clothes.</p>
 <ol>
-<li>Meta Ads Ranking AI (formerly CoreML): <a href="https://arxiv.org/html/2603.19809v1">How Well Does Generative Recommendation Generalize?</a>
+<li>Meta Monetization Ranking AI (formerly CoreML): <a href="https://arxiv.org/html/2603.19809v1">How Well Does Generative Recommendation Generalize?</a>
 <ul>
 <li><strong>TL;DR</strong>: The two contributions in this theory paper are (1) defining criteria to categorize test examples into memorization (exact 1-hop transitions exist in training data) vs. generalization (transitions can be inferred from training data via symmetry, transitivity, or higher-order connections) and (2) theorizing why semantic ID-based GR models outperform item ID-based models on generalization. The theory is that <span style="background-color: #FFC31B">&ldquo;item-level generalization can often be interpreted as token-level memorization within the semantic ID space&rdquo;</span> &mdash; i.e., while a specific item-to-item transition in the test data has never appeared in training before, the exact token n-gram prefix-to-prefix transition may have appeared and been memorized by semantic ID-based models.</li>
 </ul>
@@ -328,7 +328,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 <li><strong>TL;DR</strong>: This paper fixes issues that prevent RankMixer from scaling beyond 1B parameters. The first issue is that <code>HeadMixing</code> causes semantic alignment in residual connections &mdash; each output token no longer represents a user action, but a mixture of everyone&rsquo;s $h$-th head. The residual $F(x&rsquo;) + x$ makes no sense since each input token in $x$ still represents a user action. TokenMixer-Large restores the mixed token dimension back to $T \times D$, so each output token can be construed as a user action for meaningful residuals. To further scale up, TokenMixer-Large (1) adds inter-layer residuals every 2-3 layers (except for the final layer), (2) removes fragmented operators such as DCNv2, and (3) endorses a &ldquo;sparse training and sparse serving&rdquo; strategy, splitting each expert into multiple sub-experts based on the per-token SwiGLU and activating them sparsely. As a result, TokenMixer-Large can scale to 7B online and 15B offline.</li>
 </ul>
 </li>
-<li>Meta AI: <a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a>
+<li>Meta Monetization Ranking AI: <a href="https://arxiv.org/abs/2411.09852">InterFormer: Effective Heterogeneous Interaction Learning for Click-Through Rate Prediction</a>
 <ul>
 <li><strong>TL;DR</strong>: Meta&rsquo;s InterFormer is strikingly <span class="sidenote">
   <input
@@ -352,7 +352,11 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
  to ByteDance&rsquo;s HyFormer. The core idea is allowing bidirectional information exchange between sequence and non-sequence features. The non-sequence summarization is prepended to each sequence as the <code>CLS</code> token and it also influences the sequence projection in the so-called &ldquo;personalized&rdquo; FFN. In turn, the sequence summarization is concatenated with non-sequence features, which is then passed through interaction layers (e.g., DCNv2, DHEN).</li>
 </ul>
 </li>
-<li>Meta Ads Ranking AI: <a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a></li>
+<li>Meta Monetization Ranking AI: <a href="https://arxiv.org/abs/2602.10016">Kunlun: Establishing Scaling Laws for Massive-Scale Recommendation Systems through Unified Architecture Design</a>
+<ul>
+<li><strong>TL;DR</strong>: Kunlun claims to be the first to achieve power-law scaling in unified sequence + non-sequence models. It&rsquo;s built upon InterFormer and introduces critical efficiency improvements, including (1) reformulating PFFN (personalized FFN) as a fused Generalized Dot-Product Attention (GDPA) kernel, (2) replacing PMA (Pooling by Multihead Attention) with Hierarchical Seed Pooling (HSP) for sequence summarization, 3) using Sliding Window Attention instead of full attention in long sequences, (4) allocating different model capacity to different event types based on importance (Event-Level Personalization), and (5) selectively skipping modules in each layer (Computation Skip). Compared with InterFormer, Kunlun improves MFU (model flops utilization) from 17% to 37% and has 2x scaling efficiency (the slope of the performance-compute curve).</li>
+</ul>
+</li>
 <li>Alibaba: <a href="https://arxiv.org/abs/2602.10811">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a></li>
 <li>Alibaba: <a href="https://arxiv.org/abs/2602.09387">Query-Mixed Interest Extraction and Heterogeneous Interaction: A Scalable CTR Model for Industrial Recommender Systems</a></li>
 <li>Alibaba: <a href="https://arxiv.org/abs/2602.20676">PRECTR-V2: Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a></li>
@@ -384,7 +388,7 @@ Recommender Systems Theory &#43; Scaling Laws Every company on Earth is now purs
 </h3>
 <p>Everything hot and new in LLMs is bound to be applied to RecSys, like reasoning models or agents. Scaling these models remains challenging.</p>
 <ol start="14">
-<li>Meta Ads Ranking AI: <a href="https://arxiv.org/abs/2602.07774">Generative Reasoning Re-Ranker</a></li>
+<li>Meta Monetization Ranking AI: <a href="https://arxiv.org/abs/2602.07774">Generative Reasoning Re-Ranker</a></li>
 <li>Meta Recommendation Systems: <a href="https://arxiv.org/html/2509.10397v1">RecoWorld: Building Simulated Environments for Agentic Recommender Systems</a></li>
 <li>Google DeepMind: <a href="https://arxiv.org/abs/2602.10226">Self-Evolving Recommendation System: End-To-End Autonomous Model Optimization With LLM Agents</a></li>
 <li>Kuaishou: <a href="https://arxiv.org/abs/2601.18664">$S^2GR$: Stepwise Semantic-Guided Reasoning in Latent Space for Generative Recommendation</a></li>
