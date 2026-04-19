@@ -8,7 +8,7 @@ math: true
     <img src="https://www.dropbox.com/scl/fi/xrjctvfi0f81brcm6vlxr/7DC46823-5C4B-4DD6-B202-6334289DC68F_1_201_a.jpeg?rlkey=2m1109quro2f4jmk5e4qfbkrz&st=qpj4ykua&raw=1" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: block; margin: 0 auto;">
 </div>
 
-Hi, I'm Yuan, a Senior Machine Learning Engineer at Meta's Monetization Ranking AI (RAI). Prior to this, I worked on ads L2 ranking at Pinterest, focusing on lifelong user sequence modeling. I spent my first $2 \frac{5}{12}$ years after grad school building all things search at DoorDash: {L1, L2} ranking, {query, user, document} understanding, autocomplete, you name it. Building 0→1 models across a wide range of domains, pushing 95% models to SOTA, as well as the many friends and mentors I found, made me who I am as an engineer. 
+Hi, I'm Yuan, a Senior ML Engineer at Meta Ranking AI, a RecSys research team that discovers scaling + architectural innovations for product ML teams to adopt. Prior to this, I worked on ads L2 ranking at Pinterest, scaling user sequence models from $O(100)$ to $O(10k)$. I spent my first $2 \frac{5}{12}$ years after grad school building all things search at DoorDash: {L1, L2} ranking, {query, user, document} understanding, autocomplete, you name it. Building 0→1 models across a wide range of domains, pushing 95% models to SOTA, along with the many friends and mentors I found, made me who I am as an engineer. 
 
 I was a computational cognitive scientist studying common sense causal and social reasoning, earning my Ph.D. from Berkeley in 2022. DeepMind’s [*The Thinking Game*](https://www.youtube.com/watch?v=d95J8yzvjbQ) reminded me of the very passion I had.
 
