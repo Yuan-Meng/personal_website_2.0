@@ -13,7 +13,7 @@ My biggest fear before joining Meta was forgetting who I am. Indeed I feel I'm j
 
 At Meta, so many voices speak to you at once that you can't hear your own: what's SOTA and what's not, what you can and cannot do or say, whom you can talk to and befriend, whom to worship and whom to look down on, what you're supposed to be grateful for and never walk away from. You listen and follow so closely, thinking you're such a good student of the game, only to lose everything beautiful about machine learning and life.
 
-Modern tennis favors "point players," who construct points so tactically and mechanically yet they become great at winning and ugly to watch. Model launches at Meta are more or less the same. Shut up and learn, and one day you'll master the game. Point by point, you forget why you play, and why winning ever mattered.
+Modern tennis favors "point players," who construct points so tactically and mechanically that they become great at winning yet ugly to watch. Model launches at Meta are more or less the same. Shut up and learn, and one day you'll master the game. Point by point, you forget why you play, and why winning ever mattered.
 
 Carlos plays on instinct, passion, and joy. Few coaches would tell their trainees to follow in his footsteps. In his dog days, from late 2024 into early 2025, the doubts were so overwhelming you'd think he was about to wash out. And what if he had? Being proud of the way you are is the rarest commodity in sports, in careers, in life. I'll never find out what I love unless I shut out all the noise.
 
