@@ -1,0 +1,1697 @@
+<!doctype html>
+<html
+  lang="en-us"
+  dir="ltr"
+>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    
+<link rel="stylesheet" href="http://localhost:1313/css/styles.min.b9043231ddc756d7f5562ab1d7340f4281ad35df8c158a62ccfd66848c674e5e.css">
+<meta charset="utf-8" />
+<meta name="language" content="en" />
+<meta name="viewport" content="width=device-width" />
+<title>
+    Is Generative Recommendation the ChatGPT Moment of RecSys? | Yuan Meng
+</title>
+  <meta name="description" content=" Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
+Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling." />
+<meta property="og:url" content="http://localhost:1313/posts/generative_recommendation-copy/">
+  <meta property="og:site_name" content="Yuan Meng">
+  <meta property="og:title" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
+  <meta property="og:description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
+Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-08-03T00:00:00+00:00">
+
+
+  <meta itemprop="name" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
+  <meta itemprop="description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
+Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+  <meta itemprop="datePublished" content="2025-08-03T00:00:00+00:00">
+  <meta itemprop="wordCount" content="7356">
+  <meta itemprop="keywords" content="Generative recommendation,Large language models">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Is Generative Recommendation the ChatGPT Moment of RecSys?">
+  <meta name="twitter:description" content="Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you&#39;re familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., &#34;Embedding-MLP&#34; style `pAction` models, sequence modeling) architectures, you&#39;re golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep &amp; Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.
+Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding &amp; Interaction &amp; Expert’ model architectures.
+In 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.">
+
+<link rel="canonical" href="http://localhost:1313/posts/generative_recommendation-copy/" />
+
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="stylesheet" href="/css/stranger.css" />
+
+
+      <script src="/js/main.js" defer></script>
+  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@id": "http://localhost:1313/posts/generative_recommendation-copy/",
+  "@type": "BlogPosting",
+  "articleSection": [
+    "Generative recommendation",
+    "Large language models"
+  ],
+  "author": {
+    "@type": "Person",
+    "email": "mycaptainmy@gmail.com",
+    "name": "Yuan Meng",
+    "url": "http://localhost:1313/about/"
+  },
+  "copyrightNotice": "Yuan Meng",
+  "datePublished": "2025-08-03",
+  "description": " Has the Tide Turned? From DLRM to GR For nearly a decade, recommender systems have remained largely the same (sidenote: It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., \"Embedding-MLP\" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.) . It’s hard to even imagine a system without a cascade pipeline in the iconic YouTube paper, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn’t drifted far from the seminal Deep \u0026 Wide network, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., DCN-v2, MaskNet) and multi-task learning (e.g., MMoE, PLE) culminated in Meta’s DHEN, which combines multiple interaction modules and experts to push the limits of this “Deep Learning Recommender System” (DLRM) paradigm.\nSince 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style ‘Embedding \u0026 Interaction \u0026 Expert’ model architectures.\nIn 2025, the tide seems to have finally turned after Meta’s HSTU delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years — other top companies such as Google (sidenote: Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.) , Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new “Generative Recommendation” (GR) paradigm for retrieval and ranking, reframing the discriminative pAction prediction task as a generative task, akin to token predictions in language modeling.",
+  "headline": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
+  "isPartOf": {
+    "@id": "http://localhost:1313/posts/",
+    "@type": "Blog",
+    "name": "Posts"
+  },
+  "mainEntityOfPage": "http://localhost:1313/posts/generative_recommendation-copy/",
+  "name": "Is Generative Recommendation the ChatGPT Moment of RecSys?",
+  "timeRequired": "PT35M",
+  "url": "http://localhost:1313/posts/generative_recommendation-copy/",
+  "wordCount": 7356
+}
+</script>
+
+
+  </head>
+  <body>
+    <div class="container mx-auto flex max-w-prose flex-col space-y-10 p-4 md:p-6">
+      <header class="flex flex-row items-center justify-between">
+        <div>
+  <a id="skip-nav" class="sr-only" href="#maincontent">Skip to main content</a>
+  <a class="font-semibold" href="/">Yuan Meng</a>
+</div>
+
+  <nav>
+    <ul class="flex flex-row items-center justify-end space-x-4">
+    <li>
+      <a href="/about/">About</a
+      >
+    </li>
+    <li>
+      <a aria-current="true" class="ancestor" href="/posts/">Posts</a
+      >
+    </li>
+    <li>
+      <a href="/notes/">Notes</a
+      >
+    </li>
+    </ul>
+  </nav>
+
+
+      </header>
+      <main class="prose prose-slate relative md:prose-lg prose-h1:text-[2em]" id="maincontent">
+        <article class="main">
+    <header>
+      <h1 class="!mb-1">Is Generative Recommendation the ChatGPT Moment of RecSys?</h1><div class="flex flex-row items-center space-x-4">
+          <time class="text-sm italic opacity-80" datetime="2025-08-03T00:00:00&#43;00:00">August 3, 2025</time>
+        </div>
+    </header>
+
+    
+    
+      Reading time: 35 minutes
+    
+
+    
+    
+      <div class="toc-container">
+        <span id="toc-toggle">
+          <span id="toc-icon">▶</span> 
+          <span>Table of Contents</span>
+        </span>
+        <nav id="TableOfContents" class="toc-content">
+          <nav id="TableOfContents">
+  <ul>
+    <li><a href="#has-the-tide-turned-from-dlrm-to-gr">Has the Tide Turned? From DLRM to GR</a></li>
+    <li><a href="#compositionality-language-and-intelligence">Compositionality, Language, and Intelligence</a>
+      <ul>
+        <li><a href="#the-one-epoch-curse-of-dlrm-recommenders">The One-Epoch Curse of DLRM Recommenders</a></li>
+        <li><a href="#what-makes-language-special-hocketts-design-features">What Makes Language Special: Hockett&rsquo;s Design Features</a></li>
+      </ul>
+    </li>
+    <li><a href="#break-the-scaling-law-curse-in-recsys">Break the Scaling Law Curse in RecSys</a>
+      <ul>
+        <li><a href="#conjure-up-compositionality-via-semantic-ids">Conjure Up Compositionality via Semantic IDs</a></li>
+        <li><a href="#crank-up-task-complexity-via-generative-training">Crank Up Task Complexity via Generative Training</a></li>
+      </ul>
+    </li>
+    <li><a href="#approaches-to-generative-recommendation">Approaches to Generative Recommendation</a>
+      <ul>
+        <li><a href="#fully-generative-architectures">Fully Generative Architectures</a>
+          <ul>
+            <li><a href="#metas-hstu">Meta&rsquo;s HSTU</a></li>
+            <li><a href="#kuaishous-onerec">Kuaishou&rsquo;s OneRec</a>
+              <ul>
+                <li><a href="#semantic-id-generation"><em>Semantic ID Generation</em></a></li>
+                <li><a href="#encoder-decoder-training"><em>Encoder-Decoder Training</em></a></li>
+                <li><a href="#preference-alignment-via-dpo"><em>Preference Alignment via DPO</em></a></li>
+              </ul>
+            </li>
+            <li><a href="#meituans-mtgr">Meituan&rsquo;s MTGR</a></li>
+          </ul>
+        </li>
+        <li><a href="#hybrid-generative-discriminative-architectures">Hybrid Generative-Discriminative Architectures</a>
+          <ul>
+            <li><a href="#alibabas-gpsd">Alibaba&rsquo;s GPSD</a></li>
+            <li><a href="#xiaohongshus-rankgpt">Xiaohongshu&rsquo;s RankGPT</a></li>
+            <li><a href="#foundation-models-at-netflix-and-pinterest">Foundation Models at Netflix and Pinterest</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#lessons-from-case-studies">Lessons from Case Studies</a></li>
+    <li><a href="#references">References</a>
+      <ul>
+        <li><a href="#overview--scaling-laws-in-recommender-systems">Overview &amp; Scaling Laws in Recommender Systems</a></li>
+        <li><a href="#from-atomic-item-ids-to-semantic-ids">From Atomic Item IDs to Semantic IDs</a></li>
+        <li><a href="#ditch-dlrm-for-end-to-end-generative-architectures">Ditch DLRM for End-to-End Generative Architectures</a></li>
+        <li><a href="#weave-generative-architectures-into-dlrm">Weave Generative Architectures into DLRM</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </nav>
+      </div>
+
+      <script>
+        
+        document.addEventListener('DOMContentLoaded', function () {
+          var tocToggle = document.getElementById('toc-toggle');
+          var tocContent = document.getElementById('TableOfContents');
+          var tocIcon = document.getElementById('toc-icon');
+          tocToggle.addEventListener('click', function () {
+            if (tocContent.style.display === 'none' || tocContent.style.display === '') {
+              tocContent.style.display = 'block';
+              tocIcon.textContent = '▼'; 
+            } else {
+              tocContent.style.display = 'none';
+              tocIcon.textContent = '▶'; 
+            }
+          });
+        });
+      </script>
+    
+
+    
+    <div class="content">
+      <h2 id="has-the-tide-turned-from-dlrm-to-gr" class="scroll-mt-8 group">
+  Has the Tide Turned? From DLRM to GR
+  
+    <a href="#has-the-tide-turned-from-dlrm-to-gr"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<p>For nearly a decade, recommender systems have remained largely <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-01"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-01"
+    for="sidenote-checkbox-01"
+    class="sidenote-mark"
+    >the same</label
+  >
+  <small id="sidenote-01" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>It used to be (still is?) the case that if you're familiar with the cascade pipeline and the most popular L1 (e.g., two-tower models and embedding-based retrieval) and L2 (e.g., "Embedding-MLP" style `pAction` models, sequence modeling) architectures, you're golden in almost every ML system design interview. Perhaps a year from now, GenRec talents and experience will be what top companies seek instead.<span class="sr-only">)</span>
+  </small>
+</span>
+. It&rsquo;s hard to even imagine a system without a cascade pipeline in the iconic <a href="https://research.google.com/pubs/archive/45530.pdf">YouTube paper</a>, which retrieves tens of thousands of candidates from a massive corpus, trims them down to hundreds of relevant items using a lightweight ranker (L1), selects the top dozen using a heavy ranker (L2), and makes adjustments based on policy and business logic (L3). Architecture-wise, the L2 ranker hasn&rsquo;t drifted far from the seminal <a href="https://arxiv.org/abs/1606.07792">Deep &amp; Wide network</a>, which embeds input features, passes them through interaction modules, and transforms representations for task heads (e.g., clicks, purchase, video watch). Upgrades to feature interaction (e.g., <a href="https://arxiv.org/abs/2008.13535">DCN-v2</a>, <a href="https://arxiv.org/abs/2102.07619">MaskNet</a>) and multi-task learning (e.g., <a href="https://arxiv.org/abs/2311.09580">MMoE</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3383313.3412236">PLE</a>) culminated in Meta&rsquo;s <a href="https://arxiv.org/abs/2203.11014">DHEN</a>, which combines multiple interaction modules and experts to push the limits of this &ldquo;Deep Learning Recommender System&rdquo; (DLRM) paradigm.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/96m8zb5yps9ffz9geheu7/Screenshot-2025-07-20-at-11.07.10-PM.png?rlkey=q4xtbxt3r50okrs2zo9vac2xq&amp;st=fzobjxgt&amp;raw=1"
+    alt="Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style &lsquo;Embedding &amp; Interaction &amp; Expert&rsquo; model architectures." width="1800"><figcaption>
+      <p>Since 2016, web-scale recommender systems mostly use the cascade pipeline and DLRM-style &lsquo;Embedding &amp; Interaction &amp; Expert&rsquo; model architectures.</p>
+    </figcaption>
+</figure>
+
+<p>In 2025, the tide seems to have finally turned after Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152">HSTU</a> delivered perhaps the biggest offline/online metric and serving efficiency gains in recent years &mdash; other top companies such as <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-03"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-03"
+    for="sidenote-checkbox-03"
+    class="sidenote-mark"
+    >Google</label
+  >
+  <small id="sidenote-03" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Google DeepMind published TIGER a year before HSTU, but it was used for retrieval only. Meta might have been the major influence behind using Generative Recommendation for both retrieval and ranking.<span class="sr-only">)</span>
+  </small>
+</span>
+, Kuaishou, Meituan, Alibaba, Netflix, Xiaohongshu, ByteDance, Tencent, Baidu, and JD.com are starting to embrace a new &ldquo;Generative Recommendation&rdquo; (GR) paradigm for retrieval and ranking, reframing the discriminative <code>pAction</code> prediction task as a generative task, akin to token predictions in language modeling.</p>
+<p>What makes GR magical? Why can it unlock scaling laws in recommender systems in ways that DLRM wasn&rsquo;t able to? Is GR a genuine paradigm shift or a short-lived fad? In this blogpost, let&rsquo;s check out GR models from above companies and see what the fuss is all about 👀. Since I work on ranking, I mainly focus on ranking applications in this post, but GR is first and widely applied in retrieval.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/x0y8rm8ph7dz7u1s2bli1/Screenshot-2025-07-29-at-10.18.10-PM.png?rlkey=yww2exuhetiu3jipkqyl5hvtn&amp;st=ojhg4d1j&amp;raw=1"
+    alt="The landscape of Generative Recommenders (GR) in the past year." width="1800"><figcaption>
+      <p>The landscape of Generative Recommenders (GR) in the past year.</p>
+    </figcaption>
+</figure>
+
+<h2 id="compositionality-language-and-intelligence" class="scroll-mt-8 group">
+  Compositionality, Language, and Intelligence
+  
+    <a href="#compositionality-language-and-intelligence"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="the-one-epoch-curse-of-dlrm-recommenders" class="scroll-mt-8 group">
+  The One-Epoch Curse of DLRM Recommenders
+  
+    <a href="#the-one-epoch-curse-of-dlrm-recommenders"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>If in the old days sciences had a <a href="https://en.wikipedia.org/wiki/Physics_envy">&ldquo;physics envy&rdquo;</a>, then today&rsquo;s machine learning definitely has an &ldquo;LLM envy&rdquo;. By duplicating a deceptively simple architecture &mdash; the Transformer (<a href="https://arxiv.org/abs/1706.03762">Vaswani et al., 2017</a>) &mdash; many times over and training models on massive amounts of data, large language models seem to have unlocked <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-05"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-05"
+    for="sidenote-checkbox-05"
+    class="sidenote-mark"
+    >human-like</label
+  >
+  <small id="sidenote-05" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Or have they? The new ICML 2025 paper "What Has a Foundation Model Found?" shows foundation models struggle to learn underlying world knowledge and apply it to new tasks, such as discovering Newtonian mechanics from orbital trajectory training and applying it to new physics tasks.<span class="sr-only">)</span>
+  </small>
+</span>
+intelligence. Other AI/ML domains are eager to replicate this success, especially recommender systems, which remain the lifeline of the tech industry.</p>
+<p>Why not? After all, there are many similarities between recommender systems and the NLP domain, as noted by Meta researchers in <a href="https://arxiv.org/abs/2305.15333"><em>Breaking the Curse of Quality Saturation with User-Centric Ranking</em></a>:</p>
+<blockquote>
+<p>The key idea, with an analogy to NLP, is to think of items as tokens and users as documents, i.e., each user is modeled by a list of items that they engaged with, in chronological order according to the time of engagements.</p>
+</blockquote>
+<p>A user is thus a &ldquo;book&rdquo; written by a history of engaged items, and web-scale recommender systems provide endless training data. In language models, performance predictably improves with model size or training data (e.g., linear or power-law relationships), a phenomenon called &ldquo;scaling laws&rdquo; (<a href="https://arxiv.org/abs/2203.15556">Hoffmann et al., 2022</a>). In DLRM recommender systems, however, scaling laws have never emerged. In recommenders employing Transformer modules, increasing the number of Transformer layers doesn&rsquo;t improve performance &mdash; more often than not, one layer is all you need (e.g., Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>). Regardless of the architecture, training DLRM recommenders for more than one epoch typically results in rapid performance deterioration (the &ldquo;one-epoch phenomenon&rdquo;; Zhang et al., <a href="https://dl.acm.org/doi/abs/10.1145/3511808.3557479">CIKM 22</a>).</p>
+<p>So how do we explain this stark contrast between language and recommendation models? Back in 2021, Netflix published a &ldquo;popular science&rdquo; paper that foresaw the challenges of DLRM-style recommenders. In this paper, <a href="https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140">Steck et al. (2021)</a> argued that deep learning recommender systems differ  from other deep learning applications such as image classification in that item IDs are &ldquo;atomic&rdquo; and directly available in the data &mdash; there are no low-to-high level feature representations to extract (e.g., pixels to objects in images). As such, deep learning recommenders only require a shallow network to learn user and item embeddings from user-item interactions, effectively learning &ldquo;dot product&rdquo; operations. They don&rsquo;t benefit from deeper architectures meant to capture low-level features.</p>
+<p>This observation is profound, highlighting inherent flaws in DLRM:</p>
+<ul>
+<li><strong>Lack of task complexity</strong>: Why do we need the full power of deep learning to learn a task as simple as performing dot products? If shallow networks are enough, how could scaling laws emerge?</li>
+</ul>
+<blockquote>
+<p>[&hellip;] a syntactically complex phrase is a function of the meanings of its constituent parts and the way they are combined. &mdash; <a href="https://oecs.mit.edu/pub/e222wyjy/release/1"><em>Compositionality</em></a>, Ryan M. Nefdt and Christopher Potts</p>
+</blockquote>
+<ul>
+<li><strong>No compositionality, no intelligence</strong>: Imagine if each word as an arbitrary sound unrelated to others &mdash; e.g., saying &ldquo;blim&rdquo; for &ldquo;snake&rdquo; and &ldquo;plok&rdquo; for &ldquo;rattlesnake&rdquo; &mdash; learning any <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-06"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-06"
+    for="sidenote-checkbox-06"
+    class="sidenote-mark"
+    >language</label
+  >
+  <small id="sidenote-06" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Or music, or planning… For example, while sound frequencies are continuous and infinite, Western music relies on just 12 distinct frequencies and their multiples. Notes form chords, chords form progressions, and so forth. Without hierarchical relationships, composing music would be nearly impossible.<span class="sr-only">)</span>
+  </small>
+</span>
+ would be impossible in our lifetime, as we&rsquo;d spend an eternity just acquiring the vocabulary. Recommender systems face precisely this challenge: a popular social media platform, for instance, may have billions of items, with new ones constantly being added, making the vocabulary enormous, ever-changing, and non-stationary. Moreover, item IDs are arbitrary and atomic, with no relationship between one another that learners can exploit to speed up learning. By contrast, without knowing German, we might guess that &ldquo;klapperschlange&rdquo; (rattlesnake) relates to &ldquo;schlange&rdquo; (snake). The compositionality of language, i.e., smaller units are combined into complex phrases and concepts, allows humans to express infinite ideas using a finite vocabulary acquired in finite time &mdash; a luxury that recommender systems don&rsquo;t have.</li>
+</ul>
+<h3 id="what-makes-language-special-hocketts-design-features" class="scroll-mt-8 group">
+  What Makes Language Special: Hockett&rsquo;s Design Features
+  
+    <a href="#what-makes-language-special-hocketts-design-features"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>In the 1960s, American linguist Charles Hockett proposed 16 <a href="https://abacus.bates.edu/acad/depts/biobook/Hockett.htm">&ldquo;design features&rdquo;</a> to distinguish human language from animal communication. The <span style="background-color: #FFC31B">highlighted</span> ones below (with my paraphrasing) are what I found most interesting and relevant to recommender systems:</p>
+<ol>
+<li>Vocal-auditory channel: Communication must occur through some medium that transmits a message from the communicator to the receiver. (Hockett&rsquo;s emphasis on vocal communication is now outdated, overlooking sign languages.)</li>
+<li>Broadcast transmission and directional reception: Message is transmitted in all directions, yet the receiver can tell from where the message came. (Without knowing who&rsquo;s communicating with us from where, we can&rsquo;t communicate back.)</li>
+<li>Rapid fading: Linguistic message does not persist over time, unlike permanent forms such as stone carvings or knot-tying.</li>
+<li>Interchangeability: Anyone can say anything (e.g., I can claim &ldquo;I am your king&rdquo; even if I&rsquo;m not) &mdash; unlike only queen ants can produce certain chemicals. Communicators and receivers can switch roles.</li>
+<li>Total feedback: The communicator can receive their own message, allowing them to control what message to send.</li>
+<li>Specialization: Communication is for exchanging messages rather than practical purposes (e.g., dogs panting to cool down).</li>
+<li><span style="background-color: #FFC31B">Semanticity</span>: Symbols carry stable meanings. (The same symbol shouldn&rsquo;t change meanings from one message to the next.)</li>
+<li><span style="background-color: #FFC31B">Arbitrariness</span>: Which symbols map to which meanings is arbitrary.</li>
+<li><span style="background-color: #FFC31B">Discreteness</span>: Smaller symbols can be combined into complex symbols in rule-governed ways (noun + &ldquo;s&rdquo; $\rightarrow$ plural).</li>
+<li><span style="background-color: #FFC31B">Duality of patterning</span>: Atomic symbols have no meaning of their own, yet they can be combined into meaningful message.</li>
+<li>Displacement: Language can discuss subjects not immediately present (e.g., dinner plans for tomorrow).</li>
+<li>Prevarication: We can say things that are false or hypothetical.</li>
+<li><span style="background-color: #FFC31B">Productivity</span>: We can say things that no one in history has said before, yet those new utterances can be readily understood.</li>
+<li>Traditional transmission: Language is socially learned, not innate.</li>
+<li><span style="background-color: #FFC31B">Learnability</span>: Language can be learned (with ease in childhood).</li>
+<li>Reflexiveness: Language can describe itself (e.g., &ldquo;grammar,&rdquo; &ldquo;sentence,&rdquo; &ldquo;word,&rdquo; &ldquo;token,&rdquo; &ldquo;noun&rdquo;).</li>
+</ol>
+<p>For recommender systems to have &ldquo;intelligence,&rdquo; item IDs need not have inherent meanings from the get-go (&ldquo;arbitrariness&rdquo;), but should be decomposable into smaller units in a hierarchical, rule-governed manner (&ldquo;discreteness,&rdquo; &ldquo;duality of patterning&rdquo;), with stable mappings from tokens to meanings (&ldquo;semanticity&rdquo;). Hopefully as a result, the system will be able to learn the &ldquo;item language&rdquo; (&ldquo;learnability&rdquo;) and generalize knowledge to new items (&ldquo;productivity&rdquo;). Spoiler alert: This is the exact idea behind Semantic IDs (e.g., <a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>, <a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>), which we&rsquo;ll discuss in the next section.</p>
+<details>
+  <summary style="color: #FFC31B; cursor: pointer;">Reflections on Linguistics and Recommender Systems</summary>
+  <div style="color: #002676; padding-left: 10px;">
+    Nine years ago when I first learned about Hockett's design features in a linguistics seminar as a first-year Cognitive Science PhD student, I had <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-07"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-07"
+    for="sidenote-checkbox-07"
+    class="sidenote-mark"
+    >zero interest</label
+  >
+  <small id="sidenote-07" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Perhaps because it was too much for me to talk about how to talk about language in a language I didn't grow up speaking. Might that be a lack of reflexive-reflexiveness LOL?<span class="sr-only">)</span>
+  </small>
+</span>
+ in linguistics. Three years ago when I started my career as a Machine Learning Engineer, I had zero interest in language models, dead set on becoming a recommender system expert — despite closely following OpenAI since 2016 while at Berkeley. It's funny how recognizing the parallels between language and recommender systems finally helped me see the magic (structure $\rightarrow$ learnability) in the former and the beauty (can it be potentially intelligent?) in the latter.
+  </div>
+</details>
+<h2 id="break-the-scaling-law-curse-in-recsys" class="scroll-mt-8 group">
+  Break the Scaling Law Curse in RecSys
+  
+    <a href="#break-the-scaling-law-curse-in-recsys"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="conjure-up-compositionality-via-semantic-ids" class="scroll-mt-8 group">
+  Conjure Up Compositionality via Semantic IDs
+  
+    <a href="#conjure-up-compositionality-via-semantic-ids"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Words in language and notes in music discretize sound waves, concepts, etc., which would&rsquo;ve been atomic, continuous, and infinite. That&rsquo;s what Semantic IDs do for items in recommender systems.</p>
+<p>Residual-Quantized VAE (RQ-VAE) is the best known algorithm for Semantic ID generation. It was invented in the auditory (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and visual domains (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) and popularized by DeepMind&rsquo;s TIGER paper (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applying it to Generative Retrieval. RQ-VAE maps a pretrained semantic embedding $x$ to an $m$-level Semantic ID $(c_0, \ldots, c_{m-1})$ in a recursive manner:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/w9d3w2ra4uhueoftv41ex/Screenshot-2025-07-29-at-11.03.04-PM.png?rlkey=89zuzha8bxwh9lpl1n86l6cnv&amp;st=5ox5ujza&amp;raw=1"
+    alt="RQ-VAE generates Semantic IDs by encoding input embeddings into quantized vectors and mapping the latter to $m$-level codes." width="1800"><figcaption>
+      <p>RQ-VAE generates Semantic IDs by encoding input embeddings into quantized vectors and mapping the latter to $m$-level codes.</p>
+    </figcaption>
+</figure>
+
+<ol>
+<li>
+<p>Initialization</p>
+<ul>
+<li>Encoder $\mathcal{E}$ maps input $x$ to latent representation $\mathbf{z} := \mathcal{E}(\mathbf{x})$</li>
+<li>At each level $d$, initialize a new codebook $\mathcal{C}_d := \{ \mathbf{e}_k \}_{k=1}^{K}$ of size $K$; each code $k$ starts with embedding $\mathbf{e}_k$
+<ul>
+<li>Note: to prevent &ldquo;codebook collapse&rdquo; where most inputs are disproportionately mapped to a few codebooks, k-mean clustering can be used for codebook initialization</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Level 0: Assign inputs to codes</p>
+<ul>
+<li>The initial &ldquo;residual&rdquo; is $\mathbf{r}_0 := \mathbf{z}$, the input latent vector</li>
+<li>Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}_0$, $c_0 = \arg\min_i \lVert \mathbf{r}_0 - \mathbf{e}_k \rVert$</li>
+<li>The difference between $\mathbf{r}_0$ and the closet code embedding at level 0, $\mathbf{e}_{c_0}$, becomes the next residual $\mathbf{r}_1 := \mathbf{r}_0 - \mathbf{e}_{c_0}$</li>
+</ul>
+</li>
+<li>
+<p>Recursion: Assign residuals to codes</p>
+<ul>
+<li>At level $d$, the residual is $\mathbf{r}_d$ after assignment at $(d-1)$</li>
+<li>Conduct nearest neighbor search to find the code whose embedding is the closest to $\mathbf{r}_d$, $c_d = \arg\min_i \lVert \mathbf{r}_d - \mathbf{e}_k \rVert$</li>
+<li>The difference between $\mathbf{r}_d$ and the closet code embedding at level $d$, $\mathbf{e}_{c_d}$, becomes the next residual $\mathbf{r}_{d+1} := \mathbf{r}_d - \mathbf{e}_{c_d}$</li>
+</ul>
+</li>
+</ol>
+<p>The process above can repeat infinitely. The deeper the codebooks, the finer the representations but the more the computation. After the latent vector $\mathbf{z}$ is allocated the Semantic ID $(c_0, \ldots, c_{m-1})$, its quantized representation $\mathbf{\hat{z}} := \sum_{d=0}^{m=1}\mathbf{e}_{c_i}$ is passed to a decoder to reconstruct the input as $\mathbf{\hat{x}}$. RQ-VAE loss is defined as $\mathcal{L}(\mathbf{x}) := \mathcal{L}_{\mathrm{recon}} + \mathcal{L}_{\mathrm{rqvae}}$, where $\mathcal{L}_{\mathrm{recon}} =\lVert \mathbf{x} - \mathbf{\hat{x}}\rVert^2$ measures how close the reconstructed input is to the original input and $\mathcal{L}_{\mathrm{rqvae}} := \sum_{d=0}^{m-1} \lVert\mathrm{sg}[\mathbf{r_i}] - \mathbf{e}_{c_i}\rVert^2 + \beta\lVert\mathbf{r_i} - \mathrm{sg}[\mathbf{e}_{c_i}]\rVert^2$ ($\mathrm{sg}$ is stop-gradient) measures how good the code assignments are. Upon training, the RQ-VAE model uses the trained encoder to map the given item embedding into a quantized latent vector and generates a Semantic ID by assigning $m$-level codes to the quantized latent vector.</p>
+<p>In a Semantic ID $(c_0, \ldots, c_{m-1})$, each code $c_d$ is like a character in a word. In natural languages, we usually don&rsquo;t tokenize at the character level &mdash; even though the vocabulary will be manageable, the sequence length would be too long and it&rsquo;s hard for a character to have stable &ldquo;meanings&rdquo;. Today, subword-level <a href="https://huggingface.co/docs/transformers/en/tokenizer_summary">tokenizers</a> are most popular in NLP, which learn to bind frequently co-occurring characters into tokens. Famous examples include <a href="https://en.wikipedia.org/wiki/Byte-pair_encoding">Byte Pair Encoding (BPE)</a>, <a href="https://research.google/blog/a-fast-wordpiece-tokenization-system/">WordPiece</a>, and <a href="https://discuss.huggingface.co/t/training-sentencepiece-from-scratch/3477">SentencePiece</a>. In TIGER, the authors used SentencePiece to learn Semantic ID tokenization, which performed better than naive unigram and bigram tokenization in downstream retrieval tasks.</p>
+<p>In Generative Retrieval, a sequence of items $(\mathrm{item}_1, \ldots, \mathrm{item}_n)$ are converted into a sequence of codes using Semantic IDs $(c_{1,0}, \ldots, c_{1, m-1}, c_{2,0}, \ldots, c_{2, m-1},\ldots,c_{n,0}, \ldots, c_{n, m-1})$. To retrieve $\mathrm{item}_{n+1}$, we can use an encoder-decoder model to decode the next $m$ codes $(c_{n+1,0}, \ldots, c_{n+1, m-1})$, which is the Semantic ID of $\mathrm{item}_{n+1}$ that hopefully maps to actual items in the corpus.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/9detgaylbt0v4ed9kc1mp/Screenshot-2025-08-01-at-3.21.33-PM.png?rlkey=jxtcge2xxgy6kf3ztmjxe38y1&amp;st=rnwuyfuc&amp;raw=1"
+    alt="Semantic IDs are not designed to map to human-readable categories, but map quite nicely to item taxonomies hand crafted by taxonomists." width="1800"><figcaption>
+      <p>Semantic IDs are not designed to map to human-readable categories, but map quite nicely to item taxonomies hand crafted by taxonomists.</p>
+    </figcaption>
+</figure>
+
+<p>While there is no deliberate design, it&rsquo;s amazing how well Semantic IDs map to hand-crafted item taxonomies in the recommendation corpus. Of course, there are &ldquo;bad&rdquo; cases where different items share the same Semantic ID (hash collision) or a Semantic ID doesn&rsquo;t map to any actual items (invalid IDs). To prevent the former, an extra token can be appended to a Semantic ID to make it unique &mdash; e.g., if two items share the same Semantic ID (12, 24, 52), we can assign (12, 24, 52, 0) to one and (12, 24, 52, 1) to the other. In cold-start scenarios, hash collisions can actually help retrieve new items that share Semantic IDs with existing items. Invalid codes are pretty rare, making up only 0.1%-1.6% of all Semantic IDs generated in the TIGER paper.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/a12lvlznxux8s7gwf4box/Screenshot-2025-08-01-at-3.53.58-PM.png?rlkey=ue8fm74yeyhcniu4o5gaq84x3&amp;st=5ovirb0g&amp;raw=1"
+    alt="A high-level comparison between TIGER vs. COBORA. The latter combines sparse Semantic IDs and fine-grained item representations for Generative Retrieval." width="1800"><figcaption>
+      <p>A high-level comparison between TIGER vs. COBORA. The latter combines sparse Semantic IDs and fine-grained item representations for Generative Retrieval.</p>
+    </figcaption>
+</figure>
+
+<p>Information loss is inevitable when we discretize continuous representations &mdash; imagine the finer-grained intervals lost between semitones in Western music. Baidu&rsquo;s COBORA (<a href="https://arxiv.org/abs/2503.02453">Yang et al., 2025</a>) combines sparse (one-level Semantic IDs) and dense (real-valued embeddings) representations to depict each item in Generative Retrieval. In this hybrid framework, the sparse ID paints a coarse picture of the &ldquo;item essence&rdquo; (e.g., categories, brands, etc.) whereas the dense representation offers refinements on item details.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/zyoay6335ztooy17fo39r/Screenshot-2025-08-01-at-4.46.06-PM.png?rlkey=h9oigl01bjuqej2kdw7e7t9nz&amp;st=gxdrgcbr&amp;raw=1"
+    alt="In COBORA, the sparse ID is generated by RQ-VAE and the dense vector is contextual item embeddings after going through a BERT-style encoder." width="1800"><figcaption>
+      <p>In COBORA, the sparse ID is generated by RQ-VAE and the dense vector is contextual item embeddings after going through a BERT-style encoder.</p>
+    </figcaption>
+</figure>
+
+<p>During training, a single-level (can be multi-level) Semantic ID is first decoded and converted into an embedding, which is then appended to the input embedding sequence to decode the dense representation, $P(ID_{t+1}, \mathbf{v}_{t+1}|S_{1:t}) = P(ID_{t+1}|S_{1:t})P(\mathbf{v}_{t+1}|ID_{t+1},S_{1:t})$. The loss function is given by $\mathcal{L} = \mathcal{L}_\mathrm{sparse} + \mathcal{L}_\mathrm{dense}$, where:</p>
+<ul>
+<li>$\mathcal{L}_\mathrm{sparse} = -\sum_{t=1}^{T-1}\log(\frac{\exp(z_{t+1}^{ID_{t+1}})}{\sum_{j=1}^C\exp(z_{t+1}^j)})$, which is the standard cross-entropy loss</li>
+<li>$\mathcal{L}_\mathrm{dense} = -\sum_{t=1}^{T-1}\log(\frac{\exp(\cos(\hat{\mathbf{v}_{t+1}}\cdot \mathbf{v}_{t+1}))}{\sum_{\mathrm{item}_j}\in\mathrm{Batch}\exp(\cos(\hat{\mathbf{v}_{t+1}}\cdot \mathbf{v}_{\mathrm{item}_j}))})$, which pushes the cosine similarity between positive pair embeddings to be greater than that between negative pair embeddings</li>
+</ul>
+<p>During inference, only the dense representation is used for retrieval via embedding-based retrieval (see <a href="/posts/ebr/" class="backlink">my post</a>
+  
+  ). COBORA outperforms methods that only have the sparse or the dense components.</p>
+<p>It&rsquo;s crazy how fast moving the Generative Recommendation field is &mdash; minutes after I wrote the paragraph above and scrolled LinkedIn, Snap open-sourced their framework called Generative Recommendation with Semantic ID (GRID). I plan to read their <a href="https://github.com/snap-research/GRID">code</a> and <a href="https://arxiv.org/pdf/2507.22224">paper</a> in detail.</p>
+<h3 id="crank-up-task-complexity-via-generative-training" class="scroll-mt-8 group">
+  Crank Up Task Complexity via Generative Training
+  
+    <a href="#crank-up-task-complexity-via-generative-training"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>For language models, scale often does wonders for model performance. The seminal <em>Attention Is All You Need</em> paper used 6 Transformer blocks, GPT-2 scaled it up to 12, and GPT-3 to 96. While GPT-4&rsquo;s number of Transformer blocks is undisclosed, <a href="https://semianalysis.com/2023/07/10/gpt-4-architecture-infrastructure/">rumor</a> has it that it uses 120 layers and has 100x more parameters than its predecessor GPT-3 (18 trillion vs. 175 billion). The data and compute used to train larger models have also increased manyfold.</p>
+<p>In recommender systems, Transformer blocks are often used in user sequence modeling (see <a href="/posts/seq_user_modeling/" class="backlink">my post</a>
+  
+   for an overview of this domain) to weight historically engaged items (via self-attention or target attention), and the output is typically plugged into a DRLM model for discriminative  <code>pAction</code>  predictions. As mentioned earlier, many companies (Chen et al., <a href="https://dl.acm.org/doi/abs/10.1145/3326937.3341261">KDD 19</a>, Gu et al., CIKM <a href="https://dl.acm.org/doi/abs/10.1145/3340531.3412697">20</a>, <a href="https://dl.acm.org/doi/abs/10.1145/3459637.3481953">21</a>) found the best performance when using just one Transformer layer.</p>
+<p>Turns out the generative vs. discriminative task setup makes a huge difference in the emergence of scaling laws. The WeChat team (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">Zhang et al., 2025</a>) trained a <em>stand-alone</em> sequence model using a pure item ID sequence to predict the next item ID. They scaled up the model from 98.3K to 0.8B parameters by stacking Transformer blocks.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/yf6frvifnlg8g8pj1bumc/Screenshot-2025-08-01-at-11.28.00-PM.png?rlkey=1iwin5iu1xc782vejo6fw3p7a&amp;st=i4iwezql&amp;raw=1"
+    alt="In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers." width="1800"><figcaption>
+      <p>In the scaling law study, WeChat trained a simple autoregressive sequence model with only item IDs and scaled it up by stacking Transformer blockers.</p>
+    </figcaption>
+</figure>
+
+<p>They saw power-law curves where model performance increases with both data size and model size. Larger models are more &ldquo;data efficient,&rdquo; in that validation loss drops more quickly with data size in larger models. WeChat models differ from aforementioned sequence models that don&rsquo;t scale in that they perform an end-to-end generative task (i.e., decoding the next ID), whereas the latter perform a discriminative task (i.e., predicting whether a user will act on an item) in the end.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/6fwyco3xq3l8pjf5nax2h/Screenshot-2025-08-02-at-10.16.24-AM.png?rlkey=v9g0wv1swml28ft9stkcs5640&amp;st=wfmb5rf2&amp;raw=1"
+    alt="Scaling laws were observed where model performance increases both with model size and data size. Larger models improves faster with data size." width="1800"><figcaption>
+      <p>Scaling laws were observed where model performance increases both with model size and data size. Larger models improves faster with data size.</p>
+    </figcaption>
+</figure>
+
+<p>What makes generative vs. discriminative tasks different? In terms of task formulation, both <code>pAction</code> prediction and next-token prediction solve classification problems &mdash; the former is a binary classifier (i.e., predicting whether a user will act on an item or not given some context) and the latter is an extreme multi-class classifier (e.g., selecting the most likely tokens; check out AI Coffee Break&rsquo;s awesome <a href="https://www.youtube.com/watch?v=o-_SZ_itxeA">video</a> on decoding strategies). What makes <code>pAction</code> prediction discriminative is that it models the conditional probability $P(\mathrm{action} | \mathrm{user},,\mathrm{item},,\mathrm{context})$. By contrast, next-token prediction requires modeling the joint distribution $P(x_1,x_2,\ldots,x_n,x_{n+1})=P(x_{n+1})P(x_1,x_2,\ldots,x_{n}|x_{n+1})$. Learning the joint distribution is simultaneously a harder task but it also enjoys more supervision &mdash; all preceding tokens can supervise the current token generation, whereas for <code>pAction</code> predictions, each example only provides a single binary label. As such, generative models need more data to train and they also get what they wish for.</p>
+<p>In his Zhihu <a href="https://zhuanlan.zhihu.com/p/1918350919508140128">blogpost</a>, the first author of Kuaishou&rsquo;s <a href="https://arxiv.org/abs/2506.13695">OneRec technical report</a> offers deeper thoughts on the discriminative vs. generative distinction &mdash; below are English translations of the original text:</p>
+<blockquote>
+<p>In my view, a large language model&rsquo;s ability to think and reason largely stems from the fact that increasing the decoding steps corresponds to increasing the depth of search. If we think of the decoding process as a kind of 100K-token tree search at each step, then generating more tokens means going deeper in the search tree. And each generated token becomes part of the future input, helping the model activate more relevant information from its parameters (via the causal transformer) to make judgments about the final answer.</p>
+</blockquote>
+<blockquote>
+<p>In recommendation models, however, expanding the candidate set is fundamentally a breadth-based search, not a depth-based one. Each item is evaluated independently, so evaluating more items doesn&rsquo;t help the model make a better judgment about any single one. There&rsquo;s a performance ceiling.</p>
+</blockquote>
+<p>In the past year, companies like Kuaishou and Meta made a bold move, ditching the traditional DLRM paradigm for end-to-end generative Generative Recommendation. More companies such as Alibaba, Netflix, and Xiaohongshu integrated GR components into their DLRM systems. In the next section, let&rsquo;s look at several famous case studies.</p>
+<h2 id="approaches-to-generative-recommendation" class="scroll-mt-8 group">
+  Approaches to Generative Recommendation
+  
+    <a href="#approaches-to-generative-recommendation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="fully-generative-architectures" class="scroll-mt-8 group">
+  Fully Generative Architectures
+  
+    <a href="#fully-generative-architectures"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<h4 id="metas-hstu" class="scroll-mt-8 group">
+  Meta&rsquo;s HSTU
+  
+    <a href="#metas-hstu"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Meta&rsquo;s <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words</em></a> may be the recommender system paper with the most Greek letters you&rsquo;ll ever see, but the core ideas are straightforward: <span style="background-color: #D9CEFF">Retrieval can be framed as a next-item prediction problem and ranking a next-action prediction problem </span>.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/9s8qs8alvl5s5qwdg24vo/Screenshot-2025-08-02-at-1.54.07-PM.png?rlkey=dq12i5j8tgoa200zpfyar1ynn&amp;st=nqp621ua&amp;raw=1"
+    alt="Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks." width="1800"><figcaption>
+      <p>Meta has &lsquo;completely&rsquo; overhauled the DLRM framework, but many components in DLRM either map directly to GR or after some tweaks.</p>
+    </figcaption>
+</figure>
+
+<figure><img src="https://www.dropbox.com/scl/fi/nyyma8ul631e45kw7t87s/Screenshot-2025-08-02-at-2.23.22-PM.png?rlkey=01es2kkiy5y87qylat9q8feu7&amp;st=o5e58nl2&amp;raw=1"
+    alt="Ranking vs. retrieval task framing in the Generative Recommendation." width="600"><figcaption>
+      <p>Ranking vs. retrieval task framing in the Generative Recommendation.</p>
+    </figcaption>
+</figure>
+
+<p>In their notations, $\Phi_i$ denotes a content and $a_i$ denotes an action on the content. The total number of contents a user has engaged with is $n_c$. A user sequence is given as $(\Phi_0, a_0, \Phi_1, a_1,\ldots,\Phi_{n_c-1}, a_{n_c-1})$. The retrieval task is to predict the most likely next content $\Phi_{i+1}$ given user history $u_i$, $\arg\max_{\Phi\in\mathcal{X}_c} p(\Phi_{i+1}|u_i)$. Only positive actions serve as supervision for next-content predictions, meaning that $u_i = (\Phi_1&rsquo;,\Phi_2&rsquo;,\ldots,\Phi_{n_c-1}&rsquo;)$, where $\Phi_i&rsquo;=\Phi_i$ if $a_i$ is positive and empty $\emptyset$ otherwise. In ranking, the next item is given, so the task is to predict the next-action probability, $P(a_{i+1}|\Phi_0,a_0, \Phi_1,a_1,\ldots,\Phi_{i+1})$.</p>
+<p>The main module in Meta&rsquo;s model is a causal autoregressive Transformer called the &ldquo;Hierarchical Sequential Transduction Unit&rdquo; (HSTU). Like regular Transformers (see <a href="/posts/attention_as_dict/" class="backlink">my post</a>
+  
+   for a refresher), HSTU consists of 3 sub-layers, but each comes with modifications:</p>
+<figure><img src="https://www.dropbox.com/scl/fi/5at8fwvcl16cztms1ipdv/Screenshot-2025-08-02-at-1.51.58-PM.png?rlkey=zjtvd90ox2mbv5eiav8w69526&amp;st=gt68a43z&amp;raw=1"
+    alt="HSTU is a modified causal autoregressive Transformer." width="1800"><figcaption>
+      <p>HSTU is a modified causal autoregressive Transformer.</p>
+    </figcaption>
+</figure>
+
+<ul>
+<li>Pointwise projection: 4 linear projections are created from the input. On top of $Q, K, V$, HSTU also has gating weights $U$ &mdash;
+<ul>
+<li>$U(X), V(X), Q(X), K(X) = \mathrm{Split}(\phi_1(f_1(X)))$</li>
+</ul>
+</li>
+<li>Spatial aggregation: Similar to regular Transformers, HSTU uses attention scores to pool $V(X)$ to create a &ldquo;contextual embedding&rdquo; for each token. Instead of positional encodings, HSTU uses the relative attention bias (<a href="https://arxiv.org/html/2402.17152v3#bib.bib43">Raffel et al., 2020</a>) that incorporates positional ($p$) and temporal ($t$) information
+<ul>
+<li>$A(X)V(X) = \phi_2(Q(X)K(X)^T + \mathrm{rab}^{p,t})V(X)$</li>
+</ul>
+</li>
+<li>Pointwise aggregation: This is perhaps the most special thing about HSTU. Regular self-attention uses row-wise softmax to normalize attention scores across the entire sequence. By contrast, HSTU normalizes each attention score independently, replacing softmax with a nonlinear activation function like SiLU. As a result, attention scores in each row may not sum up to 1. Finally, gating weights $U(X)$ control which dimensions in each token embedding matter more and modulate them accordingly
+<ul>
+<li>$Y(X) = f_2(\mathrm{Norm}(A(X)V(X)\odot U(X)))$</li>
+</ul>
+</li>
+</ul>
+<p>While the overall architecture isn&rsquo;t too crazy, many optimizations are done to bring this model to life, including selecting a subsequence of <em>stochastic length</em> (SL) from each user&rsquo;s history (TL;DR: the older an action, the less likely it will be selected), row-wise AdamW optimizers, and the new M-FALCON algorithm for micro-batching during serving.</p>
+<h4 id="kuaishous-onerec" class="scroll-mt-8 group">
+  Kuaishou&rsquo;s OneRec
+  
+    <a href="#kuaishous-onerec"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Kuaishou&rsquo;s OneRec brings all-around improvements to HSTU, most notably Kuaishou&rsquo;s own RQ-Kmeans algorithm (<a href="https://arxiv.org/abs/2411.11739">Luo et al., 2024</a>) that incorporates collaborative signals into Semantic IDs and maximizes codebook utilization, session-wise list generation that generates a list of interdependent videos rather than unrelated individual videos, and a post-training preference alignment stage that uses <a href="https://arxiv.org/abs/2305.18290">Direct Preference Optimization (DPO)</a> to optimize for conflicting business objectives. The paper (<a href="https://arxiv.org/abs/2502.18965">Deng et al., 2025</a>) itself is pretty short. A more detailed technical report (<a href="https://arxiv.org/abs/2506.13695">Zhou et al., 2025</a>) came out a few months later and has made rounds in the recommendation industry.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/v0j337owy5w3k0eewczl9/Screenshot-2025-08-02-at-1.50.08-PM.png?rlkey=722s4amolmzdk9pbo4mwhpkc9&amp;st=whfld5n7&amp;raw=1"
+    alt="OneRec pretrains an encoder-decoder model that takes user sequences as input and outputs Semantic IDs for a list of videos. In post-training preference alignment, responses are rewarded for model/business metric gains and having a valid format." width="1800"><figcaption>
+      <p>OneRec pretrains an encoder-decoder model that takes user sequences as input and outputs Semantic IDs for a list of videos. In post-training preference alignment, responses are rewarded for model/business metric gains and having a valid format.</p>
+    </figcaption>
+</figure>
+
+<h5 id="semantic-id-generation" class="scroll-mt-8 group">
+  <em>Semantic ID Generation</em>
+  
+    <a href="#semantic-id-generation"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>Each video&rsquo;s content embedding is first obtained by passing multimodal inputs (e.g., texts: captions, tags, speech-to-text, image-to-text; images: the cover image, 5 uniformly sample frames) into a visual-language encoder, which, in this case, is miniCPM-V-8B. For efficiency, the authors used QFormer from BLIP-2 (<a href="https://arxiv.org/abs/2301.12597">Li et al., 2023</a>) to compress 1280 video tokens into 4 query tokens. To inject collaborative signals into content embeddings, the authors sampled item pairs engaged by similar users (&ldquo;collaboratively similar&rdquo;) and used contrastive learning to align representations of such videos.</p>
+<p>RQ-VAE initializes codebooks randomly, often resulting in many residuals being mapped to the same codebook (the &ldquo;hourglass phenomenon&rdquo;, <a href="https://arxiv.org/abs/2407.21488">Kuai et al., 2024</a>). To ensure full codebook utilization, RQ-Kmeans constructs codebooks on the fly by clustering residuals using K-means. Coarse-to-fine Semantic IDs generated by RQ-Kmeans, $\{s_m^1, s_m^2,\ldots,s_m^{L_t}\}$, are the &ldquo;vocabulary&rdquo; in OneRec.</p>
+<h5 id="encoder-decoder-training" class="scroll-mt-8 group">
+  <em>Encoder-Decoder Training</em>
+  
+    <a href="#encoder-decoder-training"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>The main module in OneRec is a T5-style (<a href="https://research.google/blog/exploring-transfer-learning-with-t5-the-text-to-text-transfer-transformer/">Roberts et al., 2020</a>) encoder-decoder architecture. Rather than encoding a single user sequence like HSTU does, OneRec encodes 4 user sequences:</p>
+<ul>
+<li>
+<p>User static pathway: Static user features, such as ID, gender, age, etc. &mdash; $[\mathbf{e}_{\mathrm{uid}};\mathbf{e}_{\mathrm{gender}};\mathbf{e}_{\mathrm{age}};\ldots]$, where $\mathbf{e}_{\mathrm{uid}};\mathbf{e}_{\mathrm{gender}};\mathbf{e}_{\mathrm{age}} \in \mathbb{R}^{64}$</p>
+</li>
+<li>
+<p>Short-term pathway: Most recent (e.g., 20) engagements, each characterized by $[\mathbf{e}_{\mathrm{vid}}^s;\mathbf{e}_{\mathrm{aid}}^s;\mathbf{e}_{\mathrm{tag}}^s;\mathbf{e}_{\mathrm{ts}}^s;\mathbf{e}_{\mathrm{playtime}}^s,\mathbf{e}_{\mathrm{dur}}^s;\mathbf{e}_{\mathrm{label}}^s]$; embedding dimensions vary between different entities</p>
+</li>
+<li>
+<p>Positive-feedback pathway: Most engaged (e.g., 256) items, each characterized by $[\mathbf{e}_{\mathrm{vid}}^p;\mathbf{e}_{\mathrm{aid}}^p;\mathbf{e}_{\mathrm{tag}}^p;\mathbf{e}_{\mathrm{ts}}^p;\mathbf{e}_{\mathrm{playtime}}^p,\mathbf{e}_{\mathrm{dur}}^p;\mathbf{e}_{\mathrm{label}}^p]$</p>
+</li>
+<li>
+<p>Lifelong pathway: Up to 100,000 past engaged videos. Kuaishou&rsquo;s own TWIN V2 (<a href="https://arxiv.org/html/2407.16357v1">Si et al., 2024</a>) is used to compress this sequence into $K$ clusters created with hierarchical K-means clustering. Each compressed token representation a cluster is characterized by $[\mathbf{e}_{\mathrm{vid}}^l;\mathbf{e}_{\mathrm{aid}}^l;\mathbf{e}_{\mathrm{tag}}^l;\mathbf{e}_{\mathrm{ts}}^l;\mathbf{e}_{\mathrm{playtime}}^l,\mathbf{e}_{\mathrm{dur}}^l;\mathbf{e}_{\mathrm{label}}^l]$</p>
+</li>
+</ul>
+<p>Outputs from the 4 pathways are projected into $\mathbf{h}_u \in \mathbb{R}^{1\times d_{\mathrm{model}}}$, $\mathbf{h}_s \in \mathbb{R}^{L_{s}\times d_{\mathrm{model}}}$, $\mathbf{h}_p \in \mathbb{R}^{L_{p}\times d_{\mathrm{model}}}$, and $\mathbf{h}_l \in \mathbb{R}^{N_{q}\times d_{\mathrm{model}}}$ (QFormer further compresses the already compressed sequence of length $L_l$ into $N_q$ query tokens), respectively. The 4 outputs are concatenated along the sequence length dimension, with a positional encoding $\mathbf{e}_{\mathrm{pos}} \in \mathbb{R}^{(1+L_s + L_p + N_q)}$ added, before being fed into the encoder.</p>
+<p>The decoder generates Semantic IDs for a series of videos, each starting with a special beginning-of-sentence token &mdash; example Semantic ID of the $m$-th video, $\mathcal{S}_m = \{s_{[\mathrm{BOS}]},s_m^1,s_m^2,\ldots,s_m^{L_t}\}$. A standard cross-entropy loss is used for next-token prediction. A nuanced is that OneRec applies cross-attention between the encoder output and the latest state of the decoder, so that the decoder attends to both previously decoded tokens (causal self-attention) and the user&rsquo;s entire history (cross-attention). A sparse MoE layer is used in the feed-forward network to for training efficiency and cost reduction.</p>
+<h5 id="preference-alignment-via-dpo" class="scroll-mt-8 group">
+  <em>Preference Alignment via DPO</em>
+  
+    <a href="#preference-alignment-via-dpo"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h5>
+<p>In Machine Learning Engineering, half the work is to build a fancy model and half is to persuade others why the new predictions are better. For instance, do users find treatment results more &ldquo;relevant&rdquo; (however defined)? Do they click on more ads? Do they have longer sessions and engage with the content more deeply (e.g., commenting, sharing)?&hellip; In DRLM, each objective can be optimized by a task tower and outputs from different towers are combined into a weighted sum.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/66etdouoq1m6vdfol7chh/Screenshot-2025-08-02-at-10.24.57-PM.png?rlkey=vzsxzhbubgwqhst2odrrfdfmf&amp;st=7hoecdhu&amp;raw=1"
+    alt="After training a &lsquo;seed model&rsquo;, cross-entropy loss and DPO loss (based on pAction, format, and business needs) are both used during preference alignment." width="1800"><figcaption>
+      <p>After training a &lsquo;seed model&rsquo;, cross-entropy loss and DPO loss (based on <code>pAction</code>, format, and business needs) are both used during preference alignment.</p>
+    </figcaption>
+</figure>
+
+<p>In OneRec, the score combining different objectives is called the P-Score (Preference Score), which serves as one of the rewards in the preference alignment stage. Other rewards include a format reward (e.g., whether the generated Semantic IDs are valid) and an &ldquo;industrial reward&rdquo; (e.g., safety, monetization, diversity, cold-start). A variant of DPO, called ECPO (Early Clipped <a href="https://arxiv.org/abs/2402.05749">GRPO</a>), is used to optimize these rewards. Different from GRPO, ECPO uses a clipped policy gradient objective to stabilize training in early stages. To maximize alignment, OneRec uses an Iterative Preference Alignment (IPA) strategy: at each iteration, beam search generates multiple candidates, the reward model selects the best and worst responses, and both standard next-token prediction loss and DPO loss are used to update the model.</p>
+<p>Reading the OneRec technical report reminds me of how I felt when reading the DeepSeek reports in February: so much thought given to every detail, loads of engineering ingenuity, and truly &ldquo;no guts, no glory&rdquo;. The lead of OneRec, Guorui Zhou, wrote in his <a href="https://zhuanlan.zhihu.com/p/1918350919508140128">post</a> that his motivation came from both practical concerns (e.g., reducing compute and overhead costs by eliminating L0 $\rightarrow$ L1 $\rightarrow$ L2 data transfer to increase the profit margin of ads) and a profound intellectual quest (e.g., how &ldquo;intelligence&rdquo; can emerge and why it has long evaded recommender systems). I hope that, in my own career, I&rsquo;ll have the honor of being part of a revolution sparked by early conviction.</p>
+<h4 id="meituans-mtgr" class="scroll-mt-8 group">
+  Meituan&rsquo;s MTGR
+  
+    <a href="#meituans-mtgr"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>In the middle of writing this blogpost, I had dinner with a <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-22"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-22"
+    for="sidenote-checkbox-22"
+    class="sidenote-mark"
+    >former colleague</label
+  >
+  <small id="sidenote-22" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>Then later in another dinner right before I published this post, she helped explain the one-epoch phenomenon to me and shared an interesting observation that her DLRM-style model without many sparse features could keep improving until 10 epochs.<span class="sr-only">)</span>
+  </small>
+</span>
+ and described the idea from the TIGER paper to her. Her first reaction was, &ldquo;Eh, how do we personalize recommendations?&rdquo;</p>
+<p>That was probably the catch with Generative Recommendation &mdash; in DLRM, user-item cross features (e.g., how often a user clicked through to an ad or purchased an item) often have the highest feature importances and are key to personalization, but it&rsquo;s not immediately apparent how this kind of information can be incorporated into a Generative Recommender (e.g., which Semantic IDs should be decoded probably doesn&rsquo;t depend on who I am). Meituan&rsquo;s MTGR (<a href="https://arxiv.org/abs/2505.18654">Han et al., 2025</a>)  brings cross features back into GR.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/959t68kyyq1hux8vwgy8q/Screenshot-2025-08-02-at-1.56.05-PM.png?rlkey=f4oyy0av007kaotk8lmmsoaqu&amp;st=7sepacbq&amp;raw=1"
+    alt="MTGR organizes data at the user-item level, allowing user-item interactions to be added as candidate item features." width="1800"><figcaption>
+      <p>MTGR organizes data at the user-item level, allowing user-item interactions to be added as candidate item features.</p>
+    </figcaption>
+</figure>
+
+<p>Typically in DRLM, if a user interacted with $N$ items for a combined total of $M$ times in a time window, it results in $M$ rows of training data. Typically in GR, $M$ interactions are organized into one  sequence. In MTGR, each user-item pair has one sequence, resulting in $N$ rows of data: $\mathbb{D} = [\mathbf{U}, \mathbf{\overrightarrow{S}}, \mathbf{\overrightarrow{R}}, [\mathbf{C}, \mathbf{I}]_1\ldots, [\mathbf{C}, \mathbf{I}]_K]$. Under this user-item level data arrangement, cross features (e.g., user-item CTR) are treated as features of the candidate (the interacted item). In each sequence, the model can predict for multiple occurrences of the same candidate at once, reducing training costs. To avoid information leakage, dynamic masking is added so that user features $(\mathbf{U},  \mathbf{\overrightarrow{S}})$ are visible to all tokens, real-time interactions $\mathbf{\overrightarrow{R}}$ are only visible to later tokens, whereas candidate tokens $(\mathbf{C},\mathbf{I})$ are only visible to themselves.</p>
+<p>Comparing with GR, MTGR sacrifices some efficiency for better personalization &mdash; by making $N$ times more predictions than a typical GR, it can now include user-item cross features in predictions.</p>
+<h3 id="hybrid-generative-discriminative-architectures" class="scroll-mt-8 group">
+  Hybrid Generative-Discriminative Architectures
+  
+    <a href="#hybrid-generative-discriminative-architectures"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<p>Rather than overhauling DLRM and existing cascade pipelines and team structures (e.g., most companies have separate retrieval/L1/L2 teams), more companies chose to integrate components of Generative Recommendation into DRLM to enjoy the best of both worlds.</p>
+<h4 id="alibabas-gpsd" class="scroll-mt-8 group">
+  Alibaba&rsquo;s GPSD
+  
+    <a href="#alibabas-gpsd"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>As alluded to earlier, DLRM is haunted by a strange &ldquo;one-epoch phenomenon&rdquo;, where model performance on the test set suddenly drops at the beginning of the second epoch (<a href="https://arxiv.org/abs/2209.06053">Zhang et al., 2022</a>). As a result, you can&rsquo;t train a DLRM model for longer to improve it.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/yq7hf8i736jjjfbxtip0n/Screenshot-2025-08-03-at-11.46.02-AM.png?rlkey=6h1h4r7gvtonslost65kujw8e&amp;st=g2dzfqco&amp;raw=1"
+    alt="A possible explanation for the one-epoch phenomenon." width="500"><figcaption>
+      <p>A possible explanation for the one-epoch phenomenon.</p>
+    </figcaption>
+</figure>
+
+<p>A common hypothesis is that the joint distribution of trained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$, differs significantly from that of untrained samples, $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$. Before training, embeddings are at their initial values. After one epoch, embeddings for trained samples are updated, allowing the model to overfit to $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{trained}}), y)$ at the start of the second epoch. In contrast, test samples still have $\mathcal{D}(\mathrm{EMB}(\mathbf{x}_{\mathrm{untrained}}), y)$ since their embeddings remain unchanged. As a result, the model performs poorly on the test set. Due to their sparsity, high-cardinality ID embeddings are easy to overfit, since each ID appears infrequently in the data. In contrast, low-cardinality features are seen more often and are less prone to overfitting.</p>
+<p>To address this issue, Alibaba&rsquo;s GPSD (<a href="https://arxiv.org/abs/2506.03699">Wang et al., 2025</a>) pretrains ID embeddings in a separate generative model (think Transformers + next-token prediction tasks) and integrates learned ID embeddings into the downstream discriminative CTR model. Another Chinese e-commerce giant JD.com follows the same generative-to-discriminative transfer strategy in their GenCTR model (<a href="https://arxiv.org/abs/2507.11246">Kong et al., 2025</a>).</p>
+<figure><img src="https://www.dropbox.com/scl/fi/nye4quw0lsu8ukts6dwfh/Screenshot-2025-08-03-at-11.56.20-AM.png?rlkey=x3101ljcjgl3ibthbll4oinkm&amp;st=sfvui9ba&amp;raw=1"
+    alt="To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model." width="1800"><figcaption>
+      <p>To mitigate the one-epoch phenomenon, GPSD pretrains a generative model on user sequences and transfers parameters to a downstream discriminative model.</p>
+    </figcaption>
+</figure>
+
+<p>The authors compared 4 ways to integrate pretrained embeddings into discriminative CTR models (baseline: train everything from scratch):</p>
+<ul>
+<li><em>Full Transfer</em>: Transfer sparse + dense parameters from the generative model to the discriminative model; allow sparse + dense parameter updates during CTR model training.</li>
+<li><em>Sparse Transfer</em>: Transfer sparse parameters and train dense parameters from scratch; allow sparse parameter updates.</li>
+<li><em>Full Transfer &amp; Sparse Freeze</em>: Transfer sparse + dense parameters; freeze sparse parameters but allow dense parameters updates.</li>
+<li><em>Sparse Transfer &amp; Sparse Freeze</em>: Transfer sparse parameters; freeze sparse parameters and train dense parameters from scratch.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/9thmlc2l4tx83ctcitnst/Screenshot-2025-08-03-at-12.47.45-PM.png?rlkey=nkoqyoj3uiw901sxn4mah852t&amp;st=nv5pll27&amp;raw=1"
+    alt="GPSD breaks the one-epoch phenomenon and the scaling law curse, with model performance improving with training data and model size." width="1800"><figcaption>
+      <p>GPSD breaks the one-epoch phenomenon and the scaling law curse, with model performance improving with training data and model size.</p>
+    </figcaption>
+</figure>
+
+<p>As one can see, the one-epoch curse is broken &mdash; all methods allowed model performance to improve after one epoch. Moreover, scaling laws based on model size have emerged &mdash; the larger the model (L4H256A4 &gt; L4H128A4 &gt; L4H64A4 &gt; L4H32A4), the better the overall performance. In the two smaller models (32 and 64), &ldquo;Sparse Transfer &amp; Sparse Freeze&rdquo; worked the best whereas in the two larger models (128 and 256), &ldquo;Full Transfer &amp; Sparse Freeze&rdquo; was the best.</p>
+<p>Besides GPSD, Alibaba have several other Generative Recommenders, such as LUM (<a href="https://arxiv.org/abs/2502.08309">Yan et al., 2025</a>) and URM (<a href="https://arxiv.org/abs/2502.03041">Jiang et al., 2025</a>). Just yesterday (August 2, 2025), Alibaba published the <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a>, showing their ambition to turn recommendations into a ChatGPT-like product that truly interacts with users intelligently.</p>
+<h4 id="xiaohongshus-rankgpt" class="scroll-mt-8 group">
+  Xiaohongshu&rsquo;s RankGPT
+  
+    <a href="#xiaohongshus-rankgpt"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>There are good, bad, and great recommender systems &mdash; and then there&rsquo;s <a href="https://www.xiaohongshu.com/explore">Xiaohongshu</a>, the only app powerful enough to dominate our lives. A restaurant can go from the brink of shutting down to having a two-hour dinner queue overnight, all for a post on Xiaohongshu. My friends and I constantly joke that no matter how unique or personal an experience feels, a post echoing that exact thought or sentiment will show up in our feed 5 minutes later. RankGPT (<a href="https://arxiv.org/abs/2505.04180">Huang et al., 2025</a>) is the <span class="sidenote">
+  <input
+    aria-label="Show sidenote"
+    type="checkbox"
+    id="sidenote-checkbox-27"
+    class="sidenote-checkbox hidden"
+  />
+  <label
+    tabindex="0"
+    role="mark"
+    aria-details="sidenote-27"
+    for="sidenote-checkbox-27"
+    class="sidenote-mark"
+    >mastermind</label
+  >
+  <small id="sidenote-27" class="sidenote-content">
+    <span class="sr-only"> (sidenote: </span>RankGPT doesn't seem like a huge innovation from Meta's HSTU. Perhaps as a wise person once said, data is the king in recommendations.<span class="sr-only">)</span>
+  </small>
+</span>
+ behind Xiaohongshu&rsquo;s uncanny recommendations.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/vwxgmdxd24zxtaw50p2am/Screenshot-2025-08-03-at-2.10.20-PM.png?rlkey=bf9auxoysas4k19k6ustszkw9&amp;st=upm449ip&amp;raw=1"
+    alt="RankGPT is similar to HSTU, but organizes training data around actions and treats items as positional information." width="1800"><figcaption>
+      <p>RankGPT is similar to HSTU, but organizes training data around actions and treats items as positional information.</p>
+    </figcaption>
+</figure>
+
+<p>RankGPT&rsquo;s architecture is modified from HSTU. HSTU assigns 2 tokens to each engagement, a content token $\Phi_i$ and an action token $a_i$. The upside is that HSTU unifies retrieval and ranking &mdash; retrieval is achieved by predicting the next content and ranking is achieved by predicting the next action. The downside is that the user sequence is now doubled in length, which then quadruples the required compute.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/bt0tc3aktaatsushbxseb/Screenshot-2025-08-03-at-2.33.47-PM.png?rlkey=ai3d5zj95pmxscbvckih23ph2&amp;st=0a59pdz8&amp;raw=1"
+    alt="Turns out all 3 positional encodings are not as good as parameter-free ALiBi." width="1800"><figcaption>
+      <p>Turns out all 3 positional encodings are not as good as parameter-free ALiBi.</p>
+    </figcaption>
+</figure>
+
+<p>Since RankGPT isn&rsquo;t designed to handle retrieval, there&rsquo;s no need to interleave separate content and action tokens &mdash; it only has to predict actions on candidates. So item and action embeddings can be added together to represent engagement $i$, $e_i = \varphi_i + \phi_i$, where $\varphi(\cdot)$ and $\phi(\cdot)$ denote item and action embedding modules, respectively. To prevent information leakage, candidate action tokens are masked. The authors call this the &ldquo;action-oriented organization&rdquo;.</p>
+<p>As for injecting positional information, the authors originally explored adding 3 forms of positional encodings to token embeddings:</p>
+<ul>
+<li><em>Position embeddings</em>: A learnable positional embedding based on the item index in the user sequence.</li>
+<li><em>Request index embeddings</em>: A learnable positional embedding based on the request index &mdash; all items belonging to the same request share the same embedding.</li>
+<li><em>Pre-request time embeddings</em>: A learnable positional embedding capturing the bucketed timestamp difference between each action timestamp and the request timestamp.</li>
+</ul>
+<p>Interestingly, all those methods combined didn&rsquo;t beat ALiBi (<a href="https://arxiv.org/abs/2108.12409">Press et al., 2021</a>), which simply replaces positional encodings with a parameter-free penalty that increases with query-key distances. Compared to HSTU, the action-oriented organization decreased AUC by 0.03%, while ALiBi improved AUC by 0.09%. Overall, RankGPT achieved a 94.8% speed-up with a net AUC gain of 0.06%.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/dbuzokx2ycz7po0pmjzio/Screenshot-2025-08-03-at-2.10.26-PM.png?rlkey=nm23z4yhi1fcnret94cq7e1l8&amp;st=sc8aj0wd&amp;raw=1"
+    alt="RankGPT offers a huge speed-up compared to HSTU with moderate AUC gains." width="500"><figcaption>
+      <p>RankGPT offers a huge speed-up compared to HSTU with moderate AUC gains.</p>
+    </figcaption>
+</figure>
+
+<h4 id="foundation-models-at-netflix-and-pinterest" class="scroll-mt-8 group">
+  Foundation Models at Netflix and Pinterest
+  
+    <a href="#foundation-models-at-netflix-and-pinterest"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h4>
+<p>Apart from Google&rsquo;s TIGER and Meta&rsquo;s HSTU, most models above come from Chinese companies. In the United States, Netflix&rsquo;s Foundation Model (<a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">Hsiao et al., 2025</a>) and Pinterest&rsquo;s PinFM (<a href="https://arxiv.org/abs/2507.12704">Chen et al., 2025</a>) are among the better known models. Rather than making end-to-end recommendations as online models, they seem more like offline models that generate features for online <code>pAction</code> models.</p>
+<p>As with most Generative Recommenders, Netflix&rsquo;s Foundation Model is a Transformer-based autoregressive model trained on user sequences to predict the next token(s). To speed up training, it uses sparse attention (the <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39">blogpost</a> doesn&rsquo;t say which one) and compresses similar movies in a row into the same token. To drive long-term satisfaction, the model predictions the next-$n$ tokens rather than just the next one (reminiscent of the &ldquo;Dense All Action&rdquo; loss in Pinterest&rsquo;s PinnerFormer, <a href="https://arxiv.org/abs/2205.04507">Pancha et al., 2022</a>). To enhance generalization, the model not only predicts item IDs but also metadata (e.g., genre, tone). This model is integrated into downstream (discriminative) models.</p>
+<figure><img src="https://www.dropbox.com/scl/fi/pe7jpmw5qocir4xiamvg7/Screenshot-2025-08-03-at-3.46.38-PM.png?rlkey=ksseh27dyje6caag7pe60r1m3&amp;st=8dc7hmmx&amp;raw=1"
+    alt="Netflix compresses similar movies into a single token." width="1800"><figcaption>
+      <p>Netflix compresses similar movies into a single token.</p>
+    </figcaption>
+</figure>
+
+<p>Pinterest&rsquo;s PinFM (<a href="https://arxiv.org/abs/2507.12704">Chen at al., 2025</a>) is similar to Netflix&rsquo;s model, which is an autoregressive Transformer trained on raw user sequences to predict multiple future tokens, with innovations here and there. During pretraining, the model uses 2 years of engagement history up to length 16,000 and only the low-dimension features (basically excluding pretrained item embeddings). The loss consists of 3 parts:</p>
+<ul>
+<li>Next-token loss: $\mathcal{L}_{ntl} = \sum_{i+1}^{m-1}l(\mathbf{H}_i, z_{i+1})\mathbb{1}[a_{i+1} \in A_{\mathrm{pos}}]$, infoNCE loss for predicting the next positively engaged item.</li>
+<li>Multi-token loss: $\mathcal{L}_{mtl} = \sum_{i+1}^{m-1}\sum_{j=i+1}^{i+L&rsquo;}l(\mathbf{H}_i, z_j)\mathbb{1}[a_j \in A_{\mathrm{pos}}]$, loss for predicting positively engaged item in window $L&rsquo;$.</li>
+<li>Future-token loss: $\mathcal{L}_{ftl} = \sum_{j=n+1}^{n+L&rsquo;}l(\mathbf{H}_{L_{d}}, z_j)\mathbb{1}[a_j \in A_{\mathrm{pos}}]$ &mdash; during serving, a shorter sequence of length $L_d$ is sent to the model; this loss penalizes prediction errors within $L_d$.</li>
+</ul>
+<figure><img src="https://www.dropbox.com/scl/fi/1478ofq5zfpzsohx8kzrk/Screenshot-2025-08-03-at-4.04.35-PM.png?rlkey=tdjex9ls02vwdhh4ff9dklw8o&amp;st=2bb8lpa4&amp;raw=1"
+    alt="PinFM is pretrained on lifelong user sequences and fine-tuned in ranking models." width="1800"><figcaption>
+      <p>PinFM is pretrained on lifelong user sequences and fine-tuned in ranking models.</p>
+    </figcaption>
+</figure>
+
+<p>In downstream ranking models, the candidate item is appended to the user sequence as the input to PinFM to bring &ldquo;candidate awareness&rdquo;. Rather than freezing model parameters (like some variants of Alibaba&rsquo;s GPSD), PinFM is fine-tuned along with <code>pAction</code> predictions.</p>
+<p>To productionize PinFM, the team took aggressive cost-saving measures. For instance, to reduce large embedding table costs, they applied int4 quantization. To avoid duplicate computations during serving (# of unique users $\ll$ # of candidates), they developed the Deduplicated Cross-Attention Transformer (DCAT), computing candidate-independent user sequence representations once for each unique user and broadcasting them to the same users in the batch to perform user-candidate feature crossing. Despite deploying a 20B model, cost and latency increases were almost neutral.</p>
+<h2 id="lessons-from-case-studies" class="scroll-mt-8 group">
+  Lessons from Case Studies
+  
+    <a href="#lessons-from-case-studies"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<ol>
+<li><em>Generative Recommendation probably isn&rsquo;t a fad</em>: It&rsquo;s too early to say whether Generative Recommendation is the &ldquo;ChatGPT moment&rdquo; for RecSys, but it probably isn&rsquo;t a fad &mdash; many companies have hit diminishing returns with DLRM models (an exception: <a href="https://arxiv.org/html/2507.15551v1">RankMixer</a> from ByteDance keeps pushing the boundary of feature interaction modules) and do need scaling laws to keep improving model performance. So far GR is the best bet to achieve that.</li>
+<li><em>Scaling laws don&rsquo;t emerge in one way</em>: Poor learning of sparse ID features is a key reason why DLRM models struggle to scale, but there isn&rsquo;t just one way to unlock scaling laws. You can reframe the entire ranking problem as a generative task (e.g., next-action prediction), or you can pretrain ID embeddings in a generative model (usually an autoregressive Transformer) and transfer the parameters to a downstream discriminative model.</li>
+<li><em>Compositionality is optional, while generative training is a must-have</em>: Some models didn&rsquo;t use Semantic IDs but still saw scaling laws, such as WeChat&rsquo;s atomic ID-based <a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129">models</a>. However, no model we&rsquo;ve seen found scaling laws without generative training. Task complexity and training data intensity are essential for reaching a model&rsquo;s full potential (studying hard to learn ID features LOL).</li>
+<li><em>Personalization may be the next frontier</em>: Personalization usually means knowing &ldquo;for this particular user, how good is this item&rdquo;, which is naturally captured by user-item interaction features (e.g., aggregated CTR, action counts, etc. at the user-item level) and is readily usable in DLRM models. In Generative Recommenders, it&rsquo;s much more awkward to plug in these features. Meta&rsquo;s HSTU got rid of them; Meituan&rsquo;s MTGR had to expand the training data $N$-fold ($N$ being the number of candidate items to rank for a user in a given time window). How to more efficiently utilize personalized features will be an interesting topic to explore.</li>
+<li><em>Sequence compression is important</em>: Training a Generative Recommendation model usually requires data on each user&rsquo;s lifelong history. As we all know, for Transformers, both time and space complexity scale quadratically with sequence length (see <a href="/posts/hardware_aware_transformers/" class="backlink">my post</a>
+  
+   for more analysis). All the models we&rsquo;ve seen apply some form of sequence compression &mdash; e.g., Kuaishou combines TWIN V2 + QFormer, Meta uses a rather rough stochastic length sampling, Netflix merges similar tokens that appear in a row, and so on. Finding an efficient and lossless compression method will greatly improve both efficiency and data quality for GR training.</li>
+</ol>
+<h2 id="references" class="scroll-mt-8 group">
+  References
+  
+    <a href="#references"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h2>
+<h3 id="overview--scaling-laws-in-recommender-systems" class="scroll-mt-8 group">
+  Overview &amp; Scaling Laws in Recommender Systems
+  
+    <a href="#overview--scaling-laws-in-recommender-systems"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol>
+<li>A comprehensive lit review on Generative Recommendation 👉 <a href="https://arxiv.org/abs/2507.06507"><em>GR-LLMs: Recent Advances in Generative Recommendation Based on Large Language Models</em></a> (2025) by Yang et al., <em>arXiv</em>.</li>
+<li>&ldquo;One-epoch phenomenon&rdquo; 👉 <a href="https://arxiv.org/abs/2209.06053"><em>Towards Understanding the Overfitting Phenomenon of Deep Click-Through Rate Prediction Models</em></a> (2022) by Zhang et al., <em>CIKM</em>.</li>
+<li>Quality saturation under the &ldquo;item-centric ranking&rdquo; framework 👉 <a href="https://arxiv.org/abs/2305.15333"><em>Breaking the Curse of Quality Saturation with User-Centric Ranking</em></a> (2023) by Zhao et al., <em>KDD</em>.</li>
+<li>Netflix foresaw the lack of task complexity and item ID compositionality in DLRM 👉 <a href="https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/18140"><em>Deep Learning for Recommender Systems: A Netflix Case Study</em></a> (2021) by Steck et al., <em>AI Magazine</em>.</li>
+<li>Power-law scaling typically hits diminishing returns in DLRM 👉 <a href="https://arxiv.org/abs/2208.08489"><em>Understanding Scaling Laws for Recommendation Models</em></a> (2022) by Ardalani et al., <em>arXiv</em>.</li>
+<li>Generative training even on pure IDs leads to power-law scaling laws 👉 <a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688129"><em>Scaling Law of Large Sequential Recommendation Models</em></a> (2025) by Zhang et al., <em>RecSys</em>.</li>
+</ol>
+<h3 id="from-atomic-item-ids-to-semantic-ids" class="scroll-mt-8 group">
+  From Atomic Item IDs to Semantic IDs
+  
+    <a href="#from-atomic-item-ids-to-semantic-ids"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="7">
+<li>RQ-VAE, the most popular technique for learning Semantic IDs 👉 initially invented to generate audios (<a href="https://arxiv.org/abs/2107.03312">Zeghidour et al., 2021</a>) and images (<a href="https://arxiv.org/abs/2203.01941">Lee et al., 2022</a>) with low costs and high fidelity</li>
+<li>Google DeepMind&rsquo;s TIGER (<a href="https://proceedings.neurips.cc/paper_files/paper/2023/hash/20dcab0f14046a5c6b02b61da9f13229-Abstract-Conference.html">Rajput et al., 2023</a>) applied RQ-VAE to learning semantic IDs and used them in retrieval 👉 another Google paper (<a href="https://dl.acm.org/doi/abs/10.1145/3640457.3688190">Singh et al., 2024</a>) applied Semantic IDs to ranking</li>
+<li>Baidu&rsquo;s COBRA tackled information loss in RQ-VAE by also generating dense representations 👉 <a href="https://arxiv.org/abs/2503.02453"><em>Sparse Meets Dense: Unified Generative Recommendations with Cascaded Sparse-Dense Representations</em></a> (2025) by Yang et al., 2025, <em>arXiv</em>.</li>
+<li>Kuaishou&rsquo;s QARM used RQ-Kmeans to maximize codebook utilization 👉 <a href="https://arxiv.org/abs/2411.11739"><em>QARM: Quantitative Alignment Multi-Modal Recommendation at Kuaishou</em></a> (2024) by Luo et al., <em>arXiv</em>.</li>
+<li>Snap&rsquo;s GRID 👉 <a href="https://www.arxiv.org/abs/2507.22224"><em>Generative Recommendation with Semantic IDs: A Practitioner&rsquo;s Handbook</em></a> (2025) by Ju et al., <em>arXiv</em>.</li>
+</ol>
+<h3 id="ditch-dlrm-for-end-to-end-generative-architectures" class="scroll-mt-8 group">
+  Ditch DLRM for End-to-End Generative Architectures
+  
+    <a href="#ditch-dlrm-for-end-to-end-generative-architectures"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="12">
+<li>Meta&rsquo;s HSTU 👉 <a href="https://arxiv.org/abs/2402.17152"><em>Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations</em></a> (2024) by Zhai et al., <em>ICML</em>.</li>
+<li>Kuaishou&rsquo;s OneRec 👉 <a href="https://arxiv.org/abs/2502.18965"><em>OneRec: Unifying Retrieve and Rank with Generative Recommender and Iterative Preference Alignment</em></a> (2025) by Deng et al., <em>arXiv</em>.</li>
+<li>Meituan&rsquo;s MTGR 👉 <a href="https://arxiv.org/abs/2505.18654"><em>MTGR: Industrial-Scale Generative Recommendation Framework in Meituan</em></a> (2025) by Han et al., <em>arXiv</em>.</li>
+</ol>
+<h3 id="weave-generative-architectures-into-dlrm" class="scroll-mt-8 group">
+  Weave Generative Architectures into DLRM
+  
+    <a href="#weave-generative-architectures-into-dlrm"
+        class="no-underline hidden opacity-50 hover:opacity-100 !text-inherit group-hover:inline-block"
+        aria-hidden="true" title="Link to this heading" tabindex="-1">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="16"
+  height="16"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-link w-4 h-4 block"
+  viewBox="0 0 24 24"
+>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+</svg>
+
+    </a>
+  
+</h3>
+<ol start="15">
+<li>Alibaba has many different GR models 👉 check out their latest <a href="https://huggingface.co/papers/2507.22879">RecGPT Technical Report</a> &mdash; below are 3 well-known examples:
+<ul>
+<li>GPSD 👉 <a href="https://arxiv.org/abs/2506.03699"><em>Scaling Transformers for Discriminative Recommendation via Generative Pretraining</em></a> (2025) by Wang et al., <em>KDD</em>.</li>
+<li>LUM 👉 <a href="https://arxiv.org/abs/2502.08309"><em>Unlocking Scaling Law in Industrial Recommendation Systems with a Three-Step Paradigm Based Large User Model</em></a> (2025) by Yan et al., <em>arXiv</em>.</li>
+<li>URM 👉 <a href="https://arxiv.org/abs/2502.03041"><em>Large Language Model as Universal Retriever in Industrial-Scale Recommender System</em></a> (2025) by Jiang et al., <em>arXiv</em>.</li>
+</ul>
+</li>
+<li>JD.com&rsquo;s GenCTR 👉 <a href="https://arxiv.org/abs/2507.11246"><em>Generative Click-through Rate Prediction with Applications to Search Advertising</em></a> (2025) by Kong et al., <em>arXiv</em>.</li>
+<li>Xiaohongshu&rsquo;s RankGPT 👉 <a href="https://arxiv.org/abs/2505.04180"><em>Towards Large-Scale Generative Ranking</em></a> (2025) by Huang et al., <em>arXiv</em>.</li>
+<li>Netflix&rsquo;s Foundation Model 👉 <a href="https://netflixtechblog.com/foundation-model-for-personalized-recommendation-1a0bd8e02d39"><em>Foundation Model for Personalized Recommendation</em></a> (2025) by  Hsiao et al., <em>Netflix Technology Blog</em>.</li>
+<li>Pinterest&rsquo;s PinFM 👉 <a href="https://arxiv.org/abs/2507.12704"><em>PinFM: Foundation Model for User Activity Sequences at a Billion-scale Visual Discovery Platform</em></a> (2025) by Chen et al., <em>RecSys</em>.</li>
+<li>Tencent&rsquo;s LC-Rec is an &ldquo;older&rdquo; model that aims to align the semantic space of LLMs with the collaborative space of RecSys 👉 <a href="https://arxiv.org/abs/2311.09049"><em>Adapting Large Language Models by Integrating Collaborative Semantics for Recommendation</em></a> (2024), <em>ICDE</em>.</li>
+</ol>
+<!-- 21. ByteDance's RankMixer 👉 [*RankMixer: Scaling Up Ranking Models in Industrial Recommenders*](https://arxiv.org/abs/2507.15551) (2025) by Zhu et al., *arXiv*. -->
+    </div>
+  </article>
+
+  
+    <aside class="not-prose flex flex-col space-y-8 border-t pt-6">
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-shapes h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M8.3 10a.7.7 0 0 1-.626-1.079L11.4 3a.7.7 0 0 1 1.198-.043L16.3 8.9a.7.7 0 0 1-.572 1.1Z"
+  />
+  <rect width="7" height="7" x="3" y="14" rx="1" />
+  <circle cx="17.5" cy="17.5" r="3.5" />
+</svg>
+
+        <span>Categories</span>
+      </h2>
+
+      <ul class="ml-6 flex flex-row flex-wrap items-center space-x-2">
+          <li>
+            <a href="/categories/generative-recommendation/" class="taxonomy category">generative recommendation</a>
+          </li>
+          <li>
+            <a href="/categories/large-language-models/" class="taxonomy category">large language models</a>
+          </li>
+      </ul>
+    </section>
+    <section class="flex flex-col space-y-4" aria-hidden="true">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-chart-network h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="m13.11 7.664 1.78 2.672M14.162 12.788l-3.324 1.424M20 4l-6.06 1.515M3 3v16a2 2 0 0 0 2 2h16"
+  />
+  <circle cx="12" cy="6" r="2" />
+  <circle cx="16" cy="12" r="2" />
+  <circle cx="9" cy="15" r="2" />
+</svg>
+
+        <span>Graph</span>
+      </h2>
+
+      <content-network-graph
+  class="h-64 ml-6"
+  data-endpoint="/graph/index.json"
+  page="/posts/generative_recommendation-copy/"
+></content-network-graph>
+
+    </section>
+    <section class="flex flex-col space-y-4">
+      <h2 class="flex flex-row items-center space-x-2 text-lg font-semibold">
+        <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-newspaper h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2M18 14h-8M15 18h-5"
+  />
+  <path d="M10 6h8v4h-8V6Z" />
+</svg>
+
+        <span>Posts</span>
+      </h2>
+        <section class="flex flex-col space-y-1">
+          <h3 class="flex flex-row items-center space-x-2 text-sm font-semibold">
+            <svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  stroke="currentColor"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  stroke-width="2"
+  class="lucide lucide-arrow-up-from-dot h-4 w-4"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path d="m5 9 7-7 7 7M12 16V2" />
+  <circle cx="12" cy="21" r="1" />
+</svg>
+
+            <span>Outgoing</span>
+          </h3>
+
+          <ol class="not-prose ml-6">
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/ebr/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="An Introduction to Embedding-Based Retrieval"
+              >An Introduction to Embedding-Based Retrieval</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/embedding/"
+                  class="taxonomy"
+                  title="Posts and notes on Embedding"
+                  >Embedding</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/vector-based-search/"
+                  class="taxonomy"
+                  title="Posts and notes on Vector-based search"
+                  >Vector-based search</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/seq_user_modeling/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Down the Rabbit Hole: Sequential User Modeling"
+              >Down the Rabbit Hole: Sequential User Modeling</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/recommender-systems/"
+                  class="taxonomy"
+                  title="Posts and notes on Recommender systems"
+                  >Recommender systems</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/information-retrieval/"
+                  class="taxonomy"
+                  title="Posts and notes on Information retrieval"
+                  >Information retrieval</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/attention_as_dict/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Attention as Soft Dictionary Lookup"
+              >Attention as Soft Dictionary Lookup</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/machine-learning/"
+                  class="taxonomy"
+                  title="Posts and notes on Machine learning"
+                  >Machine learning</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/natural-language-processing/"
+                  class="taxonomy"
+                  title="Posts and notes on Natural language processing"
+                  >Natural language processing</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+    <li>
+      <article class="flex flex-row items-center">
+        <header class="grow">
+          <h3>
+            <a
+              href="/posts/hardware_aware_transformers/"
+              class="truncate text-sm underline decoration-slate-300 decoration-2 underline-offset-4 hover:decoration-inherit"
+              title="Hardware-Aware Attention for Long Sequence Modeling"
+              >Hardware-Aware Attention for Long Sequence Modeling</a
+            >
+          </h3>
+        </header>
+          <ul class="flex flex-row items-center justify-end space-x-2">
+              <li>
+                <a
+                  href="/categories/gpu/"
+                  class="taxonomy"
+                  title="Posts and notes on Gpu"
+                  >Gpu</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/transformers/"
+                  class="taxonomy"
+                  title="Posts and notes on Transformers"
+                  >Transformers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/categories/ml-systems/"
+                  class="taxonomy"
+                  title="Posts and notes on Ml systems"
+                  >Ml systems</a
+                >
+              </li>
+          </ul>
+      </article>
+    </li>
+</ol>
+
+        </section>
+    </section>
+</aside>
+
+      </main>
+      <footer class="mt-20 border-t border-neutral-100 pt-2 text-xs">
+        
+<section class="items-top flex flex-row justify-between opacity-70">
+  <div class="flex flex-col space-y-2">
+      <p>Copyright &copy; 2026, Yuan Meng.</p>
+      <div
+        xmlns:cc="https://creativecommons.org/ns#"
+        xmlns:dct="http://purl.org/dc/terms/"
+        about="https://creativecommons.org"
+      >
+        Content is available under
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license" class="inline-block" title="Creative Commons Attribution-ShareAlike 4.0 International"
+          >CC BY-SA 4.0</a
+        >
+        unless otherwise noted.
+      </div>
+        <div
+          class="mt-2 flex items-center space-x-2 fill-slate-400 hover:fill-slate-600 motion-safe:transition-colors"
+        >
+          <div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+  aria-hidden="true"
+>
+  <title>Creative Commons</title>
+  <circle fill="transparent" cx="37.785" cy="28.501" r="28.836" />
+  <path
+    d="M37.441-3.5c8.951 0 16.572 3.125 22.857 9.372 3.008 3.009 5.295 6.448 6.857 10.314 1.561 3.867 2.344 7.971 2.344 12.314 0 4.381-.773 8.486-2.314 12.313-1.543 3.828-3.82 7.21-6.828 10.143-3.123 3.085-6.666 5.448-10.629 7.086-3.961 1.638-8.057 2.457-12.285 2.457s-8.276-.808-12.143-2.429c-3.866-1.618-7.333-3.961-10.4-7.027-3.067-3.066-5.4-6.524-7-10.372S5.5 32.767 5.5 28.5c0-4.229.809-8.295 2.428-12.2 1.619-3.905 3.972-7.4 7.057-10.486C21.08-.394 28.565-3.5 37.441-3.5zm.116 5.772c-7.314 0-13.467 2.553-18.458 7.657-2.515 2.553-4.448 5.419-5.8 8.6a25.204 25.204 0 0 0-2.029 9.972c0 3.429.675 6.734 2.029 9.913 1.353 3.183 3.285 6.021 5.8 8.516 2.514 2.496 5.351 4.399 8.515 5.715a25.652 25.652 0 0 0 9.943 1.971c3.428 0 6.75-.665 9.973-1.999 3.219-1.335 6.121-3.257 8.713-5.771 4.99-4.876 7.484-10.99 7.484-18.344 0-3.543-.648-6.895-1.943-10.057-1.293-3.162-3.18-5.98-5.654-8.458-5.146-5.143-11.335-7.715-18.573-7.715zm-.401 20.915-4.287 2.229c-.458-.951-1.019-1.619-1.685-2-.667-.38-1.286-.571-1.858-.571-2.856 0-4.286 1.885-4.286 5.657 0 1.714.362 3.084 1.085 4.113.724 1.029 1.791 1.544 3.201 1.544 1.867 0 3.181-.915 3.944-2.743l3.942 2c-.838 1.563-2 2.791-3.486 3.686-1.484.896-3.123 1.343-4.914 1.343-2.857 0-5.163-.875-6.915-2.629-1.752-1.752-2.628-4.19-2.628-7.313 0-3.048.886-5.466 2.657-7.257 1.771-1.79 4.009-2.686 6.715-2.686 3.963-.002 6.8 1.541 8.515 4.627zm18.457 0-4.229 2.229c-.457-.951-1.02-1.619-1.686-2-.668-.38-1.307-.571-1.914-.571-2.857 0-4.287 1.885-4.287 5.657 0 1.714.363 3.084 1.086 4.113.723 1.029 1.789 1.544 3.201 1.544 1.865 0 3.18-.915 3.941-2.743l4 2c-.875 1.563-2.057 2.791-3.541 3.686a9.233 9.233 0 0 1-4.857 1.343c-2.896 0-5.209-.875-6.941-2.629-1.736-1.752-2.602-4.19-2.602-7.313 0-3.048.885-5.466 2.658-7.257 1.77-1.79 4.008-2.686 6.713-2.686 3.962-.002 6.783 1.541 8.458 4.627z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Credit must be given to the creator</title>
+  <circle fill="transparent" cx="37.637" cy="28.806" r="28.276" />
+  <path
+    d="M37.443-3.5c8.988 0 16.57 3.085 22.742 9.257C66.393 11.967 69.5 19.548 69.5 28.5c0 8.991-3.049 16.476-9.145 22.456-6.476 6.363-14.113 9.544-22.912 9.544-8.649 0-16.153-3.144-22.514-9.43C8.644 44.784 5.5 37.262 5.5 28.5c0-8.761 3.144-16.342 9.429-22.742C21.101-.415 28.604-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.553-18.457 7.657-5.22 5.334-7.829 11.525-7.829 18.572 0 7.086 2.59 13.22 7.77 18.398 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.607 18.629-7.828 5.029-4.838 7.543-10.952 7.543-18.343 0-7.276-2.553-13.465-7.656-18.571-5.104-5.104-11.276-7.656-18.514-7.656zm8.572 18.285v13.085h-3.656v15.542h-9.944V33.643h-3.656V20.557c0-.572.2-1.057.599-1.457.401-.399.887-.6 1.457-.6h13.144c.533 0 1.01.2 1.428.6.417.4.628.886.628 1.457zm-13.087-8.228c0-3.008 1.485-4.514 4.458-4.514s4.457 1.504 4.457 4.514c0 2.971-1.486 4.457-4.457 4.457s-4.458-1.486-4.458-4.457z"
+  />
+</svg>
+</div><div class="flex-none cursor-help"><svg
+  version="1.0"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="5.5 -3.5 64 64"
+  xml:space="preserve"
+  class="w-5 h-5 block"
+>
+  <title>Adaptations must be shared under the same terms</title>
+  <circle fill="transparent" cx="36.944" cy="28.631" r="29.105" />
+  <path
+    d="M37.443-3.5c8.951 0 16.531 3.105 22.742 9.315C66.393 11.987 69.5 19.548 69.5 28.5c0 8.954-3.049 16.457-9.145 22.514-6.437 6.324-14.076 9.486-22.912 9.486-8.649 0-16.153-3.143-22.514-9.429C8.644 44.786 5.5 37.264 5.5 28.501c0-8.723 3.144-16.285 9.429-22.685C21.138-.395 28.643-3.5 37.443-3.5zm.114 5.772c-7.276 0-13.428 2.572-18.457 7.715-5.22 5.296-7.829 11.467-7.829 18.513 0 7.125 2.59 13.257 7.77 18.4 5.181 5.182 11.352 7.771 18.514 7.771 7.123 0 13.334-2.609 18.629-7.828 5.029-4.876 7.543-10.99 7.543-18.343 0-7.313-2.553-13.485-7.656-18.513-5.067-5.145-11.239-7.715-18.514-7.715zM23.271 23.985c.609-3.924 2.189-6.962 4.742-9.114 2.552-2.152 5.656-3.228 9.314-3.228 5.027 0 9.029 1.62 12 4.856 2.971 3.238 4.457 7.391 4.457 12.457 0 4.915-1.543 9-4.627 12.256-3.088 3.256-7.086 4.886-12.002 4.886-3.619 0-6.743-1.085-9.371-3.257-2.629-2.172-4.209-5.257-4.743-9.257H31.1c.19 3.886 2.533 5.829 7.029 5.829 2.246 0 4.057-.972 5.428-2.914 1.373-1.942 2.059-4.534 2.059-7.771 0-3.391-.629-5.971-1.885-7.743-1.258-1.771-3.066-2.657-5.43-2.657-4.268 0-6.667 1.885-7.2 5.656h2.343l-6.342 6.343-6.343-6.343 2.512.001z"
+  />
+</svg>
+</div>
+        </div>
+
+  </div>
+    <div>
+      <a
+        href="https://github.com/michenriksen/hugo-theme-til"
+        title="Today I Learned &#8212; A Hugo theme by Michael Henriksen"
+        data-theme-version="0.4.0"
+        >theme: til</a
+      >
+    </div>
+</section>
+
+      </footer>
+    </div>
+
+    
+    <button id="back-to-top" title="Go to top">☝️</button>
+
+
+    
+    
+
+    
+    <script src="/js/back-to-top.js"></script>
+
+     
+    <script src="/js/cat-cursor.js" defer></script>
+  </body>
+</html>

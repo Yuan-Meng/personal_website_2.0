@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Since Joining Meta</title>
+      <link>http://localhost:1313/notes/meta_reflection/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/notes/meta_reflection/</guid>
+      <description>&lt;p&gt;On my LinkedIn page, under my Meta entry, I have this quote from Carlos Alcaraz, my favorite tennis player:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;&amp;ldquo;Sometimes I talk to myself about what is most important: if I win or doing great things.&amp;rdquo;&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;My biggest fear before joining Meta was to forget who I am. And I feel I&amp;rsquo;m just about to.&lt;/p&gt;&#xA;&lt;p&gt;It&amp;rsquo;s hard to hear your own voice when all the other ones are deafening: What&amp;rsquo;s SOTA and what&amp;rsquo;s not, what you can and cannot say, whom to worship and whom to look down upon, how your hands are tied, whom to be grateful for and sell your soul to. You listen so carefully, follow so closely, think you&amp;rsquo;re such a good student of this game, only lose everything beautiful about machine learning and life.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>40 RecSys &#43; LLM Papers and Blogs to Catch Up On</title>
       <link>http://localhost:1313/notes/recsys_papers_2026/</link>
       <pubDate>Wed, 25 Mar 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
