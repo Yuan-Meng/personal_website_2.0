@@ -12,6 +12,13 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/large-language-models/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Some New Grounds in Recommender Systems</title>
+      <link>http://localhost:1313/posts/recsys_frontier/</link>
+      <pubDate>Sat, 03 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/posts/recsys_frontier/</guid>
+      <description>&lt;p&gt;Coming soon&amp;hellip; I hope.&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Is Generative Recommendation the ChatGPT Moment of RecSys?</title>
       <link>http://localhost:1313/posts/generative_recommendation/</link>
       <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>

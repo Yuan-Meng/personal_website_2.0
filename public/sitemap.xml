@@ -2,23 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/notes/recsys_papers_2026/</loc>
-  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/literature-review/</loc>
+    <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
   </url><url>
+    <loc>http://localhost:1313/categories/personal-reflections/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/</loc>
+  </url><url>
     <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/recommender-systems/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/meta_reflection/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/recsys_frontier/</loc>
+  </url><url>
+    <loc>http://localhost:1313/notes/recsys_papers_2026/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/literature-review/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/coding/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/distributed-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/concurrency_101/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/agi/</loc>
   </url><url>
@@ -35,8 +45,6 @@
     <loc>http://localhost:1313/posts/mle_interviews_2.0/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/stranger_things/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/personal-reflections/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/new_year_wish_2026/</loc>
   </url><url>
@@ -61,8 +69,6 @@
     <loc>http://localhost:1313/categories/generative-recommendation/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/generative_recommendation/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
   </url><url>
@@ -91,8 +97,6 @@
     <loc>http://localhost:1313/posts/seq_user_modeling/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/information-retrieval/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/how_i_read_papers/</loc>
   </url><url>
