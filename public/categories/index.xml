@@ -12,16 +12,16 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Large language models</title>
-      <link>http://localhost:1313/categories/large-language-models/</link>
-      <pubDate>Sun, 04 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/large-language-models/</guid>
+      <title>Reasoning models</title>
+      <link>http://localhost:1313/categories/reasoning-models/</link>
+      <pubDate>Sun, 11 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/reasoning-models/</guid>
       <description></description>
     </item>
     <item>
       <title>Recommender systems</title>
       <link>http://localhost:1313/categories/recommender-systems/</link>
-      <pubDate>Sun, 04 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <pubDate>Sun, 11 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/recommender-systems/</guid>
       <description></description>
     </item>
@@ -51,20 +51,6 @@
       <link>http://localhost:1313/categories/distributed-systems/</link>
       <pubDate>Sat, 07 Mar 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/distributed-systems/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Agi</title>
-      <link>http://localhost:1313/categories/agi/</link>
-      <pubDate>Thu, 26 Feb 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/agi/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Cognitive science</title>
-      <link>http://localhost:1313/categories/cognitive-science/</link>
-      <pubDate>Thu, 26 Feb 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/categories/cognitive-science/</guid>
       <description></description>
     </item>
     <item>
@@ -131,6 +117,13 @@
       <description></description>
     </item>
     <item>
+      <title>Large language models</title>
+      <link>http://localhost:1313/categories/large-language-models/</link>
+      <pubDate>Sun, 03 Aug 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/large-language-models/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Gpu</title>
       <link>http://localhost:1313/categories/gpu/</link>
       <pubDate>Wed, 19 Mar 2025 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
@@ -177,6 +170,13 @@
       <link>http://localhost:1313/categories/ai/</link>
       <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
       <guid>http://localhost:1313/categories/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Cognitive science</title>
+      <link>http://localhost:1313/categories/cognitive-science/</link>
+      <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/categories/cognitive-science/</guid>
       <description></description>
     </item>
     <item>

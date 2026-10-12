@@ -12,11 +12,11 @@
     <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/categories/recommender-systems/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Some New Grounds in Recommender Systems</title>
-      <link>http://localhost:1313/posts/recsys_frontier/</link>
-      <pubDate>Sun, 04 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
-      <guid>http://localhost:1313/posts/recsys_frontier/</guid>
-      <description>&lt;p&gt;Coming soon&amp;hellip; I hope.&lt;/p&gt;</description>
+      <title>How Does a Recommendation Model Benefit from Reasoning?</title>
+      <link>http://localhost:1313/posts/reasoning_models/</link>
+      <pubDate>Sun, 11 Oct 2026 00:00:00 +0000</pubDate><author>mycaptainmy@gmail.com (Yuan Meng)</author>
+      <guid>http://localhost:1313/posts/reasoning_models/</guid>
+      <description>&lt;p&gt;I got a baffling message from a friend one night, saying &amp;ldquo;Don&amp;rsquo;t go to this restaurant!&amp;rdquo; and found out she went to a new restaurant recommended by a Xiaohongshu post that I forwarded to her, which turned out to be terrible. &amp;ldquo;Oh, I wasn&amp;rsquo;t recommending it to you.&amp;rdquo; So I explained. &amp;ldquo;Then was your intent?&amp;rdquo; She asked. &amp;ldquo;I was randomly browsing my feed before bed and forwarded the first new place I saw, without a thought.&amp;rdquo; &amp;ldquo;Oh well, I was a reasoning model that made up all this intent.&amp;rdquo; So she joked.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Down the Rabbit Hole: Sequential User Modeling</title>

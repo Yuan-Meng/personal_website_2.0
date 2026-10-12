@@ -4,15 +4,15 @@
   <url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/large-language-models/</loc>
+    <loc>http://localhost:1313/posts/reasoning_models/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/recommender-systems/</loc>
+    <loc>http://localhost:1313/categories/reasoning-models/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/recsys_frontier/</loc>
+    <loc>http://localhost:1313/categories/recommender-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/</loc>
   </url><url>
@@ -29,12 +29,6 @@
     <loc>http://localhost:1313/categories/distributed-systems/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/concurrency_101/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/agi/</loc>
-  </url><url>
-    <loc>http://localhost:1313/categories/cognitive-science/</loc>
-  </url><url>
-    <loc>http://localhost:1313/posts/cogsci_ai/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/career/</loc>
   </url><url>
@@ -69,6 +63,8 @@
     <loc>http://localhost:1313/categories/generative-recommendation/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/generative_recommendation/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/large-language-models/</loc>
   </url><url>
     <loc>http://localhost:1313/notes/birthday_2025/</loc>
   </url><url>
@@ -105,6 +101,8 @@
     <loc>http://localhost:1313/posts/mle_interviews/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/ai/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/cognitive-science/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/human_vision/</loc>
   </url><url>
